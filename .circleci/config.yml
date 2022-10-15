@@ -3,7 +3,53 @@
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
 version: 2
+orbs:
+  slack: circleci/slack@4.4.4
 jobs:
+  deploy:
+    docker:
+      - image: 'cimg/base:stable'
+    steps:
+      - run: echo "deploy Hotel Management App"
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+          channel: $SLACK_DEFAULT_CHANNEL
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
+          channel: $SLACK_DEFAULT_CHANNEL
+    test:
+      docker:
+        - image: 'cimg/base:stable'
+      steps:
+        - run: echo "test Hotel Management Ap"
+  workflows:
+    test-and-deploy:
+      jobs:
+        - test
+        - slack/on-hold:
+            context: slack-secrets
+            filters:
+              tags:
+                only: /^v.*/
+            requires:
+              - test
+        - pause_workflow:
+            filters:
+              tags:
+                only: /^v.*/
+            requires:
+              - test
+              - slack/on-hold
+            type: approval
+        - deploy:
+            filters:
+              tags:
+                only: /^v.*/
+            requires:
+              - pause_workflow
+
   build:
     docker:
       # specify the version you desire here
