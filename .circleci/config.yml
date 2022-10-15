@@ -16,11 +16,6 @@ jobs:
       - slack/notify:
           event: pass
           template: success_tagged_deploy_1
-workflows:
-  send-notification:
-    jobs:
-      - notify:
-          context: slack-secrets
   build:
     docker:
       # specify the version you desire here
@@ -66,3 +61,8 @@ workflows:
       - run:
           name: Send to CodeCov
           command: bash <(curl -s https://codecov.io/bash)
+workflows:
+  send-notification:
+    jobs:
+      - notify:
+          context: slack-secrets
