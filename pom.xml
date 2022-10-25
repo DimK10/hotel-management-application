@@ -121,16 +121,16 @@
 								</goals>
 								<phase>generate-resources</phase>
 							</execution>
-<!--							<execution>-->
-<!--								<id>set-npm-registry</id>-->
-<!--								<goals>-->
-<!--									<goal>npm</goal>-->
-<!--								</goals>-->
-<!--								<phase>generate-resources</phase>-->
-<!--								<configuration>-->
-<!--									<arguments>config set registry=${npm.registry.url}</arguments>-->
-<!--								</configuration>-->
-<!--							</execution>-->
+							<execution>
+								<id>set-npm-registry</id>
+								<goals>
+									<goal>npm</goal>
+								</goals>
+								<phase>generate-resources</phase>
+								<configuration>
+									<arguments>config set registry=${npm.registry.url}</arguments>
+								</configuration>
+							</execution>
 							<execution>
 								<id>npm install</id>
 								<goals>
