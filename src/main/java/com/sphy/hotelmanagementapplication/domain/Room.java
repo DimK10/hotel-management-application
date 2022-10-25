@@ -16,6 +16,7 @@ public class Room {
     private int luxurity;
     @Column(name = "area")
     private String area;
+    private String transactionId;
 
     @ManyToOne
     @JoinColumn(name = "hotel_id")
