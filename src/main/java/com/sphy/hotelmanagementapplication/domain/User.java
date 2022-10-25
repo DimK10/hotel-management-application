@@ -19,14 +19,16 @@ public class User {
     private String lastname;
     private String email;
     private String hashedPassword;
+    protected enum Role{
+        CLIENT,ADMIN
+    }
+    @Enumerated(EnumType.STRING)
     protected Role role;
 
 
 
 
-    public static enum Role{
-        USER,ADMIN
-    }
+
 
     public User() {
     }
