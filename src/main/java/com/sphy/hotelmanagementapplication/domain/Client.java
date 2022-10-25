@@ -14,7 +14,7 @@ public class Client extends User{
     }
 
     public Client(boolean emailVerify, String username, String firstname, String lastname, String email) {
-        super(emailVerify, username, firstname, lastname, email, Role.USER);
+        super(emailVerify, username, firstname, lastname, email, Role.CLIENT);
     }
 
     public Set<Order> getOrders() {
