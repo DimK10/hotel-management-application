@@ -36,9 +36,9 @@ public class Hotel extends BaseEntity {
         this.areaName = areaName;
     }
 
-	public Long getId() {
-		return super.getId();
-	}
+//	public Long getId() {
+//		return super.getId();
+//	}
 
 	public void setId(Long id) {
 		super.setId(id);
@@ -97,7 +97,7 @@ public class Hotel extends BaseEntity {
 	@Override
     public String toString() {
         return "Hotel{" +
-                "Id=" + super.getId() +
+                "id=" + super.getId() +
                 ", name='" + name + '\'' +
                 ", stars=" + stars +
                 ", areaName='" + areaName + '\'' +

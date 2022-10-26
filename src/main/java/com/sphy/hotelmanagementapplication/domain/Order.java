@@ -32,9 +32,6 @@ public class Order extends BaseEntity {
         this.client=client;
     }
 
-	public Long getId() {
-		return super.getId();
-	}
 
 	public void setId(Long id) {
 		super.setId(id);
