@@ -9,6 +9,7 @@ import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.factory.ModelMapperFactory;
 import com.sphy.hotelmanagementapplication.factory.ModelMapperFactory.ModelMapperType;
+import com.sphy.hotelmanagementapplication.factory.ReverseModelMapperFactory;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
 import org.modelmapper.ModelMapper;
@@ -19,17 +20,20 @@ import org.springframework.stereotype.Service;
 public class RoomService {
 
 
-    private final RoomRepository repository;
+    private final RoomRepository roomRepository;
 
 	private final HotelRepository hotelRepository;
 
 	private final ModelMapperFactory modelMapperFactory;
 
-	public RoomService(RoomRepository repository, HotelRepository hotelRepository, ModelMapperFactory modelMapperFactory) {
-		this.repository = repository;
+    private final ReverseModelMapperFactory reverseModelMapperFactory;
+
+	public RoomService(RoomRepository repository, HotelRepository hotelRepository, ModelMapperFactory modelMapperFactory, ReverseModelMapperFactory reverseModelMapperFactory) {
+		this.roomRepository = repository;
 		this.hotelRepository = hotelRepository;
 		this.modelMapperFactory = modelMapperFactory;
-	}
+        this.reverseModelMapperFactory = reverseModelMapperFactory;
+    }
 
 	public RoomDTO saveRoomDTO(RoomDTO roomDTO) {
 		Room room = new Room();
@@ -48,44 +52,63 @@ public class RoomService {
 		ModelMapper modelMapper = modelMapperFactory.create(ModelMapperType.ROOM);
 
 		// The save method returns a Room object, which is then passed to map method of
-		// modelmapper and a RoomDTO is returned instead
-		return modelMapper.map(repository.save(room), RoomDTO.class);
+		// modelMapper and a RoomDTO is returned instead
+		return modelMapper.map(roomRepository.save(room), RoomDTO.class);
 	}
 
-    public Room saveRoom(Room room){
-       return repository.save(room);
-    }
+    public List<RoomDTO> saveRooms(List<RoomDTO> roomsDTO){
+        List<Room> rooms = new ArrayList<>();
+        ModelMapper modelMapper = reverseModelMapperFactory.create(ModelMapperType.ROOM);
 
-    public List<Room> saveRooms(List<Room> rooms){
-        return (List<Room>) repository.saveAll(rooms);
+        modelMapper.map(roomsDTO, rooms);
+
+        roomRepository.saveAll(rooms);
+
+        return roomsDTO;
     }
 
     public List<Room> getRooms(){
 		List<Room> rooms = new ArrayList<>();
-        repository.findAll().forEach(rooms::add);
+        roomRepository.findAll().forEach(rooms::add);
 		return rooms;
     }
 
-    public Room getRoomById(Long id){
-        return repository.findById(id).orElse(null);
+    public RoomDTO getRoomById(Long id){
+        Optional<Room> roomOpt = roomRepository.findById(id);
+
+        if (roomOpt.isPresent()){
+            ModelMapper modelMapper = modelMapperFactory.create(ModelMapperType.ROOM);
+            return modelMapper.map(roomOpt.get(), RoomDTO.class);
+        }else return null;
     }
 
-    public Room getRoomByName(String name){
-        return repository.findByName(name);
+
+    public RoomDTO getRoomByName(String name){
+       Room roomOpt = roomRepository.findByName(name);
+
+        if (roomOpt != null){
+            ModelMapper modelMapper = modelMapperFactory.create(ModelMapperType.ROOM);
+            return modelMapper.map(roomOpt, RoomDTO.class);
+        }else return null;
     }
 
     public String deleteRoom(Long id){
-        repository.deleteById(id);
+        roomRepository.deleteById(id);
         return "Room with id" + id + "has be successfully removed";
     }
 
-    public Room updateRoom(Room room){
-        Room existingRoom = repository.findById(room.getId()).orElse(null);
-        existingRoom.setName(room.getName());
-        existingRoom.setHotel(room.getHotel());
-        existingRoom.setLuxurity(room.getLuxurity());
-        existingRoom.setPrice(room.getPrice());
-        return repository.save(existingRoom);
+    public RoomDTO updateRoom(RoomDTO roomDTO) throws NullPointerException{
+        Optional<Room> roomOpt = roomRepository.findById(roomDTO.getId());
+        if (roomOpt.isPresent()){
+            Room existingRoom = roomRepository.findById(roomDTO.getId()).orElse(null);
+            existingRoom.setName(roomDTO.getName());
+            Optional<Hotel> hotel = hotelRepository.findById(roomDTO.getHotel());
+            existingRoom.setLuxurity(roomDTO.getLuxurity());
+            existingRoom.setPrice(roomDTO.getPrice());
+            hotel.ifPresent(existingRoom::setHotel);
+            roomRepository.save(existingRoom);
+        }
+        return roomDTO;
     }
 
 

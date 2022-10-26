@@ -37,6 +37,10 @@ public class Order extends BaseEntity {
 		super.setId(id);
 	}
 
+    public Long getId() {
+       return super.getId();
+    }
+
     public LocalDate getCheckInDate() {
         return checkInDate;
     }
@@ -68,6 +72,7 @@ public class Order extends BaseEntity {
     public void setRooms(Room rooms) {
         this.rooms = rooms;
     }
+
 
     @Override
     public boolean equals(Object o) {

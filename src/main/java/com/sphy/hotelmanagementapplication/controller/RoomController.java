@@ -43,8 +43,8 @@ public class RoomController {
     }
 
     @PostMapping("/api/rooms/create")
-    public List<Room> addRooms(@RequestBody List<Room> rooms){
-        return (List<Room>) service.saveRooms(rooms);
+    public List<RoomDTO> addRooms(@RequestBody List<RoomDTO> roomsDTO){
+        return (List<RoomDTO>) service.saveRooms(roomsDTO);
     }
 
     @GetMapping("/api/rooms")
@@ -59,18 +59,18 @@ public class RoomController {
     }
 
     @GetMapping("/api/roomId/{id}")
-    public Room findRoomById(@PathVariable Long id){
+    public RoomDTO findRoomById(@PathVariable Long id) throws Exception {
         return service.getRoomById(id);
     }
 
     @GetMapping("/api/roomName/{name}")
-    public Room findRoomByName (@PathVariable String name){
+    public RoomDTO findRoomByName (@PathVariable String name){
         return service.getRoomByName(name);
     }
 
     @PutMapping("/api/room/update")
-    public Room updateRoom(@RequestBody Room room) {
-        return service.saveRoom(room);
+    public RoomDTO updateRoom(@RequestBody RoomDTO roomDTO) {
+        return service.updateRoom(roomDTO);
     }
 
 
