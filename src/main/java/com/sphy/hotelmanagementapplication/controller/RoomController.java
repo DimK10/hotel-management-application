@@ -51,7 +51,10 @@ public class RoomController {
     public List<RoomDTO> findAllRooms(){
 		ModelMapper modelMapper = modelMapperFactory.create(ModelMapperType.ROOM);
 
-        return service.getRooms().stream().map(room -> modelMapper.map(room, RoomDTO.class))
+        return service
+				.getRooms()
+				.stream()
+				.map(room -> modelMapper.map(room, RoomDTO.class))
 				.collect(Collectors.toList());
     }
 

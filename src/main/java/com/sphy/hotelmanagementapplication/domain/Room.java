@@ -1,10 +1,18 @@
 package com.sphy.hotelmanagementapplication.domain;
 
-import javax.persistence.*;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity(name = "rooms")
 @DiscriminatorValue("rooms")
@@ -22,7 +30,7 @@ public class Room implements Serializable {
     private Hotel hotel;
 
     @OneToMany(mappedBy = "rooms")
-    private Set<Order> order=new HashSet<>();
+    private Set<Order> orders =new HashSet<>();
 
     private long price;
 
@@ -72,12 +80,12 @@ public class Room implements Serializable {
         Id = id;
     }
 
-    public Set<Order> getOrder() {
-        return order;
+    public Set<Order> getOrders() {
+        return orders;
     }
 
-    public void setOrder(Set<Order> order) {
-        this.order = order;
+    public void setOrders(Set<Order> order) {
+        this.orders = order;
     }
 
     public long getPrice() {
@@ -110,7 +118,7 @@ public class Room implements Serializable {
 				", name='" + name + '\'' +
 				", luxurity=" + luxurity +
 				", hotel=" + hotel +
-				", order=" + order +
+				", order=" + orders +
 				", price=" + price +
 				'}';
 	}

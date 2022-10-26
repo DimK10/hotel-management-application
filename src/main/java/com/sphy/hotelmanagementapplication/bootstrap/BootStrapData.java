@@ -1,11 +1,20 @@
 package com.sphy.hotelmanagementapplication.bootstrap;
 
-import com.sphy.hotelmanagementapplication.domain.*;
-import com.sphy.hotelmanagementapplication.repositories.*;
+import java.time.LocalDate;
+
+import com.sphy.hotelmanagementapplication.domain.Admin;
+import com.sphy.hotelmanagementapplication.domain.Client;
+import com.sphy.hotelmanagementapplication.domain.Hotel;
+import com.sphy.hotelmanagementapplication.domain.Order;
+import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
+import com.sphy.hotelmanagementapplication.repositories.ClientRepository;
+import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
+import com.sphy.hotelmanagementapplication.repositories.OrderRepository;
+import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
 
 
 @Component
@@ -69,14 +78,14 @@ public class BootStrapData implements CommandLineRunner {
         order.setRooms(ena);
         orderRepository.save(order);
 
-        ena.getOrder().add(order);
+        ena.getOrders().add(order);
         roomRepository.save(ena);
 
         Order order1 = new Order(null, LocalDate.ofEpochDay(2007-12-03), LocalDate.ofEpochDay(2007-12-07), client);
         orderRepository.save(order1);
         order1.setRooms(dio);
         orderRepository.save(order1);
-        dio.getOrder().add(order1);
+        dio.getOrders().add(order1);
         roomRepository.save(dio);
     //        orderRepository.save(order);
 

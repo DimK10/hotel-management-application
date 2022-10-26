@@ -15,7 +15,7 @@ public class RoomDTO implements Serializable {
 
 	private Long hotel;
 
-	private Set<Long> order=new HashSet<>();
+	private Set<Long> orders =new HashSet<>();
 
 	private long price;
 
@@ -51,12 +51,12 @@ public class RoomDTO implements Serializable {
 		this.hotel = hotel;
 	}
 
-	public Set<Long> getOrder() {
-		return order;
+	public Set<Long> getOrders() {
+		return orders;
 	}
 
-	public void setOrder(Set<Long> order) {
-		this.order = order;
+	public void setOrders(Set<Long> orders) {
+		this.orders = orders;
 	}
 
 	public long getPrice() {
@@ -87,7 +87,7 @@ public class RoomDTO implements Serializable {
 				", name='" + name + '\'' +
 				", luxurity=" + luxurity +
 				", hotel=" + hotel +
-				", order=" + order +
+				", order=" + orders +
 				", price=" + price +
 				'}';
 	}
