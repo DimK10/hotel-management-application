@@ -1,18 +1,31 @@
 package com.sphy.hotelmanagementapplication.controller;
+import com.sphy.hotelmanagementapplication.converter.BaseEntityConverter;
 import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.service.RoomService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class RoomController {
 
-    @Autowired
-    private RoomService service;
+	private final ModelMapper modelMapper;
 
-    @PostMapping("/api/room/create")
+    private final RoomService service;
+
+	private final BaseEntityConverter baseEntityConverter;
+
+	public RoomController(ModelMapper modelMapper, RoomService service, BaseEntityConverter baseEntityConverter) {
+		this.modelMapper = modelMapper;
+		this.service = service;
+		this.baseEntityConverter = baseEntityConverter;
+	}
+
+	@PostMapping("/api/room/create")
     public Room addRoom(@RequestBody Room room){
         return service.saveRoom(room);
     }
@@ -23,8 +36,10 @@ public class RoomController {
     }
 
     @GetMapping("/api/rooms")
-    public List<Room> findAllRooms(){
-        return service.getRooms();
+    public List<RoomDTO> findAllRooms(){
+		modelMapper.addConverter(baseEntityConverter);
+        return service.getRooms().stream().map(room -> modelMapper.map(room, RoomDTO.class))
+				.collect(Collectors.toList());
     }
 
     @GetMapping("/api/roomId/{id}")

@@ -1,15 +1,13 @@
 package com.sphy.hotelmanagementapplication.domain;
 
 import javax.persistence.*;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "orders")
-public class Order {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+public class Order extends BaseEntity {
 
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
@@ -27,11 +25,20 @@ public class Order {
     }
 
 
-    public Order(LocalDate checkInDate, LocalDate checkOutDate,Client client) {
-        this.checkInDate = checkInDate;
+    public Order(Long id, LocalDate checkInDate, LocalDate checkOutDate,Client client) {
+		super(id);
+		this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
         this.client=client;
     }
+
+	public Long getId() {
+		return super.getId();
+	}
+
+	public void setId(Long id) {
+		super.setId(id);
+	}
 
     public LocalDate getCheckInDate() {
         return checkInDate;
@@ -65,37 +72,24 @@ public class Order {
         this.rooms = rooms;
     }
 
-    public Long getId() {
-        return Id;
-    }
-
-    public void setId(Long id) {
-        Id = id;
-    }
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Order order = (Order) o;
-
-        return Id.equals(order.Id);
+        return super.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return Id.hashCode();
+        return super.hashCode();
     }
 
     @Override
     public String toString() {
         return "Order{" +
-                "Id=" + Id +
+                "Id=" + this.getId() +
                 ", checkInDate=" + checkInDate +
                 ", checkOutDate=" + checkOutDate +
                 ", client=" + client +
-                ", rooms=" + rooms +
+//                ", rooms=" + rooms +
                 '}';
     }
 }

@@ -1,12 +1,14 @@
 package com.sphy.hotelmanagementapplication.domain;
 
 import javax.persistence.*;
+
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "rooms")
 @DiscriminatorValue("rooms")
-public class Room {
+public class Room implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
@@ -101,15 +103,15 @@ public class Room {
         return Id.hashCode();
     }
 
-    @Override
-    public String toString() {
-        return "Room{" +
-                "Id=" + Id +
-                ", name='" + name + '\'' +
-                ", luxurity=" + luxurity +
-                ", hotel=" + hotel +
-                ", order=" + order +
-                ", price=" + price +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "Room{" +
+				"Id=" + Id +
+				", name='" + name + '\'' +
+				", luxurity=" + luxurity +
+				", hotel=" + hotel +
+				", order=" + order +
+				", price=" + price +
+				'}';
+	}
 }

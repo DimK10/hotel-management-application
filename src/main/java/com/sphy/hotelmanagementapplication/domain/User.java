@@ -1,15 +1,14 @@
 package com.sphy.hotelmanagementapplication.domain;
 
 import javax.persistence.*;
+
+import java.io.Serializable;
 import java.util.Objects;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "users")
-public class User {
+public class User extends BaseEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     private boolean emailVerify;
     private String username;
@@ -30,9 +29,11 @@ public class User {
 
 
     public User() {
-    }
+		super();
+	}
 
-    public User(boolean emailVerify, String username, String firstname, String lastname, String email, Role role) {
+    public User(Long id, boolean emailVerify, String username, String firstname, String lastname, String email, Role role) {
+        super(id);
         this.emailVerify = emailVerify;
         this.username = username;
         this.firstname = firstname;
@@ -41,13 +42,13 @@ public class User {
         this.role = role;
     }
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return super.getId();
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		super.setId(id);
+	}
 
     public String getFirstname() {
         return firstname;
@@ -106,15 +107,7 @@ public class User {
     }
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        User user = (User) o;
-
-        return Objects.equals(id, user.id);
-    }
 
     public String getTransactionId() {
         return transactionId;
@@ -124,15 +117,20 @@ public class User {
         this.transactionId = transactionId;
     }
 
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
-    }
+	@Override
+	public boolean equals(Object o) {
+		return super.equals(o);
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id=" + this.getId() +
                 ", EmailVerify=" + emailVerify +
                 ", username='" + username + '\'' +
                 ", firstname='" + firstname + '\'' +

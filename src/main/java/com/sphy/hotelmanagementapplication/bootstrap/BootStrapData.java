@@ -27,12 +27,12 @@ public class BootStrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Client client = new Client(true,"pelatis", "mitsos","allatsas", "pelatis@gmail.com");
+        Client client = new Client(null, true,"pelatis", "mitsos","allatsas", "pelatis@gmail.com");
         client.setHashedPassword("hfdgjakdhgakj");
         client.setHashedPassword("avbasbvabcba");
         clientRepository.save(client);
 
-        Admin admin = new Admin( true, "ksenodoxos", "thanos", "poul", "ksenodoxos@gmail.com");
+        Admin admin = new Admin(null, true, "ksenodoxos", "thanos", "poul", "ksenodoxos@gmail.com");
         admin.setHashedPassword("skjdfhgakhdfj");
         adminRepository.save(admin);
 
@@ -44,7 +44,7 @@ public class BootStrapData implements CommandLineRunner {
         roomRepository.save(dio);
 
 
-        Hotel ksenia = new Hotel("ksenia", 5,"athens");
+        Hotel ksenia = new Hotel(null, "ksenia", 5,"athens");
         hotelRepository.save(ksenia);
         ksenia.setOwner(admin);
         hotelRepository.save(ksenia);
@@ -63,7 +63,7 @@ public class BootStrapData implements CommandLineRunner {
 
 
 
-        Order order = new Order(LocalDate.ofEpochDay(2007-12-03), LocalDate.ofEpochDay(2007-12-07), client);
+        Order order = new Order(null, LocalDate.ofEpochDay(2007-12-03), LocalDate.ofEpochDay(2007-12-07), client);
         orderRepository.save(order);
 
         order.setRooms(ena);
@@ -72,7 +72,7 @@ public class BootStrapData implements CommandLineRunner {
         ena.getOrder().add(order);
         roomRepository.save(ena);
 
-        Order order1 = new Order(LocalDate.ofEpochDay(2007-12-03), LocalDate.ofEpochDay(2007-12-07), client);
+        Order order1 = new Order(null, LocalDate.ofEpochDay(2007-12-03), LocalDate.ofEpochDay(2007-12-07), client);
         orderRepository.save(order1);
         order1.setRooms(dio);
         orderRepository.save(order1);

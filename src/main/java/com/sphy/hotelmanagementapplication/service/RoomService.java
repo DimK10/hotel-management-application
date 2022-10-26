@@ -5,7 +5,10 @@ import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class RoomService {
@@ -22,7 +25,9 @@ public class RoomService {
     }
 
     public List<Room> getRooms(){
-        return (List<Room>) repository.findAll();
+		List<Room> rooms = new ArrayList<>();
+        repository.findAll().forEach(rooms::add);
+		return rooms;
     }
 
     public Room getRoomById(Long id){
