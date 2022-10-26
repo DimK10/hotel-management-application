@@ -26,8 +26,11 @@ public class ModelMapperFactory implements AbstractFactory<ModelMapper> {
 
 		switch (modelMapperType) {
 			case ROOM:
+
+				// Add a custom way to convert all Set<Object> to Set<Long>
 				modelMapper.addConverter(baseEntitySetConverter);
 
+				// Check if TypeMap exists, if not create
 				if (modelMapper.getTypeMap(Room.class, RoomDTO.class) == null) {
 					propertyMapper =
 							modelMapper.createTypeMap(Room.class, RoomDTO.class);
@@ -35,6 +38,7 @@ public class ModelMapperFactory implements AbstractFactory<ModelMapper> {
 					propertyMapper = modelMapper.getTypeMap(Room.class, RoomDTO.class);
 				}
 
+				// Custom mapping for Room, defining the way modelMapper maps the Hotel object to a Long
 				propertyMapper.addMappings(
 						mapper -> mapper.map(src -> src.getHotel().getId(), RoomDTO::setHotel)
 				);
