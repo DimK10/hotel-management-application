@@ -14,8 +14,6 @@ public class Room {
     private String name;
     @Column(name = "luxurity")
     private int luxurity;
-    @Column(name = "area")
-    private String area;
 
     @ManyToOne
     @JoinColumn(name = "hotel_id")
@@ -31,10 +29,10 @@ public class Room {
     public Room() {
     }
 
-    public Room(String name, int luxurity, String area, long price) {
+    public Room(String name, int luxurity, long price) {
         this.name = name;
         this.luxurity = luxurity;
-        this.area = area;
+
         this.price = price;
     }
 
@@ -63,13 +61,6 @@ public class Room {
         this.luxurity = luxurity;
     }
 
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
 
     public Long getId() {
         return Id;
@@ -116,9 +107,9 @@ public class Room {
                 "Id=" + Id +
                 ", name='" + name + '\'' +
                 ", luxurity=" + luxurity +
-                ", area='" + area + '\'' +
                 ", hotel=" + hotel +
                 ", order=" + order +
+                ", price=" + price +
                 '}';
     }
 }

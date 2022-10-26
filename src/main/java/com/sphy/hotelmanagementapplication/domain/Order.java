@@ -2,8 +2,6 @@ package com.sphy.hotelmanagementapplication.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "orders")
@@ -65,6 +63,14 @@ public class Order {
 
     public void setRooms(Room rooms) {
         this.rooms = rooms;
+    }
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
     }
 
     @Override

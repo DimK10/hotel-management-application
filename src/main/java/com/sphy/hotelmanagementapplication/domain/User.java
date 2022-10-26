@@ -1,9 +1,7 @@
 package com.sphy.hotelmanagementapplication.domain;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "users")
@@ -13,12 +11,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private boolean EmailVerify;
+    private boolean emailVerify;
     private String username;
     private String firstname;
     private String lastname;
     private String email;
     private String hashedPassword;
+    private String transactionId;
     protected enum Role{
         CLIENT,ADMIN
     }
@@ -34,7 +33,7 @@ public class User {
     }
 
     public User(boolean emailVerify, String username, String firstname, String lastname, String email, Role role) {
-        EmailVerify = emailVerify;
+        this.emailVerify = emailVerify;
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -83,11 +82,11 @@ public class User {
     }
 
     public boolean isEmailVerify() {
-        return EmailVerify;
+        return emailVerify;
     }
 
     public void setEmailVerify(boolean emailVerify) {
-        EmailVerify = emailVerify;
+        this.emailVerify = emailVerify;
     }
 
     public String getUsername() {
@@ -117,6 +116,13 @@ public class User {
         return Objects.equals(id, user.id);
     }
 
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
 
     @Override
     public int hashCode() {
@@ -127,7 +133,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", EmailVerify=" + EmailVerify +
+                ", EmailVerify=" + emailVerify +
                 ", username='" + username + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
