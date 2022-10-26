@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { Fragment, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import setAuthToken from './utils/setAuthToken';
+import store from './store';
+import { loadUser } from './actions/auth';
+import { Provider } from 'react-redux';
+import Landing from './components/Landing';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-          <p>
-              Home Management App development in process...
-          </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '@coreui/coreui/dist/css/coreui.min.css';
+
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
 }
+
+const App = () => {
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
+
+  return (
+    <Provider store={store}>
+      <Fragment>
+        <Router>
+          <Routes>
+            <Route path='/' element={<Landing />} />
+          </Routes>
+        </Router>
+      </Fragment>
+    </Provider>
+  );
+};
 
 export default App;
