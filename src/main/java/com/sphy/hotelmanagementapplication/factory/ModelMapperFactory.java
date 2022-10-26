@@ -21,12 +21,19 @@ public class ModelMapperFactory implements AbstractFactory<ModelMapper> {
 
 	@Override
 	public ModelMapper create(ModelMapperType modelMapperType) {
+
+		TypeMap<Room, RoomDTO> propertyMapper = null;
+
 		switch (modelMapperType) {
 			case ROOM:
 				modelMapper.addConverter(baseEntitySetConverter);
 
-				TypeMap<Room, RoomDTO> propertyMapper =
-						modelMapper.createTypeMap(Room.class, RoomDTO.class);
+				if (modelMapper.getTypeMap(Room.class, RoomDTO.class) == null) {
+					propertyMapper =
+							modelMapper.createTypeMap(Room.class, RoomDTO.class);
+				} else {
+					propertyMapper = modelMapper.getTypeMap(Room.class, RoomDTO.class);
+				}
 
 				propertyMapper.addMappings(
 						mapper -> mapper.map(src -> src.getHotel().getId(), RoomDTO::setHotel)

@@ -1,41 +1,45 @@
 package com.sphy.hotelmanagementapplication.controller;
-import com.sphy.hotelmanagementapplication.converter.BaseEntityConverter;
-import com.sphy.hotelmanagementapplication.converter.BaseEntitySetConverter;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.factory.ModelMapperFactory;
 import com.sphy.hotelmanagementapplication.factory.ModelMapperFactory.ModelMapperType;
+import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.RoomService;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RoomController {
 
     private final RoomService service;
 
-	private final BaseEntityConverter baseEntityConverter;
-
-	private final BaseEntitySetConverter baseEntitySetConverter;
+	private final HotelService hotelService;
 
 	private final ModelMapperFactory modelMapperFactory;
 
-	public RoomController(RoomService service, BaseEntityConverter baseEntityConverter, BaseEntitySetConverter baseEntitySetConverter, ModelMapperFactory modelMapperFactory) {
+	public RoomController(RoomService service, HotelService hotelService, ModelMapperFactory modelMapperFactory) {
 		this.service = service;
-		this.baseEntityConverter = baseEntityConverter;
-		this.baseEntitySetConverter = baseEntitySetConverter;
+		this.hotelService = hotelService;
 		this.modelMapperFactory = modelMapperFactory;
 	}
 
 	@PostMapping("/api/room/create")
-    public Room addRoom(@RequestBody Room room){
-        return service.saveRoom(room);
+    public RoomDTO addRoom(@RequestBody RoomDTO roomDTO) throws Exception {
+		if (roomDTO.getHotel() == null || hotelService.findById(roomDTO.getHotel()) == null) {
+			throw new Exception("There is no Hotel registered with that id, or the id is null!");
+		}
+        return service.saveRoomDTO(roomDTO);
     }
 
     @PostMapping("/api/rooms/create")
