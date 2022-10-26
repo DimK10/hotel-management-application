@@ -1,15 +1,15 @@
 package com.sphy.hotelmanagementapplication.controller;
 import com.sphy.hotelmanagementapplication.converter.BaseEntityConverter;
 import com.sphy.hotelmanagementapplication.converter.BaseEntitySetConverter;
-import com.sphy.hotelmanagementapplication.domain.BaseEntity;
-import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
-import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
+import com.sphy.hotelmanagementapplication.factory.ModelMapperFactory;
+import com.sphy.hotelmanagementapplication.factory.ModelMapperFactory.ModelMapperType;
 import com.sphy.hotelmanagementapplication.service.RoomService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,19 +18,19 @@ import java.util.stream.Collectors;
 @RestController
 public class RoomController {
 
-	private final ModelMapper modelMapper;
-
     private final RoomService service;
 
 	private final BaseEntityConverter baseEntityConverter;
 
 	private final BaseEntitySetConverter baseEntitySetConverter;
 
-	public RoomController(ModelMapper modelMapper, RoomService service, BaseEntityConverter baseEntityConverter, BaseEntitySetConverter baseEntitySetConverter) {
-		this.modelMapper = modelMapper;
+	private final ModelMapperFactory modelMapperFactory;
+
+	public RoomController(RoomService service, BaseEntityConverter baseEntityConverter, BaseEntitySetConverter baseEntitySetConverter, ModelMapperFactory modelMapperFactory) {
 		this.service = service;
 		this.baseEntityConverter = baseEntityConverter;
 		this.baseEntitySetConverter = baseEntitySetConverter;
+		this.modelMapperFactory = modelMapperFactory;
 	}
 
 	@PostMapping("/api/room/create")
@@ -45,12 +45,7 @@ public class RoomController {
 
     @GetMapping("/api/rooms")
     public List<RoomDTO> findAllRooms(){
-		modelMapper.addConverter(baseEntitySetConverter);
-
-		TypeMap<Room,RoomDTO> propertyMapper = modelMapper.createTypeMap(Room.class, RoomDTO.class);
-		propertyMapper.addMappings(
-				mapper -> mapper.map(src -> src.getHotel().getId(), RoomDTO::setHotel)
-		);
+		ModelMapper modelMapper = modelMapperFactory.create(ModelMapperType.ROOM);
 
         return service.getRooms().stream().map(room -> modelMapper.map(room, RoomDTO.class))
 				.collect(Collectors.toList());
