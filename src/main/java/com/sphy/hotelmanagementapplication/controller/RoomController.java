@@ -81,12 +81,11 @@ public class RoomController {
 
         if (!service.deleteRoom(id)) {
             return ResponseEntity.badRequest()
-                    .body("Το id το οποίο δώσατε δεν υπάρχει");
+                    .body("The id does not exist");
         } else {
             return ResponseEntity.status(HttpStatus.OK)
                     .body("Room with id " + id + " has be successfully removed");
         }
-
-
     }
+
 }
