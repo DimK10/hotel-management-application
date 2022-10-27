@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const NavBar = (props) => {
   return (
-    <nav class='navbar navbar-expand-lg navbar-dark bg-dark'>
+    <nav class='navbar navbar-expand-lg navbar-dark bg-dark sticky-top'>
       <div class='container-fluid'>
         <a class='navbar-brand' href='#'>
           Hotel Management App
@@ -33,7 +33,7 @@ const NavBar = (props) => {
               </Link>
             </li>
             <li class='nav-item'>
-             <Link className='nav-link' to='/sign-up'>
+              <Link className='nav-link' to='/sign-up'>
                 Sign In
               </Link>
             </li>

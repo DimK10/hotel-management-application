@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { loadUser } from './actions/auth';
 import { Provider } from 'react-redux';
 
-import FirstPage from './components/FirstPage';
+import FirstPage from './components/firstpage/FirstPage';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@coreui/coreui/dist/css/coreui.min.css';
