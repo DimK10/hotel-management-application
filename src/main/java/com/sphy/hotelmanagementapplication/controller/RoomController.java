@@ -1,5 +1,6 @@
 package com.sphy.hotelmanagementapplication.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -7,6 +8,7 @@ import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.factory.ModelMapperFactory;
 import com.sphy.hotelmanagementapplication.factory.ModelMapperFactory.ModelMapperType;
+import com.sphy.hotelmanagementapplication.factory.ReverseModelMapperFactory;
 import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.RoomService;
 import org.modelmapper.ModelMapper;
@@ -34,7 +36,7 @@ public class RoomController {
         this.service = service;
         this.hotelService = hotelService;
         this.modelMapperFactory = modelMapperFactory;
-    }
+	}
 
     @PostMapping("/api/room/create")
     public RoomDTO addRoom(@RequestBody RoomDTO roomDTO) throws Exception {
@@ -45,8 +47,13 @@ public class RoomController {
     }
 
     @PostMapping("/api/rooms/create")
-    public List<RoomDTO> addRooms(@RequestBody List<RoomDTO> roomsDTO) {
-        return (List<RoomDTO>) service.saveRooms(roomsDTO);
+    public List<RoomDTO> addRooms(@RequestBody List<RoomDTO> roomsDTO) throws Exception {
+		List<RoomDTO> roomDTOSSaved = new ArrayList<>();
+
+		roomsDTO
+				.forEach(roomDTO -> roomDTOSSaved.add(service.saveRoomDTO(roomDTO)));
+
+		return  roomsDTO;
     }
 
     @GetMapping("/api/rooms")
@@ -75,16 +82,28 @@ public class RoomController {
         return service.updateRoom(roomDTO);
     }
 
+	@PostMapping("/api/room/enable/{id}")
+	ResponseEntity<String> enableRoom(@PathVariable Long id) {
 
-    @DeleteMapping("/api/room/delete/{id}")
-    ResponseEntity<String> deleteRoom(Long id) {
+		if (!service.enableRoom(id)) {
+			return ResponseEntity.badRequest()
+					.body("The id does not exist");
+		} else {
+			return ResponseEntity.status(HttpStatus.OK)
+					.body("Room with id " + id + " was successfully activated");
+		}
+	}
 
-        if (!service.deleteRoom(id)) {
+
+    @PostMapping("/api/room/disable/{id}")
+    ResponseEntity<String> disableRoom(@PathVariable Long id) {
+
+        if (!service.disableRoom(id)) {
             return ResponseEntity.badRequest()
                     .body("The id does not exist");
         } else {
             return ResponseEntity.status(HttpStatus.OK)
-                    .body("Room with id " + id + " has be successfully removed");
+                    .body("Room with id " + id + " was successfully deactivated");
         }
     }
 

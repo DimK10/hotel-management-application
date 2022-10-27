@@ -1,15 +1,11 @@
 package com.sphy.hotelmanagementapplication.domain;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -32,6 +28,8 @@ public class Room extends BaseEntity {
 
     private long price;
 
+	private boolean disabled;
+
 
 
     public Room() {
@@ -39,13 +37,13 @@ public class Room extends BaseEntity {
 
 
 
-    public Room(Long id, String name, int luxurity, long price) {
+    public Room(Long id, String name, int luxurity, long price, boolean disabled) {
         super(id);
         this.name = name;
         this.luxurity = luxurity;
         this.price = price;
-
-    }
+		this.disabled = disabled;
+	}
 
 
     public String getName() {
@@ -97,7 +95,15 @@ public class Room extends BaseEntity {
         this.price = price;
     }
 
-    @Override
+	public boolean isDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
+	}
+
+	@Override
     public boolean equals(Object o) {
         return super.equals(o);
     }

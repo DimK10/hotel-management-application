@@ -45,11 +45,11 @@ public class BootStrapData implements CommandLineRunner {
         admin.setHashedPassword("skjdfhgakhdfj");
         adminRepository.save(admin);
 
-        Room ena = new Room( null,"ena",5,54);
+        Room ena = new Room( null,"ena",5,54, false);
         roomRepository.save(ena);
 
 
-        Room dio = new Room(null, "dio",4,30);
+        Room dio = new Room(null, "dio",4,30, false);
         roomRepository.save(dio);
 
 

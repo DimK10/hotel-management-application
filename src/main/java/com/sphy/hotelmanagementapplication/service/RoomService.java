@@ -3,6 +3,7 @@ package com.sphy.hotelmanagementapplication.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
@@ -14,8 +15,6 @@ import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
 import org.modelmapper.ModelMapper;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -58,15 +57,31 @@ public class RoomService {
 		return modelMapper.map(roomRepository.save(room), RoomDTO.class);
 	}
 
-    public List<RoomDTO> saveRooms(List<RoomDTO> roomsDTO){
+    public List<Room> saveRooms(List<RoomDTO> roomsDTO) throws Exception{
         List<Room> rooms = new ArrayList<>();
         ModelMapper modelMapper = reverseModelMapperFactory.create(ModelMapperType.ROOM);
 
-        modelMapper.map(roomsDTO, rooms);
+		rooms = roomsDTO
+				.stream()
+				.map(roomDTO -> modelMapper.map(roomDTO, Room.class))
+				.collect(Collectors.toList());
 
-        roomRepository.saveAll(rooms);
+		for(Room room : rooms) {
+			if (room.getHotel() == null) {
+				throw new Exception(
+						"One of the rooms provided does not have a hotel (room.getHotel == null)."
+								+ " Room with id: " + room.getId() + " has no hotel"
+				);
+			}
+		}
 
-        return roomsDTO;
+        Iterable<Room> roomsSaved = roomRepository.saveAll(rooms);
+
+		rooms.clear();
+
+		roomsSaved.spliterator().forEachRemaining(rooms::add);
+
+        return rooms;
     }
 
     public List<Room> getRooms(){
@@ -94,9 +109,21 @@ public class RoomService {
         }else return null;
     }
 
-    public boolean deleteRoom(Long id){
+	public boolean enableRoom(Long id){
+		if (roomRepository.existsById(id)){
+			Room room = roomRepository.findById(id).get();
+			room.setDisabled(false);
+			roomRepository.save(room);
+			return true;
+		}else return false;
+
+	}
+
+    public boolean disableRoom(Long id){
        if (roomRepository.existsById(id)){
-           roomRepository.deleteById(id);
+		   Room room = roomRepository.findById(id).get();
+		   room.setDisabled(true);
+           roomRepository.save(room);
            return true;
        }else return false;
 

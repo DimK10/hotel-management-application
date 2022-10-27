@@ -1,6 +1,6 @@
 package com.sphy.hotelmanagementapplication.factory;
 
-import com.sphy.hotelmanagementapplication.converter.BaseEntitySetConverter;
+import com.sphy.hotelmanagementapplication.converter.BaseEntitySetToSetLongConverter;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import org.modelmapper.ModelMapper;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 public class ModelMapperFactory implements AbstractFactory<ModelMapper> {
 
 	private final ModelMapper modelMapper;
-	private final BaseEntitySetConverter baseEntitySetConverter;
+	private final BaseEntitySetToSetLongConverter baseEntitySetToSetLongConverter;
 
-	public ModelMapperFactory(ModelMapper modelMapper, BaseEntitySetConverter baseEntitySetConverter) {
+	public ModelMapperFactory(ModelMapper modelMapper, BaseEntitySetToSetLongConverter baseEntitySetToSetLongConverter) {
 		this.modelMapper = modelMapper;
-		this.baseEntitySetConverter = baseEntitySetConverter;
+		this.baseEntitySetToSetLongConverter = baseEntitySetToSetLongConverter;
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class ModelMapperFactory implements AbstractFactory<ModelMapper> {
 			case ROOM:
 
 				// Add a custom way to convert all Set<Object> to Set<Long>
-				modelMapper.addConverter(baseEntitySetConverter);
+				modelMapper.addConverter(baseEntitySetToSetLongConverter);
 
 				// Check if TypeMap exists, if not create
 				if (modelMapper.getTypeMap(Room.class, RoomDTO.class) == null) {

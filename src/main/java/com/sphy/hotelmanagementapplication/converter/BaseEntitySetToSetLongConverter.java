@@ -1,5 +1,6 @@
 package com.sphy.hotelmanagementapplication.converter;
 
+import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -9,7 +10,7 @@ import org.modelmapper.AbstractConverter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BaseEntitySetConverter extends AbstractConverter<Set<BaseEntity>, Set<Long>> {
+public class BaseEntitySetToSetLongConverter extends AbstractConverter<Set<BaseEntity>, Set<Long>> {
 	@Override
 	protected Set<Long> convert(Set<BaseEntity> baseEntities) {
 		return baseEntities
