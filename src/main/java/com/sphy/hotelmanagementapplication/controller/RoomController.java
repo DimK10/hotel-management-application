@@ -11,6 +11,8 @@ import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.RoomService;
 import org.modelmapper.ModelMapper;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,38 +26,38 @@ public class RoomController {
 
     private final RoomService service;
 
-	private final HotelService hotelService;
+    private final HotelService hotelService;
 
-	private final ModelMapperFactory modelMapperFactory;
+    private final ModelMapperFactory modelMapperFactory;
 
-	public RoomController(RoomService service, HotelService hotelService, ModelMapperFactory modelMapperFactory) {
-		this.service = service;
-		this.hotelService = hotelService;
-		this.modelMapperFactory = modelMapperFactory;
-	}
+    public RoomController(RoomService service, HotelService hotelService, ModelMapperFactory modelMapperFactory) {
+        this.service = service;
+        this.hotelService = hotelService;
+        this.modelMapperFactory = modelMapperFactory;
+    }
 
-	@PostMapping("/api/room/create")
+    @PostMapping("/api/room/create")
     public RoomDTO addRoom(@RequestBody RoomDTO roomDTO) throws Exception {
-		if (roomDTO.getHotel() == null || hotelService.findById(roomDTO.getHotel()) == null) {
-			throw new Exception("There is no Hotel registered with that id, or the id is null!");
-		}
+        if (roomDTO.getHotel() == null || hotelService.findById(roomDTO.getHotel()) == null) {
+            throw new Exception("There is no Hotel registered with that id, or the id is null!");
+        }
         return service.saveRoomDTO(roomDTO);
     }
 
     @PostMapping("/api/rooms/create")
-    public List<RoomDTO> addRooms(@RequestBody List<RoomDTO> roomsDTO){
+    public List<RoomDTO> addRooms(@RequestBody List<RoomDTO> roomsDTO) {
         return (List<RoomDTO>) service.saveRooms(roomsDTO);
     }
 
     @GetMapping("/api/rooms")
-    public List<RoomDTO> findAllRooms(){
-		ModelMapper modelMapper = modelMapperFactory.create(ModelMapperType.ROOM);
+    public List<RoomDTO> findAllRooms() {
+        ModelMapper modelMapper = modelMapperFactory.create(ModelMapperType.ROOM);
 
         return service
-				.getRooms()
-				.stream()
-				.map(room -> modelMapper.map(room, RoomDTO.class))
-				.collect(Collectors.toList());
+                .getRooms()
+                .stream()
+                .map(room -> modelMapper.map(room, RoomDTO.class))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/api/roomId/{id}")
@@ -64,7 +66,7 @@ public class RoomController {
     }
 
     @GetMapping("/api/roomName/{name}")
-    public RoomDTO findRoomByName (@PathVariable String name){
+    public RoomDTO findRoomByName(@PathVariable String name) {
         return service.getRoomByName(name);
     }
 
@@ -75,9 +77,16 @@ public class RoomController {
 
 
     @DeleteMapping("/api/room/delete/{id}")
-    public String deleteRoom(@PathVariable Long id){
-        return service.deleteRoom(id);
+    ResponseEntity<String> deleteRoom(Long id) {
+
+        if (!service.deleteRoom(id)) {
+            return ResponseEntity.badRequest()
+                    .body("Το id το οποίο δώσατε δεν υπάρχει");
+        } else {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body("Room with id " + id + " has be successfully removed");
+        }
+
+
     }
-
-
 }

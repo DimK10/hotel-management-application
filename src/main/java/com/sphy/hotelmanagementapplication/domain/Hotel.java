@@ -36,10 +36,6 @@ public class Hotel extends BaseEntity {
         this.areaName = areaName;
     }
 
-//	public Long getId() {
-//		return super.getId();
-//	}
-
 	public void setId(Long id) {
 		super.setId(id);
 	}

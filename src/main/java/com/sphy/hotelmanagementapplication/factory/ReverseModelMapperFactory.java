@@ -1,6 +1,7 @@
 package com.sphy.hotelmanagementapplication.factory;
 
 import com.sphy.hotelmanagementapplication.converter.BaseEntitySetConverter;
+import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
@@ -8,21 +9,26 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class ReverseModelMapperFactory implements AbstractFactory{
     private final ModelMapper modelMapper;
     private final BaseEntitySetConverter baseEntitySetConverter;
+    private final HotelRepository hotelRepository;
 
-    public ReverseModelMapperFactory(ModelMapper modelMapper, BaseEntitySetConverter baseEntitySetConverter) {
+
+    public ReverseModelMapperFactory(ModelMapper modelMapper, BaseEntitySetConverter baseEntitySetConverter, HotelRepository hotelRepository) {
         this.modelMapper = modelMapper;
         this.baseEntitySetConverter = baseEntitySetConverter;
+        this.hotelRepository = hotelRepository;
     }
 
     @Override
     public ModelMapper create(ModelMapperFactory.ModelMapperType modelMapperType) {
 
         TypeMap<RoomDTO, Room> propertyMapper = null;
-        HotelRepository hotelRepository = null;
+
         switch (modelMapperType) {
             case ROOM:
                
@@ -39,7 +45,7 @@ public class ReverseModelMapperFactory implements AbstractFactory{
 
                 // Custom mapping for Room, defining the way modelMapper maps the Hotel object to a Long
                 propertyMapper.addMappings(
-                        mapper -> mapper.map(src -> hotelRepository.findById(src.getHotel()), Room::setHotel)
+                        mapper -> mapper.map(src -> hotelRepository.findById(src.getHotel()).isPresent(), Room::setHotel)
                 );
 
                 return modelMapper;

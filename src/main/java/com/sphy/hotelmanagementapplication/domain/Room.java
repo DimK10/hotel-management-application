@@ -16,10 +16,8 @@ import javax.persistence.OneToMany;
 
 @Entity(name = "rooms")
 @DiscriminatorValue("rooms")
-public class Room implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+public class Room extends BaseEntity {
+
     @Column(name = "name")
     private String name;
     @Column(name = "luxurity")
@@ -39,11 +37,14 @@ public class Room implements Serializable {
     public Room() {
     }
 
-    public Room(String name, int luxurity, long price) {
+
+
+    public Room(Long id, String name, int luxurity, long price) {
+        super(id);
         this.name = name;
         this.luxurity = luxurity;
-
         this.price = price;
+
     }
 
 
@@ -71,13 +72,13 @@ public class Room implements Serializable {
         this.luxurity = luxurity;
     }
 
-
     public Long getId() {
-        return Id;
+        return super.getId();
     }
 
     public void setId(Long id) {
-        Id = id;
+
+        super.setId(id);
     }
 
     public Set<Order> getOrders() {
@@ -98,23 +99,18 @@ public class Room implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Room room = (Room) o;
-
-        return Id.equals(room.Id);
+        return super.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return Id.hashCode();
+        return super.hashCode();
     }
 
 	@Override
 	public String toString() {
 		return "Room{" +
-				"Id=" + Id +
+				"Id=" + super.getId() +
 				", name='" + name + '\'' +
 				", luxurity=" + luxurity +
 				", hotel=" + hotel +

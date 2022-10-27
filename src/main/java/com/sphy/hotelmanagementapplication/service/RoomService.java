@@ -14,6 +14,8 @@ import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
 import org.modelmapper.ModelMapper;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -92,13 +94,17 @@ public class RoomService {
         }else return null;
     }
 
-    public String deleteRoom(Long id){
-        roomRepository.deleteById(id);
-        return "Room with id" + id + "has be successfully removed";
+    public boolean deleteRoom(Long id){
+       if (roomRepository.existsById(id)){
+           roomRepository.deleteById(id);
+           return true;
+       }else return false;
+
     }
 
     public RoomDTO updateRoom(RoomDTO roomDTO) throws NullPointerException{
         Optional<Room> roomOpt = roomRepository.findById(roomDTO.getId());
+
         if (roomOpt.isPresent()){
             Room existingRoom = roomRepository.findById(roomDTO.getId()).orElse(null);
             existingRoom.setName(roomDTO.getName());
