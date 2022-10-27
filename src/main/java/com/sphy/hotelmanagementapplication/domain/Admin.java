@@ -1,11 +1,14 @@
 package com.sphy.hotelmanagementapplication.domain;
 
 import javax.persistence.*;
+
+import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity(name = "admins")
-public class Admin extends User{
+public class Admin extends User {
 
     @OneToMany(mappedBy = "owner")
     private Set<Hotel> hotels = new HashSet<>();
@@ -14,9 +17,17 @@ public class Admin extends User{
     public Admin() {
     }
 
-    public Admin(boolean emailVerify, String username, String firstname, String lastname, String email) {
-        super(emailVerify, username, firstname, lastname, email, Role.ADMIN);
+    public Admin(Long id, boolean emailVerify, String username, String firstname, String lastname, String email) {
+        super(id, emailVerify, username, firstname, lastname, email, Role.ADMIN);
     }
+
+	public Long getId() {
+		return super.getId();
+	}
+
+	public void setId(Long id) {
+		super.setId(id);
+	}
 
     public Set<Hotel> getHotels() {
         return hotels;
@@ -26,10 +37,22 @@ public class Admin extends User{
         this.hotels = hotels;
     }
 
-    @Override
+	@Override
+	public boolean equals(Object o) {
+		return super.equals(o);
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	@Override
     public String toString() {
         return "Admin{" +
-                "hotels=" + hotels +
+				"id=" + this.getId() +
+//                "hotels=" + hotels +
+
                 '}';
     }
 }

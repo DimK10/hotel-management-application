@@ -1,43 +1,50 @@
 package com.sphy.hotelmanagementapplication.domain;
 
-import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 @Entity(name = "rooms")
 @DiscriminatorValue("rooms")
-public class Room {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+public class Room extends BaseEntity {
+
+
     @Column(name = "name")
     private String name;
     @Column(name = "luxurity")
     private int luxurity;
-    @Column(name = "area")
-    private String area;
-    private String transactionId;
-
     @ManyToOne
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
 
     @OneToMany(mappedBy = "rooms")
-    private Set<Order> order=new HashSet<>();
+    private Set<Order> orders =new HashSet<>();
 
     private long price;
+
+	private boolean disabled;
 
 
 
     public Room() {
     }
 
-    public Room(String name, int luxurity, String area, long price) {
+
+
+    public Room(Long id, String name, int luxurity, long price, boolean disabled) {
+        super(id);
         this.name = name;
         this.luxurity = luxurity;
-        this.area = area;
         this.price = price;
-    }
+		this.disabled = disabled;
+	}
+
 
 
     public String getName() {
@@ -64,28 +71,22 @@ public class Room {
         this.luxurity = luxurity;
     }
 
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-
     public Long getId() {
-        return Id;
+        return super.getId();
     }
 
     public void setId(Long id) {
-        Id = id;
+
+        super.setId(id);
     }
 
-    public Set<Order> getOrder() {
-        return order;
+    public Set<Order> getOrders() {
+        return orders;
     }
 
-    public void setOrder(Set<Order> order) {
-        this.order = order;
+    public void setOrders(Set<Order> order) {
+        this.orders = order;
+
     }
 
     public long getPrice() {
@@ -96,30 +97,34 @@ public class Room {
         this.price = price;
     }
 
-    @Override
+	public boolean isDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
+	}
+
+	@Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        return super.equals(o);
 
-        Room room = (Room) o;
-
-        return Id.equals(room.Id);
     }
 
     @Override
     public int hashCode() {
-        return Id.hashCode();
+        return super.hashCode();
     }
 
-    @Override
-    public String toString() {
-        return "Room{" +
-                "Id=" + Id +
-                ", name='" + name + '\'' +
-                ", luxurity=" + luxurity +
-                ", area='" + area + '\'' +
-                ", hotel=" + hotel +
-                ", order=" + order +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "Room{" +
+				"Id=" + super.getId() +
+				", name='" + name + '\'' +
+				", luxurity=" + luxurity +
+				", hotel=" + hotel +
+				", order=" + orders +
+				", price=" + price +
+				'}';
+	}
 }

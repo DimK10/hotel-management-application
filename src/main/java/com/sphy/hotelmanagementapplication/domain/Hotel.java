@@ -1,17 +1,17 @@
 package com.sphy.hotelmanagementapplication.domain;
 
 import javax.persistence.*;
+
+import java.io.Serializable;
+
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 @Entity
 @Table(name = "hotels")
 
-public class Hotel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="id", updatable = false, nullable = false)
-    private Long Id;
+public class Hotel extends BaseEntity {
+
 
     @Column(name = "name")
     private String name;
@@ -30,11 +30,18 @@ public class Hotel {
     public Hotel() {
     }
 
-    public Hotel(String name, int stars, String areaName) {
+    public Hotel(Long id, String name, int stars, String areaName) {
+		super(id);
+
         this.name = name;
         this.stars = stars;
         this.areaName = areaName;
     }
+
+	public void setId(Long id) {
+		super.setId(id);
+	}
+
 
     public Admin getOwner() {
         return owner;
@@ -76,30 +83,26 @@ public class Hotel {
         this.areaName = areaName;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	@Override
+	public boolean equals(Object o) {
+		return super.equals(o);
+	}
 
-        Hotel hotel = (Hotel) o;
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
 
-        return Id.equals(hotel.Id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Id.hashCode();
-    }
-
-    @Override
+	@Override
     public String toString() {
         return "Hotel{" +
-                "Id=" + Id +
+                "id=" + super.getId() +
+
                 ", name='" + name + '\'' +
                 ", stars=" + stars +
                 ", areaName='" + areaName + '\'' +
                 ", owner=" + owner +
-                ", rooms=" + rooms +
+//                ", rooms=" + rooms +
                 '}';
     }
 }
