@@ -16,6 +16,13 @@ import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import com.sphy.hotelmanagementapplication.domain.*;
+import com.sphy.hotelmanagementapplication.repositories.*;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+
 
 @Component
 public class BootStrapData implements CommandLineRunner {
@@ -54,6 +61,19 @@ public class BootStrapData implements CommandLineRunner {
 
 
         Hotel ksenia = new Hotel(null, "ksenia", 5,"athens");
+        Admin admin = new Admin( true, "ksenodoxos", "thanos", "poul", "ksenodoxos@gmail.com");
+        admin.setHashedPassword("skjdfhgakhdfj");
+        adminRepository.save(admin);
+
+        Room ena = new Room( "ena", 5, "athens", 53);
+        roomRepository.save(ena);
+
+
+        Room dio = new Room("dio",4,"Athens",30);
+        roomRepository.save(dio);
+
+
+        Hotel ksenia = new Hotel("ksenia", 5,"athens");
         hotelRepository.save(ksenia);
         ksenia.setOwner(admin);
         hotelRepository.save(ksenia);
@@ -86,6 +106,14 @@ public class BootStrapData implements CommandLineRunner {
         order1.setRooms(dio);
         orderRepository.save(order1);
         dio.getOrders().add(order1);
+        ena.getOrder().add(order);
+        roomRepository.save(ena);
+
+        Order order1 = new Order(LocalDate.ofEpochDay(2007-12-03), LocalDate.ofEpochDay(2007-12-07), client);
+        orderRepository.save(order1);
+        order1.setRooms(dio);
+        orderRepository.save(order1);
+        dio.getOrder().add(order1);
         roomRepository.save(dio);
     //        orderRepository.save(order);
 

@@ -52,6 +52,7 @@ public class Admin extends User {
         return "Admin{" +
 				"id=" + this.getId() +
 //                "hotels=" + hotels +
+
                 '}';
     }
 }

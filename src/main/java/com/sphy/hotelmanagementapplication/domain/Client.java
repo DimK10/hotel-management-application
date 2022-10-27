@@ -10,6 +10,7 @@ import java.util.Set;
 @Entity(name = "clients")
 public class Client extends User {
 
+
     @OneToMany(mappedBy = "client")
     private Set<Order> orders=new HashSet<>();
 

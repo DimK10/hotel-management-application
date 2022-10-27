@@ -3,6 +3,7 @@ package com.sphy.hotelmanagementapplication.domain;
 import javax.persistence.*;
 
 import java.io.Serializable;
+
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -31,6 +32,7 @@ public class Hotel extends BaseEntity {
 
     public Hotel(Long id, String name, int stars, String areaName) {
 		super(id);
+
         this.name = name;
         this.stars = stars;
         this.areaName = areaName;
@@ -39,6 +41,7 @@ public class Hotel extends BaseEntity {
 	public void setId(Long id) {
 		super.setId(id);
 	}
+
 
     public Admin getOwner() {
         return owner;
@@ -94,6 +97,7 @@ public class Hotel extends BaseEntity {
     public String toString() {
         return "Hotel{" +
                 "id=" + super.getId() +
+
                 ", name='" + name + '\'' +
                 ", stars=" + stars +
                 ", areaName='" + areaName + '\'' +

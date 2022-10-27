@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Table(name = "orders")
 public class Order extends BaseEntity {
 
+
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
 
@@ -28,10 +29,10 @@ public class Order extends BaseEntity {
     public Order(Long id, LocalDate checkInDate, LocalDate checkOutDate,Client client) {
 		super(id);
 		this.checkInDate = checkInDate;
+
         this.checkOutDate = checkOutDate;
         this.client=client;
     }
-
 
 	public void setId(Long id) {
 		super.setId(id);
@@ -73,7 +74,6 @@ public class Order extends BaseEntity {
         this.rooms = rooms;
     }
 
-
     @Override
     public boolean equals(Object o) {
         return super.equals(o);
@@ -82,6 +82,7 @@ public class Order extends BaseEntity {
     @Override
     public int hashCode() {
         return super.hashCode();
+
     }
 
     @Override

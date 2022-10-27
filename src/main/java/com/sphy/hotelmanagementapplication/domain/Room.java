@@ -14,11 +14,11 @@ import javax.persistence.OneToMany;
 @DiscriminatorValue("rooms")
 public class Room extends BaseEntity {
 
+
     @Column(name = "name")
     private String name;
     @Column(name = "luxurity")
     private int luxurity;
-
     @ManyToOne
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
@@ -44,6 +44,7 @@ public class Room extends BaseEntity {
         this.price = price;
 		this.disabled = disabled;
 	}
+
 
 
     public String getName() {
@@ -85,6 +86,7 @@ public class Room extends BaseEntity {
 
     public void setOrders(Set<Order> order) {
         this.orders = order;
+
     }
 
     public long getPrice() {
@@ -106,6 +108,7 @@ public class Room extends BaseEntity {
 	@Override
     public boolean equals(Object o) {
         return super.equals(o);
+
     }
 
     @Override

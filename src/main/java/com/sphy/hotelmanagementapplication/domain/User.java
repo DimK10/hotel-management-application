@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "users")
@@ -17,6 +18,7 @@ public class User extends BaseEntity{
     private String email;
     private String hashedPassword;
     private String transactionId;
+
     protected enum Role{
         CLIENT,ADMIN
     }
@@ -29,8 +31,8 @@ public class User extends BaseEntity{
 
 
     public User() {
-		super();
-	}
+		     super();
+	  }
 
     public User(Long id, boolean emailVerify, String username, String firstname, String lastname, String email, Role role) {
         super(id);
@@ -49,6 +51,7 @@ public class User extends BaseEntity{
 	public void setId(Long id) {
 		super.setId(id);
 	}
+
 
     public String getFirstname() {
         return firstname;
@@ -88,6 +91,7 @@ public class User extends BaseEntity{
 
     public void setEmailVerify(boolean emailVerify) {
         this.emailVerify = emailVerify;
+
     }
 
     public String getUsername() {
@@ -127,10 +131,10 @@ public class User extends BaseEntity{
 		return super.hashCode();
 	}
 
+
     @Override
     public String toString() {
-        return "User{" +
-                "id=" + this.getId() +
+        return "User{" +"id=" + this.getId() +
                 ", EmailVerify=" + emailVerify +
                 ", username='" + username + '\'' +
                 ", firstname='" + firstname + '\'' +
