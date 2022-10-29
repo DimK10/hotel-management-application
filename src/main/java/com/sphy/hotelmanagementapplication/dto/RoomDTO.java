@@ -19,6 +19,8 @@ public class RoomDTO implements Serializable {
 
 	private long price;
 
+	private boolean disabled;
+
 	public Long getId() {
 		return Id;
 	}
@@ -65,6 +67,14 @@ public class RoomDTO implements Serializable {
 
 	public void setPrice(long price) {
 		this.price = price;
+	}
+
+	public boolean isDisabled() {
+		return disabled;
+	}
+
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
 	}
 
 	@Override

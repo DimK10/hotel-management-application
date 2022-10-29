@@ -1,11 +1,7 @@
 package com.sphy.hotelmanagementapplication.domain;
 
 import javax.persistence.*;
-
-import java.io.Serializable;
-
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 @Entity
 @Table(name = "hotels")
@@ -20,6 +16,8 @@ public class Hotel extends BaseEntity {
     @Column(name = "area_name")
     private String areaName;
 
+    private boolean disabled;
+
     @ManyToOne
     @JoinColumn(name = "admin_id")
     private Admin owner;
@@ -30,18 +28,21 @@ public class Hotel extends BaseEntity {
     public Hotel() {
     }
 
-    public Hotel(Long id, String name, int stars, String areaName) {
+    public Hotel(Long id, String name, int stars, String areaName, boolean disabled) {
 		super(id);
-
         this.name = name;
         this.stars = stars;
         this.areaName = areaName;
+        this.disabled = disabled;
     }
+
+	public Long getId() {
+		return super.getId();
+	}
 
 	public void setId(Long id) {
 		super.setId(id);
 	}
-
 
     public Admin getOwner() {
         return owner;
@@ -83,7 +84,16 @@ public class Hotel extends BaseEntity {
         this.areaName = areaName;
     }
 
-	@Override
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+
+    @Override
 	public boolean equals(Object o) {
 		return super.equals(o);
 	}
@@ -97,7 +107,6 @@ public class Hotel extends BaseEntity {
     public String toString() {
         return "Hotel{" +
                 "id=" + super.getId() +
-
                 ", name='" + name + '\'' +
                 ", stars=" + stars +
                 ", areaName='" + areaName + '\'' +
