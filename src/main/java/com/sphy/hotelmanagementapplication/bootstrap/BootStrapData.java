@@ -1,20 +1,11 @@
 package com.sphy.hotelmanagementapplication.bootstrap;
 
-import java.time.LocalDate;
-
-import com.sphy.hotelmanagementapplication.domain.Admin;
-import com.sphy.hotelmanagementapplication.domain.Client;
-import com.sphy.hotelmanagementapplication.domain.Hotel;
-import com.sphy.hotelmanagementapplication.domain.Order;
-import com.sphy.hotelmanagementapplication.domain.Room;
-import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
-import com.sphy.hotelmanagementapplication.repositories.ClientRepository;
-import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
-import com.sphy.hotelmanagementapplication.repositories.OrderRepository;
-import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
-
+import com.sphy.hotelmanagementapplication.domain.*;
+import com.sphy.hotelmanagementapplication.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 
 @Component
@@ -45,15 +36,15 @@ public class BootStrapData implements CommandLineRunner {
         admin.setHashedPassword("skjdfhgakhdfj");
         adminRepository.save(admin);
 
-        Room ena = new Room( "ena",5,54);
+        Room ena = new Room( null, "ena",5,54, false);
         roomRepository.save(ena);
 
 
-        Room dio = new Room("dio",4,30);
+        Room dio = new Room(null, "dio",4,30, false);
         roomRepository.save(dio);
 
 
-        Hotel ksenia = new Hotel(null, "ksenia", 5,"athens");
+        Hotel ksenia = new Hotel(null, "ksenia", 5,"athens", false);
         hotelRepository.save(ksenia);
         ksenia.setOwner(admin);
         hotelRepository.save(ksenia);
@@ -65,10 +56,10 @@ public class BootStrapData implements CommandLineRunner {
         adminRepository.save(admin);
 
 
-//        ksenia.getRooms().add(ena);
-//        hotelRepository.save(ksenia);
-//        ksenia.getRooms().add(dio);
-//        hotelRepository.save(ksenia);
+        ksenia.getRooms().add(ena);
+        hotelRepository.save(ksenia);
+        ksenia.getRooms().add(dio);
+        hotelRepository.save(ksenia);
 
 
 

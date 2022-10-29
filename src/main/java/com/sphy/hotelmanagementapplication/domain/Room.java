@@ -1,25 +1,13 @@
 package com.sphy.hotelmanagementapplication.domain;
 
-import java.io.Serializable;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
 @Entity(name = "rooms")
 @DiscriminatorValue("rooms")
-public class Room implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+public class Room extends BaseEntity {
+
     @Column(name = "name")
     private String name;
     @Column(name = "luxurity")
@@ -34,16 +22,19 @@ public class Room implements Serializable {
 
     private long price;
 
+    private boolean disabled;
+
 
 
     public Room() {
     }
 
-    public Room(String name, int luxurity, long price) {
+    public Room(Long id,String name, int luxurity, long price, boolean disabled) {
         this.name = name;
         this.luxurity = luxurity;
-
+        id = super.getId();
         this.price = price;
+        this.disabled = disabled;
     }
 
 
@@ -73,11 +64,11 @@ public class Room implements Serializable {
 
 
     public Long getId() {
-        return Id;
+        return super.getId();
     }
 
     public void setId(Long id) {
-        Id = id;
+        super.setId(id);;
     }
 
     public Set<Order> getOrders() {
@@ -96,30 +87,34 @@ public class Room implements Serializable {
         this.price = price;
     }
 
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Room room = (Room) o;
-
-        return Id.equals(room.Id);
+        return super.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return Id.hashCode();
+        return super.hashCode();
     }
 
-	@Override
-	public String toString() {
-		return "Room{" +
-				"Id=" + Id +
-				", name='" + name + '\'' +
-				", luxurity=" + luxurity +
-				", hotel=" + hotel +
-				", order=" + orders +
-				", price=" + price +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + this.getId() +
+                "name='" + name + '\'' +
+                ", luxurity=" + luxurity +
+                ", hotel=" + hotel +
+                ", orders=" + orders +
+                ", price=" + price +
+                ", disabled=" + disabled +
+                '}';
+    }
 }

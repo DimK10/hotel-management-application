@@ -1,9 +1,5 @@
 package com.sphy.hotelmanagementapplication.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
@@ -13,8 +9,11 @@ import com.sphy.hotelmanagementapplication.factory.ReverseModelMapperFactory;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
 import org.modelmapper.ModelMapper;
-
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RoomService {
@@ -78,6 +77,7 @@ public class RoomService {
 
         if (roomOpt.isPresent()){
             ModelMapper modelMapper = modelMapperFactory.create(ModelMapperType.ROOM);
+            System.out.println(modelMapper.map(roomOpt.get(), RoomDTO.class));
             return modelMapper.map(roomOpt.get(), RoomDTO.class);
         }else return null;
     }
@@ -92,6 +92,27 @@ public class RoomService {
         }else return null;
     }
 
+
+    public boolean enableRoom(Long id){
+        if (roomRepository.existsById(id)){
+            Room room = roomRepository.findById(id).get();
+            room.setDisabled(false);
+            roomRepository.save(room);
+            return true;
+        }else return false;
+
+    }
+
+    public boolean disableRoom(Long id){
+        if (roomRepository.existsById(id)){
+            Room room = roomRepository.findById(id).get();
+            room.setDisabled(true);
+            roomRepository.save(room);
+            return true;
+        }else return false;
+
+    }
+
     public String deleteRoom(Long id){
         roomRepository.deleteById(id);
         return "Room with id" + id + "has be successfully removed";
@@ -102,9 +123,9 @@ public class RoomService {
         if (roomOpt.isPresent()){
             Room existingRoom = roomRepository.findById(roomDTO.getId()).orElse(null);
             existingRoom.setName(roomDTO.getName());
-            Optional<Hotel> hotel = hotelRepository.findById(roomDTO.getHotel());
             existingRoom.setLuxurity(roomDTO.getLuxurity());
             existingRoom.setPrice(roomDTO.getPrice());
+            Optional<Hotel> hotel = hotelRepository.findById(roomDTO.getHotel());
             hotel.ifPresent(existingRoom::setHotel);
             roomRepository.save(existingRoom);
         }

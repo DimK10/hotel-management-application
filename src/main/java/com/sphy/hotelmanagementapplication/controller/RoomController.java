@@ -1,23 +1,17 @@
 package com.sphy.hotelmanagementapplication.controller;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.factory.ModelMapperFactory;
 import com.sphy.hotelmanagementapplication.factory.ModelMapperFactory.ModelMapperType;
 import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.RoomService;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class RoomController {
@@ -34,18 +28,11 @@ public class RoomController {
 		this.modelMapperFactory = modelMapperFactory;
 	}
 
-	@PostMapping("/api/room/create")
-    public RoomDTO addRoom(@RequestBody RoomDTO roomDTO) throws Exception {
-		if (roomDTO.getHotel() == null || hotelService.findById(roomDTO.getHotel()) == null) {
-			throw new Exception("There is no Hotel registered with that id, or the id is null!");
-		}
-        return service.saveRoomDTO(roomDTO);
-    }
-
     @PostMapping("/api/rooms/create")
-    public List<RoomDTO> addRooms(@RequestBody List<RoomDTO> roomsDTO){
+    public List<RoomDTO> addRooms(@RequestBody List<RoomDTO> roomsDTO) {
         return (List<RoomDTO>) service.saveRooms(roomsDTO);
     }
+
 
     @GetMapping("/api/rooms")
     public List<RoomDTO> findAllRooms(){
@@ -73,10 +60,29 @@ public class RoomController {
         return service.updateRoom(roomDTO);
     }
 
+    @PostMapping("/api/room/enable/{id}")
+    ResponseEntity<String> enableRoom(@PathVariable Long id) {
 
-    @DeleteMapping("/api/room/delete/{id}")
-    public String deleteRoom(@PathVariable Long id){
-        return service.deleteRoom(id);
+        if (!service.enableRoom(id)) {
+            return ResponseEntity.badRequest()
+                    .body("The id does not exist");
+        } else {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body("Room with id " + id + " was successfully activated");
+        }
+    }
+    
+
+    @PostMapping("/api/room/disable/{id}")
+    ResponseEntity<String> disableRoom(@PathVariable Long id) {
+
+        if (!service.disableRoom(id)) {
+            return ResponseEntity.badRequest()
+                    .body("The id does not exist");
+        } else {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body("Room with id " + id + " was successfully deactivated");
+        }
     }
 
 
