@@ -111,7 +111,7 @@ public class HotelService {
 		return hotelDTO;
 	}
 
-	public HotelDTO saveHotelDTO(HotelDTO hotelDTO, List<RoomDTO> roomsDTO) {
+	public HotelDTO saveHotelDTO(HotelDTO hotelDTO, List<RoomDTO> roomsDTO) throws Exception {
 		Hotel hotel = new Hotel();
 
 		Optional<Admin> adminOpt =
@@ -128,7 +128,7 @@ public class HotelService {
 		return modelMapper.map(hotelRepository.save(hotel), HotelDTO.class);
 	}
 
-	public List<HotelDTO> saveHotels(List<HotelDTO> hotelsDTO, List<RoomDTO> roomsDTOS) {
+	public List<HotelDTO> saveHotels(List<HotelDTO> hotelsDTO, List<RoomDTO> roomsDTOS) throws Exception {
 		List<Hotel> hotels = new ArrayList<>();
 		ModelMapper modelMapper = reverseModelMapperFactory.create(ModelMapperFactory.ModelMapperType.HOTEL);
 		modelMapper.map(hotelsDTO, hotels);

@@ -1,27 +1,18 @@
 package com.sphy.hotelmanagementapplication.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.factory.ModelMapperFactory;
 import com.sphy.hotelmanagementapplication.factory.ModelMapperFactory.ModelMapperType;
-import com.sphy.hotelmanagementapplication.factory.ReverseModelMapperFactory;
 import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.RoomService;
 import org.modelmapper.ModelMapper;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class RoomController {
@@ -40,7 +31,7 @@ public class RoomController {
 
     @PostMapping("/api/room/create")
     public RoomDTO addRoom(@RequestBody RoomDTO roomDTO) throws Exception {
-        if (roomDTO.getHotel() == null || hotelService.findById(roomDTO.getHotel()) == null) {
+        if (roomDTO.getHotel() == null || hotelService.getHotelById(roomDTO.getHotel()) == null) {
             throw new Exception("There is no Hotel registered with that id, or the id is null!");
         }
         return service.saveRoomDTO(roomDTO);

@@ -1,10 +1,5 @@
 package com.sphy.hotelmanagementapplication.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
@@ -14,8 +9,12 @@ import com.sphy.hotelmanagementapplication.factory.ReverseModelMapperFactory;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
 import org.modelmapper.ModelMapper;
-
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RoomService {
@@ -46,9 +45,12 @@ public class RoomService {
 		room.setName(roomDTO.getName());
 		room.setLuxurity(roomDTO.getLuxurity());
 		room.setPrice(roomDTO.getPrice());
-
 		hotelOpt.ifPresent(room::setHotel);
 
+        if (hotelOpt.isPresent()){
+            hotelOpt.get().getRooms().add(room);
+            hotelRepository.save(hotelOpt.get());
+        }
 		// Get ModelMapper object specifically set up for converting Room to RoomDTO
 		ModelMapper modelMapper = modelMapperFactory.create(ModelMapperType.ROOM);
 
@@ -73,13 +75,18 @@ public class RoomService {
 								+ " Room with id: " + room.getId() + " has no hotel"
 				);
 			}
+
+            room.getHotel().getRooms().add(room);
 		}
 
         Iterable<Room> roomsSaved = roomRepository.saveAll(rooms);
 
+        roomsSaved.spliterator().forEachRemaining(rooms::add);
+
+
 		rooms.clear();
 
-		roomsSaved.spliterator().forEachRemaining(rooms::add);
+
 
         return rooms;
     }
@@ -140,6 +147,8 @@ public class RoomService {
             existingRoom.setPrice(roomDTO.getPrice());
             hotel.ifPresent(existingRoom::setHotel);
             roomRepository.save(existingRoom);
+            hotel.get().getRooms().add(existingRoom);
+            hotelRepository.save(hotel.get());
         }
         return roomDTO;
     }

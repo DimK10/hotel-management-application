@@ -1,6 +1,6 @@
 package com.sphy.hotelmanagementapplication.factory;
 
-import com.sphy.hotelmanagementapplication.converter.BaseEntitySetConverter;
+import com.sphy.hotelmanagementapplication.converter.BaseEntitySetToSetLongConverter;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
@@ -15,9 +15,9 @@ import java.util.List;
 public class ModelMapperFactory implements AbstractFactory<ModelMapper> {
 
 	private final ModelMapper modelMapper;
-	private final BaseEntitySetConverter baseEntitySetConverter;
+	private final BaseEntitySetToSetLongConverter baseEntitySetConverter;
 
-	public ModelMapperFactory(ModelMapper modelMapper, BaseEntitySetConverter baseEntitySetConverter) {
+	public ModelMapperFactory(ModelMapper modelMapper, BaseEntitySetToSetLongConverter baseEntitySetConverter) {
 		this.modelMapper = modelMapper;
 		this.baseEntitySetConverter = baseEntitySetConverter;
 	}
