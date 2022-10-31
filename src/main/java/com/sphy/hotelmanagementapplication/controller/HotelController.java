@@ -2,26 +2,24 @@ package com.sphy.hotelmanagementapplication.controller;
 
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
-import com.sphy.hotelmanagementapplication.factory.ModelMapperFactory;
-import com.sphy.hotelmanagementapplication.factory.ReverseModelMapperFactory;
 import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
 import com.sphy.hotelmanagementapplication.service.AdminService;
 import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.RoomService;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class HotelController {
 
     private final HotelService service;
+
+    private final RoomService roomService;
 
     private final RoomRepository roomRepository;
 
@@ -29,19 +27,14 @@ public class HotelController {
 
     private final AdminRepository adminRepository;
 
-    private final ModelMapperFactory modelMapperFactory;
-
-    private final ReverseModelMapperFactory reverseModelMapperFactory;
-
     private final AdminService adminService;
 
-    public HotelController(HotelService hotelService, RoomRepository roomRepository, HotelRepository hotelRepository, AdminRepository adminRepository, ModelMapperFactory modelMapperFactory, ReverseModelMapperFactory reverseModelMapperFactory, RoomService roomService, AdminService adminService) {
+    public HotelController(HotelService hotelService, RoomService roomService1, RoomRepository roomRepository, HotelRepository hotelRepository, AdminRepository adminRepository, RoomService roomService, AdminService adminService) {
         this.service = hotelService;
+        this.roomService = roomService1;
         this.roomRepository = roomRepository;
         this.hotelRepository = hotelRepository;
         this.adminRepository = adminRepository;
-        this.modelMapperFactory = modelMapperFactory;
-        this.reverseModelMapperFactory = reverseModelMapperFactory;
         this.adminService = adminService;
     }
 
@@ -53,7 +46,10 @@ public class HotelController {
         if (roomsDTO.isEmpty()) {
             throw new Exception("For adding a Hotel compulsorily you mast add one ore more rooms");
         }
-        return service.saveHotelDTO(hotelDTO, roomsDTO);
+        service.saveHotelDTO(hotelDTO);
+        roomService.saveRooms(roomsDTO);
+
+        return  hotelDTO;
     }
 
     @PostMapping("/api/hotels/create")
@@ -66,12 +62,7 @@ public class HotelController {
 
     @GetMapping("/api/hotels")
     public List<HotelDTO> findAllHotels(){
-        ModelMapper modelMapper = modelMapperFactory.create(ModelMapperFactory.ModelMapperType.HOTEL);
-        return service
-                .getHotels()
-                .stream()
-                .map(hotel -> modelMapper.map(hotel, HotelDTO.class))
-                .collect(Collectors.toList());
+        return service.getHotels();
     }
 
     @GetMapping("/api/hotelId/{id}")

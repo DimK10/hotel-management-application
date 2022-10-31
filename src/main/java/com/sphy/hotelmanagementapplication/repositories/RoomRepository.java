@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface RoomRepository extends CrudRepository<Room,Long> {
-    Room findByName(String name);
+    Optional<Room> findByName(String name);
 }

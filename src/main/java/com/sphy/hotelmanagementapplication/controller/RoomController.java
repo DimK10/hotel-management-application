@@ -1,18 +1,13 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
-import com.sphy.hotelmanagementapplication.factory.ModelMapperFactory;
-import com.sphy.hotelmanagementapplication.factory.ModelMapperFactory.ModelMapperType;
 import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.RoomService;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class RoomController {
@@ -21,17 +16,15 @@ public class RoomController {
 
     private final HotelService hotelService;
 
-    private final ModelMapperFactory modelMapperFactory;
 
-    public RoomController(RoomService service, HotelService hotelService, ModelMapperFactory modelMapperFactory) {
+    public RoomController(RoomService service, HotelService hotelService) {
         this.service = service;
         this.hotelService = hotelService;
-        this.modelMapperFactory = modelMapperFactory;
 	}
 
     @PostMapping("/api/room/create")
     public RoomDTO addRoom(@RequestBody RoomDTO roomDTO) throws Exception {
-        if (roomDTO.getHotel() == null || hotelService.getHotelById(roomDTO.getHotel()) == null) {
+        if (roomDTO.getHotelDTO() == null || hotelService.getHotelById(roomDTO.getHotelDTO()) == null) {
             throw new Exception("There is no Hotel registered with that id, or the id is null!");
         }
         return service.saveRoomDTO(roomDTO);
@@ -39,23 +32,13 @@ public class RoomController {
 
     @PostMapping("/api/rooms/create")
     public List<RoomDTO> addRooms(@RequestBody List<RoomDTO> roomsDTO) throws Exception {
-		List<RoomDTO> roomDTOSSaved = new ArrayList<>();
 
-		roomsDTO
-				.forEach(roomDTO -> roomDTOSSaved.add(service.saveRoomDTO(roomDTO)));
-
-		return  roomsDTO;
+		return service.saveRooms(roomsDTO);
     }
 
     @GetMapping("/api/rooms")
     public List<RoomDTO> findAllRooms() {
-        ModelMapper modelMapper = modelMapperFactory.create(ModelMapperType.ROOM);
-
-        return service
-                .getRooms()
-                .stream()
-                .map(room -> modelMapper.map(room, RoomDTO.class))
-                .collect(Collectors.toList());
+        return service.getRooms();
     }
 
     @GetMapping("/api/roomId/{id}")

@@ -1,10 +1,9 @@
 package com.sphy.hotelmanagementapplication.dto;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminDTO implements Serializable {
+public class ClientDTO {
 
     private Long id;
     private boolean emailVerify;
@@ -14,8 +13,7 @@ public class AdminDTO implements Serializable {
     private String email;
     private String hashedPassword;
     private String transactionId;
-
-    private List<HotelDTO> hotels = new ArrayList<>();
+    private List<OrderDTO> orderDTO = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -81,17 +79,17 @@ public class AdminDTO implements Serializable {
         this.transactionId = transactionId;
     }
 
-    public List<HotelDTO> getHotels() {
-        return hotels;
+    public List<OrderDTO> getOrderDTO() {
+        return orderDTO;
     }
 
-    public void setHotels(List<HotelDTO> hotels) {
-        this.hotels = hotels;
+    public void setOrderDTO(List<OrderDTO> orderDTO) {
+        this.orderDTO = orderDTO;
     }
 
     @Override
     public String toString() {
-        return "AdminDTO{" +
+        return "ClientDTO{" +
                 "id=" + id +
                 ", emailVerify=" + emailVerify +
                 ", username='" + username + '\'' +
@@ -100,7 +98,7 @@ public class AdminDTO implements Serializable {
                 ", email='" + email + '\'' +
                 ", hashedPassword='" + hashedPassword + '\'' +
                 ", transactionId='" + transactionId + '\'' +
-                ", hotels=" + hotels +
+                ", orderDTO=" + orderDTO +
                 '}';
     }
 }

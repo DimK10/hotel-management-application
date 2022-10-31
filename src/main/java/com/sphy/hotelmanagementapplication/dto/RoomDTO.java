@@ -1,9 +1,8 @@
 package com.sphy.hotelmanagementapplication.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RoomDTO implements Serializable {
 
@@ -13,13 +12,14 @@ public class RoomDTO implements Serializable {
 
 	private int luxurity;
 
-	private Long hotel;
+	private Long hotelDTO;
 
-	private Set<Long> orders =new HashSet<>();
+	private List<OrderDTO> ordersDTO =new ArrayList<>();
 
 	private long price;
 
 	private boolean disabled;
+
 
 	public Long getId() {
 		return Id;
@@ -45,20 +45,20 @@ public class RoomDTO implements Serializable {
 		this.luxurity = luxurity;
 	}
 
-	public Long getHotel() {
-		return hotel;
+	public Long getHotelDTO() {
+		return hotelDTO;
 	}
 
-	public void setHotel(Long hotel) {
-		this.hotel = hotel;
+	public void setHotelDTO(Long hotelDTO) {
+		this.hotelDTO = hotelDTO;
 	}
 
-	public Set<Long> getOrders() {
-		return orders;
+	public List<OrderDTO> getOrdersDTO() {
+		return ordersDTO;
 	}
 
-	public void setOrders(Set<Long> orders) {
-		this.orders = orders;
+	public void setOrdersDTO(List<OrderDTO> ordersDTO) {
+		this.ordersDTO = ordersDTO;
 	}
 
 	public long getPrice() {
@@ -78,27 +78,15 @@ public class RoomDTO implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		RoomDTO roomDTO = (RoomDTO) o;
-		return Objects.equals(Id, roomDTO.Id);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(Id);
-	}
-
-	@Override
 	public String toString() {
 		return "RoomDTO{" +
 				"Id=" + Id +
 				", name='" + name + '\'' +
 				", luxurity=" + luxurity +
-				", hotel=" + hotel +
-				", order=" + orders +
+				", hotel=" + hotelDTO +
+				", ordersDTO=" + ordersDTO +
 				", price=" + price +
+				", disabled=" + disabled +
 				'}';
 	}
 }

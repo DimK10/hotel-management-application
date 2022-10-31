@@ -1,8 +1,9 @@
 package com.sphy.hotelmanagementapplication.domain;
 
-import javax.persistence.*;
-
-import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.time.LocalDate;
 
 @Entity
@@ -19,7 +20,7 @@ public class Order extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "rooms_id")
-    private Room rooms;
+    private Room room;
 
 
     public Order() {
@@ -66,12 +67,12 @@ public class Order extends BaseEntity {
         this.client = client;
     }
 
-    public Room getRooms() {
-        return rooms;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setRooms(Room rooms) {
-        this.rooms = rooms;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     @Override

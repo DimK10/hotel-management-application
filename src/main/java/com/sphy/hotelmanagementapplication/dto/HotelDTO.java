@@ -1,9 +1,8 @@
 package com.sphy.hotelmanagementapplication.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HotelDTO implements Serializable {
 
@@ -19,7 +18,7 @@ public class HotelDTO implements Serializable {
 
     private boolean disabled;
 
-    private Set<Long> rooms =new HashSet<>();
+    private List<RoomDTO> roomsDTO =new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -61,12 +60,12 @@ public class HotelDTO implements Serializable {
         this.owner = owner;
     }
 
-    public Set<Long> getRooms() {
-        return rooms;
+    public List<RoomDTO> getRoomsDTO() {
+        return roomsDTO;
     }
 
-    public void setRooms(Set<Long> rooms) {
-        this.rooms = rooms;
+    public void setRoomsDTO(List<RoomDTO> roomsDTO) {
+        this.roomsDTO = roomsDTO;
     }
 
     public boolean isDisabled() {
@@ -77,18 +76,6 @@ public class HotelDTO implements Serializable {
         this.disabled = disabled;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        HotelDTO hotelDTO = (HotelDTO) o;
-        return Objects.equals(id, hotelDTO.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 
     @Override
     public String toString() {
@@ -98,7 +85,8 @@ public class HotelDTO implements Serializable {
                 ", stars=" + stars +
                 ", areaName='" + areaName + '\'' +
                 ", owner=" + owner +
-                ", rooms=" + rooms +
+                ", disabled=" + disabled +
+                ", roomsDTO=" + roomsDTO +
                 '}';
     }
 }
