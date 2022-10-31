@@ -69,6 +69,7 @@ public class BootStrapData implements CommandLineRunner {
         order.setRoom(ena);
         orderRepository.save(order);
 
+
         ena.getOrders().add(order);
         roomRepository.save(ena);
 

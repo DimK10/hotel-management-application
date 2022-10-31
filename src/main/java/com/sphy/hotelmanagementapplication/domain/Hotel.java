@@ -5,7 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 @Entity
 @Table(name = "hotels")
-
+@NamedEntityGraph(name = "Hotel.rooms",
+		attributeNodes = @NamedAttributeNode("rooms")
+)
 public class Hotel extends BaseEntity {
 
 
@@ -22,7 +24,7 @@ public class Hotel extends BaseEntity {
     @JoinColumn(name = "admin_id")
     private Admin owner;
 
-    @OneToMany(mappedBy = "hotel")
+    @OneToMany(mappedBy = "hotel", fetch = FetchType.EAGER)
     private Set<Room> rooms = new HashSet<>();
 
     public Hotel() {

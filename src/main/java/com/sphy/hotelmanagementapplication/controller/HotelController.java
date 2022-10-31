@@ -1,5 +1,7 @@
 package com.sphy.hotelmanagementapplication.controller;
 
+import com.sphy.hotelmanagementapplication.converter.HotelToHotelDTO;
+import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
@@ -12,7 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class HotelController {
@@ -29,14 +33,17 @@ public class HotelController {
 
     private final AdminService adminService;
 
-    public HotelController(HotelService hotelService, RoomService roomService1, RoomRepository roomRepository, HotelRepository hotelRepository, AdminRepository adminRepository, RoomService roomService, AdminService adminService) {
+	private final HotelToHotelDTO hotelToHotelDTO;
+
+    public HotelController(HotelService hotelService, RoomService roomService1, RoomRepository roomRepository, HotelRepository hotelRepository, AdminRepository adminRepository, RoomService roomService, AdminService adminService, HotelToHotelDTO hotelToHotelDTO) {
         this.service = hotelService;
         this.roomService = roomService1;
         this.roomRepository = roomRepository;
         this.hotelRepository = hotelRepository;
         this.adminRepository = adminRepository;
         this.adminService = adminService;
-    }
+		this.hotelToHotelDTO = hotelToHotelDTO;
+	}
 
     @PostMapping("/api/hotel/create")
     public HotelDTO addHotel(@RequestBody HotelDTO hotelDTO, List<RoomDTO> roomsDTO) throws Exception {
@@ -61,8 +68,14 @@ public class HotelController {
     }
 
     @GetMapping("/api/hotels")
-    public List<HotelDTO> findAllHotels(){
-        return service.getHotels();
+    public Set<HotelDTO> findAllHotels(){
+		Set<Hotel> hotels = service.getHotels();
+		Set<HotelDTO> hotelDTOS = new HashSet<>();
+		for (Hotel hotel : hotels){
+			hotelDTOS.add(hotelToHotelDTO.converter(hotel));
+		}
+
+		return hotelDTOS;
     }
 
     @GetMapping("/api/hotelId/{id}")

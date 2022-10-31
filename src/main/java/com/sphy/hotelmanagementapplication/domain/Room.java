@@ -4,6 +4,8 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity(name = "rooms")
 @DiscriminatorValue("rooms")
 public class Room extends BaseEntity {

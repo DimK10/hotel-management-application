@@ -12,8 +12,12 @@ import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
+import javax.transaction.Transactional;
 
 @Service
 public class HotelService {
@@ -49,14 +53,12 @@ public class HotelService {
 	}
 
 
-	public List<HotelDTO> getHotels(){
-		List<Hotel> hotels = new ArrayList<>();
-		hotelRepository.findAll().forEach(hotels::add);
-		List<HotelDTO> hotelDTOS = new ArrayList<>();
-		for (Hotel hotel : hotels){
-			hotelDTOS.add(hotelToHotelDTO.converter(hotel));
-		}
-		return hotelDTOS;
+	public Set<Hotel> getHotels(){
+		Set<Hotel> hotels = new HashSet<>();
+
+		hotelRepository.findAll().spliterator().forEachRemaining(hotels::add);
+
+		return hotels;
 	}
 
 

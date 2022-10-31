@@ -31,9 +31,11 @@ public class RoomToRoomDTO {
 
         roomDTO.setLuxurity(room.getLuxurity());
 
-        for (Order order:room.getOrders()){
-            roomDTO.getOrdersDTO().add(orderToOrderDTO.Converter(order));
-        }
+//		if (room.getOrders() != null && room.getOrders().size() > 0) {
+//			for (Order order:room.getOrders()){
+//				roomDTO.getOrdersDTO().add(orderToOrderDTO.Converter(order));
+//			}
+//		}
 
         Optional<Hotel> hotel = hotelRepository.findById(room.getHotel().getId());
 
