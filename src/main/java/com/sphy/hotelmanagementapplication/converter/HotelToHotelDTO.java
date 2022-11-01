@@ -26,7 +26,7 @@ public class HotelToHotelDTO {
         hotelDTO.setOwner(hotel.getOwner().getId());
 
         for (Room room : hotel.getRooms()){
-            hotelDTO.getRoomsDTO().add(roomToRoomDTO.converter(room));
+            hotelDTO.getRooms().add(roomToRoomDTO.converter(room));
         }
 
         hotelDTO.setDisabled(hotel.isDisabled());

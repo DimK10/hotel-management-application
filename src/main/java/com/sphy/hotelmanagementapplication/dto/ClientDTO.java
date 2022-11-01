@@ -1,7 +1,9 @@
 package com.sphy.hotelmanagementapplication.dto;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ClientDTO {
 
@@ -13,7 +15,7 @@ public class ClientDTO {
     private String email;
     private String hashedPassword;
     private String transactionId;
-    private List<OrderDTO> orderDTO = new ArrayList<>();
+    private Set<OrderDTO> orders = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -79,15 +81,15 @@ public class ClientDTO {
         this.transactionId = transactionId;
     }
 
-    public List<OrderDTO> getOrderDTO() {
-        return orderDTO;
-    }
+	public Set<OrderDTO> getOrders() {
+		return orders;
+	}
 
-    public void setOrderDTO(List<OrderDTO> orderDTO) {
-        this.orderDTO = orderDTO;
-    }
+	public void setOrders(Set<OrderDTO> orders) {
+		this.orders = orders;
+	}
 
-    @Override
+	@Override
     public String toString() {
         return "ClientDTO{" +
                 "id=" + id +
@@ -98,7 +100,7 @@ public class ClientDTO {
                 ", email='" + email + '\'' +
                 ", hashedPassword='" + hashedPassword + '\'' +
                 ", transactionId='" + transactionId + '\'' +
-                ", orderDTO=" + orderDTO +
+                ", orders=" + orders +
                 '}';
     }
 }

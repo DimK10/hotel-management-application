@@ -25,7 +25,7 @@ public class ClientDTOToClient {
         client.setEmailVerify(clientDTO.isEmailVerify());
         client.setTransactionId(clientDTO.getTransactionId());
 
-        for (OrderDTO orderDTO : clientDTO.getOrderDTO()) {
+        for (OrderDTO orderDTO : clientDTO.getOrders()) {
             client.getOrders().add(orderDTOToOrder.Converter(orderDTO));
         }
 

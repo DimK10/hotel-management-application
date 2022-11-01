@@ -37,7 +37,7 @@ public class RoomService {
 
 		// find hotel from db by its id
 		Optional<Hotel> hotelOpt =
-				hotelRepository.findById(roomDTO.getHotelDTO());
+				hotelRepository.findById(roomDTO.getHotel());
 
 		room = roomDTOToRoom.converter(roomDTO);
 
@@ -128,10 +128,11 @@ public class RoomService {
         if (roomOpt.isPresent()){
             Room existingRoom = roomRepository.findById(roomDTO.getId()).orElse(null);
             existingRoom.setName(roomDTO.getName());
-            Optional<Hotel> hotel = hotelRepository.findById(roomDTO.getHotelDTO());
+            Optional<Hotel> hotel = hotelRepository.findById(roomDTO.getHotel());
             existingRoom.setLuxurity(roomDTO.getLuxurity());
             existingRoom.setPrice(roomDTO.getPrice());
             hotel.ifPresent(existingRoom::setHotel);
+			existingRoom.setDisabled(roomDTO.isDisabled());
             roomRepository.save(existingRoom);
             hotel.get().getRooms().add(existingRoom);
             hotelRepository.save(hotel.get());

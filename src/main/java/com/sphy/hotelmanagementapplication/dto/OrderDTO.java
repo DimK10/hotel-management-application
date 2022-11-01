@@ -11,9 +11,9 @@ public class OrderDTO implements Serializable {
 
     private LocalDate checkOutDate;
 
-    private Long clientDTO;
+    private Long client;
 
-    private Long roomDTO;
+    private Long room;
 
     public Long getId() {
         return id;
@@ -39,30 +39,30 @@ public class OrderDTO implements Serializable {
         this.checkOutDate = checkOutDate;
     }
 
-    public Long getClientDTO() {
-        return clientDTO;
-    }
+	public Long getClient() {
+		return client;
+	}
 
-    public void setClientDTO(Long clientDTO) {
-        this.clientDTO = clientDTO;
-    }
+	public void setClient(Long client) {
+		this.client = client;
+	}
 
-    public Long getRoomDTO() {
-        return roomDTO;
-    }
+	public Long getRoom() {
+		return room;
+	}
 
-    public void setRoomDTO(Long roomDTO) {
-        this.roomDTO = roomDTO;
-    }
+	public void setRoom(Long room) {
+		this.room = room;
+	}
 
-    @Override
+	@Override
     public String toString() {
         return "OrderDTO{" +
                 "id=" + id +
                 ", checkInDate=" + checkInDate +
                 ", checkOutDate=" + checkOutDate +
-                ", clientDTO=" + clientDTO +
-                ", roomDTO=" + roomDTO +
+                ", client=" + client +
+                ", room=" + room +
                 '}';
     }
 }

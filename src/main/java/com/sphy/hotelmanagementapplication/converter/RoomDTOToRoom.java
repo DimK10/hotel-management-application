@@ -34,16 +34,16 @@ public class RoomDTOToRoom {
 
         room.setLuxurity(roomDTO.getLuxurity());
 
-        for (OrderDTO orderDTO : roomDTO.getOrdersDTO()){
+        for (OrderDTO orderDTO : roomDTO.getOrders()){
             room.getOrders().add(orderDTOToOrder.Converter(orderDTO));
         }
 
-        Optional<Hotel> hotel = hotelRepository.findById(roomDTO.getId());
+		if (roomDTO.getHotel() != null) {
+			Optional<Hotel> hotel =
+					hotelRepository.findById(roomDTO.getHotel());
 
-        if (hotel.isPresent()){
-            room.setHotel(hotel.get());
-        }
-
+			hotel.ifPresent(room::setHotel);
+		}
 
         return room;
     }

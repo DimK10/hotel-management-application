@@ -24,7 +24,7 @@ public class RoomController {
 
     @PostMapping("/api/room/create")
     public RoomDTO addRoom(@RequestBody RoomDTO roomDTO) throws Exception {
-        if (roomDTO.getHotelDTO() == null || hotelService.getHotelById(roomDTO.getHotelDTO()) == null) {
+        if (roomDTO.getHotel() == null || hotelService.getHotelById(roomDTO.getHotel()) == null) {
             throw new Exception("There is no Hotel registered with that id, or the id is null!");
         }
         return service.saveRoomDTO(roomDTO);

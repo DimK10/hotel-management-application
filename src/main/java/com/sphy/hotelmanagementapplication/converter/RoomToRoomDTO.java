@@ -40,7 +40,7 @@ public class RoomToRoomDTO {
         Optional<Hotel> hotel = hotelRepository.findById(room.getHotel().getId());
 
         if (hotel.isPresent()){
-            roomDTO.setHotelDTO(hotel.get().getId());
+            roomDTO.setHotel(hotel.get().getId());
         }
         return roomDTO;
     }

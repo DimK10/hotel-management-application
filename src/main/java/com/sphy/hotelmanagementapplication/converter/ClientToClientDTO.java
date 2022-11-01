@@ -26,7 +26,7 @@ public class ClientToClientDTO {
         clientDTO.setTransactionId(client.getTransactionId());
 
         for (Order order:client.getOrders()){
-            clientDTO.getOrderDTO().add(orderToOrderDTO.Converter(order));
+            clientDTO.getOrders().add(orderToOrderDTO.Converter(order));
         }
 
         return clientDTO;

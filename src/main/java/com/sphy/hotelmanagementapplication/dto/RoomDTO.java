@@ -2,7 +2,9 @@ package com.sphy.hotelmanagementapplication.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class RoomDTO implements Serializable {
 
@@ -12,9 +14,9 @@ public class RoomDTO implements Serializable {
 
 	private int luxurity;
 
-	private Long hotelDTO;
+	private Long hotel;
 
-	private List<OrderDTO> ordersDTO =new ArrayList<>();
+	private Set<OrderDTO> orders =new HashSet<>();
 
 	private long price;
 
@@ -45,20 +47,20 @@ public class RoomDTO implements Serializable {
 		this.luxurity = luxurity;
 	}
 
-	public Long getHotelDTO() {
-		return hotelDTO;
+	public Long getHotel() {
+		return hotel;
 	}
 
-	public void setHotelDTO(Long hotelDTO) {
-		this.hotelDTO = hotelDTO;
+	public void setHotel(Long hotel) {
+		this.hotel = hotel;
 	}
 
-	public List<OrderDTO> getOrdersDTO() {
-		return ordersDTO;
+	public Set<OrderDTO> getOrders() {
+		return orders;
 	}
 
-	public void setOrdersDTO(List<OrderDTO> ordersDTO) {
-		this.ordersDTO = ordersDTO;
+	public void setOrders(Set<OrderDTO> orders) {
+		this.orders = orders;
 	}
 
 	public long getPrice() {
@@ -83,8 +85,8 @@ public class RoomDTO implements Serializable {
 				"Id=" + Id +
 				", name='" + name + '\'' +
 				", luxurity=" + luxurity +
-				", hotel=" + hotelDTO +
-				", ordersDTO=" + ordersDTO +
+				", hotel=" + hotel +
+				", orders=" + orders +
 				", price=" + price +
 				", disabled=" + disabled +
 				'}';

@@ -2,7 +2,9 @@ package com.sphy.hotelmanagementapplication.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class HotelDTO implements Serializable {
 
@@ -18,7 +20,7 @@ public class HotelDTO implements Serializable {
 
     private boolean disabled;
 
-    private List<RoomDTO> roomsDTO =new ArrayList<>();
+    private Set<RoomDTO> rooms =new HashSet<>();
 
     public Long getId() {
         return id;
@@ -60,15 +62,15 @@ public class HotelDTO implements Serializable {
         this.owner = owner;
     }
 
-    public List<RoomDTO> getRoomsDTO() {
-        return roomsDTO;
-    }
+	public Set<RoomDTO> getRooms() {
+		return rooms;
+	}
 
-    public void setRoomsDTO(List<RoomDTO> roomsDTO) {
-        this.roomsDTO = roomsDTO;
-    }
+	public void setRooms(Set<RoomDTO> rooms) {
+		this.rooms = rooms;
+	}
 
-    public boolean isDisabled() {
+	public boolean isDisabled() {
         return disabled;
     }
 
@@ -86,7 +88,7 @@ public class HotelDTO implements Serializable {
                 ", areaName='" + areaName + '\'' +
                 ", owner=" + owner +
                 ", disabled=" + disabled +
-                ", roomsDTO=" + roomsDTO +
+                ", rooms=" + rooms +
                 '}';
     }
 }

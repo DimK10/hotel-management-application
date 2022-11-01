@@ -30,7 +30,7 @@ public class HotelDTOToHotel {
 
         hotel.setOwner(adminRepository.findById(hotelDTO.getOwner()).get());
 
-        for (RoomDTO roomDTO : hotelDTO.getRoomsDTO()){
+        for (RoomDTO roomDTO : hotelDTO.getRooms()){
             hotel.getRooms().add(roomDTOToRoom.converter(roomDTO));
         }
 

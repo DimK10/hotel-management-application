@@ -35,13 +35,13 @@ public class OrderToOrderDTO {
         Optional<Room> room = roomRepository.findById(order.getRoom().getId());
 
         if (room.isPresent()){
-            orderDTO.setRoomDTO(room.get().getId());
+            orderDTO.setRoom(room.get().getId());
         }
 
         Optional<Client> client = clientRepository.findById(order.getClient().getId());
 
         if (client.isPresent()){
-            orderDTO.setClientDTO(client.get().getId());
+            orderDTO.setClient(client.get().getId());
         }
 
         return orderDTO;

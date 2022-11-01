@@ -35,7 +35,7 @@ public class OrderDTOToOrder {
             order.setRoom(room.get());
         }
 
-        Optional<Client> client =  clientRepository.findById(orderDTO.getClientDTO());
+        Optional<Client> client =  clientRepository.findById(orderDTO.getClient());
 
         if (client.isPresent()){
             order.setClient(client.get());
