@@ -30,6 +30,10 @@ public class Hotel extends BaseEntity {
     public Hotel() {
     }
 
+	public Hotel(Long id) {
+		super(id);
+	}
+
     public Hotel(Long id, String name, int stars, String areaName, boolean disabled) {
 		super(id);
         this.name = name;
