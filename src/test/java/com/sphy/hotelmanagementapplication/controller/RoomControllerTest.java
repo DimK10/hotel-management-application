@@ -1,8 +1,10 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.service.RoomService;
@@ -17,9 +19,12 @@ import org.modelmapper.ModelMapper;
 
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -28,6 +33,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -123,14 +129,56 @@ class RoomControllerTest {
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$.id").value(1));
 
+		verify(roomService, times(1)).getRoomById(anyLong());
 	}
 
 	@Test
-	void findRoomByName() {
+	void findRoomByName() throws Exception {
+		// Given
+		RoomDTO roomDTO = new RoomDTO();
+		roomDTO.setId(1L);
+		roomDTO.setName("roomName");
+
+		// When
+		when(roomService.getRoomByName(anyString())).thenReturn(roomDTO);
+
+		// Return
+		mockMvc.perform(get("/api/roomName/roomName"))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$.name").value("roomName"));
+
+		verify(roomService, times(1)).getRoomByName(anyString());
 	}
 
 	@Test
-	void updateRoom() {
+	void updateRoom() throws Exception {
+		// Given
+		RoomDTO roomDTO = new RoomDTO();
+		roomDTO.setId(1L);
+		roomDTO.setName("roomDTO");
+		roomDTO.setLuxurity(3);
+		roomDTO.setHotel(1L);
+		roomDTO.setOrders(new HashSet<>());
+		roomDTO.setPrice(300);
+		roomDTO.setDisabled(false);
+
+		// When
+		when(roomService.updateRoom(any())).thenReturn(roomDTO);
+
+		// Return
+		mockMvc.perform(
+					put("/api/room/update")
+							.content(asJsonString(roomDTO))
+							.contentType(MediaType.APPLICATION_JSON)
+							.accept(MediaType.APPLICATION_JSON)
+				)
+				.andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.name")
+						.value("roomDTO"));
+
+
+		verify(roomService, times(1)).updateRoom(any());
 	}
 
 	@Test
@@ -139,6 +187,14 @@ class RoomControllerTest {
 
 	@Test
 	void disableRoom() {
+	}
+
+	public static String asJsonString(final Object obj) {
+		try {
+			return new ObjectMapper().writeValueAsString(obj);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 //	@Mock

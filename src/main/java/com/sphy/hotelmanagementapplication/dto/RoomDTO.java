@@ -23,6 +23,24 @@ public class RoomDTO implements Serializable {
 	private boolean disabled;
 
 
+	public RoomDTO() {
+	}
+
+	public RoomDTO(Long id, String name) {
+		Id = id;
+		this.name = name;
+	}
+
+	public RoomDTO(Long id, String name, int luxurity, Long hotel, Set<OrderDTO> orders, long price, boolean disabled) {
+		Id = id;
+		this.name = name;
+		this.luxurity = luxurity;
+		this.hotel = hotel;
+		this.orders = orders;
+		this.price = price;
+		this.disabled = disabled;
+	}
+
 	public Long getId() {
 		return Id;
 	}
