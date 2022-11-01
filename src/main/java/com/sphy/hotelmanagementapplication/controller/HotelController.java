@@ -46,26 +46,37 @@ public class HotelController {
 	}
 
     @PostMapping("/api/hotel/create")
-    public HotelDTO addHotel(@RequestBody HotelDTO hotelDTO, List<RoomDTO> roomsDTO) throws Exception {
-        if (hotelDTO.getOwner() == null || adminService.getAdminById(hotelDTO.getOwner()) == null) {
-            throw new Exception("There is no Owner registered with that id, or the id is null!");
-        }
-        if (roomsDTO.isEmpty()) {
-            throw new Exception("For adding a Hotel compulsorily you mast add one ore more rooms");
-        }
-        service.saveHotelDTO(hotelDTO);
-        roomService.saveRooms(roomsDTO);
+    public HotelDTO addHotel(@RequestBody HotelDTO hotelDTO) throws Exception {
 
-        return  hotelDTO;
+		// convert hotelsDTO to hotels
+		// save hotels
+
+		//        if (hotelDTO.getOwner() == null || adminService.getAdminById(hotelDTO.getOwner()) == null) {
+//            throw new Exception("There is no Owner registered with that id, or the id is null!");
+//        }
+//        if (roomsDTO.isEmpty()) {
+//            throw new Exception("For adding a Hotel compulsorily you mast add one ore more rooms");
+//        }
+//        service.saveHotelDTO(hotelDTO);
+//        roomService.saveRooms(roomsDTO);
+//
+//        return  hotelDTO;
+  			return null;
     }
 
     @PostMapping("/api/hotels/create")
-    public List<HotelDTO> addHotels(@RequestBody List<HotelDTO> hotelsDTO, List<RoomDTO> roomsDTO) throws Exception {
-        if (roomsDTO.isEmpty()){
-            throw new Exception("For adding Hotels compulsorily you mast add one ore more rooms for each one");
-        }
-        return (List<HotelDTO>) service.saveHotels(hotelsDTO, roomsDTO);
-    }
+    public List<HotelDTO> addHotels(@RequestBody List<HotelDTO> hotelsDTO) throws Exception {
+
+		// convert hotelsDTO to hotels
+		// save hotels
+
+//
+//		if (roomsDTO.isEmpty()){
+//            throw new Exception("For adding Hotels compulsorily you mast add one ore more rooms for each one");
+//        }
+//        return (List<HotelDTO>) service.saveHotels(hotelsDTO, roomsDTO);
+    	return null;
+	}
 
     @GetMapping("/api/hotels")
     public Set<HotelDTO> findAllHotels(){

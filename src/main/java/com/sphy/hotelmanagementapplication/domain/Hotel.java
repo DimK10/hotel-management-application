@@ -24,7 +24,7 @@ public class Hotel extends BaseEntity {
     @JoinColumn(name = "admin_id")
     private Admin owner;
 
-    @OneToMany(mappedBy = "hotel", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "hotel", fetch =  FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Room> rooms = new HashSet<>();
 
     public Hotel() {

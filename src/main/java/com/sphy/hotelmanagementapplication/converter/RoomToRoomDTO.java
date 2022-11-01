@@ -31,6 +31,8 @@ public class RoomToRoomDTO {
 
         roomDTO.setLuxurity(room.getLuxurity());
 
+		roomDTO.setDisabled(room.isDisabled());
+
 //		if (room.getOrders() != null && room.getOrders().size() > 0) {
 //			for (Order order:room.getOrders()){
 //				roomDTO.getOrdersDTO().add(orderToOrderDTO.Converter(order));
