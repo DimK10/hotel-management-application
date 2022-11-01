@@ -22,7 +22,14 @@ public class HotelDTO implements Serializable {
 
     private Set<RoomDTO> rooms =new HashSet<>();
 
-    public Long getId() {
+	public HotelDTO() {
+	}
+
+	public HotelDTO(Long id) {
+		this.id = id;
+	}
+
+	public Long getId() {
         return id;
     }
 

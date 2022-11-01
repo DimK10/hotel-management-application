@@ -6,7 +6,9 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
+import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.RoomService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,6 +44,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class RoomControllerTest {
+
+	@Mock
+	HotelService hotelService;
 
 	@Mock
 	RoomService roomService;
@@ -90,7 +95,49 @@ class RoomControllerTest {
 	}
 
 	@Test
-	void addRoom() {
+	void addRoom() throws Exception {
+		// Given
+		RoomDTO roomDTO = new RoomDTO();
+		roomDTO.setId(1L);
+		roomDTO.setName("roomDTO");
+		roomDTO.setLuxurity(3);
+		roomDTO.setHotel(1L);
+		roomDTO.setOrders(new HashSet<>());
+		roomDTO.setPrice(300);
+		roomDTO.setDisabled(false);
+
+		// When
+		when(roomService.saveRoomDTO(any())).thenReturn(roomDTO);
+		when(hotelService.getHotelById(anyLong())).thenReturn(new HotelDTO(1L));
+
+		// Return
+		mockMvc.perform(
+						post("/api/room/create")
+								.content(asJsonString(roomDTO))
+								.contentType(MediaType.APPLICATION_JSON)
+								.accept(MediaType.APPLICATION_JSON)
+				)
+				.andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id")
+						.value("1"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.name")
+						.value("roomDTO"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.luxurity")
+						.value("3"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.orders")
+						.exists())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.orders")
+						.isArray())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.orders")
+						.isEmpty())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.price")
+						.value("300"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.disabled")
+						.value("false"));
+
+
+		verify(roomService, times(1)).saveRoomDTO(any());
+
 	}
 
 	@Test
