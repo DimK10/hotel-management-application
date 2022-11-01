@@ -83,7 +83,7 @@ class RoomControllerTest {
 
 		RoomDTO roomDTO2 = new RoomDTO();
 		roomDTO2.setId(2L);
-		roomDTO2.setName("roomDTo2");
+		roomDTO2.setName("roomDTO2");
 		roomDTOS.add(roomDTO2);
 
 //		rooms.forEach(System.out::println);
@@ -141,7 +141,31 @@ class RoomControllerTest {
 	}
 
 	@Test
-	void addRooms() {
+	void addRooms() throws Exception {
+		// Given
+
+		// When
+		when(roomService.saveRooms(any())).thenReturn(roomDTOS);
+
+		// Return
+		mockMvc.perform(
+						post("/api/rooms/create")
+								.content(asJsonString(roomDTOS))
+								.contentType(MediaType.APPLICATION_JSON)
+								.accept(MediaType.APPLICATION_JSON)
+				)
+				.andDo(print())
+				.andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*]")
+						.isArray())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*]",hasSize(2)))
+
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[0].name")
+						.value("roomDTO1"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[1].name")
+						.value("roomDTO2"));
+
+		verify(roomService, times(1)).saveRooms(any());
 	}
 
 	@Test
