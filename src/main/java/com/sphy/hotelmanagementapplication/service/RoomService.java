@@ -1,21 +1,17 @@
 package com.sphy.hotelmanagementapplication.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
+import com.sphy.hotelmanagementapplication.converter.RoomDTOToRoom;
+import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
-import com.sphy.hotelmanagementapplication.factory.ModelMapperFactory;
-import com.sphy.hotelmanagementapplication.factory.ModelMapperFactory.ModelMapperType;
-import com.sphy.hotelmanagementapplication.factory.ReverseModelMapperFactory;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
-import org.modelmapper.ModelMapper;
-
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RoomService {
@@ -25,15 +21,15 @@ public class RoomService {
 
 	private final HotelRepository hotelRepository;
 
-	private final ModelMapperFactory modelMapperFactory;
+    private final RoomDTOToRoom roomDTOToRoom;
 
-    private final ReverseModelMapperFactory reverseModelMapperFactory;
+    private final RoomToRoomDTO roomToRoomDTO;
 
-	public RoomService(RoomRepository repository, HotelRepository hotelRepository, ModelMapperFactory modelMapperFactory, ReverseModelMapperFactory reverseModelMapperFactory) {
+	public RoomService(RoomRepository repository, HotelRepository hotelRepository, RoomDTOToRoom roomDTOToRoom, RoomToRoomDTO roomToRoomDTO) {
 		this.roomRepository = repository;
 		this.hotelRepository = hotelRepository;
-		this.modelMapperFactory = modelMapperFactory;
-        this.reverseModelMapperFactory = reverseModelMapperFactory;
+        this.roomDTOToRoom = roomDTOToRoom;
+        this.roomToRoomDTO = roomToRoomDTO;
     }
 
 	public RoomDTO saveRoomDTO(RoomDTO roomDTO) {
@@ -43,28 +39,19 @@ public class RoomService {
 		Optional<Hotel> hotelOpt =
 				hotelRepository.findById(roomDTO.getHotel());
 
-		room.setName(roomDTO.getName());
-		room.setLuxurity(roomDTO.getLuxurity());
-		room.setPrice(roomDTO.getPrice());
+		room = roomDTOToRoom.converter(roomDTO);
 
-		hotelOpt.ifPresent(room::setHotel);
+		roomRepository.save(room);
 
-		// Get ModelMapper object specifically set up for converting Room to RoomDTO
-		ModelMapper modelMapper = modelMapperFactory.create(ModelMapperType.ROOM);
-
-		// The save method returns a Room object, which is then passed to map method of
-		// modelMapper and a RoomDTO is returned instead
-		return modelMapper.map(roomRepository.save(room), RoomDTO.class);
+		return roomDTO;
 	}
 
-    public List<Room> saveRooms(List<RoomDTO> roomsDTO) throws Exception{
+    public List<RoomDTO> saveRooms(List<RoomDTO> roomsDTO) throws Exception{
         List<Room> rooms = new ArrayList<>();
-        ModelMapper modelMapper = reverseModelMapperFactory.create(ModelMapperType.ROOM);
 
-		rooms = roomsDTO
-				.stream()
-				.map(roomDTO -> modelMapper.map(roomDTO, Room.class))
-				.collect(Collectors.toList());
+        for (RoomDTO roomDTO : roomsDTO){
+            rooms.add(roomDTOToRoom.converter(roomDTO));
+        }
 
 		for(Room room : rooms) {
 			if (room.getHotel() == null) {
@@ -72,40 +59,43 @@ public class RoomService {
 						"One of the rooms provided does not have a hotel (room.getHotel == null)."
 								+ " Room with id: " + room.getId() + " has no hotel"
 				);
-			}
+			}else {
+                room.getHotel().getRooms().add(room);
+            }
 		}
 
         Iterable<Room> roomsSaved = roomRepository.saveAll(rooms);
 
+        roomsSaved.spliterator().forEachRemaining(rooms::add);
+
 		rooms.clear();
 
-		roomsSaved.spliterator().forEachRemaining(rooms::add);
-
-        return rooms;
+        return roomsDTO;
     }
 
-    public List<Room> getRooms(){
+    public List<RoomDTO> getRooms(){
 		List<Room> rooms = new ArrayList<>();
+        List<RoomDTO> roomsDTO = new ArrayList<>();
         roomRepository.findAll().forEach(rooms::add);
-		return rooms;
+        for (Room room : rooms){
+            roomsDTO.add(roomToRoomDTO.converter(room));
+        }
+		return roomsDTO;
     }
 
     public RoomDTO getRoomById(Long id){
         Optional<Room> roomOpt = roomRepository.findById(id);
 
         if (roomOpt.isPresent()){
-            ModelMapper modelMapper = modelMapperFactory.create(ModelMapperType.ROOM);
-            return modelMapper.map(roomOpt.get(), RoomDTO.class);
+            return roomToRoomDTO.converter(roomOpt.get());
         }else return null;
     }
 
 
     public RoomDTO getRoomByName(String name){
-       Room roomOpt = roomRepository.findByName(name);
-
-        if (roomOpt != null){
-            ModelMapper modelMapper = modelMapperFactory.create(ModelMapperType.ROOM);
-            return modelMapper.map(roomOpt, RoomDTO.class);
+        Optional<Room> roomOpt = roomRepository.findByName(name);
+        if (roomOpt.isPresent()){
+            return roomToRoomDTO.converter(roomOpt.get());
         }else return null;
     }
 
@@ -139,7 +129,10 @@ public class RoomService {
             existingRoom.setLuxurity(roomDTO.getLuxurity());
             existingRoom.setPrice(roomDTO.getPrice());
             hotel.ifPresent(existingRoom::setHotel);
+			existingRoom.setDisabled(roomDTO.isDisabled());
             roomRepository.save(existingRoom);
+            hotel.get().getRooms().add(existingRoom);
+            hotelRepository.save(hotel.get());
         }
         return roomDTO;
     }

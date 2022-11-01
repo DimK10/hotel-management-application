@@ -1,10 +1,8 @@
 package com.sphy.hotelmanagementapplication.domain;
 
-import javax.persistence.*;
-
-import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity(name = "admins")

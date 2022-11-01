@@ -1,9 +1,12 @@
 package com.sphy.hotelmanagementapplication.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Objects;
+import java.util.List;
 import java.util.Set;
+
+import com.sphy.hotelmanagementapplication.domain.Hotel;
 
 public class RoomDTO implements Serializable {
 
@@ -15,9 +18,35 @@ public class RoomDTO implements Serializable {
 
 	private Long hotel;
 
-	private Set<Long> orders =new HashSet<>();
+	private Set<OrderDTO> orders =new HashSet<>();
 
 	private long price;
+
+	private boolean disabled;
+
+	public RoomDTO(Long id, String name, Long hotel) {
+		Id = id;
+		this.name = name;
+		this.hotel = hotel;
+	}
+
+	public RoomDTO() {
+	}
+
+	public RoomDTO(Long id, String name) {
+		Id = id;
+		this.name = name;
+	}
+
+	public RoomDTO(Long id, String name, int luxurity, Long hotel, Set<OrderDTO> orders, long price, boolean disabled) {
+		Id = id;
+		this.name = name;
+		this.luxurity = luxurity;
+		this.hotel = hotel;
+		this.orders = orders;
+		this.price = price;
+		this.disabled = disabled;
+	}
 
 	public Long getId() {
 		return Id;
@@ -51,11 +80,11 @@ public class RoomDTO implements Serializable {
 		this.hotel = hotel;
 	}
 
-	public Set<Long> getOrders() {
+	public Set<OrderDTO> getOrders() {
 		return orders;
 	}
 
-	public void setOrders(Set<Long> orders) {
+	public void setOrders(Set<OrderDTO> orders) {
 		this.orders = orders;
 	}
 
@@ -67,17 +96,12 @@ public class RoomDTO implements Serializable {
 		this.price = price;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		RoomDTO roomDTO = (RoomDTO) o;
-		return Objects.equals(Id, roomDTO.Id);
+	public boolean isDisabled() {
+		return disabled;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(Id);
+	public void setDisabled(boolean disabled) {
+		this.disabled = disabled;
 	}
 
 	@Override
@@ -87,8 +111,9 @@ public class RoomDTO implements Serializable {
 				", name='" + name + '\'' +
 				", luxurity=" + luxurity +
 				", hotel=" + hotel +
-				", order=" + orders +
+				", orders=" + orders +
 				", price=" + price +
+				", disabled=" + disabled +
 				'}';
 	}
 }

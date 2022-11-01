@@ -1,14 +1,10 @@
 package com.sphy.hotelmanagementapplication.domain;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity(name = "rooms")
 @DiscriminatorValue("rooms")
@@ -23,7 +19,7 @@ public class Room extends BaseEntity {
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
 
-    @OneToMany(mappedBy = "rooms")
+    @OneToMany(mappedBy = "room")
     private Set<Order> orders =new HashSet<>();
 
     private long price;
