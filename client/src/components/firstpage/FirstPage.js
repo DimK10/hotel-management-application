@@ -19,7 +19,7 @@ const FirstPage = (props) => {
         </div>
 
         <div className='mt-5'>
-          <div className='input-group mb-3'>
+          <div className='input-group p-3'>
             <input
               type='text'
               className='form-control'
@@ -36,9 +36,9 @@ const FirstPage = (props) => {
             </button>
           </div>
           <div className='mt-5'>
-            <h1 className='display-6'>Explore By Location</h1>
-            <div className='mt-5 d-flex'>
-              <div class='card m-3' style={{ width: '18rem' }}>
+            <h1 className='display-6 m-3'>Explore By Location</h1>
+            <div className='mt-5 d-flex flex-column flex-sm-row'>
+              <div className='card m-3' style={{ width: '18rem' }}>
                 <img
                   src='https://media.cntraveler.com/photos/5ad0ca78fb3e8334dea6e22e/16:9/w_2560%2Cc_limit/GettyImages-88786323.jpg'
                   className='card-img-top'
@@ -56,7 +56,7 @@ const FirstPage = (props) => {
                 </div>
               </div>
 
-              <div class='card m-3' style={{ width: '18rem' }}>
+              <div className='card m-3' style={{ width: '18rem' }}>
                 <img
                   src='https://thessaloniki.travel/wp-content/uploads/2021/09/DJI_0134-min-scaled.jpg'
                   className='card-img-top'

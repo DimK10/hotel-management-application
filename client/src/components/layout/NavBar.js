@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom';
 
 const NavBar = (props) => {
   return (
-    <nav class='navbar navbar-expand-lg navbar-dark bg-dark sticky-top'>
-      <div class='container-fluid'>
-        <a class='navbar-brand' href='#'>
+    <nav className='navbar navbar-expand-lg navbar-dark bg-dark sticky-top'>
+      <div className='container-fluid'>
+        <a className='navbar-brand' href='#'>
           Hotel Management App
         </a>
         <button
-          class='navbar-toggler'
+          className='navbar-toggler'
           type='button'
           data-coreui-toggle='collapse'
           data-coreui-target='#navbarNav'
@@ -18,23 +18,23 @@ const NavBar = (props) => {
           aria-expanded='false'
           aria-label='Toggle navigation'
         >
-          <span class='navbar-toggler-icon'></span>
+          <span className='navbar-toggler-icon'></span>
         </button>
-        <div class='collapse navbar-collapse' id='navbarNav'>
-          <ul class='navbar-nav' style={{ marginLeft: 'auto' }}>
-            <li class='nav-item'>
-              <a class='nav-link active' aria-current='page' href='#'>
+        <div className='collapse navbar-collapse' id='navbarNav'>
+          <ul className='navbar-nav' style={{ marginLeft: 'auto' }}>
+            <li className='nav-item'>
+              <a className='nav-link active' aria-current='page' href='#'>
                 Home
               </a>
             </li>
-            <li class='nav-item'>
+            <li className='nav-item'>
               <Link className='nav-link' to='/sign-in'>
                 Sign In
               </Link>
             </li>
-            <li class='nav-item'>
+            <li className='nav-item'>
               <Link className='nav-link' to='/sign-up'>
-                Sign In
+                Sign Up
               </Link>
             </li>
           </ul>

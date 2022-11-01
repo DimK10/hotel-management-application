@@ -7,6 +7,7 @@ import FirstPage from './components/firstpage/FirstPage';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@coreui/coreui/dist/css/coreui.min.css';
+import '@coreui/coreui/dist/js/coreui.js';
 
 import setAuthToken from './utils/setAuthToken';
 import store from './store';
