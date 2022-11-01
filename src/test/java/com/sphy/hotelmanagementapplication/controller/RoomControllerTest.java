@@ -19,6 +19,7 @@ import org.modelmapper.ModelMapper;
 
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -33,9 +34,11 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class RoomControllerTest {
@@ -182,11 +185,47 @@ class RoomControllerTest {
 	}
 
 	@Test
-	void enableRoom() {
+	void enableRoom() throws Exception {
+		// Given
+		String expected = "Room with id 1 was successfully activated";
+
+		// When
+		when(roomService.enableRoom(any())).thenReturn(true);
+
+		// Return
+		MvcResult result = mockMvc.perform(
+						post("/api/room/enable/{id}", 1))
+				.andExpect(status().isOk())
+				.andReturn();
+
+		String actual = result.getResponse().getContentAsString();
+
+		assertEquals(expected, actual);
+
+		verify(roomService, times(1)).enableRoom(any());
+
 	}
 
 	@Test
-	void disableRoom() {
+	void disableRoom() throws Exception {
+		// Given
+		String expected = "Room with id 1 was successfully deactivated";
+
+		// When
+		when(roomService.disableRoom(any())).thenReturn(true);
+
+		// Return
+		MvcResult result = mockMvc.perform(
+						post("/api/room/disable/{id}", 1))
+				.andExpect(status().isOk())
+				.andReturn();
+
+		String actual = result.getResponse().getContentAsString();
+
+		assertEquals(expected, actual);
+
+		verify(roomService, times(1)).disableRoom(any());
+
 	}
 
 	public static String asJsonString(final Object obj) {
@@ -196,92 +235,4 @@ class RoomControllerTest {
 			throw new RuntimeException(e);
 		}
 	}
-
-//	@Mock
-//	RoomService roomService;
-//
-//	@Mock
-//	ModelMapperFactory modelMapperFactory;
-//
-//	@InjectMocks
-//	RoomController roomController;
-//
-//	List<Room> rooms;
-//
-//	ModelMapper modelMapper;
-//
-//	MockMvc mockMvc;
-//
-//	@BeforeEach
-//	void setUp() {
-//		rooms = new ArrayList<>();
-//
-//		Room room1 = new Room();
-//		room1.setId(1L);
-//		room1.setName("room1");
-//
-//		Room room2 = new Room();
-//		room2.setId(2L);
-//		room2.setName("room2");
-//
-//		rooms.add(room1);
-//		rooms.add(room2);
-//
-//		rooms.forEach(System.out::println);
-//
-//		modelMapper = new ModelMapper();
-//
-//		modelMapper.createTypeMap(Room.class, RoomDTO.class);
-//
-//		ModelMapperFactory modelMapperFactory =
-//				new ModelMapperFactory(modelMapper, new BaseEntitySetToSetLongConverter());
-//
-//		modelMapper = modelMapperFactory.create(ModelMapperType.ROOM);
-//
-//		mockMvc = MockMvcBuilders
-//				.standaloneSetup(roomController)
-//				.build();
-//	}
-//
-//	@Test
-//	void addRoom() {
-//
-//	}
-//
-//	@Test
-//	void addRooms() {
-//	}
-//
-//	@Test
-//	void findAllRooms() throws Exception {
-//
-//		when(roomService.getRooms()).thenReturn(rooms);
-//		when(modelMapperFactory.create(ModelMapperType.ROOM)).thenReturn(modelMapper);
-//
-//		mockMvc.perform(get("/api/rooms"))
-//				.andExpect(status().isOk())
-//				.andExpect(jsonPath("$", Matchers.hasSize(2)))
-//				.andExpect(jsonPath("$[0].name", Matchers.equalTo("room1")));
-////				.andDo(print());
-//	}
-//
-//	@Test
-//	void findRoomById() {
-//	}
-//
-//	@Test
-//	void findRoomByName() {
-//	}
-//
-//	@Test
-//	void updateRoom() {
-//	}
-//
-//	@Test
-//	void enableRoom() {
-//	}
-//
-//	@Test
-//	void disableRoom() {
-//	}
 }
