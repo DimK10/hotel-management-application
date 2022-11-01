@@ -11,13 +11,7 @@ import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
-import javax.transaction.Transactional;
+import java.util.*;
 
 @Service
 public class HotelService {
@@ -35,13 +29,16 @@ public class HotelService {
 
 	private final RoomService roomService;
 
-	public HotelService(RoomRepository roomRepository, HotelRepository hotelRepository, AdminRepository adminRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService) {
+	private final AdminService adminService;
+
+	public HotelService(RoomRepository roomRepository, HotelRepository hotelRepository, AdminRepository adminRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, AdminService adminService) {
 		this.roomRepository = roomRepository;
 		this.hotelRepository = hotelRepository;
 		this.adminRepository = adminRepository;
 		this.hotelDTOToHotel = hotelDTOToHotel;
 		this.hotelToHotelDTO = hotelToHotelDTO;
 		this.roomService = roomService;
+		this.adminService = adminService;
 	}
 
 	public HotelDTO getHotelById(Long id) {
@@ -117,22 +114,36 @@ public class HotelService {
 		Hotel hotel = new Hotel();
 		Optional<Admin> adminOpt =
 				adminRepository.findById(hotelDTO.getOwner());
-		adminOpt.ifPresent(hotel::setOwner);
-		hotel.setName(hotelDTO.getName());
-		hotel.setAreaName(hotelDTO.getAreaName());
-		hotel.setStars(hotelDTO.getStars());
 
-		return hotelDTO;
-	}
+		Set<RoomDTO> roomOpt = hotelDTO.getRooms();
 
-	public List<HotelDTO> saveHotels(List<HotelDTO> hotelsDTO, List<RoomDTO> roomsDTOS) throws Exception {
-		List<Hotel> hotels = new ArrayList<>();
-
-		for (HotelDTO hotelDTO : hotelsDTO){
-			hotels.add(hotelDTOToHotel.converter(hotelDTO));
+		if (adminOpt.isPresent() && roomOpt.size()>0){
+			hotel = hotelDTOToHotel.converter(hotelDTO);
+		}
+		if (!adminOpt.isPresent()){
+			throw new Exception("There is no Owner registered with that id, or the id is null!");
+		}
+		if (roomOpt.size() == 0){
+			throw new Exception("If you wont to save hotels you mast add one or more rooms");
 		}
 
-		roomService.saveRooms(roomsDTOS);
+		return hotelToHotelDTO.converter(hotel);
+	}
+
+	public List<HotelDTO> saveHotels(List<HotelDTO> hotelsDTO) throws Exception {
+		List<Hotel> hotels = new ArrayList<>();
+		for (HotelDTO hotelDTO : hotelsDTO){
+
+			if (hotelDTO.getOwner() == null || adminService.getAdminById(hotelDTO.getOwner()) == null) {
+				throw new Exception("There is no Owner registered with that id, or the id is null!");
+			}
+
+			if (hotelDTO.getRooms() == null){
+				throw new Exception("If you wont to save hotels you mast add one or more rooms");
+			}
+
+			hotels.add(hotelDTOToHotel.converter(hotelDTO));
+		}
 
 		hotelRepository.saveAll(hotels);
 

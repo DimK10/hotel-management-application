@@ -32,10 +32,9 @@ public class RoomService {
         this.roomToRoomDTO = roomToRoomDTO;
     }
 
-	public RoomDTO saveRoomDTO(RoomDTO roomDTO) {
+	public RoomDTO saveRoomDTO(RoomDTO roomDTO) throws Exception {
 		Room room = new Room();
 
-		// find hotel from db by its id
 		Optional<Hotel> hotelOpt =
 				hotelRepository.findById(roomDTO.getHotel());
 
@@ -44,26 +43,26 @@ public class RoomService {
         if (hotelOpt.isPresent()){
             hotelOpt.get().getRooms().add(room);
             hotelRepository.save(hotelOpt.get());
+        }else{
+            throw new Exception("The Room can't be saved without a hotel");
         }
 
-		return roomDTO;
+		return roomToRoomDTO.converter(room);
 	}
 
     public List<RoomDTO> saveRooms(List<RoomDTO> roomsDTO) throws Exception{
         List<Room> rooms = new ArrayList<>();
-
         for (RoomDTO roomDTO : roomsDTO){
-            rooms.add(roomDTOToRoom.converter(roomDTO));
-        }
 
-		for(Room room : rooms) {
-			if (room.getHotel() == null) {
+        }
+		for(RoomDTO roomDto : roomsDTO) {
+			if (roomDto.getHotel() == null) {
 				throw new Exception(
 						"One of the rooms provided does not have a hotel (room.getHotel == null)."
-								+ " Room with id: " + room.getId() + " has no hotel"
+								+ " Room with name: " + roomDto.getName() + " has no hotel"
 				);
 			}else {
-                room.getHotel().getRooms().add(room);
+                rooms.add(roomDTOToRoom.converter(roomDto));
             }
 		}
 

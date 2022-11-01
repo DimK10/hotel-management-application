@@ -1,5 +1,6 @@
 package com.sphy.hotelmanagementapplication.controller;
 
+import com.sphy.hotelmanagementapplication.converter.HotelDTOToHotel;
 import com.sphy.hotelmanagementapplication.converter.HotelToHotelDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
@@ -35,7 +36,9 @@ public class HotelController {
 
 	private final HotelToHotelDTO hotelToHotelDTO;
 
-    public HotelController(HotelService hotelService, RoomService roomService1, RoomRepository roomRepository, HotelRepository hotelRepository, AdminRepository adminRepository, RoomService roomService, AdminService adminService, HotelToHotelDTO hotelToHotelDTO) {
+    private final HotelDTOToHotel hotelDTOToHotel;
+
+    public HotelController(HotelService hotelService, RoomService roomService1, RoomRepository roomRepository, HotelRepository hotelRepository, AdminRepository adminRepository, RoomService roomService, AdminService adminService, HotelToHotelDTO hotelToHotelDTO, HotelDTOToHotel hotelDTOToHotel) {
         this.service = hotelService;
         this.roomService = roomService1;
         this.roomRepository = roomRepository;
@@ -43,39 +46,19 @@ public class HotelController {
         this.adminRepository = adminRepository;
         this.adminService = adminService;
 		this.hotelToHotelDTO = hotelToHotelDTO;
-	}
+        this.hotelDTOToHotel = hotelDTOToHotel;
+    }
 
     @PostMapping("/api/hotel/create")
     public HotelDTO addHotel(@RequestBody HotelDTO hotelDTO) throws Exception {
-
-		// convert hotelsDTO to hotels
-		// save hotels
-
-		//        if (hotelDTO.getOwner() == null || adminService.getAdminById(hotelDTO.getOwner()) == null) {
-//            throw new Exception("There is no Owner registered with that id, or the id is null!");
-//        }
-//        if (roomsDTO.isEmpty()) {
-//            throw new Exception("For adding a Hotel compulsorily you mast add one ore more rooms");
-//        }
-//        service.saveHotelDTO(hotelDTO);
-//        roomService.saveRooms(roomsDTO);
-//
-//        return  hotelDTO;
-  			return null;
+        return service.saveHotelDTO(hotelDTO);
     }
 
     @PostMapping("/api/hotels/create")
     public List<HotelDTO> addHotels(@RequestBody List<HotelDTO> hotelsDTO) throws Exception {
 
-		// convert hotelsDTO to hotels
-		// save hotels
+        return service.saveHotels(hotelsDTO);
 
-//
-//		if (roomsDTO.isEmpty()){
-//            throw new Exception("For adding Hotels compulsorily you mast add one ore more rooms for each one");
-//        }
-//        return (List<HotelDTO>) service.saveHotels(hotelsDTO, roomsDTO);
-    	return null;
 	}
 
     @GetMapping("/api/hotels")
