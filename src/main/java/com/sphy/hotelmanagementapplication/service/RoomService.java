@@ -41,10 +41,7 @@ public class RoomService {
 
 		room = roomDTOToRoom.converter(roomDTO);
 
-        if (hotelOpt.isPresent()){
-            hotelOpt.get().getRooms().add(room);
-            hotelRepository.save(hotelOpt.get());
-        }
+		roomRepository.save(room);
 
 		return roomDTO;
 	}
