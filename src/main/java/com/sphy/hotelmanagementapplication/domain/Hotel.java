@@ -2,16 +2,14 @@ package com.sphy.hotelmanagementapplication.domain;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 @Entity
 @Table(name = "hotels")
+@NamedEntityGraph(name = "Hotel.rooms",
+		attributeNodes = @NamedAttributeNode("rooms")
+)
+public class Hotel extends BaseEntity {
 
-public class Hotel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="id", updatable = false, nullable = false)
-    private Long Id;
 
     @Column(name = "name")
     private String name;
@@ -20,21 +18,37 @@ public class Hotel {
     @Column(name = "area_name")
     private String areaName;
 
+    private boolean disabled;
+
     @ManyToOne
     @JoinColumn(name = "admin_id")
     private Admin owner;
 
-    @OneToMany(mappedBy = "hotel")
+    @OneToMany(mappedBy = "hotel", fetch =  FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Room> rooms = new HashSet<>();
 
     public Hotel() {
     }
 
-    public Hotel(String name, int stars, String areaName) {
+	public Hotel(Long id) {
+		super(id);
+	}
+
+    public Hotel(Long id, String name, int stars, String areaName, boolean disabled) {
+		super(id);
         this.name = name;
         this.stars = stars;
         this.areaName = areaName;
+        this.disabled = disabled;
     }
+
+	public Long getId() {
+		return super.getId();
+	}
+
+	public void setId(Long id) {
+		super.setId(id);
+	}
 
     public Admin getOwner() {
         return owner;
@@ -76,30 +90,34 @@ public class Hotel {
         this.areaName = areaName;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Hotel hotel = (Hotel) o;
-
-        return Id.equals(hotel.Id);
+    public boolean isDisabled() {
+        return disabled;
     }
 
-    @Override
-    public int hashCode() {
-        return Id.hashCode();
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
     }
 
+
     @Override
+	public boolean equals(Object o) {
+		return super.equals(o);
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	@Override
     public String toString() {
         return "Hotel{" +
-                "Id=" + Id +
+                "id=" + super.getId() +
                 ", name='" + name + '\'' +
                 ", stars=" + stars +
                 ", areaName='" + areaName + '\'' +
                 ", owner=" + owner +
-                ", rooms=" + rooms +
+//                ", rooms=" + rooms +
                 '}';
     }
 }

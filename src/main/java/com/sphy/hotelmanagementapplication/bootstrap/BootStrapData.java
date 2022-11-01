@@ -27,24 +27,24 @@ public class BootStrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Client client = new Client(true,"pelatis", "mitsos","allatsas", "pelatis@gmail.com");
+        Client client = new Client(null, true,"pelatis", "mitsos","allatsas", "pelatis@gmail.com");
         client.setHashedPassword("hfdgjakdhgakj");
         client.setHashedPassword("avbasbvabcba");
         clientRepository.save(client);
 
-        Admin admin = new Admin( true, "ksenodoxos", "thanos", "poul", "ksenodoxos@gmail.com");
+        Admin admin = new Admin(null, true, "ksenodoxos", "thanos", "poul", "ksenodoxos@gmail.com");
         admin.setHashedPassword("skjdfhgakhdfj");
         adminRepository.save(admin);
 
-        Room ena = new Room( "ena", 5, "athens", 53);
+        Room ena = new Room( null, "ena",5,54, false);
         roomRepository.save(ena);
 
 
-        Room dio = new Room("dio",4,"Athens",30);
+        Room dio = new Room(null, "dio",4,30, false);
         roomRepository.save(dio);
 
 
-        Hotel ksenia = new Hotel("ksenia", 5,"athens");
+        Hotel ksenia = new Hotel(null, "ksenia", 5,"athens", false);
         hotelRepository.save(ksenia);
         ksenia.setOwner(admin);
         hotelRepository.save(ksenia);
@@ -56,27 +56,28 @@ public class BootStrapData implements CommandLineRunner {
         adminRepository.save(admin);
 
 
-//        ksenia.getRooms().add(ena);
-//        hotelRepository.save(ksenia);
-//        ksenia.getRooms().add(dio);
-//        hotelRepository.save(ksenia);
+        ksenia.getRooms().add(ena);
+        hotelRepository.save(ksenia);
+        ksenia.getRooms().add(dio);
+        hotelRepository.save(ksenia);
 
 
 
-        Order order = new Order(LocalDate.ofEpochDay(2007-12-03), LocalDate.ofEpochDay(2007-12-07), client);
+        Order order = new Order(null, LocalDate.ofEpochDay(2007-12-03), LocalDate.ofEpochDay(2007-12-07), client);
         orderRepository.save(order);
 
-        order.setRooms(ena);
+        order.setRoom(ena);
         orderRepository.save(order);
 
-        ena.getOrder().add(order);
+
+        ena.getOrders().add(order);
         roomRepository.save(ena);
 
-        Order order1 = new Order(LocalDate.ofEpochDay(2007-12-03), LocalDate.ofEpochDay(2007-12-07), client);
+        Order order1 = new Order(null, LocalDate.ofEpochDay(2007-12-03), LocalDate.ofEpochDay(2007-12-07), client);
         orderRepository.save(order1);
-        order1.setRooms(dio);
+        order1.setRoom(dio);
         orderRepository.save(order1);
-        dio.getOrder().add(order1);
+        dio.getOrders().add(order1);
         roomRepository.save(dio);
     //        orderRepository.save(order);
 

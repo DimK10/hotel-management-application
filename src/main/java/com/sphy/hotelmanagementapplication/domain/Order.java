@@ -1,17 +1,16 @@
 package com.sphy.hotelmanagementapplication.domain;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "orders")
-public class Order {
+public class Order extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
 
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
@@ -20,19 +19,29 @@ public class Order {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rooms_id")
-    private Room rooms;
+    private Room room;
 
 
     public Order() {
     }
 
 
-    public Order(LocalDate checkInDate, LocalDate checkOutDate,Client client) {
-        this.checkInDate = checkInDate;
+    public Order(Long id, LocalDate checkInDate, LocalDate checkOutDate,Client client) {
+		super(id);
+		this.checkInDate = checkInDate;
+
         this.checkOutDate = checkOutDate;
         this.client=client;
+    }
+
+	public void setId(Long id) {
+		super.setId(id);
+	}
+
+    public Long getId() {
+       return super.getId();
     }
 
     public LocalDate getCheckInDate() {
@@ -59,37 +68,33 @@ public class Order {
         this.client = client;
     }
 
-    public Room getRooms() {
-        return rooms;
+    public Room getRoom() {
+        return room;
     }
 
-    public void setRooms(Room rooms) {
-        this.rooms = rooms;
+    public void setRoom(Room room) {
+        this.room = room;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Order order = (Order) o;
-
-        return Id.equals(order.Id);
+        return super.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return Id.hashCode();
+        return super.hashCode();
+
     }
 
     @Override
     public String toString() {
         return "Order{" +
-                "Id=" + Id +
+                "Id=" + this.getId() +
                 ", checkInDate=" + checkInDate +
                 ", checkOutDate=" + checkOutDate +
                 ", client=" + client +
-                ", rooms=" + rooms +
+//                ", rooms=" + rooms +
                 '}';
     }
 }
