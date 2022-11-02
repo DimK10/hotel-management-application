@@ -1,12 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
+import NavBar from './../layout/NavBar';
 
-const Register = props => {
+const Register = (props) => {
   return (
-    <div>Register</div>
-  )
-}
+   <div>register</div>
+  );
+};
 
-Register.propTypes = {}
+Register.propTypes = {};
 
-export default Register
+export default Register;

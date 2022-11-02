@@ -6,9 +6,9 @@ const NavBar = (props) => {
   return (
     <nav className='navbar navbar-expand-lg navbar-dark bg-dark sticky-top'>
       <div className='container-fluid'>
-        <a className='navbar-brand' href='#'>
+        <Link className='navbar-brand' to='/'>
           Hotel Management App
-        </a>
+        </Link>
         <button
           className='navbar-toggler'
           type='button'
@@ -23,17 +23,32 @@ const NavBar = (props) => {
         <div className='collapse navbar-collapse' id='navbarNav'>
           <ul className='navbar-nav' style={{ marginLeft: 'auto' }}>
             <li className='nav-item'>
-              <a className='nav-link active' aria-current='page' href='#'>
+              <Link
+                className={`nav-link ${
+                  window.location.pathname == '/' ? 'active' : ''
+                }`}
+                to='/'
+              >
                 Home
-              </a>
+              </Link>
             </li>
             <li className='nav-item'>
-              <Link className='nav-link' to='/sign-in'>
+              <Link
+                className={`nav-link ${
+                  window.location.pathname == '/sign-in' ? 'active' : ''
+                }`}
+                to='/sign-in'
+              >
                 Sign In
               </Link>
             </li>
             <li className='nav-item'>
-              <Link className='nav-link' to='/sign-up'>
+              <Link
+                className={`nav-link ${
+                  window.location.pathname == '/sign-up' ? 'active' : ''
+                }`}
+                to='/sign-up'
+              >
                 Sign Up
               </Link>
             </li>
