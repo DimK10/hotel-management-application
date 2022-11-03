@@ -14,6 +14,11 @@ public class ClientDTOToClient {
         this.orderDTOToOrder = orderDTOToOrder;
     }
 
+    /***
+     * converts a clientDTO object to client
+     * @param clientDTO the clint object to be converted
+     * @return the converted Client object
+     */
     public Client converter(ClientDTO clientDTO) {
         Client client = new Client();
         client.setId(clientDTO.getId());

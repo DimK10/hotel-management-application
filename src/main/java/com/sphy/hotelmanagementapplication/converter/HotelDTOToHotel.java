@@ -19,6 +19,11 @@ public class HotelDTOToHotel {
         this.adminRepository = adminRepository;
     }
 
+    /***
+     * converts a hotelDTO object to hotel
+     * @param hotelDTO the hotelDTO object we want to convert
+     * @return the converted hotel object
+     */
     public Hotel converter(HotelDTO hotelDTO){
 
         Hotel hotel = new Hotel(1L);

@@ -32,6 +32,12 @@ public class RoomService {
         this.roomToRoomDTO = roomToRoomDTO;
     }
 
+    /***
+     * save a room
+     * @param roomDTO the room to be saved
+     * @return the saved room for confirmation
+     * @throws Exception
+     */
 	public RoomDTO saveRoomDTO(RoomDTO roomDTO) throws Exception {
 		Room room = new Room();
 
@@ -50,6 +56,12 @@ public class RoomService {
 		return roomToRoomDTO.converter(room);
 	}
 
+    /***
+     * save a list of rooms
+     * @param roomsDTO the rooms to be saved
+     * @return the saved rooms for confirmation
+     * @throws Exception
+     */
     public List<RoomDTO> saveRooms(List<RoomDTO> roomsDTO) throws Exception{
         List<Room> rooms = new ArrayList<>();
         for (RoomDTO roomDTO : roomsDTO){
@@ -75,6 +87,11 @@ public class RoomService {
         return roomsDTO;
     }
 
+    /***
+     * get all rooms
+     * @return a list of all rooms
+     * @throws Exception
+     */
     public List<RoomDTO> getRooms() throws Exception {
 		List<Room> rooms = new ArrayList<>();
         List<RoomDTO> roomsDTO = new ArrayList<>();
@@ -85,6 +102,12 @@ public class RoomService {
 		return roomsDTO;
     }
 
+    /***
+     * find a room by his id
+     * @param id of the room to be found
+     * @return the room with the current id
+     * @throws Exception
+     */
     public RoomDTO getRoomById(Long id) throws Exception {
         Optional<Room> roomOpt = roomRepository.findById(id);
 
@@ -94,6 +117,12 @@ public class RoomService {
     }
 
 
+    /***
+     * get a room by his name
+     * @param name of the room to be found
+     * @return the room with the current name
+     * @throws Exception
+     */
     public RoomDTO getRoomByName(String name) throws Exception {
         Optional<Room> roomOpt = roomRepository.findByName(name);
         if (roomOpt.isPresent()){
@@ -101,6 +130,11 @@ public class RoomService {
         }else return null;
     }
 
+    /***
+     * enables a room
+     * @param id of the room to be enabled
+     * @return a boolean if  the room enabled or not
+     */
 	public boolean enableRoom(Long id){
 		if (roomRepository.existsById(id)){
 			Room room = roomRepository.findById(id).get();
@@ -111,6 +145,11 @@ public class RoomService {
 
 	}
 
+    /***
+     * disable a room by his id
+     * @param id of the room to be disabled
+     * @return a boolean if the room disabled or not
+     */
     public boolean disableRoom(Long id){
        if (roomRepository.existsById(id)){
 		   Room room = roomRepository.findById(id).get();
@@ -121,6 +160,12 @@ public class RoomService {
 
     }
 
+    /***
+     * updates a room
+     * @param roomDTO room to be updated
+     * @return the updated room for confirmation
+     * @throws NullPointerException
+     */
     public RoomDTO updateRoom(RoomDTO roomDTO) throws NullPointerException{
         Optional<Room> roomOpt = roomRepository.findById(roomDTO.getId());
 

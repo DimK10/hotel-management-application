@@ -13,6 +13,11 @@ public class AdminService {
         this.adminRepository = adminRepository;
     }
 
+    /***
+     * get an admin by his id
+     * @param id the id of the admin to be found
+     * @return the admin with the current id
+     */
     public Admin getAdminById(Long id){
         return adminRepository.findById(id).orElse(null);
     }
