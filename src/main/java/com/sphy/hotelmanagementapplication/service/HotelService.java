@@ -11,7 +11,10 @@ import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class HotelService {
@@ -41,7 +44,7 @@ public class HotelService {
 		this.adminService = adminService;
 	}
 
-	public HotelDTO getHotelById(Long id) {
+	public HotelDTO getHotelById(Long id) throws Exception {
 		Optional<Hotel> hotelOPT = hotelRepository.findById(id);
 
 		if (hotelOPT.isPresent()){
@@ -50,20 +53,27 @@ public class HotelService {
 	}
 
 
-	public Set<Hotel> getHotels(){
-		Set<Hotel> hotels = new HashSet<>();
+	public List<HotelDTO> getHotels() throws Exception {
+
+		List<Hotel> hotels = new ArrayList<>();
+		List<HotelDTO> hotelDTOS = new ArrayList<>();
 
 		hotelRepository.findAll().spliterator().forEachRemaining(hotels::add);
 
-		return hotels;
+		for (Hotel hotel : hotels){
+			hotelDTOS.add(hotelToHotelDTO.converter(hotel));
+		}
+
+		return hotelDTOS;
 	}
 
 
-	public HotelDTO getHotelByName(String name){
-		Hotel hotelOpt = hotelRepository.findByName(name);
+	public HotelDTO getHotelByName(String name) throws Exception {
 
-		if (hotelOpt != null){
-			return hotelToHotelDTO.converter(hotelOpt);
+		Optional<Hotel> hotelOpt = hotelRepository.findByName(name);
+
+		if (hotelOpt.isPresent()){
+			return hotelToHotelDTO.converter(hotelOpt.get());
 		}else return null;
 	}
 
@@ -93,7 +103,7 @@ public class HotelService {
 		return "Hotel with id" + id + "has be successfully removed";
 	}
 
-	public HotelDTO updateHotel(HotelDTO hotelDTO, List<RoomDTO> roomDTOS) throws NullPointerException{
+	public HotelDTO updateHotel(HotelDTO hotelDTO) throws NullPointerException{
 		Optional<Hotel> hotelOpt = hotelRepository.findById(hotelDTO.getId());
 		if (hotelOpt.isPresent()){
 			Hotel existingHotel = hotelRepository.findById(hotelDTO.getId()).orElse(null);
@@ -102,16 +112,14 @@ public class HotelService {
 			existingHotel.setAreaName(hotelDTO.getAreaName());
 			Optional<Admin>  admin = adminRepository.findById(hotelDTO.getId());
 			admin.ifPresent(existingHotel::setOwner);
-			for (RoomDTO roomDTO : roomDTOS){
-				roomService.updateRoom(roomDTO);
-			}
+
 			hotelRepository.save(existingHotel);
 		}
 		return hotelDTO;
 	}
 
 	public HotelDTO saveHotelDTO(HotelDTO hotelDTO) throws Exception {
-		Hotel hotel = new Hotel();
+		Hotel hotel = new Hotel(1L);
 		Optional<Admin> adminOpt =
 				adminRepository.findById(hotelDTO.getOwner());
 

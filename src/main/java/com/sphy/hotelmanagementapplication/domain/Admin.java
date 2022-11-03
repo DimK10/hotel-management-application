@@ -19,7 +19,10 @@ public class Admin extends User {
         super(id, emailVerify, username, firstname, lastname, email, Role.ADMIN);
     }
 
-	public Long getId() {
+    public Admin(long l) {
+    }
+
+    public Long getId() {
 		return super.getId();
 	}
 

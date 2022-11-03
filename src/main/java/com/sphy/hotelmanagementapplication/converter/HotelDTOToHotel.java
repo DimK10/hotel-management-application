@@ -21,7 +21,7 @@ public class HotelDTOToHotel {
 
     public Hotel converter(HotelDTO hotelDTO){
 
-        Hotel hotel = new Hotel();
+        Hotel hotel = new Hotel(1L);
 
         hotel.setId(hotelDTO.getId());
         hotel.setName(hotelDTO.getName());

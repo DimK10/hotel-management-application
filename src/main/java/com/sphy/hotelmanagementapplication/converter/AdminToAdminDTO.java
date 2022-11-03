@@ -14,7 +14,7 @@ public class AdminToAdminDTO {
         this.hotelToHotelDTO = hotelToHotelDTO;
     }
 
-    public AdminDTO converter(Admin admin){
+    public AdminDTO converter(Admin admin) throws Exception {
 
         AdminDTO adminDTO = new AdminDTO();
 

@@ -2,9 +2,7 @@ package com.sphy.hotelmanagementapplication.controller;
 
 import com.sphy.hotelmanagementapplication.converter.HotelDTOToHotel;
 import com.sphy.hotelmanagementapplication.converter.HotelToHotelDTO;
-import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
-import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
@@ -15,9 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 public class HotelController {
@@ -62,14 +58,9 @@ public class HotelController {
 	}
 
     @GetMapping("/api/hotels")
-    public Set<HotelDTO> findAllHotels(){
-		Set<Hotel> hotels = service.getHotels();
-		Set<HotelDTO> hotelDTOS = new HashSet<>();
-		for (Hotel hotel : hotels){
-			hotelDTOS.add(hotelToHotelDTO.converter(hotel));
-		}
+    public List<HotelDTO> findAllHotels() throws Exception {
 
-		return hotelDTOS;
+		return service.getHotels();
     }
 
     @GetMapping("/api/hotelId/{id}")
@@ -79,13 +70,13 @@ public class HotelController {
     }
 
     @GetMapping("/api/hotelName/{name}")
-    public HotelDTO findHotelByName (@PathVariable String name){
+    public HotelDTO findHotelByName (@PathVariable String name) throws Exception {
         return service.getHotelByName(name);
     }
 
     @PutMapping("/api/hotel/update")
-    public HotelDTO updateHotel(@RequestBody HotelDTO hotelDTO, List<RoomDTO> roomDTOS) {
-        return service.updateHotel(hotelDTO, roomDTOS);
+    public HotelDTO updateHotel(@RequestBody HotelDTO hotelDTO) {
+        return service.updateHotel(hotelDTO);
     }
 
 

@@ -75,7 +75,7 @@ public class RoomService {
         return roomsDTO;
     }
 
-    public List<RoomDTO> getRooms(){
+    public List<RoomDTO> getRooms() throws Exception {
 		List<Room> rooms = new ArrayList<>();
         List<RoomDTO> roomsDTO = new ArrayList<>();
         roomRepository.findAll().forEach(rooms::add);
@@ -85,7 +85,7 @@ public class RoomService {
 		return roomsDTO;
     }
 
-    public RoomDTO getRoomById(Long id){
+    public RoomDTO getRoomById(Long id) throws Exception {
         Optional<Room> roomOpt = roomRepository.findById(id);
 
         if (roomOpt.isPresent()){
@@ -94,7 +94,7 @@ public class RoomService {
     }
 
 
-    public RoomDTO getRoomByName(String name){
+    public RoomDTO getRoomByName(String name) throws Exception {
         Optional<Room> roomOpt = roomRepository.findByName(name);
         if (roomOpt.isPresent()){
             return roomToRoomDTO.converter(roomOpt.get());

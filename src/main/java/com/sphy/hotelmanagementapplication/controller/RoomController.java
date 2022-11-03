@@ -37,7 +37,7 @@ public class RoomController {
     }
 
     @GetMapping("/api/rooms")
-    public List<RoomDTO> findAllRooms() {
+    public List<RoomDTO> findAllRooms() throws Exception {
         return service.getRooms();
     }
 
@@ -47,7 +47,7 @@ public class RoomController {
     }
 
     @GetMapping("/api/roomName/{name}")
-    public RoomDTO findRoomByName(@PathVariable String name) {
+    public RoomDTO findRoomByName(@PathVariable String name) throws Exception {
         return service.getRoomByName(name);
     }
 

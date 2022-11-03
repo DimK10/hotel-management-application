@@ -15,7 +15,7 @@ public class HotelToHotelDTO {
         this.roomToRoomDTO = roomToRoomDTO;
     }
 
-    public HotelDTO converter(Hotel hotel){
+    public HotelDTO converter(Hotel hotel) throws Exception {
 
         HotelDTO hotelDTO = new HotelDTO();
 
