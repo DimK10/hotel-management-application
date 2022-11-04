@@ -59,7 +59,7 @@ public class HotelController {
     /***
      * Create new hotels
      * @param hotelsDTO is a list of hotels to be saved
-     * @return the list of hotels tha saved
+     * @return the list of hotels that where saved
      * @throws Exception
      */
     @PostMapping("/api/hotels/create")
@@ -109,7 +109,7 @@ public class HotelController {
      * @return tha updated hotel for confirmation
      */
     @PutMapping("/api/hotel/update")
-    public HotelDTO updateHotel(@RequestBody HotelDTO hotelDTO) {
+    public HotelDTO updateHotel(@RequestBody HotelDTO hotelDTO) throws Exception {
         return service.updateHotel(hotelDTO);
     }
 

@@ -46,7 +46,7 @@ public class HotelServiceTest {
         @Mock
         RoomService roomService;
 
-        @Mock
+
         HotelService hotelService;
 
         List<Hotel> hotels;
@@ -399,7 +399,7 @@ public class HotelServiceTest {
 
 
             //then
-            boolean actual = hotelService.disableHotel(anyLong());
+            boolean actual = hotelService.enableHotel(anyLong());
 
             assertEquals(expected, actual);
         }

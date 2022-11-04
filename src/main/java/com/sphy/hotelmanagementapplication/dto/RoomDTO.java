@@ -22,6 +22,8 @@ public class RoomDTO implements Serializable {
 
 	private boolean disabled;
 
+	public RoomDTO() {
+	}
 
 	public Long getId() {
 		return Id;

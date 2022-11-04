@@ -1,5 +1,6 @@
 package com.sphy.hotelmanagementapplication.service;
 
+import com.sphy.hotelmanagementapplication.converter.HotelToHotelDTO;
 import com.sphy.hotelmanagementapplication.converter.RoomDTOToRoom;
 import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
@@ -24,6 +25,7 @@ public class RoomService {
     private final RoomDTOToRoom roomDTOToRoom;
 
     private final RoomToRoomDTO roomToRoomDTO;
+
 
 	public RoomService(RoomRepository repository, HotelRepository hotelRepository, RoomDTOToRoom roomDTOToRoom, RoomToRoomDTO roomToRoomDTO) {
 		this.roomRepository = repository;
@@ -82,9 +84,14 @@ public class RoomService {
 
         roomsSaved.spliterator().forEachRemaining(rooms::add);
 
+        List<RoomDTO> roomDTOS = new ArrayList<>();
+        for (Room room:rooms){
+            roomDTOS.add(roomToRoomDTO.converter(room));
+        }
+
 		rooms.clear();
 
-        return roomsDTO;
+        return roomDTOS;
     }
 
     /***
@@ -177,11 +184,14 @@ public class RoomService {
             existingRoom.setPrice(roomDTO.getPrice());
             hotel.ifPresent(existingRoom::setHotel);
 			existingRoom.setDisabled(roomDTO.isDisabled());
-            roomRepository.save(existingRoom);
+
             hotel.get().getRooms().add(existingRoom);
             hotelRepository.save(hotel.get());
+
+            return roomToRoomDTO.converter(roomRepository.save(existingRoom));
         }
-        return roomDTO;
+        return null;
+
     }
 
 

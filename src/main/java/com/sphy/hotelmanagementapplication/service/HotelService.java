@@ -136,7 +136,7 @@ public class HotelService {
 	 * @return the updated hotel
 	 * @throws NullPointerException
 	 */
-	public HotelDTO updateHotel(HotelDTO hotelDTO) throws NullPointerException{
+	public HotelDTO updateHotel(HotelDTO hotelDTO) throws Exception {
 		Optional<Hotel> hotelOpt = hotelRepository.findById(hotelDTO.getId());
 		if (hotelOpt.isPresent()){
 			Hotel existingHotel = hotelRepository.findById(hotelDTO.getId()).orElse(null);
@@ -146,7 +146,7 @@ public class HotelService {
 			Optional<Admin>  admin = adminRepository.findById(hotelDTO.getId());
 			admin.ifPresent(existingHotel::setOwner);
 
-			hotelRepository.save(existingHotel);
+			return hotelToHotelDTO.converter(hotelRepository.save(existingHotel));
 		}
 		return hotelDTO;
 	}

@@ -241,7 +241,7 @@ public class HotelControllerTest {
         when(hotelService.getHotelByName(anyString())).thenReturn(hotelDTO);
 
         // Return
-        mockMvc.perform(get("/api/hotelName/hotelName"))
+        mockMvc.perform(get("/api/hotelName/hotelName", "hotelName"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.name").value("hotelName"));
