@@ -326,6 +326,12 @@ public class HotelControllerTest {
 
     }
 
+	/**
+	 * This method converts an object to a string represantation in JSON format.
+	 * Basically, it serializes the object in json format.
+	 * @param obj The object to be serialized.
+	 * @return THe String representation of given object in JSON format.
+	 */
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
