@@ -23,7 +23,12 @@ public class OrderDTOToOrder {
         this.clientRepository = clientRepository;
     }
 
-    Order Converter(OrderDTO orderDTO){
+    /***
+     * converts an orderDTO object to order
+     * @param orderDTO the orderDTO object we want to convert
+     * @return the converted order object
+     */
+    public Order Converter(OrderDTO orderDTO){
 
         Order order = new Order();
 

@@ -22,6 +22,12 @@ public class RoomController {
         this.hotelService = hotelService;
 	}
 
+    /***
+     * creates a new room
+     * @param roomDTO is the room we want to save
+     * @return the saved room for confirmation
+     * @throws Exception if the room's hotel does not exist
+     */
     @PostMapping("/api/room/create")
     public RoomDTO addRoom(@RequestBody RoomDTO roomDTO) throws Exception {
         if (roomDTO.getHotel() == null || hotelService.getHotelById(roomDTO.getHotel()) == null) {
@@ -30,32 +36,65 @@ public class RoomController {
         return service.saveRoomDTO(roomDTO);
     }
 
+    /***
+     * create new rooms
+     * @param roomsDTO is the list of the hotels we want to save
+     * @return the list with the saved rooms
+     * @throws Exception
+     */
     @PostMapping("/api/rooms/create")
     public List<RoomDTO> addRooms(@RequestBody List<RoomDTO> roomsDTO) throws Exception {
 
 		return service.saveRooms(roomsDTO);
     }
 
+    /***
+     * finds all rooms
+     * @return all rooms
+     * @throws Exception
+     */
     @GetMapping("/api/rooms")
-    public List<RoomDTO> findAllRooms() {
+    public List<RoomDTO> findAllRooms() throws Exception {
         return service.getRooms();
     }
 
+    /***
+     * finds a room by his id
+     * @param id id of the room we want to save
+     * @return the room with the given id
+     * @throws Exception
+     */
     @GetMapping("/api/roomId/{id}")
     public RoomDTO findRoomById(@PathVariable Long id) throws Exception {
         return service.getRoomById(id);
     }
 
+    /***
+     * finds a room by his name
+     * @param name name of the room we want to save
+     * @return the room with that name
+     * @throws Exception
+     */
     @GetMapping("/api/roomName/{name}")
-    public RoomDTO findRoomByName(@PathVariable String name) {
+    public RoomDTO findRoomByName(@PathVariable String name) throws Exception {
         return service.getRoomByName(name);
     }
 
+    /***
+     * updates a room
+     * @param roomDTO the room we want to update
+     * @return the updated room for confirmation
+     */
     @PutMapping("/api/room/update")
     public RoomDTO updateRoom(@RequestBody RoomDTO roomDTO) {
         return service.updateRoom(roomDTO);
     }
 
+    /***
+     * enables a room by his id
+     * @param id id of the room we want to disable
+     * @return a confirmation message or an error message
+     */
 	@PostMapping("/api/room/enable/{id}")
 	ResponseEntity<String> enableRoom(@PathVariable Long id) {
 
@@ -69,6 +108,11 @@ public class RoomController {
 	}
 
 
+    /***
+     * disables a room by his id
+     * @param id of the room we want to disable
+     * @return a message of confirmation or an error message
+     */
     @PostMapping("/api/room/disable/{id}")
     ResponseEntity<String> disableRoom(@PathVariable Long id) {
 

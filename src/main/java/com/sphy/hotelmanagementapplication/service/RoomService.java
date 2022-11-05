@@ -1,5 +1,6 @@
 package com.sphy.hotelmanagementapplication.service;
 
+import com.sphy.hotelmanagementapplication.converter.HotelToHotelDTO;
 import com.sphy.hotelmanagementapplication.converter.RoomDTOToRoom;
 import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
@@ -25,6 +26,7 @@ public class RoomService {
 
     private final RoomToRoomDTO roomToRoomDTO;
 
+
 	public RoomService(RoomRepository repository, HotelRepository hotelRepository, RoomDTOToRoom roomDTOToRoom, RoomToRoomDTO roomToRoomDTO) {
 		this.roomRepository = repository;
 		this.hotelRepository = hotelRepository;
@@ -32,35 +34,49 @@ public class RoomService {
         this.roomToRoomDTO = roomToRoomDTO;
     }
 
-	public RoomDTO saveRoomDTO(RoomDTO roomDTO) {
+    /***
+     * save a room
+     * @param roomDTO the room to be saved
+     * @return the saved room for confirmation
+     * @throws Exception
+     */
+	public RoomDTO saveRoomDTO(RoomDTO roomDTO) throws Exception {
 		Room room = new Room();
 
-		// find hotel from db by its id
 		Optional<Hotel> hotelOpt =
 				hotelRepository.findById(roomDTO.getHotel());
 
 		room = roomDTOToRoom.converter(roomDTO);
 
-		roomRepository.save(room);
-
-		return roomDTO;
-	}
-
-    public List<RoomDTO> saveRooms(List<RoomDTO> roomsDTO) throws Exception{
-        List<Room> rooms = new ArrayList<>();
-
-        for (RoomDTO roomDTO : roomsDTO){
-            rooms.add(roomDTOToRoom.converter(roomDTO));
+        if (hotelOpt.isPresent()){
+            hotelOpt.get().getRooms().add(room);
+            hotelRepository.save(hotelOpt.get());
+        }else{
+            throw new Exception("The Room can't be saved without a hotel");
         }
 
-		for(Room room : rooms) {
-			if (room.getHotel() == null) {
+		return roomToRoomDTO.converter(room);
+	}
+
+    /***
+     * save a list of rooms
+     * @param roomsDTO the rooms to be saved
+     * @return the saved rooms for confirmation
+     * @throws Exception
+     */
+    public List<RoomDTO> saveRooms(List<RoomDTO> roomsDTO) throws Exception{
+        List<Room> rooms = new ArrayList<>();
+        for (RoomDTO roomDTO : roomsDTO){
+
+        }
+		for(RoomDTO roomDto : roomsDTO) {
+			if (roomDto.getHotel() == null) {
 				throw new Exception(
 						"One of the rooms provided does not have a hotel (room.getHotel == null)."
-								+ " Room with id: " + room.getId() + " has no hotel"
+								+ " Room with name: " + roomDto.getName() + " has no hotel"
 				);
 			}else {
-                room.getHotel().getRooms().add(room);
+                rooms.add(roomDTOToRoom.converter(roomDto));
             }
 		}
 
@@ -68,12 +84,21 @@ public class RoomService {
 
         roomsSaved.spliterator().forEachRemaining(rooms::add);
 
-		rooms.clear();
+        List<RoomDTO> roomDTOS = new ArrayList<>();
+        for (Room room:rooms){
+            roomDTOS.add(roomToRoomDTO.converter(room));
+        }
 
-        return roomsDTO;
+
+        return roomDTOS;
     }
 
-    public List<RoomDTO> getRooms(){
+    /***
+     * get all rooms
+     * @return a list of all rooms
+     * @throws Exception
+     */
+    public List<RoomDTO> getRooms() throws Exception {
 		List<Room> rooms = new ArrayList<>();
         List<RoomDTO> roomsDTO = new ArrayList<>();
         roomRepository.findAll().forEach(rooms::add);
@@ -83,7 +108,13 @@ public class RoomService {
 		return roomsDTO;
     }
 
-    public RoomDTO getRoomById(Long id){
+    /***
+     * find a room by his id
+     * @param id of the room to be found
+     * @return the room with the current id
+     * @throws Exception
+     */
+    public RoomDTO getRoomById(Long id) throws Exception {
         Optional<Room> roomOpt = roomRepository.findById(id);
 
         if (roomOpt.isPresent()){
@@ -92,13 +123,24 @@ public class RoomService {
     }
 
 
-    public RoomDTO getRoomByName(String name){
+    /***
+     * get a room by his name
+     * @param name of the room to be found
+     * @return the room with the current name
+     * @throws Exception
+     */
+    public RoomDTO getRoomByName(String name) throws Exception {
         Optional<Room> roomOpt = roomRepository.findByName(name);
         if (roomOpt.isPresent()){
             return roomToRoomDTO.converter(roomOpt.get());
         }else return null;
     }
 
+    /***
+     * enables a room
+     * @param id of the room to be enabled
+     * @return a boolean if  the room enabled or not
+     */
 	public boolean enableRoom(Long id){
 		if (roomRepository.existsById(id)){
 			Room room = roomRepository.findById(id).get();
@@ -109,6 +151,11 @@ public class RoomService {
 
 	}
 
+    /***
+     * disable a room by his id
+     * @param id of the room to be disabled
+     * @return a boolean if the room disabled or not
+     */
     public boolean disableRoom(Long id){
        if (roomRepository.existsById(id)){
 		   Room room = roomRepository.findById(id).get();
@@ -119,6 +166,12 @@ public class RoomService {
 
     }
 
+    /***
+     * updates a room
+     * @param roomDTO room to be updated
+     * @return the updated room for confirmation
+     * @throws NullPointerException
+     */
     public RoomDTO updateRoom(RoomDTO roomDTO) throws NullPointerException{
         Optional<Room> roomOpt = roomRepository.findById(roomDTO.getId());
 
@@ -130,11 +183,14 @@ public class RoomService {
             existingRoom.setPrice(roomDTO.getPrice());
             hotel.ifPresent(existingRoom::setHotel);
 			existingRoom.setDisabled(roomDTO.isDisabled());
-            roomRepository.save(existingRoom);
+
             hotel.get().getRooms().add(existingRoom);
             hotelRepository.save(hotel.get());
+
+            return roomToRoomDTO.converter(roomRepository.save(existingRoom));
+
         }
-        return roomDTO;
+        return null;
     }
 
 

@@ -6,8 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.sphy.hotelmanagementapplication.domain.Hotel;
-
 public class RoomDTO implements Serializable {
 
 	private Long Id;
@@ -24,28 +22,7 @@ public class RoomDTO implements Serializable {
 
 	private boolean disabled;
 
-	public RoomDTO(Long id, String name, Long hotel) {
-		Id = id;
-		this.name = name;
-		this.hotel = hotel;
-	}
-
 	public RoomDTO() {
-	}
-
-	public RoomDTO(Long id, String name) {
-		Id = id;
-		this.name = name;
-	}
-
-	public RoomDTO(Long id, String name, int luxurity, Long hotel, Set<OrderDTO> orders, long price, boolean disabled) {
-		Id = id;
-		this.name = name;
-		this.luxurity = luxurity;
-		this.hotel = hotel;
-		this.orders = orders;
-		this.price = price;
-		this.disabled = disabled;
 	}
 
 	public Long getId() {

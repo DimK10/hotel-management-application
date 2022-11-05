@@ -14,7 +14,13 @@ public class AdminToAdminDTO {
         this.hotelToHotelDTO = hotelToHotelDTO;
     }
 
-    public AdminDTO converter(Admin admin){
+    /***
+     * converts an Admin Object to AdminDTO
+     * @param admin Admin object we want to convert
+     * @return the converted AdminDTO object
+     * @throws Exception
+     */
+    public AdminDTO converter(Admin admin) throws Exception {
 
         AdminDTO adminDTO = new AdminDTO();
 

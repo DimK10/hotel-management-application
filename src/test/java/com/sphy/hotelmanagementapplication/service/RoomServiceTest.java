@@ -1,9 +1,5 @@
 package com.sphy.hotelmanagementapplication.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import com.sphy.hotelmanagementapplication.converter.OrderDTOToOrder;
 import com.sphy.hotelmanagementapplication.converter.OrderToOrderDTO;
 import com.sphy.hotelmanagementapplication.converter.RoomDTOToRoom;
@@ -20,6 +16,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -100,7 +100,7 @@ class RoomServiceTest {
 	}
 
 	@Test
-	void getRooms() {
+	void getRooms() throws Exception {
 		// given
 
 		// when
@@ -115,7 +115,7 @@ class RoomServiceTest {
 	}
 
 	@Test
-	void getRoomById() {
+	void getRoomById() throws Exception {
 		// given
 		Hotel hotel = new Hotel(1L);
 		Optional<Hotel> hotelOptional = Optional.of(hotel);
@@ -139,7 +139,7 @@ class RoomServiceTest {
 	}
 
 	@Test
-	void getRoomByName() {
+	void getRoomByName() throws Exception {
 		// given
 		Hotel hotel = new Hotel(1L);
 		Optional<Hotel> hotelOptional = Optional.of(hotel);

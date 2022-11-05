@@ -1,12 +1,12 @@
 package com.sphy.hotelmanagementapplication.dto;
 
+import com.sphy.hotelmanagementapplication.domain.BaseEntity;
+
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-public class HotelDTO implements Serializable {
+public class HotelDTO implements Serializable{
 
     private Long id;
 
@@ -22,14 +22,15 @@ public class HotelDTO implements Serializable {
 
     private Set<RoomDTO> rooms =new HashSet<>();
 
-	public HotelDTO() {
-	}
+    public HotelDTO(long id) {
+        this.id = id;
+    }
 
-	public HotelDTO(Long id) {
-		this.id = id;
-	}
+    public HotelDTO() {
 
-	public Long getId() {
+    }
+
+    public Long getId() {
         return id;
     }
 

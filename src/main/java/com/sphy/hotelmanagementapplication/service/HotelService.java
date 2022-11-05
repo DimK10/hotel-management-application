@@ -12,12 +12,9 @@ import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
-import javax.transaction.Transactional;
 
 @Service
 public class HotelService {
@@ -35,16 +32,25 @@ public class HotelService {
 
 	private final RoomService roomService;
 
-	public HotelService(RoomRepository roomRepository, HotelRepository hotelRepository, AdminRepository adminRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService) {
+	private final AdminService adminService;
+
+	public HotelService(RoomRepository roomRepository, HotelRepository hotelRepository, AdminRepository adminRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, AdminService adminService) {
 		this.roomRepository = roomRepository;
 		this.hotelRepository = hotelRepository;
 		this.adminRepository = adminRepository;
 		this.hotelDTOToHotel = hotelDTOToHotel;
 		this.hotelToHotelDTO = hotelToHotelDTO;
 		this.roomService = roomService;
+		this.adminService = adminService;
 	}
 
-	public HotelDTO getHotelById(Long id) {
+	/***
+	 * get a hotel by his id
+	 * @param id of the hotel tobe found
+	 * @return the hotel with the current id
+	 * @throws Exception
+	 */
+	public HotelDTO getHotelById(Long id) throws Exception {
 		Optional<Hotel> hotelOPT = hotelRepository.findById(id);
 
 		if (hotelOPT.isPresent()){
@@ -53,23 +59,46 @@ public class HotelService {
 	}
 
 
-	public Set<Hotel> getHotels(){
-		Set<Hotel> hotels = new HashSet<>();
+	/***
+	 * get all hotels
+	 * @return a list of all hotels
+	 * @throws Exception
+	 */
+	public List<HotelDTO> getHotels() throws Exception {
+
+		List<Hotel> hotels = new ArrayList<>();
+		List<HotelDTO> hotelDTOS = new ArrayList<>();
 
 		hotelRepository.findAll().spliterator().forEachRemaining(hotels::add);
 
-		return hotels;
+		for (Hotel hotel : hotels){
+			hotelDTOS.add(hotelToHotelDTO.converter(hotel));
+		}
+
+		return hotelDTOS;
 	}
 
 
-	public HotelDTO getHotelByName(String name){
-		Hotel hotelOpt = hotelRepository.findByName(name);
+	/***
+	 * get a hotel by his name
+	 * @param name of hotel to be found
+	 * @return the hotel with the current id
+	 * @throws Exception
+	 */
+	public HotelDTO getHotelByName(String name) throws Exception {
 
-		if (hotelOpt != null){
-			return hotelToHotelDTO.converter(hotelOpt);
+		Optional<Hotel> hotelOpt = hotelRepository.findByName(name);
+
+		if (hotelOpt.isPresent()){
+			return hotelToHotelDTO.converter(hotelOpt.get());
 		}else return null;
 	}
 
+	/***
+	 * enables a hotel by his id
+	 * @param id of the hotel to be enabled
+	 * @return  a boolean if the action is done or not
+	 */
 	public boolean enableHotel(Long id){
 		if (hotelRepository.existsById(id)){
 			Hotel hotel = hotelRepository.findById(id).get();
@@ -80,6 +109,11 @@ public class HotelService {
 
 	}
 
+	/***
+	 * disbel a hotel by his id
+	 * @param id of the hotel to be disabled
+	 * @return a boolean if the action has done or not
+	 */
 	public boolean disableHotel(Long id){
 		if (hotelRepository.existsById(id)){
 			Hotel hotel = hotelRepository.findById(id).get();
@@ -96,7 +130,13 @@ public class HotelService {
 		return "Hotel with id" + id + "has be successfully removed";
 	}
 
-	public HotelDTO updateHotel(HotelDTO hotelDTO, List<RoomDTO> roomDTOS) throws NullPointerException{
+	/***
+	 * update a hotel
+	 * @param hotelDTO the hotel to be updated
+	 * @return the updated hotel
+	 * @throws NullPointerException
+	 */
+	public HotelDTO updateHotel(HotelDTO hotelDTO) throws Exception {
 		Optional<Hotel> hotelOpt = hotelRepository.findById(hotelDTO.getId());
 		if (hotelOpt.isPresent()){
 			Hotel existingHotel = hotelRepository.findById(hotelDTO.getId()).orElse(null);
@@ -105,34 +145,58 @@ public class HotelService {
 			existingHotel.setAreaName(hotelDTO.getAreaName());
 			Optional<Admin>  admin = adminRepository.findById(hotelDTO.getId());
 			admin.ifPresent(existingHotel::setOwner);
-			for (RoomDTO roomDTO : roomDTOS){
-				roomService.updateRoom(roomDTO);
-			}
-			hotelRepository.save(existingHotel);
+
+			return hotelToHotelDTO.converter(hotelRepository.save(existingHotel));
 		}
 		return hotelDTO;
 	}
 
+	/***
+	 * saves a hotel
+	 * @param hotelDTO hotel to be saved
+	 * @return the saved hotel for confirmation
+	 * @throws Exception
+	 */
 	public HotelDTO saveHotelDTO(HotelDTO hotelDTO) throws Exception {
-		Hotel hotel = new Hotel();
+		Hotel hotel = new Hotel(1L);
 		Optional<Admin> adminOpt =
 				adminRepository.findById(hotelDTO.getOwner());
-		adminOpt.ifPresent(hotel::setOwner);
-		hotel.setName(hotelDTO.getName());
-		hotel.setAreaName(hotelDTO.getAreaName());
-		hotel.setStars(hotelDTO.getStars());
 
-		return hotelDTO;
-	}
+		Set<RoomDTO> roomOpt = hotelDTO.getRooms();
 
-	public List<HotelDTO> saveHotels(List<HotelDTO> hotelsDTO, List<RoomDTO> roomsDTOS) throws Exception {
-		List<Hotel> hotels = new ArrayList<>();
-
-		for (HotelDTO hotelDTO : hotelsDTO){
-			hotels.add(hotelDTOToHotel.converter(hotelDTO));
+		if (adminOpt.isPresent() && roomOpt.size()>0){
+			hotel = hotelDTOToHotel.converter(hotelDTO);
+		}
+		if (!adminOpt.isPresent()){
+			throw new Exception("There is no Owner registered with that id, or the id is null!");
+		}
+		if (roomOpt.size() == 0){
+			throw new Exception("If you wont to save hotels you mast add one or more rooms");
 		}
 
-		roomService.saveRooms(roomsDTOS);
+		return hotelToHotelDTO.converter(hotel);
+	}
+
+	/***
+	 * save a list of hotels
+	 * @param hotelsDTO list of hotels to be saved
+	 * @return the saved hotels for confirmation
+	 * @throws Exception
+	 */
+	public List<HotelDTO> saveHotels(List<HotelDTO> hotelsDTO) throws Exception {
+		List<Hotel> hotels = new ArrayList<>();
+		for (HotelDTO hotelDTO : hotelsDTO){
+
+			if (hotelDTO.getOwner() == null || adminService.getAdminById(hotelDTO.getOwner()) == null) {
+				throw new Exception("There is no Owner registered with that id, or the id is null!");
+			}
+
+			if (hotelDTO.getRooms() == null){
+				throw new Exception("If you wont to save hotels you mast add one or more rooms");
+			}
+
+			hotels.add(hotelDTOToHotel.converter(hotelDTO));
+		}
 
 		hotelRepository.saveAll(hotels);
 
