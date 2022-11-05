@@ -2,11 +2,9 @@ package com.sphy.hotelmanagementapplication.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
-import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.service.HotelService;
-import com.sphy.hotelmanagementapplication.service.RoomService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,20 +39,11 @@ public class HotelControllerTest {
     @Mock
     HotelService hotelService;
 
-    @Mock
-    RoomService roomService;
-
-    @Mock
-    RoomController roomController;
-
     @InjectMocks
     HotelController hotelController;
 
     List<Hotel> hotels;
     List<HotelDTO> hotelDTOS1;
-
-    List<RoomDTO> roomDTOS;
-    List<Room> rooms;
 
     MockMvc mockMvc;
 

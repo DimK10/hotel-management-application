@@ -174,7 +174,7 @@ public class HotelServiceTest {
             roomDTOS1.add(roomDTO4);
             hotelDTO.getRooms().add(roomDTO2);
 
-            hotelService = new HotelService(roomRepository, hotelRepository,adminRepository,
+            hotelService = new HotelService(hotelRepository,adminRepository,
                     new HotelDTOToHotel(new RoomDTOToRoom(hotelRepository,
                             new OrderDTOToOrder(roomRepository, clientRepository)),adminRepository),
                     new HotelToHotelDTO(new RoomToRoomDTO(
@@ -381,7 +381,7 @@ public class HotelServiceTest {
 
 
             //then
-            boolean actual = hotelService.disableHotel(anyLong());
+            boolean actual = hotelService.enableHotel(anyLong());
 
             assertEquals(expected, actual);
         }
@@ -393,7 +393,7 @@ public class HotelServiceTest {
             Hotel hotel = new Hotel();
             hotel.setId(1L);
             hotel.setName("hotel");
-            hotel.setDisabled(true);
+            hotel.setDisabled(false);
 
             Optional<Hotel> hotelOptional = Optional.of(hotel);
 
@@ -403,7 +403,7 @@ public class HotelServiceTest {
 
 
             //then
-            boolean actual = hotelService.enableHotel(anyLong());
+            boolean actual = hotelService.disableHotel(anyLong());
 
             assertEquals(expected, actual);
         }

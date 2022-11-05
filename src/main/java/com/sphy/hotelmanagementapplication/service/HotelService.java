@@ -9,7 +9,6 @@ import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
-import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,8 +23,6 @@ import java.util.Set;
 public class HotelService {
 
 
-	private final RoomRepository roomRepository;
-
 	private final HotelRepository hotelRepository;
 
 	private final AdminRepository adminRepository;
@@ -34,17 +31,13 @@ public class HotelService {
 
 	private final HotelToHotelDTO hotelToHotelDTO;
 
-	private final RoomService roomService;
-
 	private final AdminService adminService;
 
-	public HotelService(RoomRepository roomRepository, HotelRepository hotelRepository, AdminRepository adminRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, AdminService adminService) {
-		this.roomRepository = roomRepository;
+	public HotelService(HotelRepository hotelRepository, AdminRepository adminRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, AdminService adminService) {
 		this.hotelRepository = hotelRepository;
 		this.adminRepository = adminRepository;
 		this.hotelDTOToHotel = hotelDTOToHotel;
 		this.hotelToHotelDTO = hotelToHotelDTO;
-		this.roomService = roomService;
 		this.adminService = adminService;
 	}
 
@@ -52,32 +45,39 @@ public class HotelService {
 	 * get a hotel by his id
 	 * @param id of the hotel tobe found
 	 * @return the hotel with the current id
+	 * @throws Exception if the hotel does not exist
 	 */
 	public HotelDTO getHotelById(Long id) throws Exception {
-		Optional<Hotel> hotelOPT = hotelRepository.findById(id);
-
-		if (hotelOPT.isPresent()){
+		Optional<Hotel> hotel = hotelRepository.findById(id);
+		if (!hotel.isPresent()){
+			throw new ApiRequestException("There is no hotel with id: " + id);
+		}else {
 			return hotelToHotelDTO.converter(hotelRepository.findById(id).get());
-		}else return null;
+		}
+
 	}
 
 
 	/***
 	 * get all hotels
 	 * @return a list of all hotels
+	 * @throws Exception if There are no hotels
 	 */
 	public List<HotelDTO> getHotels() throws Exception {
+		if (hotelRepository.findAll() == null) {
+			throw new ApiRequestException("There are no hotels added whet");
+		}else {
+			List<Hotel> hotels = new ArrayList<>();
+			List<HotelDTO> hotelDTOS = new ArrayList<>();
 
-		List<Hotel> hotels = new ArrayList<>();
-		List<HotelDTO> hotelDTOS = new ArrayList<>();
+			hotelRepository.findAll().spliterator().forEachRemaining(hotels::add);
 
-		hotelRepository.findAll().spliterator().forEachRemaining(hotels::add);
+			for (Hotel hotel : hotels) {
+				hotelDTOS.add(hotelToHotelDTO.converter(hotel));
+			}
 
-		for (Hotel hotel : hotels){
-			hotelDTOS.add(hotelToHotelDTO.converter(hotel));
+			return hotelDTOS;
 		}
-
-		return hotelDTOS;
 	}
 
 
@@ -85,28 +85,37 @@ public class HotelService {
 	 * get a hotel by his name
 	 * @param name of hotel to be found
 	 * @return the hotel with the current id
+	 * @throws Exception if the hotel does not exist
 	 */
 	public HotelDTO getHotelByName(String name) throws Exception {
+		Optional<Hotel> hotel = hotelRepository.findByName(name);
+		if (!hotel.isPresent()){
+			throw new ApiRequestException("There is no hotel with name: " + name);
+		}else {
+			Optional<Hotel> hotelOpt = hotelRepository.findByName(name);
+				return hotelToHotelDTO.converter(hotelRepository.findByName(name).get());
 
-		Optional<Hotel> hotelOpt = hotelRepository.findByName(name);
-
-		if (hotelOpt.isPresent()){
-			return hotelToHotelDTO.converter(hotelOpt.get());
-		}else return null;
+		}
 	}
 
 	/***
 	 * enables a hotel by his id
 	 * @param id of the hotel to be enabled
 	 * @return  a boolean if the action is done or not
+	 * @throws ApiRequestException if the hotel does not exist or is already activated
 	 */
-	public boolean enableHotel(Long id){
-		if (hotelRepository.existsById(id)){
+	public boolean enableHotel(Long id) throws ApiRequestException{
+
+		if (!hotelRepository.existsById(id)) {
+			throw new ApiRequestException("There is no hotel with id: " + id);
+		}else if(!hotelRepository.findById(id).get().isDisabled()){
+			throw new ApiRequestException("The hotel with id: " + id + " is already activated");
+		}else{
 			Hotel hotel = hotelRepository.findById(id).get();
 			hotel.setDisabled(false);
 			hotelRepository.save(hotel);
 			return true;
-		}else return false;
+		}
 
 	}
 
@@ -114,15 +123,20 @@ public class HotelService {
 	 * disbel a hotel by his id
 	 * @param id of the hotel to be disabled
 	 * @return a boolean if the action has done or not
+	 * @throws ApiRequestException if the hotel does not exist or is already deactivated
 	 */
 	public boolean disableHotel(Long id){
-		if (hotelRepository.existsById(id)){
+
+		if (!hotelRepository.existsById(id)){
+			throw new ApiRequestException("There is no hotel with id: " + id);
+		}else if (hotelRepository.findById(id).get().isDisabled()) {
+			throw new ApiRequestException("The hotel with id: " + id + " is already deactivated");
+		} else {
 			Hotel hotel = hotelRepository.findById(id).get();
 			hotel.setDisabled(true);
 			hotelRepository.save(hotel);
 			return true;
-		}else return false;
-
+		}
 	}
 
 
@@ -135,10 +149,13 @@ public class HotelService {
 	 * update a hotel
 	 * @param hotelDTO the hotel to be updated
 	 * @return the updated hotel
+	 * @throws Exception if the hotel does not exist
 	 */
 	public HotelDTO updateHotel(HotelDTO hotelDTO) throws Exception {
-		Optional<Hotel> hotelOpt = hotelRepository.findById(hotelDTO.getId());
-		if (hotelOpt.isPresent()){
+
+		if (!hotelRepository.existsById(hotelDTO.getId())){
+			throw new ApiRequestException("The hotel with name: " + hotelDTO.getName() + " does not exist to update it");
+		}else {
 			Hotel existingHotel = hotelRepository.findById(hotelDTO.getId()).orElse(null);
 			existingHotel.setName(hotelDTO.getName());
 			existingHotel.setStars(hotelDTO.getStars());
@@ -148,16 +165,15 @@ public class HotelService {
 
 			return hotelToHotelDTO.converter(hotelRepository.save(existingHotel));
 		}
-		return hotelDTO;
 	}
 
 	/***
 	 * saves a hotel
 	 * @param hotelDTO hotel to be saved
 	 * @return the saved hotel for confirmation
-	 * @throws Exception if the hotel does not have an Owner or does not have rooms
+	 * @throws ApiRequestException if the hotel does not have an Owner or does not have rooms
 	 */
-	public HotelDTO saveHotelDTO(HotelDTO hotelDTO) throws Exception {
+	public HotelDTO saveHotelDTO(HotelDTO hotelDTO) throws Exception{
 		Hotel hotel = new Hotel();
 		Optional<Admin> adminOpt =
 				adminRepository.findById(hotelDTO.getOwner());
