@@ -6,6 +6,7 @@ import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
+import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
 import org.springframework.stereotype.Service;
@@ -65,7 +66,7 @@ public class RoomService {
      * save a list of rooms
      * @param roomsDTO the rooms to be saved
      * @return the saved rooms for confirmation
-     * @throws Exception
+     * @throws Exception if the rooms that are going to save does not have a hotel
      */
     public List<RoomDTO> saveRooms(List<RoomDTO> roomsDTO) throws Exception{
         List<Room> rooms = new ArrayList<>();
@@ -74,9 +75,8 @@ public class RoomService {
         }
 		for(RoomDTO roomDto : roomsDTO) {
 			if (roomDto.getHotel() == null) {
-				throw new Exception(
-						"One of the rooms provided does not have a hotel (room.getHotel == null)."
-								+ " Room with name: " + roomDto.getName() + " has no hotel"
+				throw new ApiRequestException(
+								" Room with name: " + roomDto.getName() + " has not have a hotel"
 				);
 			}else {
                 rooms.add(roomDTOToRoom.converter(roomDto));
@@ -103,8 +103,11 @@ public class RoomService {
      */
     public List<RoomDTO> getRooms() throws Exception {
 		List<Room> rooms = new ArrayList<>();
-        List<RoomDTO> roomsDTO = new ArrayList<>();
+
         roomRepository.findAll().forEach(rooms::add);
+
+        List<RoomDTO> roomsDTO = new ArrayList<>();
+
         for (Room room : rooms){
             roomsDTO.add(roomToRoomDTO.converter(room));
         }
@@ -118,6 +121,7 @@ public class RoomService {
      * @throws Exception
      */
     public RoomDTO getRoomById(Long id) throws Exception {
+
         Optional<Room> roomOpt = roomRepository.findById(id);
 
         if (roomOpt.isPresent()){
@@ -130,9 +134,8 @@ public class RoomService {
      * get a room by his name
      * @param name of the room to be found
      * @return the room with the current name
-     * @throws Exception
      */
-    public RoomDTO getRoomByName(String name) throws Exception {
+    public RoomDTO getRoomByName(String name) throws ApiRequestException {
         Optional<Room> roomOpt = roomRepository.findByName(name);
         if (roomOpt.isPresent()){
             return roomToRoomDTO.converter(roomOpt.get());
