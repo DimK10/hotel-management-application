@@ -42,7 +42,6 @@ public class RoomService {
      * save a room
      * @param roomDTO the room to be saved
      * @return the saved room for confirmation
-     * @throws Exception
      */
 	public RoomDTO saveRoomDTO(RoomDTO roomDTO) throws Exception {
 		Room room = new Room();
@@ -55,8 +54,6 @@ public class RoomService {
         if (hotelOpt.isPresent()){
             hotelOpt.get().getRooms().add(room);
             hotelRepository.save(hotelOpt.get());
-        }else{
-            throw new Exception("The Room can't be saved without a hotel");
         }
 
 		return roomToRoomDTO.converter(room);
@@ -99,7 +96,6 @@ public class RoomService {
     /***
      * get all rooms
      * @return a list of all rooms
-     * @throws Exception
      */
     public List<RoomDTO> getRooms() throws Exception {
 		List<Room> rooms = new ArrayList<>();
@@ -118,7 +114,6 @@ public class RoomService {
      * find a room by his id
      * @param id of the room to be found
      * @return the room with the current id
-     * @throws Exception
      */
     public RoomDTO getRoomById(Long id) throws Exception {
 
@@ -176,9 +171,8 @@ public class RoomService {
      * updates a room
      * @param roomDTO room to be updated
      * @return the updated room for confirmation
-     * @throws NullPointerException
      */
-    public RoomDTO updateRoom(RoomDTO roomDTO) throws NullPointerException{
+    public RoomDTO updateRoom(RoomDTO roomDTO) {
         Optional<Room> roomOpt = roomRepository.findById(roomDTO.getId());
 
         if (roomOpt.isPresent()){

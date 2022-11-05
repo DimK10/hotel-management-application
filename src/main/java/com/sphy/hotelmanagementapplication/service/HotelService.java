@@ -6,6 +6,7 @@ import com.sphy.hotelmanagementapplication.domain.Admin;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
+import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
@@ -51,7 +52,6 @@ public class HotelService {
 	 * get a hotel by his id
 	 * @param id of the hotel tobe found
 	 * @return the hotel with the current id
-	 * @throws Exception
 	 */
 	public HotelDTO getHotelById(Long id) throws Exception {
 		Optional<Hotel> hotelOPT = hotelRepository.findById(id);
@@ -65,7 +65,6 @@ public class HotelService {
 	/***
 	 * get all hotels
 	 * @return a list of all hotels
-	 * @throws Exception
 	 */
 	public List<HotelDTO> getHotels() throws Exception {
 
@@ -86,7 +85,6 @@ public class HotelService {
 	 * get a hotel by his name
 	 * @param name of hotel to be found
 	 * @return the hotel with the current id
-	 * @throws Exception
 	 */
 	public HotelDTO getHotelByName(String name) throws Exception {
 
@@ -137,7 +135,6 @@ public class HotelService {
 	 * update a hotel
 	 * @param hotelDTO the hotel to be updated
 	 * @return the updated hotel
-	 * @throws NullPointerException
 	 */
 	public HotelDTO updateHotel(HotelDTO hotelDTO) throws Exception {
 		Optional<Hotel> hotelOpt = hotelRepository.findById(hotelDTO.getId());
@@ -158,7 +155,7 @@ public class HotelService {
 	 * saves a hotel
 	 * @param hotelDTO hotel to be saved
 	 * @return the saved hotel for confirmation
-	 * @throws Exception
+	 * @throws Exception if the hotel does not have an Owner or does not have rooms
 	 */
 	public HotelDTO saveHotelDTO(HotelDTO hotelDTO) throws Exception {
 		Hotel hotel = new Hotel(1L);
@@ -171,10 +168,10 @@ public class HotelService {
 			hotel = hotelDTOToHotel.converter(hotelDTO);
 		}
 		if (!adminOpt.isPresent()){
-			throw new Exception("There is no Owner registered with that id, or the id is null!");
+			throw new ApiRequestException("There is no Owner registered with that id, or the id is null!");
 		}
 		if (roomOpt.size() == 0){
-			throw new Exception("If you wont to save hotels you mast add one or more rooms");
+			throw new ApiRequestException("If you wont to save hotels you mast add one or more rooms");
 		}
 
 		return hotelToHotelDTO.converter(hotel);
@@ -184,18 +181,18 @@ public class HotelService {
 	 * save a list of hotels
 	 * @param hotelsDTO list of hotels to be saved
 	 * @return the saved hotels for confirmation
-	 * @throws Exception
+	 * @throws Exception if one of the hotels does not have an owner , the owner does not exist or does not have rooms
 	 */
 	public List<HotelDTO> saveHotels(List<HotelDTO> hotelsDTO) throws Exception {
 		List<Hotel> hotels = new ArrayList<>();
 		for (HotelDTO hotelDTO : hotelsDTO){
 
 			if (hotelDTO.getOwner() == null || adminService.getAdminById(hotelDTO.getOwner()) == null) {
-				throw new Exception("There is no Owner registered with that id, or the id is null!");
+				throw new Exception("In hotel with name: " + hotelDTO.getName() + " There Owner does not exist or you have not add one");
 			}
 
 			if (hotelDTO.getRooms() == null){
-				throw new Exception("If you wont to save hotels you mast add one or more rooms");
+				throw new Exception("In hotel with name: " + hotelDTO.getName() + " In hotel with name: " + hotelDTO.getName() + " there are no rooms");
 			}
 
 			hotels.add(hotelDTOToHotel.converter(hotelDTO));

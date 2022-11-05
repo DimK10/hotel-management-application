@@ -39,7 +39,7 @@ public class RoomController {
     @PostMapping("/api/room/create")
     public RoomDTO addRoom(@RequestBody RoomDTO roomDTO) throws Exception {
         if (roomDTO.getHotel() == null || hotelService.getHotelById(roomDTO.getHotel()) == null) {
-            throw new ApiRequestException("There is no Hotel registered with that id, or the id is null!");
+            throw new ApiRequestException("The rooms Hotel does not exist, or you haven't add any");
         }
         return service.saveRoomDTO(roomDTO);
     }
@@ -48,7 +48,6 @@ public class RoomController {
      * create new rooms
      * @param roomsDTO is the list of the hotels we want to save
      * @return the list with the saved rooms
-     * @throws Exception if the rooms that are going to save does not have a hotel
      */
     @PostMapping("/api/rooms/create")
     public List<RoomDTO> addRooms(@RequestBody List<RoomDTO> roomsDTO) throws Exception {
@@ -64,7 +63,7 @@ public class RoomController {
     @GetMapping("/api/rooms")
     public List<RoomDTO> findAllRooms() throws Exception {
         if (roomRepository.count() == 0){
-            throw new ApiRequestException("There are no rooms");
+            throw new ApiRequestException("There are no rooms added whet");
         }else {
             return service.getRooms();
         }
@@ -80,7 +79,7 @@ public class RoomController {
     public RoomDTO findRoomById(@PathVariable Long id) throws Exception {
 
         if (!roomRepository.existsById(id)){
-            throw new ApiRequestException("There is now room with such id");
+            throw new ApiRequestException("There is now room with id: " + id);
 
         }else {
             return service.getRoomById(id);
@@ -91,12 +90,12 @@ public class RoomController {
      * finds a room by his name
      * @param name name of the room we want to save
      * @return the room with that name
-     * @throws ApiRequestException if there is no room with the given name
+     * @throws Exception if there is no room with the given name
      */
     @GetMapping("/api/roomName/{name}")
     public RoomDTO findRoomByName(@PathVariable String name) throws ApiRequestException {
         if (!roomRepository.findByName(name).isPresent()){
-            throw new ApiRequestException("There is no room with the given name");
+            throw new ApiRequestException("There is no room with the given name: " + name);
         }else {
             return service.getRoomByName(name);
         }
@@ -106,13 +105,13 @@ public class RoomController {
      * updates a room
      * @param roomDTO the room we want to update
      * @return the updated room for confirmation
-     * @throws ApiRequestException if the room that is going to update is not exists
+     * @throws Exception if the room that is going to update is not exists
      */
     @PutMapping("/api/room/update")
     public RoomDTO updateRoom(@RequestBody RoomDTO roomDTO)throws ApiRequestException {
 
         if (!roomRepository.findById(roomDTO.getId()).isPresent()){
-            throw new ApiRequestException("The room you wont to update does not exist");
+            throw new ApiRequestException("The room with name: " + roomDTO.getName() + " does not exist");
         }else {
             return service.updateRoom(roomDTO);
         }
@@ -122,7 +121,7 @@ public class RoomController {
      * enables a room by his id
      * @param id id of the room we want to disable
      * @return a confirmation message or an error message
-     * @throws ApiRequestException if the room does not exist or is already activated
+     * @throws Exception if the room does not exist or is already activated
      */
 	@PostMapping("/api/room/enable/{id}")
 	ResponseEntity<String> enableRoom(@PathVariable Long id) throws ApiRequestException {
@@ -132,6 +131,7 @@ public class RoomController {
 		}if (!roomRepository.findById(id).get().isDisabled()){
             throw new ApiRequestException("The room you want to activate is already activated");
         }else {
+            service.enableRoom(id);
 			return ResponseEntity.status(HttpStatus.OK)
 					.body("Room with id " + id + " was successfully activated");
 		}
@@ -142,7 +142,7 @@ public class RoomController {
      * disables a room by his id
      * @param id of the room we want to disable
      * @return a message of confirmation or an error message
-     * @throws ApiRequestException if the room does not exist or is already deactivated
+     * @throws Exception if the room does not exist or is already deactivated
      */
     @PostMapping("/api/room/disable/{id}")
     ResponseEntity<String> disableRoom(@PathVariable Long id) throws ApiRequestException{
@@ -152,6 +152,7 @@ public class RoomController {
         }else if (roomRepository.findById(id).get().isDisabled() ){
             throw new ApiRequestException("The room you want to deactivate is already deactivated");
         }else {
+            service.disableRoom(id);
             return ResponseEntity.status(HttpStatus.OK)
                     .body("Room with id " + id + " was successfully deactivated");
         }
