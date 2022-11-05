@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 import java.util.Set;
 
+/***
+ * created by dk
+ */
 @Repository
 public interface HotelRepository extends CrudRepository<Hotel,Long> {
 

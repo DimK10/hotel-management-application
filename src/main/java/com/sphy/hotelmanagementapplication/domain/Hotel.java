@@ -3,6 +3,10 @@ package com.sphy.hotelmanagementapplication.domain;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+
+/***
+ * created by gp
+ */
 @Entity
 @Table(name = "hotels")
 @NamedEntityGraph(name = "Hotel.rooms",

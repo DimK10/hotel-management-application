@@ -7,6 +7,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
 
+/***
+ * created by gp
+ */
 @Entity
 @Table(name = "orders")
 public class Order extends BaseEntity {
