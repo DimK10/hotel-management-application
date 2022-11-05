@@ -158,7 +158,7 @@ public class HotelService {
 	 * @throws Exception if the hotel does not have an Owner or does not have rooms
 	 */
 	public HotelDTO saveHotelDTO(HotelDTO hotelDTO) throws Exception {
-		Hotel hotel = new Hotel(1L);
+		Hotel hotel = new Hotel();
 		Optional<Admin> adminOpt =
 				adminRepository.findById(hotelDTO.getOwner());
 
@@ -181,18 +181,18 @@ public class HotelService {
 	 * save a list of hotels
 	 * @param hotelsDTO list of hotels to be saved
 	 * @return the saved hotels for confirmation
-	 * @throws Exception if one of the hotels does not have an owner , the owner does not exist or does not have rooms
+	 * @throws ApiRequestException if one of the hotels does not have an owner , the owner does not exist or does not have rooms
 	 */
-	public List<HotelDTO> saveHotels(List<HotelDTO> hotelsDTO) throws Exception {
+	public List<HotelDTO> saveHotels(List<HotelDTO> hotelsDTO) throws ApiRequestException {
 		List<Hotel> hotels = new ArrayList<>();
 		for (HotelDTO hotelDTO : hotelsDTO){
 
 			if (hotelDTO.getOwner() == null || adminService.getAdminById(hotelDTO.getOwner()) == null) {
-				throw new Exception("In hotel with name: " + hotelDTO.getName() + " There Owner does not exist or you have not add one");
+				throw new ApiRequestException("In hotel with name: " + hotelDTO.getName() + " There Owner does not exist or you have not add one");
 			}
 
 			if (hotelDTO.getRooms() == null){
-				throw new Exception("In hotel with name: " + hotelDTO.getName() + " In hotel with name: " + hotelDTO.getName() + " there are no rooms");
+				throw new ApiRequestException("In hotel with name: " + hotelDTO.getName() + " In hotel with name: " + hotelDTO.getName() + " there are no rooms");
 			}
 
 			hotels.add(hotelDTOToHotel.converter(hotelDTO));

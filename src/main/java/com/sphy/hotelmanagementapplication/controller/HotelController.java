@@ -144,11 +144,11 @@ public class HotelController {
      * @throws Exception if the hotel does not exist or is already activated
      */
     @PostMapping("/api/hotel/enable/{id}")
-    ResponseEntity<String> enableHotel(@PathVariable Long id) {
+    ResponseEntity<String> enableHotel(@PathVariable Long id)throws ApiRequestException {
 
         if (!hotelRepository.findById(id).isPresent()) {
             throw new ApiRequestException("There is no hotel with id: " + id);
-        } else if(hotelRepository.findById(id).get().isDisabled()) {
+        } else if(!hotelRepository.findById(id).get().isDisabled()) {
             throw new ApiRequestException("The hotel with id: " + id + " is already activated");
         }else {
             service.enableHotel(id);
@@ -165,11 +165,11 @@ public class HotelController {
      * @throws Exception if the hotel does not exist or is already deactivated
      */
     @PostMapping("/api/hotel/disable/{id}")
-    ResponseEntity<String> disableHotel(@PathVariable Long id) {
+    ResponseEntity<String> disableHotel(@PathVariable Long id) throws ApiRequestException {
 
         if (!hotelRepository.findById(id).isPresent()){
             throw new ApiRequestException("There is no hotel with id: " + id);
-        }else if (!hotelRepository.findById(id).get().isDisabled()) {
+        }else if (hotelRepository.findById(id).get().isDisabled()) {
             throw new ApiRequestException("The hotel with id: " + id + " is already deactivated");
         } else {
             service.disableHotel(id);

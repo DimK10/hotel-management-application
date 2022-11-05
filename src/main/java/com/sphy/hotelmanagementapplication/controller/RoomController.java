@@ -128,7 +128,7 @@ public class RoomController {
 
 		if (!roomRepository.findById(id).isPresent()) {
 			throw  new ApiRequestException("The room you want to activate does not exist");
-		}if (!roomRepository.findById(id).get().isDisabled()){
+		}else if (!roomRepository.findById(id).get().isDisabled()){
             throw new ApiRequestException("The room you want to activate is already activated");
         }else {
             service.enableRoom(id);
