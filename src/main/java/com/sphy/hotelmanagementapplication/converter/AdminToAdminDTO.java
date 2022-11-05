@@ -5,6 +5,9 @@ import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.dto.AdminDTO;
 import org.springframework.stereotype.Component;
 
+/***
+ * created by gp
+ */
 @Component
 public class AdminToAdminDTO {
 

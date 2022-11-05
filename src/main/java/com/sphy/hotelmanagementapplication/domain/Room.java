@@ -6,6 +6,9 @@ import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/***
+ * created by gp
+ */
 @Entity(name = "rooms")
 @DiscriminatorValue("rooms")
 public class Room extends BaseEntity {

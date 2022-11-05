@@ -4,6 +4,9 @@ import com.sphy.hotelmanagementapplication.domain.Admin;
 import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
 import org.springframework.stereotype.Service;
 
+/***
+ * created by gp
+ */
 @Service
 public class AdminService {
 

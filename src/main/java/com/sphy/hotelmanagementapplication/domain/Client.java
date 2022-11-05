@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/***
+ * created by gp
+ */
 @Entity(name = "clients")
 public class Client extends User {
 

@@ -6,6 +6,10 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+
+/***
+ * created by gp
+ */
 public class HotelDTO implements Serializable{
 
     private Long id;

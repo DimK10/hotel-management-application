@@ -5,6 +5,9 @@ import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
 
+/***
+ * created by gp
+ */
 @Entity(name = "admins")
 public class Admin extends User {
 

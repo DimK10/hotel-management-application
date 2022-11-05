@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/***
+ * created by gp
+ */
 public class AdminDTO implements Serializable {
 
     private Long id;
