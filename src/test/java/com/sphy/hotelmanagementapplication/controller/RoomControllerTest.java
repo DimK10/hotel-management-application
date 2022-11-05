@@ -107,7 +107,6 @@ class RoomControllerTest {
 
 		// When
 		when(roomService.saveRoomDTO(any())).thenReturn(roomDTO);
-		when(hotelService.getHotelById(anyLong())).thenReturn(new HotelDTO(1L));
 
 		// Return
 		mockMvc.perform(
