@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -299,6 +300,12 @@ class RoomControllerTest {
 
 		verify(roomService, times(1)).disableRoom(any());
 
+	}
+
+
+	@Test
+	void should_fail_on_purpose() throws Exception {
+		fail("Fail on purpose test");
 	}
 
 	public static String asJsonString(final Object obj) {
