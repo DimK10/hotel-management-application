@@ -13,6 +13,7 @@ import java.util.Set;
 /***
  * created by dk
  */
+
 @Repository
 public interface HotelRepository extends CrudRepository<Hotel,Long> {
 

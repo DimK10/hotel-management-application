@@ -103,9 +103,6 @@ public class HotelControllerTest {
 
         hotelDTOS1.add(hotelDTO1);
 
-//		rooms.forEach(System.out::println);
-//		roomDTOS.forEach(System.out::println);
-
         mockMvc = MockMvcBuilders
                 .standaloneSetup(hotelController)
                 .build();

@@ -30,6 +30,7 @@ import static org.mockito.Mockito.when;
 /***
  * created by gp
  */
+
 @ExtendWith(MockitoExtension.class)
 public class HotelServiceTest {
 

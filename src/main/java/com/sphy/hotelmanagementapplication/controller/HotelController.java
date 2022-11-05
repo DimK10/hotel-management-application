@@ -108,7 +108,7 @@ public class HotelController {
      * Finds a hotel by his name
      * @param name the name of the hotel we want to find
      * @return the hotel with the given name
-     * @throws Exception
+     * @throws Exception if the hotel does not exist
      */
     @GetMapping("/api/hotelName/{name}")
     public HotelDTO findHotelByName (@PathVariable String name) throws Exception {
