@@ -89,7 +89,6 @@ public class RoomService {
             roomDTOS.add(roomToRoomDTO.converter(room));
         }
 
-		rooms.clear();
 
         return roomDTOS;
     }
@@ -189,9 +188,9 @@ public class RoomService {
             hotelRepository.save(hotel.get());
 
             return roomToRoomDTO.converter(roomRepository.save(existingRoom));
+
         }
         return null;
-
     }
 
 

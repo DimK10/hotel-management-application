@@ -241,7 +241,7 @@ public class HotelControllerTest {
         when(hotelService.getHotelByName(anyString())).thenReturn(hotelDTO);
 
         // Return
-        mockMvc.perform(get("/api/hotelName/hotelName", "hotelName"))
+        mockMvc.perform(get("/api/hotelName/{name}","hotelName"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.name").value("hotelName"));
@@ -327,7 +327,7 @@ public class HotelControllerTest {
     }
 
 	/**
-	 * This method converts an object to a string represantation in JSON format.
+	 * This method converts an object to a string representation in JSON format.
 	 * Basically, it serializes the object in json format.
 	 * @param obj The object to be serialized.
 	 * @return THe String representation of given object in JSON format.
