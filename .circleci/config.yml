@@ -62,10 +62,9 @@ jobs:
           name: Send to CodeCov
           command: bash <(curl -s https://codecov.io/bash)
 workflows:
+  version: 2
   build_and_notify:
     jobs:
       - build
       - notify:
-          requires:
-            - build
           context: slack-secrets
