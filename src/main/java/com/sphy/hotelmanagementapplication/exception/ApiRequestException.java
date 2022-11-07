@@ -1,10 +1,10 @@
 package com.sphy.hotelmanagementapplication.exception;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
 
+/***
+ * created by gp
+ */
 public class ApiRequestException extends RuntimeException{
 
     public ApiRequestException(String message) {

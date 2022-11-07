@@ -4,6 +4,9 @@ import org.springframework.http.HttpStatus;
 
 import java.time.ZonedDateTime;
 
+/***
+ * created by gp
+ */
 public class ApiException {
 
     private final String message;
