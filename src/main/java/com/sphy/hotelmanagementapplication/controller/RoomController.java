@@ -53,7 +53,7 @@ public class RoomController {
      * @throws ApiRequestException if no room is saved
      */
     @GetMapping("/api/rooms")
-    public List<RoomDTO> findAllRooms() throws ApiRequestException{
+    public List<RoomDTO> findAllRooms() throws ApiRequestException {
             return service.getRooms();
     }
 
@@ -116,7 +116,7 @@ public class RoomController {
      * @throws ApiRequestException if the room does not exist or is already deactivated
      */
     @PostMapping("/api/room/disable/{id}")
-    ResponseEntity<String> disableRoom(@PathVariable Long id) throws ApiRequestException{
+    ResponseEntity<String> disableRoom(@PathVariable Long id) throws ApiRequestException {
 
             service.disableRoom(id);
             return ResponseEntity.status(HttpStatus.OK)

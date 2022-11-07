@@ -104,7 +104,7 @@ public class HotelService {
 	 * @return  a boolean if the action is done or not
 	 * @throws ApiRequestException if the hotel does not exist or is already activated
 	 */
-	public boolean enableHotel(Long id) throws ApiRequestException{
+	public boolean enableHotel(Long id) throws ApiRequestException {
 
 		if (!hotelRepository.existsById(id)) {
 			throw new ApiRequestException("There is no hotel with id: " + id);

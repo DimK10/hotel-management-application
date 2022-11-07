@@ -70,7 +70,7 @@ public class RoomService {
      * @return the saved rooms for confirmation
      * @throws ApiRequestException if the rooms that are going to save does not have a hotel or the hotel does not exist
      */
-    public List<RoomDTO> saveRooms(List<RoomDTO> roomsDTO) throws ApiRequestException{
+    public List<RoomDTO> saveRooms(List<RoomDTO> roomsDTO) throws ApiRequestException {
         List<Room> rooms = new ArrayList<>();
 
 		for(RoomDTO roomDto : roomsDTO) {
@@ -101,21 +101,25 @@ public class RoomService {
      * @throws ApiRequestException if no room is saved
      */
     public List<RoomDTO> getRooms() throws ApiRequestException {
-        if (roomRepository.findAll() == null) {
-            throw new ApiRequestException("There are no rooms added whet");
-        } else {
-            List<Room> rooms = new ArrayList<>();
 
-            roomRepository.findAll().forEach(rooms::add);
+        throw new ApiRequestException("There are no rooms added whet");
 
 
-            List<RoomDTO> roomsDTO = new ArrayList<>();
-
-            for (Room room : rooms) {
-                roomsDTO.add(roomToRoomDTO.converter(room));
-            }
-            return roomsDTO;
-        }
+//        if (roomRepository.findAll() == null) {
+//            throw new ApiRequestException("There are no rooms added whet");
+//        } else {
+//            List<Room> rooms = new ArrayList<>();
+//
+//            roomRepository.findAll().forEach(rooms::add);
+//
+//
+//            List<RoomDTO> roomsDTO = new ArrayList<>();
+//
+//            for (Room room : rooms) {
+//                roomsDTO.add(roomToRoomDTO.converter(room));
+//            }
+//            return roomsDTO;
+//        }
     }
 
     /***
@@ -155,7 +159,7 @@ public class RoomService {
      * @return a boolean if  the room enabled or not
      * @throws ApiRequestException if the room does not exist or is already activated
      */
-	public boolean enableRoom(Long id) throws ApiRequestException{
+	public boolean enableRoom(Long id) throws ApiRequestException {
         if (!roomRepository.existsById(id)) {
             throw  new ApiRequestException("The room you want to activate does not exist");
         }else if (!roomRepository.findById(id).get().isDisabled()){
@@ -174,7 +178,7 @@ public class RoomService {
      * @return a boolean if the room disabled or not
      * @throws ApiRequestException if the room does not exist or is already deactivated
      */
-    public boolean disableRoom(Long id) throws ApiRequestException{
+    public boolean disableRoom(Long id) throws ApiRequestException {
 
         if (!roomRepository.existsById(id)) {
             throw new ApiRequestException("The room want to deactivate does not exist");
