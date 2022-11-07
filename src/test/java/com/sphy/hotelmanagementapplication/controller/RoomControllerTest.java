@@ -302,12 +302,6 @@ class RoomControllerTest {
 
 	}
 
-
-//	@Test
-//	void should_fail_on_purpose() throws Exception {
-//		fail("Fail on purpose test");
-//	}
-
 	public static String asJsonString(final Object obj) {
 		try {
 			return new ObjectMapper().writeValueAsString(obj);
