@@ -42,7 +42,7 @@ public class RoomController {
      * @return the list with the saved rooms
      */
     @PostMapping("/api/rooms/create")
-    public List<RoomDTO> addRooms(@RequestBody List<RoomDTO> roomsDTO) throws Exception {
+    public List<RoomDTO> addRooms(@RequestBody List<RoomDTO> roomsDTO) throws ApiRequestException {
 
 		return service.saveRooms(roomsDTO);
     }

@@ -45,9 +45,9 @@ public class HotelService {
 	 * get a hotel by his id
 	 * @param id of the hotel tobe found
 	 * @return the hotel with the current id
-	 * @throws Exception if the hotel does not exist
+	 * @throws ApiRequestException if the hotel does not exist
 	 */
-	public HotelDTO getHotelById(Long id) throws Exception {
+	public HotelDTO getHotelById(Long id) throws ApiRequestException {
 		Optional<Hotel> hotel = hotelRepository.findById(id);
 		if (!hotel.isPresent()){
 			throw new ApiRequestException("There is no hotel with id: " + id);
@@ -61,9 +61,9 @@ public class HotelService {
 	/***
 	 * get all hotels
 	 * @return a list of all hotels
-	 * @throws Exception if There are no hotels
+	 * @throws ApiRequestException if There are no hotels
 	 */
-	public List<HotelDTO> getHotels() throws Exception {
+	public List<HotelDTO> getHotels() throws ApiRequestException {
 		if (hotelRepository.findAll() == null) {
 			throw new ApiRequestException("There are no hotels added whet");
 		}else {
@@ -85,9 +85,9 @@ public class HotelService {
 	 * get a hotel by his name
 	 * @param name of hotel to be found
 	 * @return the hotel with the current id
-	 * @throws Exception if the hotel does not exist
+	 * @throws ApiRequestException if the hotel does not exist
 	 */
-	public HotelDTO getHotelByName(String name) throws Exception {
+	public HotelDTO getHotelByName(String name) throws ApiRequestException {
 		Optional<Hotel> hotel = hotelRepository.findByName(name);
 		if (!hotel.isPresent()){
 			throw new ApiRequestException("There is no hotel with name: " + name);
@@ -125,7 +125,7 @@ public class HotelService {
 	 * @return a boolean if the action has done or not
 	 * @throws ApiRequestException if the hotel does not exist or is already deactivated
 	 */
-	public boolean disableHotel(Long id){
+	public boolean disableHotel(Long id) throws ApiRequestException{
 
 		if (!hotelRepository.existsById(id)){
 			throw new ApiRequestException("There is no hotel with id: " + id);
@@ -149,9 +149,9 @@ public class HotelService {
 	 * update a hotel
 	 * @param hotelDTO the hotel to be updated
 	 * @return the updated hotel
-	 * @throws Exception if the hotel does not exist
+	 * @throws ApiRequestException if the hotel does not exist
 	 */
-	public HotelDTO updateHotel(HotelDTO hotelDTO) throws Exception {
+	public HotelDTO updateHotel(HotelDTO hotelDTO) throws ApiRequestException {
 
 		if (!hotelRepository.existsById(hotelDTO.getId())){
 			throw new ApiRequestException("The hotel with name: " + hotelDTO.getName() + " does not exist to update it");
@@ -173,7 +173,7 @@ public class HotelService {
 	 * @return the saved hotel for confirmation
 	 * @throws ApiRequestException if the hotel does not have an Owner or does not have rooms
 	 */
-	public HotelDTO saveHotelDTO(HotelDTO hotelDTO) throws Exception{
+	public HotelDTO saveHotelDTO(HotelDTO hotelDTO) throws ApiRequestException{
 		Hotel hotel = new Hotel();
 		Optional<Admin> adminOpt =
 				adminRepository.findById(hotelDTO.getOwner());

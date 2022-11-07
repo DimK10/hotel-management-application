@@ -29,7 +29,7 @@ public class HotelController {
      * @return the saved hotel for confirmation
      */
     @PostMapping("/api/hotel/create")
-    public HotelDTO addHotel(@RequestBody HotelDTO hotelDTO) throws Exception {
+    public HotelDTO addHotel(@RequestBody HotelDTO hotelDTO) throws ApiRequestException {
         return service.saveHotelDTO(hotelDTO);
     }
 
@@ -39,7 +39,7 @@ public class HotelController {
      * @return the list of hotels that where saved
      */
     @PostMapping("/api/hotels/create")
-    public List<HotelDTO> addHotels(@RequestBody List<HotelDTO> hotelsDTO) throws Exception {
+    public List<HotelDTO> addHotels(@RequestBody List<HotelDTO> hotelsDTO) {
 
         return service.saveHotels(hotelsDTO);
 
@@ -48,10 +48,10 @@ public class HotelController {
     /***
      * Finds all hotels
      * @return all hotels
-     * @throws Exception if There are no hotels
+     * @throws ApiRequestException if There are no hotels
      */
     @GetMapping("/api/hotels")
-    public List<HotelDTO> findAllHotels() throws Exception {
+    public List<HotelDTO> findAllHotels() throws ApiRequestException {
 
             return service.getHotels();
 
@@ -61,10 +61,10 @@ public class HotelController {
      * Finds a hotel by his id
      * @param id id of the hotel that we want to find
      * @return the hotel with the given id
-     * @throws Exception if the hotel does not exist
+     * @throws ApiRequestException if the hotel does not exist
      */
     @GetMapping("/api/hotelId/{id}")
-    public HotelDTO findHotelById(@PathVariable Long id) throws Exception {
+    public HotelDTO findHotelById(@PathVariable Long id) throws ApiRequestException {
 
             return service.getHotelById(id);
 
@@ -74,10 +74,10 @@ public class HotelController {
      * Finds a hotel by his name
      * @param name the name of the hotel we want to find
      * @return the hotel with the given name
-     * @throws Exception if the hotel does not exist
+     * @throws ApiRequestException if the hotel does not exist
      */
     @GetMapping("/api/hotelName/{name}")
-    public HotelDTO findHotelByName (@PathVariable String name) throws Exception {
+    public HotelDTO findHotelByName (@PathVariable String name) throws ApiRequestException {
 
             return service.getHotelByName(name);
 
@@ -87,10 +87,10 @@ public class HotelController {
      * update a hotels parameters
      * @param hotelDTO new hotel parameters
      * @return tha updated hotel for confirmation
-     * @throws Exception if the hotel does not exist
+     * @throws ApiRequestException if the hotel does not exist
      */
     @PutMapping("/api/hotel/update")
-    public HotelDTO updateHotel(@RequestBody HotelDTO hotelDTO) throws Exception {
+    public HotelDTO updateHotel(@RequestBody HotelDTO hotelDTO) throws ApiRequestException {
 
             return service.updateHotel(hotelDTO);
 
