@@ -9,7 +9,6 @@ import java.util.Set;
 /***
  * created by gp
  */
-
 public class RoomDTO implements Serializable {
 
 	private Long Id;
