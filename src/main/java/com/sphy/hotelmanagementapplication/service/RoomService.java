@@ -158,9 +158,9 @@ public class RoomService {
      */
 	public boolean enableRoom(Long id) throws ApiRequestException {
         if (!roomRepository.existsById(id)) {
-            throw  new ApiRequestException("The room you want to activate does not exist");
+            throw  new ApiRequestException("The room with id: " + id + " does not exist");
         }else if (!roomRepository.findById(id).get().isDisabled()){
-            throw new ApiRequestException("The room you want to activate is already activated");
+            throw new ApiRequestException("The room with id: " + id + " is already activated");
         }else {
 			Room room = roomRepository.findById(id).get();
 			room.setDisabled(false);
@@ -178,9 +178,9 @@ public class RoomService {
     public boolean disableRoom(Long id) throws ApiRequestException {
 
         if (!roomRepository.existsById(id)) {
-            throw new ApiRequestException("The room want to deactivate does not exist");
+            throw new ApiRequestException("The room with id:" + id + " does not exist");
         }else if (roomRepository.findById(id).get().isDisabled() ){
-            throw new ApiRequestException("The room you want to deactivate is already deactivated");
+            throw new ApiRequestException("The room with id: " + id + "is already deactivated");
         }else {
 		   Room room = roomRepository.findById(id).get();
 		   room.setDisabled(true);
