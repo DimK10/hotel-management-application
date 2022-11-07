@@ -5,6 +5,9 @@ import javax.persistence.OneToMany;
 import java.util.HashSet;
 import java.util.Set;
 
+/***
+ * created by gp
+ */
 @Entity(name = "admins")
 public class Admin extends User {
 
@@ -19,7 +22,8 @@ public class Admin extends User {
         super(id, emailVerify, username, firstname, lastname, email, Role.ADMIN);
     }
 
-    public Admin(long l) {
+    public Admin(Long id) {
+        super.setId(id);
     }
 
     public Long getId() {

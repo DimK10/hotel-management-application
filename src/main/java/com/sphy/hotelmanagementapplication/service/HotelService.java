@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+/***
+ * created by gp
+ */
 @Service
 public class HotelService {
 
@@ -44,6 +47,12 @@ public class HotelService {
 		this.adminService = adminService;
 	}
 
+	/***
+	 * get a hotel by his id
+	 * @param id of the hotel tobe found
+	 * @return the hotel with the current id
+	 * @throws Exception
+	 */
 	public HotelDTO getHotelById(Long id) throws Exception {
 		Optional<Hotel> hotelOPT = hotelRepository.findById(id);
 
@@ -53,6 +62,11 @@ public class HotelService {
 	}
 
 
+	/***
+	 * get all hotels
+	 * @return a list of all hotels
+	 * @throws Exception
+	 */
 	public List<HotelDTO> getHotels() throws Exception {
 
 		List<Hotel> hotels = new ArrayList<>();
@@ -68,6 +82,12 @@ public class HotelService {
 	}
 
 
+	/***
+	 * get a hotel by his name
+	 * @param name of hotel to be found
+	 * @return the hotel with the current id
+	 * @throws Exception
+	 */
 	public HotelDTO getHotelByName(String name) throws Exception {
 
 		Optional<Hotel> hotelOpt = hotelRepository.findByName(name);
@@ -77,6 +97,11 @@ public class HotelService {
 		}else return null;
 	}
 
+	/***
+	 * enables a hotel by his id
+	 * @param id of the hotel to be enabled
+	 * @return  a boolean if the action is done or not
+	 */
 	public boolean enableHotel(Long id){
 		if (hotelRepository.existsById(id)){
 			Hotel hotel = hotelRepository.findById(id).get();
@@ -87,6 +112,11 @@ public class HotelService {
 
 	}
 
+	/***
+	 * disbel a hotel by his id
+	 * @param id of the hotel to be disabled
+	 * @return a boolean if the action has done or not
+	 */
 	public boolean disableHotel(Long id){
 		if (hotelRepository.existsById(id)){
 			Hotel hotel = hotelRepository.findById(id).get();
@@ -103,7 +133,13 @@ public class HotelService {
 		return "Hotel with id" + id + "has be successfully removed";
 	}
 
-	public HotelDTO updateHotel(HotelDTO hotelDTO) throws NullPointerException{
+	/***
+	 * update a hotel
+	 * @param hotelDTO the hotel to be updated
+	 * @return the updated hotel
+	 * @throws NullPointerException
+	 */
+	public HotelDTO updateHotel(HotelDTO hotelDTO) throws Exception {
 		Optional<Hotel> hotelOpt = hotelRepository.findById(hotelDTO.getId());
 		if (hotelOpt.isPresent()){
 			Hotel existingHotel = hotelRepository.findById(hotelDTO.getId()).orElse(null);
@@ -113,11 +149,17 @@ public class HotelService {
 			Optional<Admin>  admin = adminRepository.findById(hotelDTO.getId());
 			admin.ifPresent(existingHotel::setOwner);
 
-			hotelRepository.save(existingHotel);
+			return hotelToHotelDTO.converter(hotelRepository.save(existingHotel));
 		}
 		return hotelDTO;
 	}
 
+	/***
+	 * saves a hotel
+	 * @param hotelDTO hotel to be saved
+	 * @return the saved hotel for confirmation
+	 * @throws Exception
+	 */
 	public HotelDTO saveHotelDTO(HotelDTO hotelDTO) throws Exception {
 		Hotel hotel = new Hotel(1L);
 		Optional<Admin> adminOpt =
@@ -138,6 +180,12 @@ public class HotelService {
 		return hotelToHotelDTO.converter(hotel);
 	}
 
+	/***
+	 * save a list of hotels
+	 * @param hotelsDTO list of hotels to be saved
+	 * @return the saved hotels for confirmation
+	 * @throws Exception
+	 */
 	public List<HotelDTO> saveHotels(List<HotelDTO> hotelsDTO) throws Exception {
 		List<Hotel> hotels = new ArrayList<>();
 		for (HotelDTO hotelDTO : hotelsDTO){

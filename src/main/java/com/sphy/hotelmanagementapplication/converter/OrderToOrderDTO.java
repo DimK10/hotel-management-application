@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+/***
+ * created by gp
+ */
 @Component
 public class OrderToOrderDTO {
 
@@ -19,11 +22,17 @@ public class OrderToOrderDTO {
     private final ClientRepository clientRepository;
 
 
+
     public OrderToOrderDTO(RoomRepository roomRepository, ClientRepository clientRepository) {
         this.roomRepository = roomRepository;
         this.clientRepository = clientRepository;
     }
 
+    /***
+     * converts an orderDTO object to order
+     * @param order the order object to be converted
+     * @return the converted orderDTO object
+     */
     OrderDTO Converter(Order order){
 
         OrderDTO orderDTO = new OrderDTO();

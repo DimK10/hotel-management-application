@@ -9,6 +9,10 @@ import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+
+/***
+ * created by gp
+ */
 @Component
 public class OrderDTOToOrder {
 
@@ -23,7 +27,12 @@ public class OrderDTOToOrder {
         this.clientRepository = clientRepository;
     }
 
-    Order Converter(OrderDTO orderDTO){
+    /***
+     * converts an orderDTO object to order
+     * @param orderDTO the orderDTO object we want to convert
+     * @return the converted order object
+     */
+    public Order Converter(OrderDTO orderDTO){
 
         Order order = new Order();
 

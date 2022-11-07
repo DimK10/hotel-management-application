@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+/***
+ * created by gp
+ */
 @Component
 public class AdminDTOToAdmin {
 
@@ -19,6 +22,11 @@ public class AdminDTOToAdmin {
         this.hotelRepository = hotelRepository;
     }
 
+    /***
+     * converts an AdminDTO to an Admin
+     * @param adminDTO AdminDTO we want to convert
+     * @return the converted Admin object
+     */
     public Admin converter(AdminDTO adminDTO) {
 
         Admin admin = new Admin();

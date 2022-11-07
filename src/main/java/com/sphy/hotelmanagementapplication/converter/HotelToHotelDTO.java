@@ -5,6 +5,9 @@ import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import org.springframework.stereotype.Component;
 
+/***
+ * created by gp
+ */
 @Component
 public class HotelToHotelDTO {
 
@@ -15,6 +18,12 @@ public class HotelToHotelDTO {
         this.roomToRoomDTO = roomToRoomDTO;
     }
 
+    /***
+     * converts a hotel object to hotelDTO
+     * @param hotel the hotel object we want to convert
+     * @return the converted hotelDTO object
+     * @throws Exception
+     */
     public HotelDTO converter(Hotel hotel) throws Exception {
 
         HotelDTO hotelDTO = new HotelDTO();

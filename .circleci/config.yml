@@ -3,8 +3,23 @@
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
 version: '2.1'
+
 orbs:
   slack: circleci/slack@4.4.4
+
+commands:
+  notify_slack_error:
+    steps:
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+
+  notify_slack_pass:
+    steps:
+      - slack/notify:
+          event: pass
+          template: basic_success_1
+
 jobs:
   notify:
     docker:
@@ -20,7 +35,7 @@ jobs:
     docker:
       # specify the version you desire here
       #- image: circleci/openjdk:8-jdk
-      - image: circleci/openjdk:11-browsers-legacy
+      - image: circleci/openjdk:11-stretch
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -58,11 +73,17 @@ jobs:
       - store_test_results:
           path: target/surefire-reports
 
-      - run:
-          name: Send to CodeCov
-          command: bash <(curl -s https://codecov.io/bash)
+      - notify_slack_error
+      - notify_slack_pass
+
+#      - run:
+#          name: Send to CodeCov
+#          command: bash <(curl -s https://codecov.io/bash)
 workflows:
-  send-notification:
+  version: 2
+  build_and_notify:
     jobs:
-      - notify:
+      - build:
           context: slack-secrets
+#      - notify:
+#          context: slack-secrets

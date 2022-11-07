@@ -32,6 +32,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+/***
+ * created by gp
+ */
 @ExtendWith(MockitoExtension.class)
 public class HotelControllerTest {
 
@@ -241,7 +244,7 @@ public class HotelControllerTest {
         when(hotelService.getHotelByName(anyString())).thenReturn(hotelDTO);
 
         // Return
-        mockMvc.perform(get("/api/hotelName/hotelName"))
+        mockMvc.perform(get("/api/hotelName/{name}","hotelName"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.name").value("hotelName"));
@@ -326,6 +329,12 @@ public class HotelControllerTest {
 
     }
 
+	/**
+	 * This method converts an object to a string representation in JSON format.
+	 * Basically, it serializes the object in json format.
+	 * @param obj The object to be serialized.
+	 * @return THe String representation of given object in JSON format.
+	 */
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
