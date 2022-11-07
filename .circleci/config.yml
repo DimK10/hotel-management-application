@@ -3,13 +3,23 @@
 # Check https://circleci.com/docs/2.0/language-java/ for more details
 #
 version: '2.1'
-slack-fail-post-step: &slack-fail-post-step
-  post-steps:
-    - slack/status:
-        fail_only: true
 
 orbs:
   slack: circleci/slack@4.4.4
+
+commands:
+  notify_slack_error:
+    steps:
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+
+  notify_slack_pass:
+    steps:
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
+
 jobs:
   notify:
     docker:
@@ -63,6 +73,9 @@ jobs:
       - store_test_results:
           path: target/surefire-reports
 
+      - notify_slack_error
+      - notify_slack_pass
+
 #      - run:
 #          name: Send to CodeCov
 #          command: bash <(curl -s https://codecov.io/bash)
@@ -70,8 +83,7 @@ workflows:
   version: 2
   build_and_notify:
     jobs:
-      - build: *slack-fail-post-step
-      - notify:
-          requires:
-            - build
+      - build:
           context: slack-secrets
+#      - notify:
+#          context: slack-secrets
