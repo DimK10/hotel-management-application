@@ -102,24 +102,21 @@ public class RoomService {
      */
     public List<RoomDTO> getRooms() throws ApiRequestException {
 
-        throw new ApiRequestException("There are no rooms added whet");
+        if (roomRepository.findAll() == null) {
+            throw new ApiRequestException("There are no rooms added whet");
+        } else {
+            List<Room> rooms = new ArrayList<>();
+
+            roomRepository.findAll().forEach(rooms::add);
 
 
-//        if (roomRepository.findAll() == null) {
-//            throw new ApiRequestException("There are no rooms added whet");
-//        } else {
-//            List<Room> rooms = new ArrayList<>();
-//
-//            roomRepository.findAll().forEach(rooms::add);
-//
-//
-//            List<RoomDTO> roomsDTO = new ArrayList<>();
-//
-//            for (Room room : rooms) {
-//                roomsDTO.add(roomToRoomDTO.converter(room));
-//            }
-//            return roomsDTO;
-//        }
+            List<RoomDTO> roomsDTO = new ArrayList<>();
+
+            for (Room room : rooms) {
+                roomsDTO.add(roomToRoomDTO.converter(room));
+            }
+            return roomsDTO;
+        }
     }
 
     /***
