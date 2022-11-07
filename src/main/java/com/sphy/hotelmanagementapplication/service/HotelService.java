@@ -6,6 +6,7 @@ import com.sphy.hotelmanagementapplication.domain.Admin;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
+import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
@@ -64,9 +65,7 @@ public class HotelService {
 	 * @throws ApiRequestException if There are no hotels
 	 */
 	public List<HotelDTO> getHotels() throws ApiRequestException {
-		if (hotelRepository.findAll() == null) {
-			throw new ApiRequestException("There are no hotels added whet");
-		}else {
+
 			List<Hotel> hotels = new ArrayList<>();
 			List<HotelDTO> hotelDTOS = new ArrayList<>();
 
@@ -77,7 +76,7 @@ public class HotelService {
 			}
 
 			return hotelDTOS;
-		}
+
 	}
 
 
@@ -102,14 +101,14 @@ public class HotelService {
 	 * enables a hotel by his id
 	 * @param id of the hotel to be enabled
 	 * @return  a boolean if the action is done or not
-	 * @throws ApiRequestException if the hotel does not exist or is already activated
+	 * @throws ApiExceptionFront if the hotel does not exist or is already activated
 	 */
-	public boolean enableHotel(Long id) throws ApiRequestException {
+	public boolean enableHotel(Long id) throws ApiExceptionFront {
 
 		if (!hotelRepository.existsById(id)) {
-			throw new ApiRequestException("There is no hotel with id: " + id);
+			throw new ApiExceptionFront("There is no hotel with id: " + id);
 		}else if(!hotelRepository.findById(id).get().isDisabled()){
-			throw new ApiRequestException("The hotel with id: " + id + " is already activated");
+			throw new ApiExceptionFront("The hotel with id: " + id + " is already activated");
 		}else{
 			Hotel hotel = hotelRepository.findById(id).get();
 			hotel.setDisabled(false);
@@ -123,14 +122,14 @@ public class HotelService {
 	 * disbel a hotel by his id
 	 * @param id of the hotel to be disabled
 	 * @return a boolean if the action has done or not
-	 * @throws ApiRequestException if the hotel does not exist or is already deactivated
+	 * @throws ApiExceptionFront if the hotel does not exist or is already deactivated
 	 */
-	public boolean disableHotel(Long id) throws ApiRequestException{
+	public boolean disableHotel(Long id) throws ApiExceptionFront{
 
 		if (!hotelRepository.existsById(id)){
-			throw new ApiRequestException("There is no hotel with id: " + id);
+			throw new ApiExceptionFront("There is no hotel with id: " + id);
 		}else if (hotelRepository.findById(id).get().isDisabled()) {
-			throw new ApiRequestException("The hotel with id: " + id + " is already deactivated");
+			throw new ApiExceptionFront("The hotel with id: " + id + " is already deactivated");
 		} else {
 			Hotel hotel = hotelRepository.findById(id).get();
 			hotel.setDisabled(true);

@@ -5,6 +5,7 @@ import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
+import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
@@ -102,9 +103,7 @@ public class RoomService {
      */
     public List<RoomDTO> getRooms() throws ApiRequestException {
 
-        if (roomRepository.findAll() == null) {
-            throw new ApiRequestException("There are no rooms added whet");
-        } else {
+
             List<Room> rooms = new ArrayList<>();
 
             roomRepository.findAll().forEach(rooms::add);
@@ -116,7 +115,7 @@ public class RoomService {
                 roomsDTO.add(roomToRoomDTO.converter(room));
             }
             return roomsDTO;
-        }
+
     }
 
     /***
@@ -154,13 +153,13 @@ public class RoomService {
      * enables a room
      * @param id of the room to be enabled
      * @return a boolean if  the room enabled or not
-     * @throws ApiRequestException if the room does not exist or is already activated
+     * @throws ApiExceptionFront if the room does not exist or is already activated
      */
-	public boolean enableRoom(Long id) throws ApiRequestException {
+	public boolean enableRoom(Long id) throws ApiExceptionFront {
         if (!roomRepository.existsById(id)) {
-            throw  new ApiRequestException("The room with id: " + id + " does not exist");
+            throw  new ApiExceptionFront("The room with id: " + id + " does not exist");
         }else if (!roomRepository.findById(id).get().isDisabled()){
-            throw new ApiRequestException("The room with id: " + id + " is already activated");
+            throw new ApiExceptionFront("The room with id: " + id + " is already activated");
         }else {
 			Room room = roomRepository.findById(id).get();
 			room.setDisabled(false);
@@ -173,14 +172,14 @@ public class RoomService {
      * disable a room by his id
      * @param id of the room to be disabled
      * @return a boolean if the room disabled or not
-     * @throws ApiRequestException if the room does not exist or is already deactivated
+     * @throws ApiExceptionFront if the room does not exist or is already deactivated
      */
-    public boolean disableRoom(Long id) throws ApiRequestException {
+    public boolean disableRoom(Long id) throws ApiExceptionFront {
 
         if (!roomRepository.existsById(id)) {
-            throw new ApiRequestException("The room with id:" + id + " does not exist");
+            throw new ApiExceptionFront("The room with id:" + id + " does not exist");
         }else if (roomRepository.findById(id).get().isDisabled() ){
-            throw new ApiRequestException("The room with id: " + id + "is already deactivated");
+            throw new ApiExceptionFront("The room with id: " + id + "is already deactivated");
         }else {
 		   Room room = roomRepository.findById(id).get();
 		   room.setDisabled(true);
