@@ -211,7 +211,7 @@ public class RoomService {
             return roomToRoomDTO.converter(roomRepository.save(existingRoom));
         }else{
 
-            throw new ApiRequestException("The room with name: " + roomDTO.getName() + " does not exist");
+            throw new ApiRequestException("The room with id: " + roomDTO.getId() + " does not exist");
         }
     }
 

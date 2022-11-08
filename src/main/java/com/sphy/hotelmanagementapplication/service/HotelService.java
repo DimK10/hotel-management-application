@@ -153,7 +153,7 @@ public class HotelService {
 	public HotelDTO updateHotel(HotelDTO hotelDTO) throws ApiRequestException {
 
 		if (!hotelRepository.existsById(hotelDTO.getId())){
-			throw new ApiRequestException("The hotel with name: " + hotelDTO.getName() + " does not exist to update it");
+			throw new ApiRequestException("The hotel with id: " + hotelDTO.getId() + " does not exist to update it");
 		}else {
 			Hotel existingHotel = hotelRepository.findById(hotelDTO.getId()).orElse(null);
 			existingHotel.setName(hotelDTO.getName());
