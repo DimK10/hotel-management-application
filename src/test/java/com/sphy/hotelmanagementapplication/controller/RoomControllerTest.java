@@ -89,9 +89,6 @@ class RoomControllerTest {
 		roomDTO2.setName("roomDTO2");
 		roomDTOS.add(roomDTO2);
 
-//		rooms.forEach(System.out::println);
-//		roomDTOS.forEach(System.out::println);
-
 		mockMvc = MockMvcBuilders
 				.standaloneSetup(roomController)
 				.build();
@@ -111,7 +108,6 @@ class RoomControllerTest {
 
 		// When
 		when(roomService.saveRoomDTO(any())).thenReturn(roomDTO);
-		when(hotelService.getHotelById(anyLong())).thenReturn(new HotelDTO(1L));
 
 		// Return
 		mockMvc.perform(

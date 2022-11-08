@@ -14,6 +14,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -85,10 +86,9 @@ class RoomServiceTest {
 		roomDTOS.add(roomDTO2);
 
 
-		roomService = new RoomService(
-				roomRepository, hotelRepository,
-				new RoomDTOToRoom(hotelRepository, new OrderDTOToOrder(roomRepository, clientRepository)),
-				new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, clientRepository), hotelRepository));
+		roomService = new RoomService(roomRepository,hotelRepository,new RoomDTOToRoom(hotelRepository,
+				new OrderDTOToOrder(roomRepository,clientRepository)),new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, clientRepository),hotelRepository));
+
 	}
 
 	@Test
@@ -104,6 +104,7 @@ class RoomServiceTest {
 	@Test
 	void getRooms() throws Exception {
 		// given
+
 
 		// when
 		when(roomRepository.findAll()).thenReturn(rooms);
@@ -192,7 +193,7 @@ class RoomServiceTest {
 		Room room = new Room();
 		room.setId(1L);
 		room.setName("room");
-		room.setDisabled(true);
+		room.setDisabled(false);
 
 		Optional<Room> roomOptional = Optional.of(room);
 
