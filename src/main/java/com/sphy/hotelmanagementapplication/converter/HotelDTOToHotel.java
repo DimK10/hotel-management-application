@@ -6,6 +6,9 @@ import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
 import org.springframework.stereotype.Component;
 
+/***
+ * created by gp
+ */
 @Component
 public class HotelDTOToHotel {
 
@@ -19,9 +22,14 @@ public class HotelDTOToHotel {
         this.adminRepository = adminRepository;
     }
 
+    /***
+     * converts a hotelDTO object to hotel
+     * @param hotelDTO the hotelDTO object we want to convert
+     * @return the converted hotel object
+     */
     public Hotel converter(HotelDTO hotelDTO){
 
-        Hotel hotel = new Hotel();
+        Hotel hotel = new Hotel(1L);
 
         hotel.setId(hotelDTO.getId());
         hotel.setName(hotelDTO.getName());

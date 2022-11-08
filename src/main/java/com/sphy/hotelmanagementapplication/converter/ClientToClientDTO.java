@@ -5,6 +5,9 @@ import com.sphy.hotelmanagementapplication.domain.Order;
 import com.sphy.hotelmanagementapplication.dto.ClientDTO;
 import org.springframework.stereotype.Component;
 
+/***
+ * created by gp
+ */
 @Component
 public class ClientToClientDTO {
 
@@ -14,6 +17,11 @@ public class ClientToClientDTO {
         this.orderToOrderDTO = orderToOrderDTO;
     }
 
+    /***
+     * converts a client object to clientDTO
+     * @param client the client object we want to convert
+     * @return the converted clientDTO object
+     */
     public ClientDTO converter(Client client){
         ClientDTO clientDTO = new ClientDTO();
         clientDTO.setId(client.getId());

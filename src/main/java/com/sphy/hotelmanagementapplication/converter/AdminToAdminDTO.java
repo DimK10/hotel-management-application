@@ -5,6 +5,9 @@ import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.dto.AdminDTO;
 import org.springframework.stereotype.Component;
 
+/***
+ * created by gp
+ */
 @Component
 public class AdminToAdminDTO {
 
@@ -14,7 +17,13 @@ public class AdminToAdminDTO {
         this.hotelToHotelDTO = hotelToHotelDTO;
     }
 
-    public AdminDTO converter(Admin admin){
+    /***
+     * converts an Admin Object to AdminDTO
+     * @param admin Admin object we want to convert
+     * @return the converted AdminDTO object
+     * @throws Exception
+     */
+    public AdminDTO converter(Admin admin) throws Exception {
 
         AdminDTO adminDTO = new AdminDTO();
 

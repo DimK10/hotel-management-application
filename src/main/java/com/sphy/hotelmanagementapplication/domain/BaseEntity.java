@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+/***
+ * created by dk
+ */
 @MappedSuperclass
 public class BaseEntity implements Serializable {
 

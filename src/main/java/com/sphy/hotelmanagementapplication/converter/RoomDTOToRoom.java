@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+/***
+ * created by gp
+ */
 @Component
 public class RoomDTOToRoom {
 
@@ -23,6 +26,11 @@ public class RoomDTOToRoom {
         this.orderDTOToOrder = orderDTOToOrder;
     }
 
+    /***
+     * converts a roomDTO object to room
+     * @param roomDTO the roomDTO object to be converted
+     * @return the converted room object
+     */
     public Room converter(RoomDTO roomDTO){
         Room room = new Room();
 

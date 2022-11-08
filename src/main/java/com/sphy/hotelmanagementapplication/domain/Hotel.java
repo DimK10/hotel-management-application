@@ -3,6 +3,10 @@ package com.sphy.hotelmanagementapplication.domain;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+
+/***
+ * created by gp
+ */
 @Entity
 @Table(name = "hotels")
 @NamedEntityGraph(name = "Hotel.rooms",
@@ -27,12 +31,12 @@ public class Hotel extends BaseEntity {
     @OneToMany(mappedBy = "hotel", fetch =  FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Room> rooms = new HashSet<>();
 
-    public Hotel() {
+    public Hotel(Long id) {
+        super(id);
     }
 
-	public Hotel(Long id) {
-		super(id);
-	}
+    public Hotel() {
+    }
 
     public Hotel(Long id, String name, int stars, String areaName, boolean disabled) {
 		super(id);

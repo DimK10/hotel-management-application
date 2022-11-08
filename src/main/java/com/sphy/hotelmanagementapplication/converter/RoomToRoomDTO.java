@@ -8,6 +8,10 @@ import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+
+/***
+ * created by gp
+ */
 @Component
 public class RoomToRoomDTO {
 
@@ -20,6 +24,11 @@ public class RoomToRoomDTO {
         this.hotelRepository = hotelRepository;
     }
 
+    /***
+     * converts a room object to roomDTO
+     * @param room the room object we want to convert
+     * @return the converted roomDTO object
+     */
     public RoomDTO converter(Room room){
         RoomDTO roomDTO = new RoomDTO();
 
@@ -33,11 +42,6 @@ public class RoomToRoomDTO {
 
 		roomDTO.setDisabled(room.isDisabled());
 
-//		if (room.getOrders() != null && room.getOrders().size() > 0) {
-//			for (Order order:room.getOrders()){
-//				roomDTO.getOrdersDTO().add(orderToOrderDTO.Converter(order));
-//			}
-//		}
 
         Optional<Hotel> hotel = hotelRepository.findById(room.getHotel().getId());
 
