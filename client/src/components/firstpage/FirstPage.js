@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import NavBar from '../layout/NavBar';
+import { Link } from 'react-router-dom';
 
 const FirstPage = (props) => {
   return (
@@ -27,13 +28,9 @@ const FirstPage = (props) => {
               aria-label='Search for anywhere'
               aria-describedby='button-addon2'
             />
-            <button
-              className='btn btn-outline-primary'
-              type='button'
-              id='button-addon2'
-            >
+            <Link className='btn btn-outline-primary' to='/search'>
               Search
-            </button>
+            </Link>
           </div>
           <div className='mt-5'>
             <h1 className='display-6 m-3'>Explore By Location</h1>
