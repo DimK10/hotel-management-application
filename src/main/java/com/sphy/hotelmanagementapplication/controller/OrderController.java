@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/***
+ * created by gp on 08/11/22
+ */
 @RestController
 public class OrderController {
 
@@ -65,16 +68,6 @@ public class OrderController {
         return service.getOrderById(id);
     }
 
-    /***
-     * finds an order by his name
-     * @param name name of the order we want to save
-     * @return the order with that name
-     * @throws ApiRequestException if there is no order with the given name
-     */
-    @GetMapping("/api/orderName/{name}")
-    public OrderDTO findOrderByName(@PathVariable String name) throws ApiRequestException {
-        return service.getOrderByName(name);
-    }
 
     /***
      * updates an order

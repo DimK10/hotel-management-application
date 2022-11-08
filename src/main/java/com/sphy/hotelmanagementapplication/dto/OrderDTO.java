@@ -18,15 +18,15 @@ public class OrderDTO implements Serializable {
 
     private Long room;
 
-    private boolean disabled;
+    private boolean canceled;
 
 
-    public boolean isDisabled() {
-        return disabled;
+    public boolean isCanceled() {
+        return canceled;
     }
 
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
     }
 
 

@@ -43,7 +43,7 @@ public class RoomDTOToRoom {
         room.setLuxurity(roomDTO.getLuxurity());
 
         for (OrderDTO orderDTO : roomDTO.getOrders()){
-            room.getOrders().add(orderDTOToOrder.Converter(orderDTO));
+            room.getOrders().add(orderDTOToOrder.converter(orderDTO));
         }
 
 		if (roomDTO.getHotel() != null) {

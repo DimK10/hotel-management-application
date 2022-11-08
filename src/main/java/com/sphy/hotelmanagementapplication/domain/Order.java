@@ -17,7 +17,7 @@ public class Order extends BaseEntity {
 
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
-    private boolean disabled;
+    private boolean canceled;
 
 
     @ManyToOne
@@ -33,21 +33,21 @@ public class Order extends BaseEntity {
     }
 
 
-    public Order(Long id, LocalDate checkInDate, LocalDate checkOutDate, boolean disabled, Client client) {
+    public Order(Long id, LocalDate checkInDate, LocalDate checkOutDate, boolean canceled, Client client, Room room) {
 		super(id);
 		this.checkInDate = checkInDate;
-
+        this.room = room;
         this.checkOutDate = checkOutDate;
-        this.disabled = disabled;
+        this.canceled = canceled;
         this.client=client;
     }
 
-    public boolean isDisabled() {
-        return disabled;
+    public boolean isCanceled() {
+        return canceled;
     }
 
-    public void setDisabled(boolean disabled) {
-        this.disabled = disabled;
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
     }
 
     public void setId(Long id) {

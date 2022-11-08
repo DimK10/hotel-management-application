@@ -11,5 +11,4 @@ import java.util.Optional;
  */
 @Repository
 public interface OrderRepository extends CrudRepository<Order,Long> {
-    Optional<Order> findByName(String name);
 }

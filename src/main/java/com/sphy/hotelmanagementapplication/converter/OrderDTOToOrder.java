@@ -39,7 +39,7 @@ public class OrderDTOToOrder {
         order.setId(orderDTO.getId());
         order.setCheckInDate(orderDTO.getCheckInDate());
         order.setCheckOutDate(orderDTO.getCheckOutDate());
-        order.setDisabled(orderDTO.isDisabled());
+        order.setCanceled(orderDTO.isCanceled());
         Optional<Room> room = roomRepository.findById(orderDTO.getId());
         if (room.isPresent()){
             order.setRoom(room.get());

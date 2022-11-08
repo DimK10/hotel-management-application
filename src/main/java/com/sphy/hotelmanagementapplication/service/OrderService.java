@@ -135,20 +135,6 @@ public class OrderService {
     }
 
 
-    /***
-     * get an order by his name
-     * @param name of the order to be found
-     * @return the order with the current name
-     * @throws ApiRequestException if there is no order with the given name
-     */
-    public OrderDTO getOrderByName(String name) throws ApiRequestException {
-        Optional<Order> order = orderRepository.findByName(name);
-        if (!order.isPresent()){
-            throw new ApiRequestException("There is now order with name: " + name);
-        }else {
-            return orderToOrderDTO.converter(orderRepository.findByName(name).get());
-        }
-    }
 
     /***
      * enables an order
@@ -159,31 +145,31 @@ public class OrderService {
     public boolean enableOrder(Long id) throws ApiExceptionFront {
         if (!orderRepository.existsById(id)) {
             throw  new ApiExceptionFront("The order with id: " + id + " does not exist");
-        }else if (!orderRepository.findById(id).get().isDisabled()){
+        }else if (!orderRepository.findById(id).get().isCanceled()){
             throw new ApiExceptionFront("The order with id: " + id + " is already activated");
         }else {
             Order order = orderRepository.findById(id).get();
-            order.setDisabled(false);
+            order.setCanceled(false);
             orderRepository.save(order);
             return true;
         }
     }
 
     /***
-     * disable an order by his id
-     * @param id of the order to be disabled
-     * @return a boolean if the order disabled or not
-     * @throws ApiExceptionFront if the order does not exist or is already deactivated
+     * cancel an order by his id
+     * @param id of the order to be canceled
+     * @return a boolean if the order canceled or not
+     * @throws ApiExceptionFront if the order does not exist or is already canceled
      */
     public boolean disableOrder(Long id) throws ApiExceptionFront {
 
         if (!orderRepository.existsById(id)) {
             throw new ApiExceptionFront("The order with id:" + id + " does not exist");
-        }else if (orderRepository.findById(id).get().isDisabled() ){
-            throw new ApiExceptionFront("The order with id: " + id + "is already deactivated");
+        }else if (orderRepository.findById(id).get().isCanceled() ){
+            throw new ApiExceptionFront("The order with id: " + id + "is already canceled");
         }else {
             Order order = orderRepository.findById(id).get();
-            order.setDisabled(true);
+            order.setCanceled(true);
             orderRepository.save(order);
             return true;
         }
@@ -203,7 +189,7 @@ public class OrderService {
             existingOrder.setCheckInDate(orderDTO.getCheckInDate());
             existingOrder.setClient(clientRepository.findById(orderDTO.getClient()).get());
             existingOrder.setRoom(roomRepository.findById(orderDTO.getRoom()).get());
-            existingOrder.setDisabled(orderDTO.isDisabled());
+            existingOrder.setCanceled(orderDTO.isCanceled());
             Optional<Room> room = roomRepository.findById(orderDTO.getRoom());
             if (room.isPresent()){
                 room.get().getOrders().add(existingOrder);
