@@ -4,8 +4,9 @@ import NavBar from '../layout/NavBar';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 
 import 'bootstrap-daterangepicker/daterangepicker.css';
+import SearchItem from './SearchItem';
 
-let dateNow = Date.now();
+import cities from '../../json/cities.json';
 
 const AdvancedSearch = (props) => {
   const [formData, setFormData] = useState({
@@ -16,17 +17,22 @@ const AdvancedSearch = (props) => {
     stars: 1,
   });
 
+  const [citiesArray, setCitiesArray] = useState(cities);
+  const [citiesSuggestions, setCitiesSuggestions] = useState([]);
+
   const { location, dateFrom, dateTo, adultsRange, stars } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  // const [dateFrom, setDateFrom] = useState(new Date());
-  // const [dateTo, setDateTo] = useState(
-  //   new Date(new Date().setDate(new Date().getDate() + 7))
-  // );
+  const onLocationInputChange = (e) => {
+    // citiesSuggestions = citiesArray
+    //   .filter((city) => city.city.includes(e.target.value))
 
-  // const [adultsRange, setAdultsRange] = useState(1);
+    setCitiesSuggestions(
+      citiesArray.filter((city) => city.city.includes(e.target.value))
+    );
+  };
 
   useEffect(() => {}, []);
 
@@ -44,21 +50,26 @@ const AdvancedSearch = (props) => {
                   </div>
                   <div className='card-body'>
                     <div className='mb-3'>
-                      <label
-                        for='exampleFormControlInput1'
-                        className='form-label'
-                      >
+                      <label htmlFor='locationInput' className='form-label'>
                         Location
                       </label>
                       <input
                         type='text'
                         className='form-control'
-                        id='exampleFormControlInput1'
+                        id='locationInput'
                         placeholder='Location'
+                        onChange={(e) => onLocationInputChange(e)}
+                        list='citiesOptions'
                       />
+                      <datalist id='citiesOptions'>
+                        {citiesSuggestions.length > 0 &&
+                          citiesSuggestions.map((city) => (
+                            <option value={city.city} />
+                          ))}
+                      </datalist>
                     </div>
                     <div className='mb-3'>
-                      <label for='customRange1' className='form-label'>
+                      <label htmlFor='customRange1' className='form-label'>
                         Number of Adults: {adultsRange}
                       </label>
                       <input
@@ -77,7 +88,7 @@ const AdvancedSearch = (props) => {
 
                     <div className='mb-3'>
                       <label
-                        for='exampleFormControlInput1'
+                        htmlFor='exampleFormControlInput1'
                         className='form-label'
                       >
                         Check In - Check Out Date
@@ -103,42 +114,38 @@ const AdvancedSearch = (props) => {
                   </div>
                   <div className='card-body'>
                     <div className='mb-3'>
-                      <label
-                        for='exampleFormControlInput1'
-                        className='form-label'
-                      >
-                        Stars
+                      <label htmlFor='starsRange' className='form-label'>
+                        Stars: {stars}
                       </label>
                       <input
-                        type='text'
-                        className='form-control'
-                        id='exampleFormControlInput1'
-                        placeholder='Location'
+                        type='range'
+                        className='form-range'
+                        id='starsRange'
+                        name='stars'
+                        min='1'
+                        max='5'
+                        value={stars}
+                        onChange={(e) => {
+                          onChange(e);
+                        }}
                       />
                     </div>
 
-                    <div className='mb-3'>
-                      <label
-                        for='exampleFormControlInput1'
-                        className='form-label'
-                      >
-                        Check In - Check Out Date
-                      </label>
-                      <DateRangePicker
-                        initialSettings={{
-                          startDate: dateFrom,
-                          endDate: dateTo,
-                        }}
-                      >
-                        <input type='text' className='form-control' />
-                      </DateRangePicker>
+                    <div className='row'>
+                      <div className='col-6'>
+                        <button className='btn btn-primary px-4' type='button'>
+                          Search
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className='col-9'></div>
+          <div className='col-9'>
+            <SearchItem />
+          </div>
         </div>
       </div>
     </Fragment>
