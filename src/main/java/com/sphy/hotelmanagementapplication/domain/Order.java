@@ -17,6 +17,8 @@ public class Order extends BaseEntity {
 
     private LocalDate checkInDate;
     private LocalDate checkOutDate;
+    private boolean disabled;
+
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -31,15 +33,24 @@ public class Order extends BaseEntity {
     }
 
 
-    public Order(Long id, LocalDate checkInDate, LocalDate checkOutDate,Client client) {
+    public Order(Long id, LocalDate checkInDate, LocalDate checkOutDate, boolean disabled, Client client) {
 		super(id);
 		this.checkInDate = checkInDate;
 
         this.checkOutDate = checkOutDate;
+        this.disabled = disabled;
         this.client=client;
     }
 
-	public void setId(Long id) {
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    public void setId(Long id) {
 		super.setId(id);
 	}
 

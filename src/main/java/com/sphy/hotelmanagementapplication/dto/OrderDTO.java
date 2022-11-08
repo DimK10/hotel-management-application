@@ -18,6 +18,18 @@ public class OrderDTO implements Serializable {
 
     private Long room;
 
+    private boolean disabled;
+
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+
     public Long getId() {
         return id;
     }

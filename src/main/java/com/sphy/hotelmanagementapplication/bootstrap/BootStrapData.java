@@ -63,7 +63,7 @@ public class BootStrapData implements CommandLineRunner {
 
 
 
-        Order order = new Order(null, LocalDate.ofEpochDay(2007-12-03), LocalDate.ofEpochDay(2007-12-07), client);
+        Order order = new Order(null, LocalDate.ofEpochDay(2007-12-03), LocalDate.ofEpochDay(2007-12-07), false, client);
         orderRepository.save(order);
 
         order.setRoom(ena);
@@ -73,7 +73,7 @@ public class BootStrapData implements CommandLineRunner {
         ena.getOrders().add(order);
         roomRepository.save(ena);
 
-        Order order1 = new Order(null, LocalDate.ofEpochDay(2007-12-03), LocalDate.ofEpochDay(2007-12-07), client);
+        Order order1 = new Order(null, LocalDate.ofEpochDay(2007-12-03), LocalDate.ofEpochDay(2007-12-07), false, client);
         orderRepository.save(order1);
         order1.setRoom(dio);
         orderRepository.save(order1);

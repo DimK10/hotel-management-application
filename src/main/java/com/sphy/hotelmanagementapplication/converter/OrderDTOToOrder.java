@@ -32,13 +32,14 @@ public class OrderDTOToOrder {
      * @param orderDTO the orderDTO object we want to convert
      * @return the converted order object
      */
-    public Order Converter(OrderDTO orderDTO){
+    public Order converter(OrderDTO orderDTO){
 
         Order order = new Order();
 
         order.setId(orderDTO.getId());
         order.setCheckInDate(orderDTO.getCheckInDate());
         order.setCheckOutDate(orderDTO.getCheckOutDate());
+        order.setDisabled(orderDTO.isDisabled());
         Optional<Room> room = roomRepository.findById(orderDTO.getId());
         if (room.isPresent()){
             order.setRoom(room.get());
