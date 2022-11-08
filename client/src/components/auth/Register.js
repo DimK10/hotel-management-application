@@ -1,10 +1,71 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import NavBar from './../layout/NavBar';
+import CIcon from '@coreui/icons-react';
+import { cilUser, cilEnvelopeOpen, cilLockLocked } from '@coreui/icons';
 
 const Register = (props) => {
   return (
-   <div>register</div>
+    <Fragment>
+      <NavBar />
+      <div className='bg-light min-vh-100 d-flex flex-row align-items-center'>
+        <div className='container'>
+          <div className='row justify-content-center'>
+            <div className='col-md-6'>
+              <div className='card mb-4 mx-4'>
+                <div className='card-body p-4'>
+                  <h1>Register</h1>
+                  <p className='text-medium-emphasis'>Create your account</p>
+                  <div className='input-group mb-3'>
+                    <span className='input-group-text'>
+                      <CIcon icon={cilUser} />
+                    </span>
+                    <input
+                      className='form-control'
+                      type='text'
+                      placeholder='Username'
+                    />
+                  </div>
+                  <div className='input-group mb-3'>
+                    <span className='input-group-text'>
+                      <CIcon icon={cilEnvelopeOpen} />
+                    </span>
+                    <input
+                      className='form-control'
+                      type='text'
+                      placeholder='Email'
+                    />
+                  </div>
+                  <div className='input-group mb-3'>
+                    <span className='input-group-text'>
+                      <CIcon icon={cilLockLocked} />
+                    </span>
+                    <input
+                      className='form-control'
+                      type='password'
+                      placeholder='Password'
+                    />
+                  </div>
+                  <div className='input-group mb-4'>
+                    <span className='input-group-text'>
+                      <CIcon icon={cilLockLocked} />
+                    </span>
+                    <input
+                      class='form-control'
+                      type='password'
+                      placeholder='Repeat password'
+                    />
+                  </div>
+                  <button className='btn btn-block btn-success' type='button'>
+                    Create Account
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Fragment>
   );
 };
 
