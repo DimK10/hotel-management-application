@@ -59,12 +59,13 @@ const AdvancedSearch = (props) => {
                         id='locationInput'
                         placeholder='Location'
                         onChange={(e) => onLocationInputChange(e)}
+                        onBlur={() => setCitiesSuggestions([])}
                         list='citiesOptions'
                       />
                       <datalist id='citiesOptions'>
                         {citiesSuggestions.length > 0 &&
                           citiesSuggestions.map((city) => (
-                            <option value={city.city} />
+                            <option key={city.id} value={city.city} />
                           ))}
                       </datalist>
                     </div>

@@ -1,6 +1,5 @@
 [
   {
-    "id": 0,
     "city": "Athens",
     "lat": "37.9842",
     "lng": "23.7281",
@@ -12,7 +11,6 @@
     "population_proper": "664046"
   },
   {
-    "id": 1,
     "city": "Thessaloníki",
     "lat": "40.6403",
     "lng": "22.9356",
@@ -24,7 +22,6 @@
     "population_proper": "315196"
   },
   {
-    "id": 2,
     "city": "Pátra",
     "lat": "38.2500",
     "lng": "21.7333",
@@ -36,7 +33,6 @@
     "population_proper": "167446"
   },
   {
-    "id": 3,
     "city": "Piraeus",
     "lat": "37.9430",
     "lng": "23.6469",
@@ -48,7 +44,6 @@
     "population_proper": "163688"
   },
   {
-    "id": 4,
     "city": "Lárisa",
     "lat": "39.6369",
     "lng": "22.4176",
@@ -60,7 +55,6 @@
     "population_proper": "144651"
   },
   {
-    "id": 5,
     "city": "Irákleio",
     "lat": "35.3403",
     "lng": "25.1344",
@@ -72,7 +66,6 @@
     "population_proper": "140730"
   },
   {
-    "id": 6,
     "city": "Peristéri",
     "lat": "38.0167",
     "lng": "23.6833",
@@ -84,7 +77,6 @@
     "population_proper": "139981"
   },
   {
-    "id": 7,
     "city": "Kallithéa",
     "lat": "37.9500",
     "lng": "23.7000",
@@ -96,7 +88,6 @@
     "population_proper": "100641"
   },
   {
-    "id": 8,
     "city": "Níkaia",
     "lat": "37.9667",
     "lng": "23.6333",
@@ -108,7 +99,6 @@
     "population_proper": "89380"
   },
   {
-    "id": 9,
     "city": "Glyfáda",
     "lat": "37.8800",
     "lng": "23.7533",
@@ -120,7 +110,6 @@
     "population_proper": "87305"
   },
   {
-    "id": 10,
     "city": "Vólos",
     "lat": "39.3611",
     "lng": "22.9425",
@@ -132,7 +121,6 @@
     "population_proper": "86046"
   },
   {
-    "id": 11,
     "city": "Chaniá",
     "lat": "35.5173",
     "lng": "24.0195",
@@ -144,7 +132,6 @@
     "population_proper": "54565"
   },
   {
-    "id": 12,
     "city": "Chalándri",
     "lat": "38.0167",
     "lng": "23.8000",
@@ -156,7 +143,6 @@
     "population_proper": "74192"
   },
   {
-    "id": 13,
     "city": "Kalamáta",
     "lat": "37.0389",
     "lng": "22.1142",
@@ -168,7 +154,6 @@
     "population_proper": "51108"
   },
   {
-    "id": 14,
     "city": "Néa Ionía",
     "lat": "38.0333",
     "lng": "23.7500",
@@ -180,7 +165,6 @@
     "population_proper": "67134"
   },
   {
-    "id": 15,
     "city": "Ioánnina",
     "lat": "39.6636",
     "lng": "20.8522",
@@ -192,7 +176,6 @@
     "population_proper": "65574"
   },
   {
-    "id": 16,
     "city": "Palaió Fáliro",
     "lat": "37.9320",
     "lng": "23.7003",
@@ -204,7 +187,6 @@
     "population_proper": "64021"
   },
   {
-    "id": 17,
     "city": "Tríkala",
     "lat": "39.5550",
     "lng": "21.7683",
@@ -216,7 +198,6 @@
     "population_proper": "61653"
   },
   {
-    "id": 18,
     "city": "Výronas",
     "lat": "37.9556",
     "lng": "23.7600",
@@ -228,7 +209,6 @@
     "population_proper": "61308"
   },
   {
-    "id": 19,
     "city": "Agía Paraskeví",
     "lat": "38.0053",
     "lng": "23.8208",
@@ -240,7 +220,6 @@
     "population_proper": "59704"
   },
   {
-    "id": 20,
     "city": "Galátsi",
     "lat": "38.0167",
     "lng": "23.7500",
@@ -252,7 +231,6 @@
     "population_proper": "59345"
   },
   {
-    "id": 21,
     "city": "Kavála",
     "lat": "40.9350",
     "lng": "24.4150",
@@ -264,7 +242,6 @@
     "population_proper": "52950"
   },
   {
-    "id": 22,
     "city": "Chalkída",
     "lat": "38.4625",
     "lng": "23.5950",
@@ -276,7 +253,6 @@
     "population_proper": "59125"
   },
   {
-    "id": 23,
     "city": "Sérres",
     "lat": "41.0833",
     "lng": "23.5500",
@@ -288,7 +264,6 @@
     "population_proper": "58287"
   },
   {
-    "id": 24,
     "city": "Alexandroúpoli",
     "lat": "40.8500",
     "lng": "25.8667",
@@ -300,7 +275,6 @@
     "population_proper": "57812"
   },
   {
-    "id": 25,
     "city": "Ródos",
     "lat": "36.4412",
     "lng": "28.2225",
@@ -312,7 +286,6 @@
     "population_proper": "56128"
   },
   {
-    "id": 26,
     "city": "Xánthi",
     "lat": "41.1333",
     "lng": "24.8833",
@@ -324,7 +297,6 @@
     "population_proper": "56122"
   },
   {
-    "id": 27,
     "city": "Kateríni",
     "lat": "40.2667",
     "lng": "22.5000",
@@ -336,7 +308,6 @@
     "population_proper": "55997"
   },
   {
-    "id": 28,
     "city": "Lamía",
     "lat": "38.8972",
     "lng": "22.4311",
@@ -348,7 +319,6 @@
     "population_proper": "52006"
   },
   {
-    "id": 29,
     "city": "Komotiní",
     "lat": "41.1167",
     "lng": "25.4000",
@@ -360,7 +330,6 @@
     "population_proper": "50990"
   },
   {
-    "id": 30,
     "city": "Agrínio",
     "lat": "38.6167",
     "lng": "21.4000",
@@ -372,7 +341,6 @@
     "population_proper": "46899"
   },
   {
-    "id": 31,
     "city": "Chaïdári",
     "lat": "38.0167",
     "lng": "23.6500",
@@ -384,7 +352,6 @@
     "population_proper": "45642"
   },
   {
-    "id": 32,
     "city": "Dráma",
     "lat": "41.1514",
     "lng": "24.1392",
@@ -396,7 +363,6 @@
     "population_proper": "44823"
   },
   {
-    "id": 33,
     "city": "Véroia",
     "lat": "40.5203",
     "lng": "22.2019",
@@ -408,7 +374,6 @@
     "population_proper": "43158"
   },
   {
-    "id": 34,
     "city": "Kozáni",
     "lat": "40.3007",
     "lng": "21.7890",
@@ -420,7 +385,6 @@
     "population_proper": "41066"
   },
   {
-    "id": 35,
     "city": "Kardítsa",
     "lat": "39.3647",
     "lng": "21.9219",
@@ -432,7 +396,6 @@
     "population_proper": "38554"
   },
   {
-    "id": 36,
     "city": "Réthymno",
     "lat": "35.3689",
     "lng": "24.4739",
@@ -444,7 +407,6 @@
     "population_proper": "32468"
   },
   {
-    "id": 37,
     "city": "Trípoli",
     "lat": "37.5083",
     "lng": "22.3750",
@@ -456,7 +418,6 @@
     "population_proper": "30866"
   },
   {
-    "id": 38,
     "city": "Vrilíssia",
     "lat": "38.0391",
     "lng": "23.8378",
@@ -468,7 +429,6 @@
     "population_proper": "30741"
   },
   {
-    "id": 39,
     "city": "Kórinthos",
     "lat": "37.9333",
     "lng": "22.9333",
@@ -480,7 +440,6 @@
     "population_proper": "30176"
   },
   {
-    "id": 40,
     "city": "Giannitsá",
     "lat": "40.7962",
     "lng": "22.4145",
@@ -492,7 +451,6 @@
     "population_proper": "29789"
   },
   {
-    "id": 41,
     "city": "Mytilíni",
     "lat": "39.1114",
     "lng": "26.5621",
@@ -504,7 +462,6 @@
     "population_proper": "28322"
   },
   {
-    "id": 42,
     "city": "Chíos",
     "lat": "38.3725",
     "lng": "26.1375",
@@ -516,7 +473,6 @@
     "population_proper": "26850"
   },
   {
-    "id": 43,
     "city": "Kaisarianí",
     "lat": "37.9633",
     "lng": "23.7653",
@@ -528,7 +484,6 @@
     "population_proper": "26370"
   },
   {
-    "id": 44,
     "city": "Néa Filadélfeia",
     "lat": "38.0350",
     "lng": "23.7381",
@@ -540,7 +495,6 @@
     "population_proper": "25734"
   },
   {
-    "id": 45,
     "city": "Salamína",
     "lat": "37.9333",
     "lng": "23.5000",
@@ -552,7 +506,6 @@
     "population_proper": "25370"
   },
   {
-    "id": 46,
     "city": "Elefsína",
     "lat": "38.0414",
     "lng": "23.5453",
@@ -564,7 +517,6 @@
     "population_proper": "24910"
   },
   {
-    "id": 47,
     "city": "Kérkyra",
     "lat": "39.6239",
     "lng": "19.9214",
@@ -576,7 +528,6 @@
     "population_proper": "24838"
   },
   {
-    "id": 48,
     "city": "Pýrgos",
     "lat": "37.6667",
     "lng": "21.4333",
@@ -588,7 +539,6 @@
     "population_proper": "24359"
   },
   {
-    "id": 49,
     "city": "Mégara",
     "lat": "38.0000",
     "lng": "23.3333",
@@ -600,7 +550,6 @@
     "population_proper": "23456"
   },
   {
-    "id": 50,
     "city": "Kilkís",
     "lat": "40.9954",
     "lng": "22.8765",
@@ -612,7 +561,6 @@
     "population_proper": "22914"
   },
   {
-    "id": 51,
     "city": "Thebes",
     "lat": "38.3242",
     "lng": "23.3236",
@@ -624,7 +572,6 @@
     "population_proper": "22883"
   },
   {
-    "id": 52,
     "city": "Lefkáda",
     "lat": "38.7178",
     "lng": "20.6439",
@@ -636,7 +583,6 @@
     "population_proper": "22652"
   },
   {
-    "id": 53,
     "city": "Áno Sýros",
     "lat": "37.4500",
     "lng": "24.9000",
@@ -648,7 +594,6 @@
     "population_proper": "21507"
   },
   {
-    "id": 54,
     "city": "Péfki",
     "lat": "38.0667",
     "lng": "23.8000",
@@ -660,7 +605,6 @@
     "population_proper": "21415"
   },
   {
-    "id": 55,
     "city": "Livadeiá",
     "lat": "38.4361",
     "lng": "22.8750",
@@ -672,7 +616,6 @@
     "population_proper": "21379"
   },
   {
-    "id": 56,
     "city": "Kos",
     "lat": "36.8153",
     "lng": "27.1103",
@@ -684,7 +627,6 @@
     "population_proper": "18691"
   },
   {
-    "id": 57,
     "city": "Préveza",
     "lat": "38.9500",
     "lng": "20.7500",
@@ -696,7 +638,6 @@
     "population_proper": "19042"
   },
   {
-    "id": 58,
     "city": "Orestiáda",
     "lat": "41.5000",
     "lng": "26.5333",
@@ -708,7 +649,6 @@
     "population_proper": "18426"
   },
   {
-    "id": 59,
     "city": "Spárti",
     "lat": "37.0819",
     "lng": "22.4236",
@@ -720,7 +660,6 @@
     "population_proper": "15497"
   },
   {
-    "id": 60,
     "city": "Thérmi",
     "lat": "40.5472",
     "lng": "23.0197",
@@ -732,7 +671,6 @@
     "population_proper": "16004"
   },
   {
-    "id": 61,
     "city": "Alexándreia",
     "lat": "40.6283",
     "lng": "22.4454",
@@ -744,7 +682,6 @@
     "population_proper": "14821"
   },
   {
-    "id": 62,
     "city": "Paianía",
     "lat": "37.9500",
     "lng": "23.8500",
@@ -756,7 +693,6 @@
     "population_proper": "14595"
   },
   {
-    "id": 63,
     "city": "Náfplio",
     "lat": "37.5667",
     "lng": "22.8000",
@@ -768,7 +704,6 @@
     "population_proper": "14203"
   },
   {
-    "id": 64,
     "city": "Náfpaktos",
     "lat": "38.3917",
     "lng": "21.8275",
@@ -780,7 +715,6 @@
     "population_proper": "13415"
   },
   {
-    "id": 65,
     "city": "Kastoriá",
     "lat": "40.5181",
     "lng": "21.2688",
@@ -792,7 +726,6 @@
     "population_proper": "13387"
   },
   {
-    "id": 66,
     "city": "Néa Alikarnassós",
     "lat": "35.3286",
     "lng": "25.1644",
@@ -804,7 +737,6 @@
     "population_proper": "12925"
   },
   {
-    "id": 67,
     "city": "Kálymnos",
     "lat": "36.9512",
     "lng": "26.9832",
@@ -816,7 +748,6 @@
     "population_proper": "12324"
   },
   {
-    "id": 68,
     "city": "Ermoúpoli",
     "lat": "37.4504",
     "lng": "24.9333",
@@ -828,7 +759,6 @@
     "population_proper": "12260"
   },
   {
-    "id": 69,
     "city": "Týrnavos",
     "lat": "39.7353",
     "lng": "22.2869",
@@ -840,7 +770,6 @@
     "population_proper": "11069"
   },
   {
-    "id": 70,
     "city": "Diavatá",
     "lat": "40.6883",
     "lng": "22.8583",
@@ -852,7 +781,6 @@
     "population_proper": "9890"
   },
   {
-    "id": 71,
     "city": "Kiáto",
     "lat": "38.0117",
     "lng": "22.7467",
@@ -864,7 +792,6 @@
     "population_proper": "9812"
   },
   {
-    "id": 72,
     "city": "Anatolí",
     "lat": "39.6386",
     "lng": "20.8661",
@@ -876,7 +803,6 @@
     "population_proper": "9798"
   },
   {
-    "id": 73,
     "city": "Argostóli",
     "lat": "38.1739",
     "lng": "20.4883",
@@ -888,7 +814,6 @@
     "population_proper": "9748"
   },
   {
-    "id": 74,
     "city": "Lykóvrysi",
     "lat": "38.0667",
     "lng": "23.7833",
@@ -900,7 +825,6 @@
     "population_proper": "9738"
   },
   {
-    "id": 75,
     "city": "Pórto Ráfti",
     "lat": "37.8844",
     "lng": "24.0125",
@@ -912,7 +836,6 @@
     "population_proper": "9686"
   },
   {
-    "id": 76,
     "city": "Psychikó",
     "lat": "38.0180",
     "lng": "23.7804",
@@ -924,7 +847,6 @@
     "population_proper": "9529"
   },
   {
-    "id": 77,
     "city": "Néa Artáki",
     "lat": "38.5167",
     "lng": "23.6333",
@@ -936,7 +858,6 @@
     "population_proper": "9489"
   },
   {
-    "id": 78,
     "city": "Zefýri",
     "lat": "38.0667",
     "lng": "23.7167",
@@ -948,7 +869,6 @@
     "population_proper": "9454"
   },
   {
-    "id": 79,
     "city": "Siteía",
     "lat": "35.2000",
     "lng": "26.1000",
@@ -960,7 +880,6 @@
     "population_proper": "9348"
   },
   {
-    "id": 80,
     "city": "Néa Moudaniá",
     "lat": "40.2386",
     "lng": "23.2814",
@@ -972,7 +891,6 @@
     "population_proper": "9342"
   },
   {
-    "id": 81,
     "city": "Fársala",
     "lat": "39.2833",
     "lng": "22.3833",
@@ -984,7 +902,6 @@
     "population_proper": "9298"
   },
   {
-    "id": 82,
     "city": "Síndos",
     "lat": "40.6667",
     "lng": "22.8000",
@@ -996,7 +913,6 @@
     "population_proper": "9289"
   },
   {
-    "id": 83,
     "city": "Didymóteicho",
     "lat": "41.3500",
     "lng": "26.5000",
@@ -1008,7 +924,6 @@
     "population_proper": "9263"
   },
   {
-    "id": 84,
     "city": "Spáta",
     "lat": "37.9667",
     "lng": "23.9167",
@@ -1020,7 +935,6 @@
     "population_proper": "9198"
   },
   {
-    "id": 85,
     "city": "Epanomí",
     "lat": "40.4261",
     "lng": "22.9281",
@@ -1032,7 +946,6 @@
     "population_proper": "8979"
   },
   {
-    "id": 86,
     "city": "Chrysoúpoli",
     "lat": "40.9833",
     "lng": "24.7000",
@@ -1044,7 +957,6 @@
     "population_proper": "8885"
   },
   {
-    "id": 87,
     "city": "Néa Péramos",
     "lat": "38.0000",
     "lng": "23.4167",
@@ -1056,7 +968,6 @@
     "population_proper": "8333"
   },
   {
-    "id": 88,
     "city": "Kalampáka",
     "lat": "39.7044",
     "lng": "21.6269",
@@ -1068,7 +979,6 @@
     "population_proper": "8330"
   },
   {
-    "id": 89,
     "city": "Almyrós",
     "lat": "39.1803",
     "lng": "22.7606",
@@ -1080,7 +990,6 @@
     "population_proper": "7955"
   },
   {
-    "id": 90,
     "city": "Koufália",
     "lat": "40.7792",
     "lng": "22.5767",
@@ -1092,7 +1001,6 @@
     "population_proper": "7850"
   },
   {
-    "id": 91,
     "city": "Giánnouli",
     "lat": "39.6672",
     "lng": "22.3958",
@@ -1104,7 +1012,6 @@
     "population_proper": "7847"
   },
   {
-    "id": 92,
     "city": "Lagkadás",
     "lat": "40.7500",
     "lng": "23.0667",
@@ -1116,7 +1023,6 @@
     "population_proper": "7764"
   },
   {
-    "id": 93,
     "city": "Mourniés",
     "lat": "35.4850",
     "lng": "24.0130",
@@ -1128,7 +1034,6 @@
     "population_proper": "7553"
   },
   {
-    "id": 94,
     "city": "Elassóna",
     "lat": "39.8947",
     "lng": "22.1886",
@@ -1140,7 +1045,6 @@
     "population_proper": "7338"
   },
   {
-    "id": 95,
     "city": "Chalástra",
     "lat": "40.6267",
     "lng": "22.7322",
@@ -1152,7 +1056,6 @@
     "population_proper": "7270"
   },
   {
-    "id": 96,
     "city": "Néa Kallikráteia",
     "lat": "40.3139",
     "lng": "23.0633",
@@ -1164,7 +1067,6 @@
     "population_proper": "7238"
   },
   {
-    "id": 97,
     "city": "Karpenísi",
     "lat": "38.9203",
     "lng": "21.7833",
@@ -1176,7 +1078,6 @@
     "population_proper": "7183"
   },
   {
-    "id": 98,
     "city": "Marathónas",
     "lat": "38.1550",
     "lng": "23.9636",
@@ -1188,7 +1089,6 @@
     "population_proper": "7170"
   },
   {
-    "id": 99,
     "city": "Lávrio",
     "lat": "37.7000",
     "lng": "24.0500",
@@ -1200,7 +1100,6 @@
     "population_proper": "7078"
   },
   {
-    "id": 100,
     "city": "Polýkastro",
     "lat": "40.9954",
     "lng": "22.5714",
@@ -1212,7 +1111,6 @@
     "population_proper": "7064"
   },
   {
-    "id": 101,
     "city": "Litóchoro",
     "lat": "40.1028",
     "lng": "22.5069",
@@ -1224,7 +1122,6 @@
     "population_proper": "6995"
   },
   {
-    "id": 102,
     "city": "Aígina",
     "lat": "37.7467",
     "lng": "23.4275",
@@ -1236,7 +1133,6 @@
     "population_proper": "6867"
   },
   {
-    "id": 103,
     "city": "Néo Karlovási",
     "lat": "37.7917",
     "lng": "26.7051",
@@ -1248,7 +1144,6 @@
     "population_proper": "6708"
   },
   {
-    "id": 104,
     "city": "Káto Achaḯa",
     "lat": "38.1500",
     "lng": "21.5500",
@@ -1260,7 +1155,6 @@
     "population_proper": "6618"
   },
   {
-    "id": 105,
     "city": "Aridaía",
     "lat": "40.9750",
     "lng": "22.0583",
@@ -1272,7 +1166,6 @@
     "population_proper": "6561"
   },
   {
-    "id": 106,
     "city": "Soúda",
     "lat": "35.4833",
     "lng": "24.0667",
@@ -1284,7 +1177,6 @@
     "population_proper": "6358"
   },
   {
-    "id": 107,
     "city": "Kounoupidianá",
     "lat": "35.5360",
     "lng": "24.0760",
@@ -1296,7 +1188,6 @@
     "population_proper": "6334"
   },
   {
-    "id": 108,
     "city": "Anávyssos",
     "lat": "37.7333",
     "lng": "23.9500",
@@ -1308,7 +1199,6 @@
     "population_proper": "6202"
   },
   {
-    "id": 109,
     "city": "Polýgyros",
     "lat": "40.3783",
     "lng": "23.4453",
@@ -1320,7 +1210,6 @@
     "population_proper": "6121"
   },
   {
-    "id": 110,
     "city": "Messíni",
     "lat": "37.0500",
     "lng": "22.0000",
@@ -1332,7 +1221,6 @@
     "population_proper": "6065"
   },
   {
-    "id": 111,
     "city": "Néoi Epivátes",
     "lat": "40.5010",
     "lng": "22.9090",
@@ -1344,7 +1232,6 @@
     "population_proper": "5984"
   },
   {
-    "id": 112,
     "city": "Filiatrá",
     "lat": "37.1572",
     "lng": "21.5858",
@@ -1356,7 +1243,6 @@
     "population_proper": "5969"
   },
   {
-    "id": 113,
     "city": "Psachná",
     "lat": "38.5828",
     "lng": "23.6328",
@@ -1368,7 +1254,6 @@
     "population_proper": "5827"
   },
   {
-    "id": 114,
     "city": "Megalópoli",
     "lat": "37.4000",
     "lng": "22.1333",
@@ -1380,7 +1265,6 @@
     "population_proper": "5748"
   },
   {
-    "id": 115,
     "city": "Mýrina",
     "lat": "39.8797",
     "lng": "25.0742",
@@ -1392,7 +1276,6 @@
     "population_proper": "5711"
   },
   {
-    "id": 116,
     "city": "Diónysos",
     "lat": "38.1000",
     "lng": "23.8667",
@@ -1404,7 +1287,6 @@
     "population_proper": "5651"
   },
   {
-    "id": 117,
     "city": "Nerokoúros",
     "lat": "35.4758",
     "lng": "24.0383",
@@ -1416,7 +1298,6 @@
     "population_proper": "5531"
   },
   {
-    "id": 118,
     "city": "Xylókastro",
     "lat": "38.0667",
     "lng": "22.6333",
@@ -1428,7 +1309,6 @@
     "population_proper": "5500"
   },
   {
-    "id": 119,
     "city": "Fílyro",
     "lat": "40.6911",
     "lng": "23.0042",
@@ -1440,7 +1320,6 @@
     "population_proper": "5495"
   },
   {
-    "id": 120,
     "city": "Siátista",
     "lat": "40.2564",
     "lng": "21.5522",
@@ -1452,7 +1331,6 @@
     "population_proper": "5490"
   },
   {
-    "id": 121,
     "city": "Féres",
     "lat": "40.8933",
     "lng": "26.1739",
@@ -1464,7 +1342,6 @@
     "population_proper": "5457"
   },
   {
-    "id": 122,
     "city": "Skýdra",
     "lat": "40.7667",
     "lng": "22.1500",
@@ -1476,7 +1353,6 @@
     "population_proper": "5406"
   },
   {
-    "id": 123,
     "city": "Archángelos",
     "lat": "36.2167",
     "lng": "28.1167",
@@ -1488,7 +1364,6 @@
     "population_proper": "5384"
   },
   {
-    "id": 124,
     "city": "Kremastí",
     "lat": "36.4105",
     "lng": "28.1191",
@@ -1500,7 +1375,6 @@
     "population_proper": "5363"
   },
   {
-    "id": 125,
     "city": "Vrontádos",
     "lat": "38.4167",
     "lng": "26.1333",
@@ -1512,7 +1386,6 @@
     "population_proper": "5323"
   },
   {
-    "id": 126,
     "city": "Tympáki",
     "lat": "35.0719",
     "lng": "24.7683",
@@ -1524,7 +1397,6 @@
     "population_proper": "5285"
   },
   {
-    "id": 127,
     "city": "Orchomenós",
     "lat": "38.4933",
     "lng": "22.9749",
@@ -1536,7 +1408,6 @@
     "population_proper": "5238"
   },
   {
-    "id": 128,
     "city": "Agriá",
     "lat": "39.3400",
     "lng": "23.0133",
@@ -1548,7 +1419,6 @@
     "population_proper": "5191"
   },
   {
-    "id": 129,
     "city": "Néa Anchiálos",
     "lat": "39.2667",
     "lng": "22.8167",
@@ -1560,7 +1430,6 @@
     "population_proper": "5132"
   },
   {
-    "id": 130,
     "city": "Kyparissía",
     "lat": "37.2333",
     "lng": "21.6667",
@@ -1572,7 +1441,6 @@
     "population_proper": "5131"
   },
   {
-    "id": 131,
     "city": "Gargaliánoi",
     "lat": "37.0667",
     "lng": "21.6333",
@@ -1584,7 +1452,6 @@
     "population_proper": "5007"
   },
   {
-    "id": 132,
     "city": "Nigríta",
     "lat": "40.9133",
     "lng": "23.5014",
@@ -1596,7 +1463,6 @@
     "population_proper": "4947"
   },
   {
-    "id": 133,
     "city": "Skiáthos",
     "lat": "39.1652",
     "lng": "23.4895",
@@ -1608,7 +1474,6 @@
     "population_proper": "4883"
   },
   {
-    "id": 134,
     "city": "Chortiátis",
     "lat": "40.6083",
     "lng": "23.1028",
@@ -1620,7 +1485,6 @@
     "population_proper": "4873"
   },
   {
-    "id": 135,
     "city": "Alivéri",
     "lat": "38.4083",
     "lng": "24.0417",
@@ -1632,7 +1496,6 @@
     "population_proper": "4827"
   },
   {
-    "id": 136,
     "city": "Tínos",
     "lat": "37.5377",
     "lng": "25.1611",
@@ -1644,7 +1507,6 @@
     "population_proper": "4762"
   },
   {
-    "id": 137,
     "city": "Magoúla",
     "lat": "38.0833",
     "lng": "23.5167",
@@ -1656,7 +1518,6 @@
     "population_proper": "4735"
   },
   {
-    "id": 138,
     "city": "Stafidókampos",
     "lat": "37.8933",
     "lng": "21.2933",
@@ -1668,7 +1529,6 @@
     "population_proper": "4716"
   },
   {
-    "id": 139,
     "city": "Ampelákia",
     "lat": "37.9500",
     "lng": "23.5167",
@@ -1680,7 +1540,6 @@
     "population_proper": "4710"
   },
   {
-    "id": 140,
     "city": "Vónitsa",
     "lat": "38.9153",
     "lng": "20.8911",
@@ -1692,7 +1551,6 @@
     "population_proper": "4703"
   },
   {
-    "id": 141,
     "city": "Filippiáda",
     "lat": "39.2028",
     "lng": "20.8842",
@@ -1704,7 +1562,6 @@
     "population_proper": "4619"
   },
   {
-    "id": 142,
     "city": "Alíartos",
     "lat": "38.3667",
     "lng": "23.1000",
@@ -1716,7 +1573,6 @@
     "population_proper": "4402"
   },
   {
-    "id": 143,
     "city": "Zevgolatió",
     "lat": "37.9333",
     "lng": "22.8000",
@@ -1728,7 +1584,6 @@
     "population_proper": "4363"
   },
   {
-    "id": 144,
     "city": "Itéa",
     "lat": "38.4333",
     "lng": "22.4333",
@@ -1740,7 +1595,6 @@
     "population_proper": "4362"
   },
   {
-    "id": 145,
     "city": "Istiaía",
     "lat": "38.9500",
     "lng": "23.1500",
@@ -1752,7 +1606,6 @@
     "population_proper": "4339"
   },
   {
-    "id": 146,
     "city": "Arkalochóri",
     "lat": "35.1500",
     "lng": "25.2667",
@@ -1764,7 +1617,6 @@
     "population_proper": "4313"
   },
   {
-    "id": 147,
     "city": "Gýtheio",
     "lat": "36.7617",
     "lng": "22.5661",
@@ -1776,7 +1628,6 @@
     "population_proper": "4279"
   },
   {
-    "id": 148,
     "city": "Néa Magnisía",
     "lat": "40.6878",
     "lng": "22.8458",
@@ -1788,7 +1639,6 @@
     "population_proper": "4266"
   },
   {
-    "id": 149,
     "city": "Kíssamos",
     "lat": "35.4833",
     "lng": "23.6500",
@@ -1800,7 +1650,6 @@
     "population_proper": "4236"
   },
   {
-    "id": 150,
     "city": "Vouliagméni",
     "lat": "37.8000",
     "lng": "23.7833",
@@ -1812,7 +1661,6 @@
     "population_proper": "4180"
   },
   {
-    "id": 151,
     "city": "Aigínio",
     "lat": "40.5022",
     "lng": "22.5422",
@@ -1824,7 +1672,6 @@
     "population_proper": "4153"
   },
   {
-    "id": 152,
     "city": "Kítsi",
     "lat": "37.8456",
     "lng": "23.8267",
@@ -1836,7 +1683,6 @@
     "population_proper": "4091"
   },
   {
-    "id": 153,
     "city": "Schimatári",
     "lat": "38.3500",
     "lng": "23.5833",
@@ -1848,7 +1694,6 @@
     "population_proper": "4035"
   },
   {
-    "id": 154,
     "city": "Aitolikó",
     "lat": "38.4369",
     "lng": "21.3536",
@@ -1860,7 +1705,6 @@
     "population_proper": "4012"
   },
   {
-    "id": 155,
     "city": "Kranídi",
     "lat": "37.3750",
     "lng": "23.1583",
@@ -1872,7 +1716,6 @@
     "population_proper": "4006"
   },
   {
-    "id": 156,
     "city": "Spétses",
     "lat": "37.2591",
     "lng": "23.1364",
@@ -1884,7 +1727,6 @@
     "population_proper": "4001"
   },
   {
-    "id": 157,
     "city": "Andravída",
     "lat": "37.9058",
     "lng": "21.2667",
@@ -1896,7 +1738,6 @@
     "population_proper": "3981"
   },
   {
-    "id": 158,
     "city": "Katsikás",
     "lat": "39.6228",
     "lng": "20.8875",
@@ -1908,7 +1749,6 @@
     "population_proper": "3885"
   },
   {
-    "id": 159,
     "city": "Néa Raidestós",
     "lat": "40.5239",
     "lng": "23.0508",
@@ -1920,7 +1760,6 @@
     "population_proper": "3869"
   },
   {
-    "id": 160,
     "city": "Neméa",
     "lat": "37.8167",
     "lng": "22.6667",
@@ -1932,7 +1771,6 @@
     "population_proper": "3853"
   },
   {
-    "id": 161,
     "city": "Potamós",
     "lat": "39.6239",
     "lng": "19.8792",
@@ -1944,7 +1782,6 @@
     "population_proper": "3840"
   },
   {
-    "id": 162,
     "city": "Souflí",
     "lat": "41.1942",
     "lng": "26.3023",
@@ -1956,7 +1793,6 @@
     "population_proper": "3837"
   },
   {
-    "id": 163,
     "city": "Amfilochía",
     "lat": "38.8592",
     "lng": "21.1758",
@@ -1968,7 +1804,6 @@
     "population_proper": "3827"
   },
   {
-    "id": 164,
     "city": "Mýkonos",
     "lat": "37.4453",
     "lng": "25.3287",
@@ -1980,7 +1815,6 @@
     "population_proper": "3783"
   },
   {
-    "id": 165,
     "city": "Vasiliká",
     "lat": "40.4800",
     "lng": "23.1367",
@@ -1992,7 +1826,6 @@
     "population_proper": "3762"
   },
   {
-    "id": 166,
     "city": "Leonídio",
     "lat": "37.1667",
     "lng": "22.8500",
@@ -2004,7 +1837,6 @@
     "population_proper": "3761"
   },
   {
-    "id": 167,
     "city": "Lixoúri",
     "lat": "38.2000",
     "lng": "20.4333",
@@ -2016,7 +1848,6 @@
     "population_proper": "3752"
   },
   {
-    "id": 168,
     "city": "Leptokaryá",
     "lat": "40.0603",
     "lng": "22.5612",
@@ -2028,7 +1859,6 @@
     "population_proper": "3700"
   },
   {
-    "id": 169,
     "city": "Stavrós",
     "lat": "40.6642",
     "lng": "23.6961",
@@ -2040,7 +1870,6 @@
     "population_proper": "3672"
   },
   {
-    "id": 170,
     "city": "Amýntaio",
     "lat": "40.6897",
     "lng": "21.6797",
@@ -2052,7 +1881,6 @@
     "population_proper": "3671"
   },
   {
-    "id": 171,
     "city": "Kimméria",
     "lat": "41.1475",
     "lng": "24.9388",
@@ -2064,7 +1892,6 @@
     "population_proper": "3644"
   },
   {
-    "id": 172,
     "city": "Gouménissa",
     "lat": "40.9481",
     "lng": "22.4519",
@@ -2076,7 +1903,6 @@
     "population_proper": "3609"
   },
   {
-    "id": 173,
     "city": "Vartholomió",
     "lat": "37.8622",
     "lng": "21.2058",
@@ -2088,7 +1914,6 @@
     "population_proper": "3603"
   },
   {
-    "id": 174,
     "city": "Lagyná",
     "lat": "40.7233",
     "lng": "23.0050",
@@ -2100,7 +1925,6 @@
     "population_proper": "3591"
   },
   {
-    "id": 175,
     "city": "Prosotsáni",
     "lat": "41.1786",
     "lng": "23.9722",
@@ -2112,7 +1936,6 @@
     "population_proper": "3553"
   },
   {
-    "id": 176,
     "city": "Néa Péramos",
     "lat": "40.8389",
     "lng": "24.3036",
@@ -2124,7 +1947,6 @@
     "population_proper": "3514"
   },
   {
-    "id": 177,
     "city": "Korinós",
     "lat": "40.3167",
     "lng": "22.5833",
@@ -2136,7 +1958,6 @@
     "population_proper": "3487"
   },
   {
-    "id": 178,
     "city": "Krinídes",
     "lat": "41.0131",
     "lng": "24.2950",
@@ -2148,7 +1969,6 @@
     "population_proper": "3365"
   },
   {
-    "id": 179,
     "city": "Velventós",
     "lat": "40.2547",
     "lng": "22.0742",
@@ -2160,7 +1980,6 @@
     "population_proper": "3360"
   },
   {
-    "id": 180,
     "city": "Kapandríti",
     "lat": "38.2167",
     "lng": "23.8833",
@@ -2172,7 +1991,6 @@
     "population_proper": "3359"
   },
   {
-    "id": 181,
     "city": "Sápes",
     "lat": "41.0333",
     "lng": "25.7000",
@@ -2184,7 +2002,6 @@
     "population_proper": "3351"
   },
   {
-    "id": 182,
     "city": "Vracháti",
     "lat": "37.9500",
     "lng": "22.8000",
@@ -2196,7 +2013,6 @@
     "population_proper": "3338"
   },
   {
-    "id": 183,
     "city": "Lití",
     "lat": "40.7447",
     "lng": "22.9781",
@@ -2208,7 +2024,6 @@
     "population_proper": "3302"
   },
   {
-    "id": 184,
     "city": "Ierissós",
     "lat": "40.3983",
     "lng": "23.8783",
@@ -2220,7 +2035,6 @@
     "population_proper": "3266"
   },
   {
-    "id": 185,
     "city": "Thásos",
     "lat": "40.7781",
     "lng": "24.7094",
@@ -2232,7 +2046,6 @@
     "population_proper": "3234"
   },
   {
-    "id": 186,
     "city": "Itháki",
     "lat": "38.4167",
     "lng": "20.6667",
@@ -2244,7 +2057,6 @@
     "population_proper": "3231"
   },
   {
-    "id": 187,
     "city": "Mália",
     "lat": "35.2836",
     "lng": "25.4625",
@@ -2256,7 +2068,6 @@
     "population_proper": "3224"
   },
   {
-    "id": 188,
     "city": "Néos Marmarás",
     "lat": "40.0967",
     "lng": "23.7831",
@@ -2268,7 +2079,6 @@
     "population_proper": "3158"
   },
   {
-    "id": 189,
     "city": "Zacháro",
     "lat": "37.4861",
     "lng": "21.6494",
@@ -2280,7 +2090,6 @@
     "population_proper": "3145"
   },
   {
-    "id": 190,
     "city": "Kallithéa",
     "lat": "40.2750",
     "lng": "22.5750",
@@ -2292,7 +2101,6 @@
     "population_proper": "3134"
   },
   {
-    "id": 191,
     "city": "Melíki",
     "lat": "40.5167",
     "lng": "22.4000",
@@ -2304,7 +2112,6 @@
     "population_proper": "3116"
   },
   {
-    "id": 192,
     "city": "Kalampáki",
     "lat": "41.0500",
     "lng": "24.1833",
@@ -2316,7 +2123,6 @@
     "population_proper": "3110"
   },
   {
-    "id": 193,
     "city": "Néa Tríglia",
     "lat": "40.3061",
     "lng": "23.2086",
@@ -2328,7 +2134,6 @@
     "population_proper": "3102"
   },
   {
-    "id": 194,
     "city": "Sochós",
     "lat": "40.8164",
     "lng": "23.3542",
@@ -2340,7 +2145,6 @@
     "population_proper": "3094"
   },
   {
-    "id": 195,
     "city": "Skópelos",
     "lat": "39.1167",
     "lng": "23.7167",
@@ -2352,7 +2156,6 @@
     "population_proper": "3090"
   },
   {
-    "id": 196,
     "city": "Skála",
     "lat": "36.8525",
     "lng": "22.6661",
@@ -2364,7 +2167,6 @@
     "population_proper": "3067"
   },
   {
-    "id": 197,
     "city": "Ntráfi",
     "lat": "38.0333",
     "lng": "23.9000",
@@ -2376,7 +2178,6 @@
     "population_proper": "3055"
   },
   {
-    "id": 198,
     "city": "Maniákoi",
     "lat": "40.5019",
     "lng": "21.2447",
@@ -2388,7 +2189,6 @@
     "population_proper": "3055"
   },
   {
-    "id": 199,
     "city": "Néa Mesimvría",
     "lat": "40.7517",
     "lng": "22.7692",
@@ -2400,7 +2200,6 @@
     "population_proper": "3050"
   },
   {
-    "id": 200,
     "city": "Velestíno",
     "lat": "39.3817",
     "lng": "22.7450",
@@ -2412,7 +2211,6 @@
     "population_proper": "3044"
   },
   {
-    "id": 201,
     "city": "Plomári",
     "lat": "38.9833",
     "lng": "26.3667",
@@ -2424,7 +2222,6 @@
     "population_proper": "2996"
   },
   {
-    "id": 202,
     "city": "Ormýlia",
     "lat": "40.2944",
     "lng": "23.5433",
@@ -2436,7 +2233,6 @@
     "population_proper": "2979"
   },
   {
-    "id": 203,
     "city": "Néo Rýsi",
     "lat": "40.4961",
     "lng": "22.9881",
@@ -2448,7 +2244,6 @@
     "population_proper": "2952"
   },
   {
-    "id": 204,
     "city": "Kónitsa",
     "lat": "40.0417",
     "lng": "20.7450",
@@ -2460,7 +2255,6 @@
     "population_proper": "2942"
   },
   {
-    "id": 205,
     "city": "Lefkímmi",
     "lat": "39.4167",
     "lng": "20.0667",
@@ -2472,7 +2266,6 @@
     "population_proper": "2935"
   },
   {
-    "id": 206,
     "city": "Panaitólio",
     "lat": "38.5833",
     "lng": "21.4461",
@@ -2484,7 +2277,6 @@
     "population_proper": "2935"
   },
   {
-    "id": 207,
     "city": "Saronída",
     "lat": "37.7333",
     "lng": "23.9000",
@@ -2496,7 +2288,6 @@
     "population_proper": "2932"
   },
   {
-    "id": 208,
     "city": "Axioúpoli",
     "lat": "40.9858",
     "lng": "22.5417",
@@ -2508,7 +2299,6 @@
     "population_proper": "2897"
   },
   {
-    "id": 209,
     "city": "Erythrés",
     "lat": "38.2167",
     "lng": "23.3167",
@@ -2520,7 +2310,6 @@
     "population_proper": "2862"
   },
   {
-    "id": 210,
     "city": "Asproválta",
     "lat": "40.7247",
     "lng": "23.7056",
@@ -2532,7 +2321,6 @@
     "population_proper": "2838"
   },
   {
-    "id": 211,
     "city": "Katochí",
     "lat": "38.4142",
     "lng": "21.2542",
@@ -2544,7 +2332,6 @@
     "population_proper": "2829"
   },
   {
-    "id": 212,
     "city": "Neochóri",
     "lat": "38.4083",
     "lng": "21.2750",
@@ -2556,7 +2343,6 @@
     "population_proper": "2827"
   },
   {
-    "id": 213,
     "city": "Kolindrós",
     "lat": "40.4783",
     "lng": "22.4861",
@@ -2568,7 +2354,6 @@
     "population_proper": "2822"
   },
   {
-    "id": 214,
     "city": "Néa Výssa",
     "lat": "41.5833",
     "lng": "26.5333",
@@ -2580,7 +2365,6 @@
     "population_proper": "2805"
   },
   {
-    "id": 215,
     "city": "Néa Kíos",
     "lat": "37.5875",
     "lng": "22.7444",
@@ -2592,7 +2376,6 @@
     "population_proper": "2778"
   },
   {
-    "id": 216,
     "city": "Kassándreia",
     "lat": "40.0467",
     "lng": "23.4161",
@@ -2604,7 +2387,6 @@
     "population_proper": "2775"
   },
   {
-    "id": 217,
     "city": "Kaména Voúrla",
     "lat": "38.7833",
     "lng": "22.7833",
@@ -2616,7 +2398,6 @@
     "population_proper": "2761"
   },
   {
-    "id": 218,
     "city": "Choristí",
     "lat": "41.1300",
     "lng": "24.2083",
@@ -2628,7 +2409,6 @@
     "population_proper": "2725"
   },
   {
-    "id": 219,
     "city": "Néa Palátia",
     "lat": "38.3167",
     "lng": "23.7833",
@@ -2640,7 +2420,6 @@
     "population_proper": "2723"
   },
   {
-    "id": 220,
     "city": "Palaiá Fókaia",
     "lat": "37.7167",
     "lng": "23.9500",
@@ -2652,7 +2431,6 @@
     "population_proper": "2713"
   },
   {
-    "id": 221,
     "city": "Níkiti",
     "lat": "40.2228",
     "lng": "23.6686",
@@ -2664,7 +2442,6 @@
     "population_proper": "2711"
   },
   {
-    "id": 222,
     "city": "Kárpathos",
     "lat": "35.5075",
     "lng": "27.2136",
@@ -2676,7 +2453,6 @@
     "population_proper": "2707"
   },
   {
-    "id": 223,
     "city": "Astakós",
     "lat": "38.5333",
     "lng": "21.0833",
@@ -2688,7 +2464,6 @@
     "population_proper": "2696"
   },
   {
-    "id": 224,
     "city": "Spercheiáda",
     "lat": "38.9167",
     "lng": "22.1333",
@@ -2700,7 +2475,6 @@
     "population_proper": "2691"
   },
   {
-    "id": 225,
     "city": "Pálairos",
     "lat": "38.7809",
     "lng": "20.8785",
@@ -2712,7 +2486,6 @@
     "population_proper": "2664"
   },
   {
-    "id": 226,
     "city": "Aráchova",
     "lat": "38.4789",
     "lng": "22.5867",
@@ -2724,7 +2497,6 @@
     "population_proper": "2657"
   },
   {
-    "id": 227,
     "city": "Lechainá",
     "lat": "37.9333",
     "lng": "21.2667",
@@ -2736,7 +2508,6 @@
     "population_proper": "2641"
   },
   {
-    "id": 228,
     "city": "Sými",
     "lat": "36.5989",
     "lng": "27.8342",
@@ -2748,7 +2519,6 @@
     "population_proper": "2590"
   },
   {
-    "id": 229,
     "city": "Anatolikó",
     "lat": "40.6631",
     "lng": "22.7114",
@@ -2760,7 +2530,6 @@
     "population_proper": "2589"
   },
   {
-    "id": 230,
     "city": "Kéntavros",
     "lat": "41.2300",
     "lng": "24.9500",
@@ -2772,7 +2541,6 @@
     "population_proper": "2580"
   },
   {
-    "id": 231,
     "city": "Vrachnaíika",
     "lat": "38.1669",
     "lng": "21.6669",
@@ -2784,7 +2552,6 @@
     "population_proper": "2571"
   },
   {
-    "id": 232,
     "city": "Rododáfni",
     "lat": "38.2697",
     "lng": "22.0489",
@@ -2796,7 +2563,6 @@
     "population_proper": "2564"
   },
   {
-    "id": 233,
     "city": "Loutrá Aidipsoú",
     "lat": "38.8556",
     "lng": "23.0464",
@@ -2808,7 +2574,6 @@
     "population_proper": "2560"
   },
   {
-    "id": 234,
     "city": "Livanátes",
     "lat": "38.7500",
     "lng": "23.0333",
@@ -2820,7 +2585,6 @@
     "population_proper": "2559"
   },
   {
-    "id": 235,
     "city": "Markópoulo",
     "lat": "38.2897",
     "lng": "23.8247",
@@ -2832,7 +2596,6 @@
     "population_proper": "2549"
   },
   {
-    "id": 236,
     "city": "Galátista",
     "lat": "40.4672",
     "lng": "23.2806",
@@ -2844,7 +2607,6 @@
     "population_proper": "2537"
   },
   {
-    "id": 237,
     "city": "Moláoi",
     "lat": "36.8042",
     "lng": "22.8547",
@@ -2856,7 +2618,6 @@
     "population_proper": "2534"
   },
   {
-    "id": 238,
     "city": "Kanaláki",
     "lat": "39.2325",
     "lng": "20.5986",
@@ -2868,7 +2629,6 @@
     "population_proper": "2513"
   },
   {
-    "id": 239,
     "city": "Filiátes",
     "lat": "39.6011",
     "lng": "20.3119",
@@ -2880,7 +2640,6 @@
     "population_proper": "2512"
   },
   {
-    "id": 240,
     "city": "Ermióni",
     "lat": "37.3833",
     "lng": "23.2500",
@@ -2892,7 +2651,6 @@
     "population_proper": "2505"
   },
   {
-    "id": 241,
     "city": "Métsovo",
     "lat": "39.7703",
     "lng": "21.1839",
@@ -2904,7 +2662,6 @@
     "population_proper": "2503"
   },
   {
-    "id": 242,
     "city": "Echínos",
     "lat": "41.2758",
     "lng": "24.9725",
@@ -2916,7 +2673,6 @@
     "population_proper": "2486"
   },
   {
-    "id": 243,
     "city": "Ligourió",
     "lat": "37.6144",
     "lng": "23.0361",
@@ -2928,7 +2684,6 @@
     "population_proper": "2482"
   },
   {
-    "id": 244,
     "city": "Limenária",
     "lat": "40.6278",
     "lng": "24.5767",
@@ -2940,7 +2695,6 @@
     "population_proper": "2471"
   },
   {
-    "id": 245,
     "city": "Gónnoi",
     "lat": "39.8611",
     "lng": "22.4761",
@@ -2952,7 +2706,6 @@
     "population_proper": "2462"
   },
   {
-    "id": 246,
     "city": "Néa Málgara",
     "lat": "40.6097",
     "lng": "22.6819",
@@ -2964,7 +2717,6 @@
     "population_proper": "2404"
   },
   {
-    "id": 247,
     "city": "Pélla",
     "lat": "40.7617",
     "lng": "22.5264",
@@ -2976,7 +2728,6 @@
     "population_proper": "2398"
   },
   {
-    "id": 248,
     "city": "Lefkónas",
     "lat": "41.0983",
     "lng": "23.4961",
@@ -2988,7 +2739,6 @@
     "population_proper": "2388"
   },
   {
-    "id": 249,
     "city": "Kými",
     "lat": "38.6343",
     "lng": "24.1038",
@@ -3000,7 +2750,6 @@
     "population_proper": "2383"
   },
   {
-    "id": 250,
     "city": "Paramythiá",
     "lat": "39.4667",
     "lng": "20.5000",
@@ -3012,7 +2761,6 @@
     "population_proper": "2363"
   },
   {
-    "id": 251,
     "city": "Pýlos",
     "lat": "36.9000",
     "lng": "21.6833",
@@ -3024,7 +2772,6 @@
     "population_proper": "2345"
   },
   {
-    "id": 252,
     "city": "Agiásos",
     "lat": "39.0833",
     "lng": "26.3711",
@@ -3036,7 +2783,6 @@
     "population_proper": "2320"
   },
   {
-    "id": 253,
     "city": "Tycheró",
     "lat": "41.0289",
     "lng": "26.2944",
@@ -3048,7 +2794,6 @@
     "population_proper": "2311"
   },
   {
-    "id": 254,
     "city": "Arnaía",
     "lat": "40.4867",
     "lng": "23.5947",
@@ -3060,7 +2805,6 @@
     "population_proper": "2300"
   },
   {
-    "id": 255,
     "city": "Várda",
     "lat": "38.0306",
     "lng": "21.3650",
@@ -3072,7 +2816,6 @@
     "population_proper": "2291"
   },
   {
-    "id": 256,
     "city": "Dimíni",
     "lat": "39.3547",
     "lng": "22.8892",
@@ -3084,7 +2827,6 @@
     "population_proper": "2261"
   },
   {
-    "id": 257,
     "city": "Makrakómi",
     "lat": "38.9333",
     "lng": "22.1167",
@@ -3096,7 +2838,6 @@
     "population_proper": "2245"
   },
   {
-    "id": 258,
     "city": "Livádi",
     "lat": "40.1333",
     "lng": "22.1500",
@@ -3108,7 +2849,6 @@
     "population_proper": "2244"
   },
   {
-    "id": 259,
     "city": "Nikísiani",
     "lat": "40.9489",
     "lng": "24.1417",
@@ -3120,7 +2860,6 @@
     "population_proper": "2236"
   },
   {
-    "id": 260,
     "city": "Ágios Kírykos",
     "lat": "37.6114",
     "lng": "26.2931",
@@ -3132,7 +2871,6 @@
     "population_proper": "2218"
   },
   {
-    "id": 261,
     "city": "Galatás",
     "lat": "37.4967",
     "lng": "23.4475",
@@ -3144,7 +2882,6 @@
     "population_proper": "2195"
   },
   {
-    "id": 262,
     "city": "Kyriáki",
     "lat": "38.3500",
     "lng": "22.7833",
@@ -3156,7 +2893,6 @@
     "population_proper": "2185"
   },
   {
-    "id": 263,
     "city": "Zagklivéri",
     "lat": "40.5719",
     "lng": "23.2889",
@@ -3168,7 +2904,6 @@
     "population_proper": "2171"
   },
   {
-    "id": 264,
     "city": "Terpní",
     "lat": "40.9167",
     "lng": "23.4833",
@@ -3180,7 +2915,6 @@
     "population_proper": "2169"
   },
   {
-    "id": 265,
     "city": "Néa Karváli",
     "lat": "40.9606",
     "lng": "24.5106",
@@ -3192,7 +2926,6 @@
     "population_proper": "2160"
   },
   {
-    "id": 266,
     "city": "Káto Nevrokópi",
     "lat": "41.3439",
     "lng": "23.8667",
@@ -3204,7 +2937,6 @@
     "population_proper": "2157"
   },
   {
-    "id": 267,
     "city": "Káto Goúves",
     "lat": "35.3300",
     "lng": "25.3119",
@@ -3216,7 +2948,6 @@
     "population_proper": "2153"
   },
   {
-    "id": 268,
     "city": "Anthoúsa",
     "lat": "38.0333",
     "lng": "23.8667",
@@ -3228,7 +2959,6 @@
     "population_proper": "2132"
   },
   {
-    "id": 269,
     "city": "Alistráti",
     "lat": "41.0633",
     "lng": "23.9581",
@@ -3240,7 +2970,6 @@
     "population_proper": "2127"
   },
   {
-    "id": 270,
     "city": "Mintilógli",
     "lat": "38.1833",
     "lng": "21.7000",
@@ -3252,7 +2981,6 @@
     "population_proper": "2120"
   },
   {
-    "id": 271,
     "city": "Zarós",
     "lat": "35.1333",
     "lng": "24.9000",
@@ -3264,7 +2992,6 @@
     "population_proper": "2106"
   },
   {
-    "id": 272,
     "city": "Polichnítos",
     "lat": "39.0790",
     "lng": "26.1810",
@@ -3276,7 +3003,6 @@
     "population_proper": "2102"
   },
   {
-    "id": 273,
     "city": "Mesopotamía",
     "lat": "40.5000",
     "lng": "21.1500",
@@ -3288,7 +3014,6 @@
     "population_proper": "2099"
   },
   {
-    "id": 274,
     "city": "Tagarádes",
     "lat": "40.4889",
     "lng": "23.0222",
@@ -3300,7 +3025,6 @@
     "population_proper": "2088"
   },
   {
-    "id": 275,
     "city": "Párga",
     "lat": "39.2833",
     "lng": "20.4000",
@@ -3312,7 +3036,6 @@
     "population_proper": "2088"
   },
   {
-    "id": 276,
     "city": "Rodópoli",
     "lat": "38.1000",
     "lng": "23.8667",
@@ -3324,7 +3047,6 @@
     "population_proper": "2078"
   },
   {
-    "id": 277,
     "city": "Zagorá",
     "lat": "39.4428",
     "lng": "23.1017",
@@ -3336,7 +3058,6 @@
     "population_proper": "2074"
   },
   {
-    "id": 278,
     "city": "Antimácheia",
     "lat": "36.8125",
     "lng": "27.0983",
@@ -3348,7 +3069,6 @@
     "population_proper": "2068"
   },
   {
-    "id": 279,
     "city": "Karditsomagoúla",
     "lat": "39.3917",
     "lng": "21.9233",
@@ -3360,7 +3080,6 @@
     "population_proper": "2063"
   },
   {
-    "id": 280,
     "city": "Sélero",
     "lat": "41.1333",
     "lng": "25.0000",
@@ -3372,7 +3091,6 @@
     "population_proper": "2059"
   },
   {
-    "id": 281,
     "city": "Tsarítsani",
     "lat": "39.8820",
     "lng": "22.2280",
@@ -3384,7 +3102,6 @@
     "population_proper": "2040"
   },
   {
-    "id": 282,
     "city": "Karítsa",
     "lat": "40.1875",
     "lng": "22.4819",
@@ -3396,7 +3113,6 @@
     "population_proper": "2025"
   },
   {
-    "id": 283,
     "city": "Galaxídi",
     "lat": "38.3767",
     "lng": "22.3836",
@@ -3408,7 +3124,6 @@
     "population_proper": "2011"
   },
   {
-    "id": 284,
     "city": "Pikérmi",
     "lat": "38.0000",
     "lng": "23.9333",
@@ -3420,7 +3135,6 @@
     "population_proper": "2009"
   },
   {
-    "id": 285,
     "city": "Néa Manoláda",
     "lat": "38.0500",
     "lng": "21.3833",
@@ -3432,7 +3146,6 @@
     "population_proper": "2006"
   },
   {
-    "id": 286,
     "city": "Aianí",
     "lat": "40.1647",
     "lng": "21.8208",
@@ -3444,7 +3157,6 @@
     "population_proper": "2006"
   },
   {
-    "id": 287,
     "city": "Kalloní",
     "lat": "39.2328",
     "lng": "26.2069",
@@ -3456,7 +3168,6 @@
     "population_proper": "1978"
   },
   {
-    "id": 288,
     "city": "Dílesi",
     "lat": "38.3425",
     "lng": "23.6728",
@@ -3468,7 +3179,6 @@
     "population_proper": "1976"
   },
   {
-    "id": 289,
     "city": "Svorónos",
     "lat": "40.2667",
     "lng": "22.4667",
@@ -3480,7 +3190,6 @@
     "population_proper": "1948"
   },
   {
-    "id": 290,
     "city": "Emporeío",
     "lat": "36.3583",
     "lng": "25.4444",
@@ -3492,7 +3201,6 @@
     "population_proper": "1938"
   },
   {
-    "id": 291,
     "city": "Loúros",
     "lat": "39.1667",
     "lng": "20.7500",
@@ -3504,7 +3212,6 @@
     "population_proper": "1938"
   },
   {
-    "id": 292,
     "city": "Néos Skopós",
     "lat": "41.0239",
     "lng": "23.6108",
@@ -3516,7 +3223,6 @@
     "population_proper": "1934"
   },
   {
-    "id": 293,
     "city": "Afídnes",
     "lat": "38.2000",
     "lng": "23.8333",
@@ -3528,7 +3234,6 @@
     "population_proper": "1908"
   },
   {
-    "id": 294,
     "city": "Vrontoú",
     "lat": "40.1936",
     "lng": "22.4319",
@@ -3540,7 +3245,6 @@
     "population_proper": "1902"
   },
   {
-    "id": 295,
     "city": "Gaïtáni",
     "lat": "37.7833",
     "lng": "20.8667",
@@ -3552,7 +3256,6 @@
     "population_proper": "1899"
   },
   {
-    "id": 296,
     "city": "Sámos",
     "lat": "37.7475",
     "lng": "26.9825",
@@ -3564,7 +3267,6 @@
     "population_proper": "1888"
   },
   {
-    "id": 297,
     "city": "Kréstena",
     "lat": "37.5917",
     "lng": "21.6200",
@@ -3576,7 +3278,6 @@
     "population_proper": "1864"
   },
   {
-    "id": 298,
     "city": "Megála Kalývia",
     "lat": "39.5000",
     "lng": "21.7833",
@@ -3588,7 +3289,6 @@
     "population_proper": "1849"
   },
   {
-    "id": 299,
     "city": "Mavrommáti",
     "lat": "38.3278",
     "lng": "23.1408",
@@ -3600,7 +3300,6 @@
     "population_proper": "1847"
   },
   {
-    "id": 300,
     "city": "Káto Tithoréa",
     "lat": "38.6000",
     "lng": "22.7167",
@@ -3612,7 +3311,6 @@
     "population_proper": "1841"
   },
   {
-    "id": 301,
     "city": "Athíkia",
     "lat": "37.8167",
     "lng": "22.9333",
@@ -3624,7 +3322,6 @@
     "population_proper": "1834"
   },
   {
-    "id": 302,
     "city": "Kolchikó",
     "lat": "40.7581",
     "lng": "23.1347",
@@ -3636,7 +3333,6 @@
     "population_proper": "1831"
   },
   {
-    "id": 303,
     "city": "Kálamos",
     "lat": "38.2847",
     "lng": "23.8637",
@@ -3648,7 +3344,6 @@
     "population_proper": "1824"
   },
   {
-    "id": 304,
     "city": "Desfína",
     "lat": "38.4184",
     "lng": "22.5287",
@@ -3660,7 +3355,6 @@
     "population_proper": "1824"
   },
   {
-    "id": 305,
     "city": "Pórto Chéli",
     "lat": "37.3250",
     "lng": "23.1420",
@@ -3672,7 +3366,6 @@
     "population_proper": "1817"
   },
   {
-    "id": 306,
     "city": "Verdikoússa",
     "lat": "39.7808",
     "lng": "21.9764",
@@ -3684,7 +3377,6 @@
     "population_proper": "1812"
   },
   {
-    "id": 307,
     "city": "Platýkampos",
     "lat": "39.6217",
     "lng": "22.5350",
@@ -3696,7 +3388,6 @@
     "population_proper": "1804"
   },
   {
-    "id": 308,
     "city": "Galatiní",
     "lat": "40.3197",
     "lng": "21.5519",
@@ -3708,7 +3399,6 @@
     "population_proper": "1795"
   },
   {
-    "id": 309,
     "city": "Mantoúdi",
     "lat": "38.7981",
     "lng": "23.4797",
@@ -3720,7 +3410,6 @@
     "population_proper": "1787"
   },
   {
-    "id": 310,
     "city": "Prómachoi",
     "lat": "41.0236",
     "lng": "22.0081",
@@ -3732,7 +3421,6 @@
     "population_proper": "1740"
   },
   {
-    "id": 311,
     "city": "Evropós",
     "lat": "40.8975",
     "lng": "22.5525",
@@ -3744,7 +3432,6 @@
     "population_proper": "1734"
   },
   {
-    "id": 312,
     "city": "Makrísia",
     "lat": "37.6167",
     "lng": "21.6000",
@@ -3756,7 +3443,6 @@
     "population_proper": "1718"
   },
   {
-    "id": 313,
     "city": "Thérmo",
     "lat": "38.5736",
     "lng": "21.6664",
@@ -3768,7 +3454,6 @@
     "population_proper": "1716"
   },
   {
-    "id": 314,
     "city": "Petroússa",
     "lat": "41.1944",
     "lng": "24.0158",
@@ -3780,7 +3465,6 @@
     "population_proper": "1704"
   },
   {
-    "id": 315,
     "city": "Chiliomódi",
     "lat": "37.8139",
     "lng": "22.8711",
@@ -3792,7 +3476,6 @@
     "population_proper": "1699"
   },
   {
-    "id": 316,
     "city": "Néa Sánta",
     "lat": "40.8428",
     "lng": "22.9194",
@@ -3804,7 +3487,6 @@
     "population_proper": "1693"
   },
   {
-    "id": 317,
     "city": "Katoúna",
     "lat": "38.7853",
     "lng": "21.1167",
@@ -3816,7 +3498,6 @@
     "population_proper": "1677"
   },
   {
-    "id": 318,
     "city": "Kalávryta",
     "lat": "38.0308",
     "lng": "22.1086",
@@ -3828,7 +3509,6 @@
     "population_proper": "1674"
   },
   {
-    "id": 319,
     "city": "Argyropoúli",
     "lat": "39.8261",
     "lng": "22.3081",
@@ -3840,7 +3520,6 @@
     "population_proper": "1667"
   },
   {
-    "id": 320,
     "city": "Kontariótissa",
     "lat": "40.2272",
     "lng": "22.4594",
@@ -3852,7 +3531,6 @@
     "population_proper": "1662"
   },
   {
-    "id": 321,
     "city": "Kontokáli",
     "lat": "39.6460",
     "lng": "19.8500",
@@ -3864,7 +3542,6 @@
     "population_proper": "1660"
   },
   {
-    "id": 322,
     "city": "Skýros",
     "lat": "38.9064",
     "lng": "24.5658",
@@ -3876,7 +3553,6 @@
     "population_proper": "1657"
   },
   {
-    "id": 323,
     "city": "Evinochóri",
     "lat": "38.3594",
     "lng": "21.5361",
@@ -3888,7 +3564,6 @@
     "population_proper": "1651"
   },
   {
-    "id": 324,
     "city": "Kardámaina",
     "lat": "36.7818",
     "lng": "27.1419",
@@ -3900,7 +3575,6 @@
     "population_proper": "1650"
   },
   {
-    "id": 325,
     "city": "Límni",
     "lat": "38.7700",
     "lng": "23.3200",
@@ -3912,7 +3586,6 @@
     "population_proper": "1642"
   },
   {
-    "id": 326,
     "city": "Palaiá Epídavros",
     "lat": "37.6379",
     "lng": "23.1570",
@@ -3924,7 +3597,6 @@
     "population_proper": "1618"
   },
   {
-    "id": 327,
     "city": "Perigiáli",
     "lat": "37.9380",
     "lng": "22.8360",
@@ -3936,7 +3608,6 @@
     "population_proper": "1616"
   },
   {
-    "id": 328,
     "city": "Makrychóri",
     "lat": "39.8000",
     "lng": "22.4833",
@@ -3948,7 +3619,6 @@
     "population_proper": "1615"
   },
   {
-    "id": 329,
     "city": "Ampelókipoi",
     "lat": "37.7581",
     "lng": "20.8725",
@@ -3960,7 +3630,6 @@
     "population_proper": "1606"
   },
   {
-    "id": 330,
     "city": "Néa Flogitá",
     "lat": "40.2600",
     "lng": "23.2200",
@@ -3972,7 +3641,6 @@
     "population_proper": "1604"
   },
   {
-    "id": 331,
     "city": "Dístomo",
     "lat": "38.4293",
     "lng": "22.6673",
@@ -3984,7 +3652,6 @@
     "population_proper": "1589"
   },
   {
-    "id": 332,
     "city": "Vári",
     "lat": "37.3906",
     "lng": "24.9447",
@@ -3996,7 +3663,6 @@
     "population_proper": "1584"
   },
   {
-    "id": 333,
     "city": "Thymianá",
     "lat": "38.3144",
     "lng": "26.1325",
@@ -4008,7 +3674,6 @@
     "population_proper": "1566"
   },
   {
-    "id": 334,
     "city": "Néa Éfesos",
     "lat": "40.2297",
     "lng": "22.5003",
@@ -4020,7 +3685,6 @@
     "population_proper": "1564"
   },
   {
-    "id": 335,
     "city": "Néa Iraklítsa",
     "lat": "40.8644",
     "lng": "24.3167",
@@ -4032,7 +3696,6 @@
     "population_proper": "1560"
   },
   {
-    "id": 336,
     "city": "Néa Poteídaia",
     "lat": "40.1931",
     "lng": "23.3279",
@@ -4044,7 +3707,6 @@
     "population_proper": "1559"
   },
   {
-    "id": 337,
     "city": "Kompóti",
     "lat": "39.1022",
     "lng": "21.0837",
@@ -4056,7 +3718,6 @@
     "population_proper": "1544"
   },
   {
-    "id": 338,
     "city": "Domokós",
     "lat": "39.1000",
     "lng": "22.3333",
@@ -4068,7 +3729,6 @@
     "population_proper": "1531"
   },
   {
-    "id": 339,
     "city": "Gra Lygiá",
     "lat": "35.0150",
     "lng": "25.6922",
@@ -4080,7 +3740,6 @@
     "population_proper": "1528"
   },
   {
-    "id": 340,
     "city": "Lófos",
     "lat": "40.2417",
     "lng": "22.3833",
@@ -4092,7 +3751,6 @@
     "population_proper": "1496"
   },
   {
-    "id": 341,
     "city": "Zygós",
     "lat": "41.0167",
     "lng": "24.3833",
@@ -4104,7 +3762,6 @@
     "population_proper": "1485"
   },
   {
-    "id": 342,
     "city": "Filóti",
     "lat": "37.0519",
     "lng": "25.4983",
@@ -4116,7 +3773,6 @@
     "population_proper": "1477"
   },
   {
-    "id": 343,
     "city": "Pérdika",
     "lat": "39.3667",
     "lng": "20.3000",
@@ -4128,7 +3784,6 @@
     "population_proper": "1476"
   },
   {
-    "id": 344,
     "city": "Geniséa",
     "lat": "41.0614",
     "lng": "24.9624",
@@ -4140,7 +3795,6 @@
     "population_proper": "1473"
   },
   {
-    "id": 345,
     "city": "Kokkinóchoma",
     "lat": "40.9261",
     "lng": "24.2983",
@@ -4152,7 +3806,6 @@
     "population_proper": "1472"
   },
   {
-    "id": 346,
     "city": "Epitálio",
     "lat": "37.6267",
     "lng": "21.4933",
@@ -4164,7 +3817,6 @@
     "population_proper": "1469"
   },
   {
-    "id": 347,
     "city": "Pyrgetós",
     "lat": "39.9181",
     "lng": "22.5956",
@@ -4176,7 +3828,6 @@
     "population_proper": "1463"
   },
   {
-    "id": 348,
     "city": "Aigeíra",
     "lat": "38.1456",
     "lng": "22.3506",
@@ -4188,7 +3839,6 @@
     "population_proper": "1462"
   },
   {
-    "id": 349,
     "city": "Toló",
     "lat": "37.5205",
     "lng": "22.8600",
@@ -4200,7 +3850,6 @@
     "population_proper": "1460"
   },
   {
-    "id": 350,
     "city": "Antíkyra",
     "lat": "38.3833",
     "lng": "22.6333",
@@ -4212,7 +3861,6 @@
     "population_proper": "1448"
   },
   {
-    "id": 351,
     "city": "Kinéta",
     "lat": "37.9717",
     "lng": "23.2150",
@@ -4224,7 +3872,6 @@
     "population_proper": "1446"
   },
   {
-    "id": 352,
     "city": "Kastélli",
     "lat": "35.2089",
     "lng": "25.3378",
@@ -4236,7 +3883,6 @@
     "population_proper": "1438"
   },
   {
-    "id": 353,
     "city": "Keramotí",
     "lat": "40.8556",
     "lng": "24.6983",
@@ -4248,7 +3894,6 @@
     "population_proper": "1438"
   },
   {
-    "id": 354,
     "city": "Grammatikó",
     "lat": "38.2025",
     "lng": "23.9650",
@@ -4260,7 +3905,6 @@
     "population_proper": "1432"
   },
   {
-    "id": 355,
     "city": "Skála Oropoú",
     "lat": "38.3197",
     "lng": "23.7875",
@@ -4272,7 +3916,6 @@
     "population_proper": "1430"
   },
   {
-    "id": 356,
     "city": "Profítis Ilías",
     "lat": "35.2064",
     "lng": "25.1000",
@@ -4284,7 +3927,6 @@
     "population_proper": "1429"
   },
   {
-    "id": 357,
     "city": "Kouvarás",
     "lat": "37.8333",
     "lng": "23.9667",
@@ -4296,7 +3938,6 @@
     "population_proper": "1426"
   },
   {
-    "id": 358,
     "city": "Magoúla",
     "lat": "37.0667",
     "lng": "22.4000",
@@ -4308,7 +3949,6 @@
     "population_proper": "1415"
   },
   {
-    "id": 359,
     "city": "Koróni",
     "lat": "36.7961",
     "lng": "21.9581",
@@ -4320,7 +3960,6 @@
     "population_proper": "1409"
   },
   {
-    "id": 360,
     "city": "Míthymna",
     "lat": "39.3686",
     "lng": "26.1806",
@@ -4332,7 +3971,6 @@
     "population_proper": "1399"
   },
   {
-    "id": 361,
     "city": "Atsipópoulo",
     "lat": "35.3527",
     "lng": "24.4340",
@@ -4344,7 +3982,6 @@
     "population_proper": "1392"
   },
   {
-    "id": 362,
     "city": "Kírra",
     "lat": "38.4334",
     "lng": "22.4400",
@@ -4356,7 +3993,6 @@
     "population_proper": "1385"
   },
   {
-    "id": 363,
     "city": "Polydéndri",
     "lat": "38.2167",
     "lng": "23.8667",
@@ -4368,7 +4004,6 @@
     "population_proper": "1385"
   },
   {
-    "id": 364,
     "city": "Potamiá",
     "lat": "40.7164",
     "lng": "24.7283",
@@ -4380,7 +4015,6 @@
     "population_proper": "1383"
   },
   {
-    "id": 365,
     "city": "Lárdos",
     "lat": "36.0941",
     "lng": "28.0166",
@@ -4392,7 +4026,6 @@
     "population_proper": "1380"
   },
   {
-    "id": 366,
     "city": "Damási",
     "lat": "39.7125",
     "lng": "22.1875",
@@ -4404,7 +4037,6 @@
     "population_proper": "1380"
   },
   {
-    "id": 367,
     "city": "Perivóli",
     "lat": "39.4208",
     "lng": "20.0139",
@@ -4416,7 +4048,6 @@
     "population_proper": "1378"
   },
   {
-    "id": 368,
     "city": "Katastári",
     "lat": "37.8278",
     "lng": "20.7567",
@@ -4428,7 +4059,6 @@
     "population_proper": "1378"
   },
   {
-    "id": 369,
     "city": "Kalí",
     "lat": "40.8177",
     "lng": "22.1782",
@@ -4440,7 +4070,6 @@
     "population_proper": "1378"
   },
   {
-    "id": 370,
     "city": "Thesprotikó",
     "lat": "39.2497",
     "lng": "20.7811",
@@ -4452,7 +4081,6 @@
     "population_proper": "1363"
   },
   {
-    "id": 371,
     "city": "Kamári",
     "lat": "36.3741",
     "lng": "25.4820",
@@ -4464,7 +4092,6 @@
     "population_proper": "1344"
   },
   {
-    "id": 372,
     "city": "Kýria",
     "lat": "41.0985",
     "lng": "24.2892",
@@ -4476,7 +4103,6 @@
     "population_proper": "1330"
   },
   {
-    "id": 373,
     "city": "Varnávas",
     "lat": "38.2236",
     "lng": "23.9236",
@@ -4488,7 +4114,6 @@
     "population_proper": "1326"
   },
   {
-    "id": 374,
     "city": "Argalastí",
     "lat": "39.2257",
     "lng": "23.2197",
@@ -4500,7 +4125,6 @@
     "population_proper": "1321"
   },
   {
-    "id": 375,
     "city": "Mýki",
     "lat": "41.2447",
     "lng": "24.9192",
@@ -4512,7 +4136,6 @@
     "population_proper": "1313"
   },
   {
-    "id": 376,
     "city": "Meligalás",
     "lat": "37.2167",
     "lng": "21.9667",
@@ -4524,7 +4147,6 @@
     "population_proper": "1296"
   },
   {
-    "id": 377,
     "city": "Kritsá",
     "lat": "35.1567",
     "lng": "25.6444",
@@ -4536,7 +4158,6 @@
     "population_proper": "1296"
   },
   {
-    "id": 378,
     "city": "Grizáno",
     "lat": "39.6319",
     "lng": "22.0525",
@@ -4548,7 +4169,6 @@
     "population_proper": "1290"
   },
   {
-    "id": 379,
     "city": "Mavrochóri",
     "lat": "40.5114",
     "lng": "21.3208",
@@ -4560,7 +4180,6 @@
     "population_proper": "1287"
   },
   {
-    "id": 380,
     "city": "Kallífytos",
     "lat": "41.1728",
     "lng": "24.2153",
@@ -4572,7 +4191,6 @@
     "population_proper": "1282"
   },
   {
-    "id": 381,
     "city": "Palaiokómi",
     "lat": "40.8714",
     "lng": "23.9017",
@@ -4584,7 +4202,6 @@
     "population_proper": "1274"
   },
   {
-    "id": 382,
     "city": "Rízia",
     "lat": "41.6219",
     "lng": "26.4222",
@@ -4596,7 +4213,6 @@
     "population_proper": "1272"
   },
   {
-    "id": 383,
     "city": "Vília",
     "lat": "38.1667",
     "lng": "23.3333",
@@ -4608,7 +4224,6 @@
     "population_proper": "1269"
   },
   {
-    "id": 384,
     "city": "Skarmagkás",
     "lat": "38.0100",
     "lng": "23.6000",
@@ -4620,7 +4235,6 @@
     "population_proper": "1255"
   },
   {
-    "id": 385,
     "city": "Kavásila",
     "lat": "37.8750",
     "lng": "21.2667",
@@ -4632,7 +4246,6 @@
     "population_proper": "1252"
   },
   {
-    "id": 386,
     "city": "Aidipsós",
     "lat": "38.8500",
     "lng": "23.0333",
@@ -4644,7 +4257,6 @@
     "population_proper": "1249"
   },
   {
-    "id": 387,
     "city": "Zárkos",
     "lat": "39.6078",
     "lng": "22.1247",
@@ -4656,7 +4268,6 @@
     "population_proper": "1247"
   },
   {
-    "id": 388,
     "city": "Gérgeri",
     "lat": "35.1329",
     "lng": "24.9499",
@@ -4668,7 +4279,6 @@
     "population_proper": "1241"
   },
   {
-    "id": 389,
     "city": "Karterádos",
     "lat": "36.4133",
     "lng": "25.4458",
@@ -4680,7 +4290,6 @@
     "population_proper": "1238"
   },
   {
-    "id": 390,
     "city": "Stalída",
     "lat": "35.2914",
     "lng": "25.4284",
@@ -4692,7 +4301,6 @@
     "population_proper": "1237"
   },
   {
-    "id": 391,
     "city": "Livaderó",
     "lat": "40.0333",
     "lng": "21.9425",
@@ -4704,7 +4312,6 @@
     "population_proper": "1232"
   },
   {
-    "id": 392,
     "city": "Dávleia",
     "lat": "38.5167",
     "lng": "22.7333",
@@ -4716,7 +4323,6 @@
     "population_proper": "1232"
   },
   {
-    "id": 393,
     "city": "Angelókastro",
     "lat": "38.5667",
     "lng": "21.3000",
@@ -4728,7 +4334,6 @@
     "population_proper": "1220"
   },
   {
-    "id": 394,
     "city": "Fyteíes",
     "lat": "38.6953",
     "lng": "21.1858",
@@ -4740,7 +4345,6 @@
     "population_proper": "1210"
   },
   {
-    "id": 395,
     "city": "Savália",
     "lat": "37.8167",
     "lng": "21.2833",
@@ -4752,7 +4356,6 @@
     "population_proper": "1206"
   },
   {
-    "id": 396,
     "city": "Dafnés",
     "lat": "35.2161",
     "lng": "25.0503",
@@ -4764,7 +4367,6 @@
     "population_proper": "1204"
   },
   {
-    "id": 397,
     "city": "Amaxádes",
     "lat": "41.1167",
     "lng": "25.0667",
@@ -4776,7 +4378,6 @@
     "population_proper": "1195"
   },
   {
-    "id": 398,
     "city": "Angelochórion",
     "lat": "40.4970",
     "lng": "22.8340",
@@ -4788,7 +4389,6 @@
     "population_proper": "1178"
   },
   {
-    "id": 399,
     "city": "Próti",
     "lat": "40.9442",
     "lng": "24.0017",
@@ -4800,7 +4400,6 @@
     "population_proper": "1176"
   },
   {
-    "id": 400,
     "city": "Kítros",
     "lat": "40.3722",
     "lng": "22.5789",
@@ -4812,7 +4411,6 @@
     "population_proper": "1172"
   },
   {
-    "id": 401,
     "city": "Kampánis",
     "lat": "40.8928",
     "lng": "22.9153",
@@ -4824,7 +4422,6 @@
     "population_proper": "1170"
   },
   {
-    "id": 402,
     "city": "Sylivainiótika",
     "lat": "38.1614",
     "lng": "22.3317",
@@ -4836,7 +4433,6 @@
     "population_proper": "1165"
   },
   {
-    "id": 403,
     "city": "Lefkopigí",
     "lat": "40.2310",
     "lng": "21.7490",
@@ -4848,7 +4444,6 @@
     "population_proper": "1161"
   },
   {
-    "id": 404,
     "city": "Agía Tríada",
     "lat": "37.6377",
     "lng": "22.8041",
@@ -4860,7 +4455,6 @@
     "population_proper": "1151"
   },
   {
-    "id": 405,
     "city": "Arrianá",
     "lat": "41.0813",
     "lng": "25.6949",
@@ -4872,7 +4466,6 @@
     "population_proper": "1147"
   },
   {
-    "id": 406,
     "city": "Loutró Elénis",
     "lat": "37.8660",
     "lng": "22.9970",
@@ -4884,7 +4477,6 @@
     "population_proper": "1145"
   },
   {
-    "id": 407,
     "city": "Perachóra",
     "lat": "38.0314",
     "lng": "22.9486",
@@ -4896,7 +4488,6 @@
     "population_proper": "1141"
   },
   {
-    "id": 408,
     "city": "Myrsíni",
     "lat": "37.9167",
     "lng": "21.2333",
@@ -4908,7 +4499,6 @@
     "population_proper": "1135"
   },
   {
-    "id": 409,
     "city": "Isthmía",
     "lat": "37.9155",
     "lng": "23.0073",
@@ -4920,7 +4510,6 @@
     "population_proper": "1134"
   },
   {
-    "id": 410,
     "city": "Kalá Déndra",
     "lat": "41.0994",
     "lng": "23.4239",
@@ -4932,7 +4521,6 @@
     "population_proper": "1131"
   },
   {
-    "id": 411,
     "city": "Díon",
     "lat": "40.1719",
     "lng": "22.4825",
@@ -4944,7 +4532,6 @@
     "population_proper": "1130"
   },
   {
-    "id": 412,
     "city": "Chrysokellariá",
     "lat": "36.7919",
     "lng": "21.8894",
@@ -4956,7 +4543,6 @@
     "population_proper": "1128"
   },
   {
-    "id": 413,
     "city": "Néa Plágia",
     "lat": "40.2625",
     "lng": "23.2028",
@@ -4968,7 +4554,6 @@
     "population_proper": "1127"
   },
   {
-    "id": 414,
     "city": "Polýdrosos",
     "lat": "38.6403",
     "lng": "22.5317",
@@ -4980,7 +4565,6 @@
     "population_proper": "1125"
   },
   {
-    "id": 415,
     "city": "Foúrnoi",
     "lat": "37.5908",
     "lng": "26.5022",
@@ -4992,7 +4576,6 @@
     "population_proper": "1120"
   },
   {
-    "id": 416,
     "city": "Zonianá",
     "lat": "35.2947",
     "lng": "24.8308",
@@ -5004,7 +4587,6 @@
     "population_proper": "1117"
   },
   {
-    "id": 417,
     "city": "Pontokómi",
     "lat": "40.4106",
     "lng": "21.7619",
@@ -5016,7 +4598,6 @@
     "population_proper": "1116"
   },
   {
-    "id": 418,
     "city": "Koíla",
     "lat": "40.3306",
     "lng": "21.7886",
@@ -5028,7 +4609,6 @@
     "population_proper": "1115"
   },
   {
-    "id": 419,
     "city": "Anéza",
     "lat": "39.0867",
     "lng": "20.9236",
@@ -5040,7 +4620,6 @@
     "population_proper": "1111"
   },
   {
-    "id": 420,
     "city": "Pétra",
     "lat": "39.3269",
     "lng": "26.1764",
@@ -5052,7 +4631,6 @@
     "population_proper": "1108"
   },
   {
-    "id": 421,
     "city": "Varvásaina",
     "lat": "37.6719",
     "lng": "21.4983",
@@ -5064,7 +4642,6 @@
     "population_proper": "1107"
   },
   {
-    "id": 422,
     "city": "Methóni",
     "lat": "36.8217",
     "lng": "21.7069",
@@ -5076,7 +4653,6 @@
     "population_proper": "1103"
   },
   {
-    "id": 423,
     "city": "Lávara",
     "lat": "41.2667",
     "lng": "26.3833",
@@ -5088,7 +4664,6 @@
     "population_proper": "1093"
   },
   {
-    "id": 424,
     "city": "Eresós",
     "lat": "39.1667",
     "lng": "25.9331",
@@ -5100,7 +4675,6 @@
     "population_proper": "1086"
   },
   {
-    "id": 425,
     "city": "Vranás",
     "lat": "38.1244",
     "lng": "23.9475",
@@ -5112,7 +4686,6 @@
     "population_proper": "1082"
   },
   {
-    "id": 426,
     "city": "Charakopió",
     "lat": "36.8086",
     "lng": "21.9133",
@@ -5124,7 +4697,6 @@
     "population_proper": "1080"
   },
   {
-    "id": 427,
     "city": "Káto Asítes",
     "lat": "35.2000",
     "lng": "25.0000",
@@ -5136,7 +4708,6 @@
     "population_proper": "1076"
   },
   {
-    "id": 428,
     "city": "Marathókampos",
     "lat": "37.7269",
     "lng": "26.6883",
@@ -5148,7 +4719,6 @@
     "population_proper": "1069"
   },
   {
-    "id": 429,
     "city": "Petalídi",
     "lat": "36.9500",
     "lng": "21.9333",
@@ -5160,7 +4730,6 @@
     "population_proper": "1065"
   },
   {
-    "id": 430,
     "city": "Andromáchi",
     "lat": "40.2719",
     "lng": "22.4811",
@@ -5172,7 +4741,6 @@
     "population_proper": "1061"
   },
   {
-    "id": 431,
     "city": "Kokkári",
     "lat": "37.7758",
     "lng": "26.8867",
@@ -5184,7 +4752,6 @@
     "population_proper": "1060"
   },
   {
-    "id": 432,
     "city": "Kastaniés",
     "lat": "41.6500",
     "lng": "26.4833",
@@ -5196,7 +4763,6 @@
     "population_proper": "1059"
   },
   {
-    "id": 433,
     "city": "Stratóni",
     "lat": "40.5200",
     "lng": "23.8200",
@@ -5208,7 +4774,6 @@
     "population_proper": "1057"
   },
   {
-    "id": 434,
     "city": "Astypálaia",
     "lat": "36.5475",
     "lng": "26.3528",
@@ -5220,7 +4785,6 @@
     "population_proper": "1055"
   },
   {
-    "id": 435,
     "city": "Kandíla",
     "lat": "38.7000",
     "lng": "20.9500",
@@ -5232,7 +4796,6 @@
     "population_proper": "1048"
   },
   {
-    "id": 436,
     "city": "Vanáto",
     "lat": "37.7930",
     "lng": "20.8530",
@@ -5244,7 +4807,6 @@
     "population_proper": "1045"
   },
   {
-    "id": 437,
     "city": "Parálio Ástros",
     "lat": "37.4167",
     "lng": "22.7661",
@@ -5256,7 +4818,6 @@
     "population_proper": "1043"
   },
   {
-    "id": 438,
     "city": "Sagaíika",
     "lat": "38.1000",
     "lng": "21.4667",
@@ -5268,7 +4829,6 @@
     "population_proper": "1038"
   },
   {
-    "id": 439,
     "city": "Alfeioúsa",
     "lat": "37.6333",
     "lng": "21.5333",
@@ -5280,7 +4840,6 @@
     "population_proper": "1037"
   },
   {
-    "id": 440,
     "city": "Néa Stýra",
     "lat": "38.1810",
     "lng": "24.2080",
@@ -5292,7 +4851,6 @@
     "population_proper": "1031"
   },
   {
-    "id": 441,
     "city": "Levídi",
     "lat": "37.6833",
     "lng": "22.2833",
@@ -5304,7 +4862,6 @@
     "population_proper": "1025"
   },
   {
-    "id": 442,
     "city": "Tríkeri",
     "lat": "39.1003",
     "lng": "23.0769",
@@ -5316,7 +4873,6 @@
     "population_proper": "1022"
   },
   {
-    "id": 443,
     "city": "Antírrio",
     "lat": "38.3306",
     "lng": "21.7647",
@@ -5328,7 +4884,6 @@
     "population_proper": "1018"
   },
   {
-    "id": 444,
     "city": "Acharávi",
     "lat": "39.7968",
     "lng": "19.8111",
@@ -5340,7 +4895,6 @@
     "population_proper": "1013"
   },
   {
-    "id": 445,
     "city": "Eleónas",
     "lat": "38.3633",
     "lng": "23.4428",
@@ -5352,7 +4906,6 @@
     "population_proper": "1010"
   },
   {
-    "id": 446,
     "city": "Batsí",
     "lat": "37.8586",
     "lng": "24.7864",
@@ -5364,7 +4917,6 @@
     "population_proper": "1010"
   },
   {
-    "id": 447,
     "city": "Kallíkomo",
     "lat": "37.5833",
     "lng": "21.5833",
@@ -5376,7 +4928,6 @@
     "population_proper": "1008"
   },
   {
-    "id": 448,
     "city": "Chalandrítsa",
     "lat": "38.1167",
     "lng": "21.8000",
@@ -5388,7 +4939,6 @@
     "population_proper": "913"
   },
   {
-    "id": 449,
     "city": "Fillýra",
     "lat": "41.1167",
     "lng": "25.6333",
@@ -5400,7 +4950,6 @@
     "population_proper": "909"
   },
   {
-    "id": 450,
     "city": "Lidoríki",
     "lat": "38.5333",
     "lng": "22.2000",
@@ -5412,7 +4961,6 @@
     "population_proper": "875"
   },
   {
-    "id": 451,
     "city": "Nestório",
     "lat": "40.4122",
     "lng": "21.0617",
@@ -5424,7 +4972,6 @@
     "population_proper": "865"
   },
   {
-    "id": 452,
     "city": "Archaía Olympía",
     "lat": "37.6443",
     "lng": "21.6253",
@@ -5436,7 +4983,6 @@
     "population_proper": "835"
   },
   {
-    "id": 453,
     "city": "Leipsoí",
     "lat": "37.3000",
     "lng": "26.7500",
@@ -5448,7 +4994,6 @@
     "population_proper": "790"
   },
   {
-    "id": 454,
     "city": "Mílos",
     "lat": "36.7417",
     "lng": "24.4292",
@@ -5460,7 +5005,6 @@
     "population_proper": "749"
   },
   {
-    "id": 455,
     "city": "Mandráki",
     "lat": "36.6108",
     "lng": "27.1367",
@@ -5472,7 +5016,6 @@
     "population_proper": "660"
   },
   {
-    "id": 456,
     "city": "Tzermiádo",
     "lat": "35.1983",
     "lng": "25.4900",
@@ -5484,7 +5027,6 @@
     "population_proper": "637"
   },
   {
-    "id": 457,
     "city": "Kalpáki",
     "lat": "39.8861",
     "lng": "20.6261",
@@ -5496,7 +5038,6 @@
     "population_proper": "625"
   },
   {
-    "id": 458,
     "city": "Paranésti",
     "lat": "41.2667",
     "lng": "24.5014",
@@ -5508,7 +5049,6 @@
     "population_proper": "625"
   },
   {
-    "id": 459,
     "city": "Spíli",
     "lat": "35.2189",
     "lng": "24.5361",
@@ -5520,7 +5060,6 @@
     "population_proper": "564"
   },
   {
-    "id": 460,
     "city": "Megísti",
     "lat": "36.1450",
     "lng": "29.5850",
@@ -5532,7 +5071,6 @@
     "population_proper": "492"
   },
   {
-    "id": 461,
     "city": "Pezá",
     "lat": "35.2178",
     "lng": "25.1928",
@@ -5544,7 +5082,6 @@
     "population_proper": "441"
   },
   {
-    "id": 462,
     "city": "Sérifos",
     "lat": "37.1500",
     "lng": "24.5000",
@@ -5556,7 +5093,6 @@
     "population_proper": "364"
   },
   {
-    "id": 463,
     "city": "Dimitsána",
     "lat": "37.5952",
     "lng": "22.0403",
@@ -5568,7 +5104,6 @@
     "population_proper": "342"
   },
   {
-    "id": 464,
     "city": "Vourgaréli",
     "lat": "39.3722",
     "lng": "21.1817",
@@ -5580,7 +5115,6 @@
     "population_proper": "301"
   },
   {
-    "id": 465,
     "city": "Kardamýli",
     "lat": "36.8867",
     "lng": "22.2322",
@@ -5592,7 +5126,6 @@
     "population_proper": "300"
   },
   {
-    "id": 466,
     "city": "Kýthira",
     "lat": "36.1497",
     "lng": "22.9879",
@@ -5604,7 +5137,6 @@
     "population_proper": "281"
   },
   {
-    "id": 467,
     "city": "Alónnisos",
     "lat": "39.1500",
     "lng": "23.8500",
@@ -5616,7 +5148,6 @@
     "population_proper": "208"
   },
   {
-    "id": 468,
     "city": "Síkinos",
     "lat": "36.6833",
     "lng": "25.1167",
@@ -5628,7 +5159,6 @@
     "population_proper": "184"
   },
   {
-    "id": 469,
     "city": "Kerasochóri",
     "lat": "39.0056",
     "lng": "21.6378",
@@ -5640,7 +5170,6 @@
     "population_proper": "174"
   },
   {
-    "id": 470,
     "city": "Anthiró",
     "lat": "39.3414",
     "lng": "21.4539",
@@ -5652,7 +5181,6 @@
     "population_proper": "167"
   },
   {
-    "id": 471,
     "city": "Néa Smýrni",
     "lat": "37.9454",
     "lng": "23.7146",
@@ -5664,7 +5192,6 @@
     "population_proper": ""
   },
   {
-    "id": 472,
     "city": "Ampelókipoi",
     "lat": "40.6540",
     "lng": "22.9175",
@@ -5676,7 +5203,6 @@
     "population_proper": ""
   },
   {
-    "id": 473,
     "city": "Dáfni",
     "lat": "37.9501",
     "lng": "23.7312",
@@ -5688,7 +5214,6 @@
     "population_proper": ""
   },
   {
-    "id": 474,
     "city": "Ágios Dimítrios",
     "lat": "37.9342",
     "lng": "23.7291",
@@ -5700,7 +5225,6 @@
     "population_proper": ""
   },
   {
-    "id": 475,
     "city": "Korydallós",
     "lat": "37.9811",
     "lng": "23.6514",
@@ -5712,7 +5236,6 @@
     "population_proper": ""
   },
   {
-    "id": 476,
     "city": "Stavroúpoli",
     "lat": "40.6692",
     "lng": "22.9310",
@@ -5724,7 +5247,6 @@
     "population_proper": ""
   },
   {
-    "id": 477,
     "city": "Kalamariá",
     "lat": "40.5789",
     "lng": "22.9485",
@@ -5736,7 +5258,6 @@
     "population_proper": ""
   },
   {
-    "id": 478,
     "city": "Agía Varvára",
     "lat": "37.9883",
     "lng": "23.6609",
@@ -5748,7 +5269,6 @@
     "population_proper": ""
   },
   {
-    "id": 479,
     "city": "Aigáleo",
     "lat": "37.9925",
     "lng": "23.6781",
@@ -5760,7 +5280,6 @@
     "population_proper": ""
   },
   {
-    "id": 480,
     "city": "Irákleio",
     "lat": "38.0540",
     "lng": "23.7745",
@@ -5772,7 +5291,6 @@
     "population_proper": ""
   },
   {
-    "id": 481,
     "city": "Ágioi Anárgyroi",
     "lat": "38.0324",
     "lng": "23.7247",
@@ -5784,7 +5302,6 @@
     "population_proper": ""
   },
   {
-    "id": 482,
     "city": "Ílion",
     "lat": "38.0323",
     "lng": "23.7022",
@@ -5796,7 +5313,6 @@
     "population_proper": ""
   },
   {
-    "id": 483,
     "city": "Keratsíni",
     "lat": "37.9643",
     "lng": "23.6199",
@@ -5808,7 +5324,6 @@
     "population_proper": ""
   },
   {
-    "id": 484,
     "city": "Moscháto",
     "lat": "37.9540",
     "lng": "23.6815",
@@ -5820,7 +5335,6 @@
     "population_proper": ""
   },
   {
-    "id": 485,
     "city": "Zográfos",
     "lat": "37.9757",
     "lng": "23.7691",
@@ -5832,7 +5346,6 @@
     "population_proper": ""
   },
   {
-    "id": 486,
     "city": "Petroúpoli",
     "lat": "38.0396",
     "lng": "23.6812",
@@ -5844,7 +5357,6 @@
     "population_proper": ""
   },
   {
-    "id": 487,
     "city": "Cholargós",
     "lat": "38.0010",
     "lng": "23.8008",
@@ -5856,7 +5368,6 @@
     "population_proper": ""
   },
   {
-    "id": 488,
     "city": "Sykiés",
     "lat": "40.6474",
     "lng": "22.9563",
@@ -5868,7 +5379,6 @@
     "population_proper": ""
   },
   {
-    "id": 489,
     "city": "Évosmos",
     "lat": "40.6698",
     "lng": "22.9088",
@@ -5880,7 +5390,6 @@
     "population_proper": ""
   },
   {
-    "id": 490,
     "city": "Álimos",
     "lat": "37.9143",
     "lng": "23.7159",
@@ -5892,7 +5401,6 @@
     "population_proper": ""
   },
   {
-    "id": 491,
     "city": "Ilioúpoli",
     "lat": "37.9302",
     "lng": "23.7514",
@@ -5904,7 +5412,6 @@
     "population_proper": ""
   },
   {
-    "id": 492,
     "city": "Melíssia",
     "lat": "38.0512",
     "lng": "23.8362",
@@ -5916,7 +5423,6 @@
     "population_proper": ""
   },
   {
-    "id": 493,
     "city": "Metamórfosi",
     "lat": "38.0639",
     "lng": "23.7618",
@@ -5928,7 +5434,6 @@
     "population_proper": ""
   },
   {
-    "id": 494,
     "city": "Maroúsi",
     "lat": "38.0537",
     "lng": "23.8077",
@@ -5940,7 +5445,6 @@
     "population_proper": ""
   },
   {
-    "id": 495,
     "city": "Argyroúpoli",
     "lat": "37.9062",
     "lng": "23.7507",
@@ -5952,7 +5456,6 @@
     "population_proper": ""
   },
   {
-    "id": 496,
     "city": "Gérakas",
     "lat": "38.0133",
     "lng": "23.8560",
@@ -5964,7 +5467,6 @@
     "population_proper": ""
   },
   {
-    "id": 497,
     "city": "Voúla",
     "lat": "37.8459",
     "lng": "23.7626",
@@ -5976,7 +5478,6 @@
     "population_proper": ""
   },
   {
-    "id": 498,
     "city": "Peraía",
     "lat": "40.4990",
     "lng": "22.9262",
@@ -5988,7 +5489,6 @@
     "population_proper": ""
   },
   {
-    "id": 499,
     "city": "Zákynthos",
     "lat": "37.8000",
     "lng": "20.7500",
@@ -6000,7 +5500,6 @@
     "population_proper": ""
   },
   {
-    "id": 500,
     "city": "Kifisiá",
     "lat": "38.0767",
     "lng": "23.8208",
@@ -6012,7 +5511,6 @@
     "population_proper": ""
   },
   {
-    "id": 501,
     "city": "Pérama",
     "lat": "37.9662",
     "lng": "23.5739",
@@ -6024,7 +5522,6 @@
     "population_proper": ""
   },
   {
-    "id": 502,
     "city": "Ágios Stéfanos",
     "lat": "38.1408",
     "lng": "23.8591",
@@ -6036,7 +5533,6 @@
     "population_proper": ""
   },
   {
-    "id": 503,
     "city": "Aígio",
     "lat": "38.2527",
     "lng": "22.0820",
@@ -6048,7 +5544,6 @@
     "population_proper": ""
   },
   {
-    "id": 504,
     "city": "Oraiókastro",
     "lat": "40.7296",
     "lng": "22.9165",
@@ -6060,7 +5555,6 @@
     "population_proper": ""
   },
   {
-    "id": 505,
     "city": "Acharnés",
     "lat": "38.0847",
     "lng": "23.7372",
@@ -6072,7 +5566,6 @@
     "population_proper": ""
   },
   {
-    "id": 506,
     "city": "Áno Liósia",
     "lat": "38.0840",
     "lng": "23.7023",
@@ -6084,7 +5577,6 @@
     "population_proper": ""
   },
   {
-    "id": 507,
     "city": "Panórama",
     "lat": "40.5853",
     "lng": "23.0281",
@@ -6096,7 +5588,6 @@
     "population_proper": ""
   },
   {
-    "id": 508,
     "city": "Árta",
     "lat": "39.1601",
     "lng": "20.9856",
@@ -6108,7 +5599,6 @@
     "population_proper": ""
   },
   {
-    "id": 509,
     "city": "Gázi",
     "lat": "35.3252",
     "lng": "25.0662",
@@ -6120,7 +5610,6 @@
     "population_proper": ""
   },
   {
-    "id": 510,
     "city": "Rafína",
     "lat": "38.0232",
     "lng": "24.0026",
@@ -6132,7 +5621,6 @@
     "population_proper": ""
   },
   {
-    "id": 511,
     "city": "Flórina",
     "lat": "40.7807",
     "lng": "21.4093",
@@ -6144,7 +5632,6 @@
     "population_proper": ""
   },
   {
-    "id": 512,
     "city": "Ágios Nikólaos",
     "lat": "35.1911",
     "lng": "25.7152",
@@ -6156,7 +5643,6 @@
     "population_proper": ""
   },
   {
-    "id": 513,
     "city": "Náxos",
     "lat": "37.1021",
     "lng": "25.3780",
@@ -6168,7 +5654,6 @@
     "population_proper": ""
   },
   {
-    "id": 514,
     "city": "Ptolemaḯda",
     "lat": "40.5121",
     "lng": "21.6780",
@@ -6180,7 +5665,6 @@
     "population_proper": ""
   },
   {
-    "id": 515,
     "city": "Édessa",
     "lat": "40.8026",
     "lng": "22.0475",
@@ -6192,7 +5676,6 @@
     "population_proper": ""
   },
   {
-    "id": 516,
     "city": "Árgos",
     "lat": "37.6350",
     "lng": "22.7285",
@@ -6204,7 +5687,6 @@
     "population_proper": ""
   },
   {
-    "id": 517,
     "city": "Zevgolatió",
     "lat": "38.0815",
     "lng": "22.6193",
@@ -6216,7 +5698,6 @@
     "population_proper": ""
   },
   {
-    "id": 518,
     "city": "Moíres",
     "lat": "35.0517",
     "lng": "24.8750",
@@ -6228,7 +5709,6 @@
     "population_proper": ""
   },
   {
-    "id": 519,
     "city": "Pérama",
     "lat": "35.3695",
     "lng": "24.7039",
@@ -6240,7 +5720,6 @@
     "population_proper": ""
   },
   {
-    "id": 520,
     "city": "Igoumenítsa",
     "lat": "39.5034",
     "lng": "20.2673",
@@ -6252,7 +5731,6 @@
     "population_proper": ""
   },
   {
-    "id": 521,
     "city": "Gastoúni",
     "lat": "37.8506",
     "lng": "21.2534",
@@ -6264,7 +5742,6 @@
     "population_proper": ""
   },
   {
-    "id": 522,
     "city": "Goúrnes",
     "lat": "35.3248",
     "lng": "25.2776",
@@ -6276,7 +5753,6 @@
     "population_proper": ""
   },
   {
-    "id": 523,
     "city": "Eleoúsa",
     "lat": "39.7059",
     "lng": "20.7928",
@@ -6288,7 +5764,6 @@
     "population_proper": ""
   },
   {
-    "id": 524,
     "city": "Asprópyrgos",
     "lat": "38.0617",
     "lng": "23.5894",
@@ -6300,7 +5775,6 @@
     "population_proper": ""
   },
   {
-    "id": 525,
     "city": "Amaliáda",
     "lat": "37.7972",
     "lng": "21.3495",
@@ -6312,7 +5786,6 @@
     "population_proper": ""
   },
   {
-    "id": 526,
     "city": "Koropí",
     "lat": "37.9009",
     "lng": "23.8723",
@@ -6324,7 +5797,6 @@
     "population_proper": ""
   },
   {
-    "id": 527,
     "city": "Irákleia",
     "lat": "41.1823",
     "lng": "23.2822",
@@ -6336,7 +5808,6 @@
     "population_proper": ""
   },
   {
-    "id": 528,
     "city": "Árgos Orestikó",
     "lat": "40.4525",
     "lng": "21.2592",
@@ -6348,7 +5819,6 @@
     "population_proper": ""
   },
   {
-    "id": 529,
     "city": "Markópoulo",
     "lat": "37.8833",
     "lng": "23.9333",
@@ -6360,7 +5830,6 @@
     "population_proper": ""
   },
   {
-    "id": 530,
     "city": "Ierápetra",
     "lat": "35.0056",
     "lng": "25.7333",
@@ -6372,7 +5841,6 @@
     "population_proper": ""
   },
   {
-    "id": 531,
     "city": "Grevená",
     "lat": "40.0840",
     "lng": "21.4291",
@@ -6384,7 +5852,6 @@
     "population_proper": ""
   },
   {
-    "id": 532,
     "city": "Kalývia Thorikoú",
     "lat": "37.8391",
     "lng": "23.9276",
@@ -6396,7 +5863,6 @@
     "population_proper": ""
   },
   {
-    "id": 533,
     "city": "Geráni",
     "lat": "35.5168",
     "lng": "23.8780",
@@ -6408,7 +5874,6 @@
     "population_proper": ""
   },
   {
-    "id": 534,
     "city": "Mouzáki",
     "lat": "39.4288",
     "lng": "21.6629",
@@ -6420,7 +5885,6 @@
     "population_proper": ""
   },
   {
-    "id": 535,
     "city": "Ándros",
     "lat": "37.8362",
     "lng": "24.9352",
@@ -6432,7 +5896,6 @@
     "population_proper": ""
   },
   {
-    "id": 536,
     "city": "Kárystos",
     "lat": "38.0165",
     "lng": "24.4204",
@@ -6444,7 +5907,6 @@
     "population_proper": ""
   },
   {
-    "id": 537,
     "city": "Firá",
     "lat": "36.4102",
     "lng": "25.4056",
@@ -6456,7 +5918,6 @@
     "population_proper": ""
   },
   {
-    "id": 538,
     "city": "Stylída",
     "lat": "38.9144",
     "lng": "22.6138",
@@ -6468,7 +5929,6 @@
     "population_proper": ""
   },
   {
-    "id": 539,
     "city": "Oropós",
     "lat": "38.3195",
     "lng": "23.7900",
@@ -6480,7 +5940,6 @@
     "population_proper": ""
   },
   {
-    "id": 540,
     "city": "Agiá",
     "lat": "39.7188",
     "lng": "22.7555",
@@ -6492,7 +5951,6 @@
     "population_proper": ""
   },
   {
-    "id": 541,
     "city": "Mesolóngi",
     "lat": "38.3714",
     "lng": "21.4315",
@@ -6504,7 +5962,6 @@
     "population_proper": ""
   },
   {
-    "id": 542,
     "city": "Palamás",
     "lat": "39.4644",
     "lng": "22.0825",
@@ -6516,7 +5973,6 @@
     "population_proper": ""
   },
   {
-    "id": 543,
     "city": "Ámfissa",
     "lat": "38.5281",
     "lng": "22.3771",
@@ -6528,7 +5984,6 @@
     "population_proper": ""
   },
   {
-    "id": 544,
     "city": "Loutráki",
     "lat": "37.9750",
     "lng": "22.9798",
@@ -6540,7 +5995,6 @@
     "population_proper": ""
   },
   {
-    "id": 545,
     "city": "Erétria",
     "lat": "38.3971",
     "lng": "23.7902",
@@ -6552,7 +6006,6 @@
     "population_proper": ""
   },
   {
-    "id": 546,
     "city": "Péta",
     "lat": "39.1677",
     "lng": "21.0351",
@@ -6564,7 +6017,6 @@
     "population_proper": ""
   },
   {
-    "id": 547,
     "city": "Sofádes",
     "lat": "39.3344",
     "lng": "22.0973",
@@ -6576,7 +6028,6 @@
     "population_proper": ""
   },
   {
-    "id": 548,
     "city": "Eleftheroúpoli",
     "lat": "40.9149",
     "lng": "24.2542",
@@ -6588,7 +6039,6 @@
     "population_proper": ""
   },
   {
-    "id": 549,
     "city": "Páros",
     "lat": "37.0844",
     "lng": "25.1483",
@@ -6600,7 +6050,6 @@
     "population_proper": ""
   },
   {
-    "id": 550,
     "city": "Agía Marína",
     "lat": "37.1467",
     "lng": "26.8419",
@@ -6612,7 +6061,6 @@
     "population_proper": ""
   },
   {
-    "id": 551,
     "city": "Náousa",
     "lat": "40.6300",
     "lng": "22.0684",
@@ -6624,7 +6072,6 @@
     "population_proper": ""
   },
   {
-    "id": 552,
     "city": "Évlalo",
     "lat": "40.9812",
     "lng": "24.8001",
@@ -6636,7 +6083,6 @@
     "population_proper": ""
   },
   {
-    "id": 553,
     "city": "Pýli",
     "lat": "39.4596",
     "lng": "21.6221",
@@ -6648,7 +6094,6 @@
     "population_proper": ""
   },
   {
-    "id": 554,
     "city": "Gáios",
     "lat": "39.1961",
     "lng": "20.1858",
@@ -6660,7 +6105,6 @@
     "population_proper": ""
   },
   {
-    "id": 555,
     "city": "Póros",
     "lat": "37.5167",
     "lng": "23.4667",
@@ -6672,7 +6116,6 @@
     "population_proper": ""
   },
   {
-    "id": 556,
     "city": "Chrysó",
     "lat": "41.0584",
     "lng": "23.6514",
@@ -6684,7 +6127,6 @@
     "population_proper": ""
   },
   {
-    "id": 557,
     "city": "Sérvia",
     "lat": "40.1844",
     "lng": "22.0005",
@@ -6696,7 +6138,6 @@
     "population_proper": ""
   },
   {
-    "id": 558,
     "city": "Agkístri",
     "lat": "37.7096",
     "lng": "23.3472",
@@ -6708,7 +6149,6 @@
     "population_proper": ""
   },
   {
-    "id": 559,
     "city": "Farkadóna",
     "lat": "39.5913",
     "lng": "22.0686",
@@ -6720,7 +6160,6 @@
     "population_proper": ""
   },
   {
-    "id": 560,
     "city": "Pátmos",
     "lat": "37.3086",
     "lng": "26.5474",
@@ -6732,7 +6171,6 @@
     "population_proper": ""
   },
   {
-    "id": 561,
     "city": "Níkaia",
     "lat": "39.5667",
     "lng": "22.4667",
@@ -6744,7 +6182,6 @@
     "population_proper": ""
   },
   {
-    "id": 562,
     "city": "Mándra",
     "lat": "38.0747",
     "lng": "23.4969",
@@ -6756,7 +6193,6 @@
     "population_proper": ""
   },
   {
-    "id": 563,
     "city": "Smínthi",
     "lat": "41.2289",
     "lng": "24.8804",
@@ -6768,7 +6204,6 @@
     "population_proper": ""
   },
   {
-    "id": 564,
     "city": "Atalánti",
     "lat": "38.6540",
     "lng": "22.9970",
@@ -6780,7 +6215,6 @@
     "population_proper": ""
   },
   {
-    "id": 565,
     "city": "Ágioi Déka",
     "lat": "35.0582",
     "lng": "24.9602",
@@ -6792,7 +6226,6 @@
     "population_proper": ""
   },
   {
-    "id": 566,
     "city": "Néa Zíchni",
     "lat": "41.0312",
     "lng": "23.8289",
@@ -6804,7 +6237,6 @@
     "population_proper": ""
   },
   {
-    "id": 567,
     "city": "Elafónisos",
     "lat": "36.5090",
     "lng": "22.9787",
@@ -6816,7 +6248,6 @@
     "population_proper": ""
   },
   {
-    "id": 568,
     "city": "Sidirókastro",
     "lat": "41.2361",
     "lng": "23.3925",
@@ -6828,7 +6259,6 @@
     "population_proper": ""
   },
   {
-    "id": 569,
     "city": "Oinoússes",
     "lat": "38.5158",
     "lng": "26.2225",
@@ -6840,7 +6270,6 @@
     "population_proper": ""
   },
   {
-    "id": 570,
     "city": "Prámanta",
     "lat": "39.5220",
     "lng": "21.0986",
@@ -6852,7 +6281,6 @@
     "population_proper": ""
   },
   {
-    "id": 571,
     "city": "Rodolívos",
     "lat": "40.9211",
     "lng": "23.9746",
@@ -6864,7 +6292,6 @@
     "population_proper": ""
   },
   {
-    "id": 572,
     "city": "Áno Viánnos",
     "lat": "35.0539",
     "lng": "25.4100",
@@ -6876,7 +6303,6 @@
     "population_proper": ""
   },
   {
-    "id": 573,
     "city": "Palaióchora",
     "lat": "35.2313",
     "lng": "23.6813",
@@ -6888,7 +6314,6 @@
     "population_proper": ""
   },
   {
-    "id": 574,
     "city": "Apollonía",
     "lat": "36.9744",
     "lng": "24.7240",
@@ -6900,7 +6325,6 @@
     "population_proper": ""
   },
   {
-    "id": 575,
     "city": "Agía Kyriakí",
     "lat": "39.5226",
     "lng": "20.8836",
@@ -6912,7 +6336,6 @@
     "population_proper": ""
   },
   {
-    "id": 576,
     "city": "Ýdra",
     "lat": "37.3469",
     "lng": "23.4657",
@@ -6924,7 +6347,6 @@
     "population_proper": ""
   },
   {
-    "id": 577,
     "city": "Asklipieío",
     "lat": "37.5975",
     "lng": "23.0747",
@@ -6936,7 +6358,6 @@
     "population_proper": ""
   },
   {
-    "id": 578,
     "city": "Íasmos",
     "lat": "41.1279",
     "lng": "25.1844",
@@ -6948,7 +6369,6 @@
     "population_proper": ""
   },
   {
-    "id": 579,
     "city": "Deskáti",
     "lat": "39.9253",
     "lng": "21.8102",
@@ -6960,7 +6380,6 @@
     "population_proper": ""
   },
   {
-    "id": 580,
     "city": "Agía Foteiní",
     "lat": "35.2542",
     "lng": "24.6342",
@@ -6972,7 +6391,6 @@
     "population_proper": ""
   },
   {
-    "id": 581,
     "city": "Folégandros",
     "lat": "36.6222",
     "lng": "24.9014",
@@ -6984,7 +6402,6 @@
     "population_proper": ""
   },
   {
-    "id": 582,
     "city": "Vrýses",
     "lat": "35.4545",
     "lng": "23.6004",
@@ -6996,7 +6413,6 @@
     "population_proper": ""
   },
   {
-    "id": 583,
     "city": "Antíparos",
     "lat": "37.0404",
     "lng": "25.0819",
@@ -7008,7 +6424,6 @@
     "population_proper": ""
   },
   {
-    "id": 584,
     "city": "Anógeia",
     "lat": "35.2907",
     "lng": "24.8834",
@@ -7020,7 +6435,6 @@
     "population_proper": ""
   },
   {
-    "id": 585,
     "city": "Morfovoúni",
     "lat": "39.3525",
     "lng": "21.7504",
@@ -7032,7 +6446,6 @@
     "population_proper": ""
   },
   {
-    "id": 586,
     "city": "Íos",
     "lat": "36.7233",
     "lng": "25.2825",
@@ -7044,7 +6457,6 @@
     "population_proper": ""
   },
   {
-    "id": 587,
     "city": "Kímolos",
     "lat": "36.8000",
     "lng": "24.5500",
@@ -7056,7 +6468,6 @@
     "population_proper": ""
   },
   {
-    "id": 588,
     "city": "Samothráki",
     "lat": "40.4743",
     "lng": "25.5251",
@@ -7068,7 +6479,6 @@
     "population_proper": ""
   },
   {
-    "id": 589,
     "city": "Frý",
     "lat": "35.4162",
     "lng": "26.9231",
@@ -7080,7 +6490,6 @@
     "population_proper": ""
   },
   {
-    "id": 590,
     "city": "Kýthnos",
     "lat": "37.3833",
     "lng": "24.4167",
@@ -7092,7 +6501,6 @@
     "population_proper": ""
   },
   {
-    "id": 591,
     "city": "Ioulída",
     "lat": "37.6397",
     "lng": "24.3423",
@@ -7104,7 +6512,6 @@
     "population_proper": ""
   },
   {
-    "id": 592,
     "city": "Chálki",
     "lat": "36.2226",
     "lng": "27.6113",
@@ -7116,7 +6523,6 @@
     "population_proper": ""
   },
   {
-    "id": 593,
     "city": "Megálo Chorió",
     "lat": "37.4578",
     "lng": "26.9724",
@@ -7128,7 +6534,6 @@
     "population_proper": ""
   },
   {
-    "id": 594,
     "city": "Asprángeloi",
     "lat": "39.8226",
     "lng": "20.7276",
@@ -7140,7 +6545,6 @@
     "population_proper": ""
   },
   {
-    "id": 595,
     "city": "Amorgós",
     "lat": "36.8318",
     "lng": "25.8983",
@@ -7152,7 +6556,6 @@
     "population_proper": ""
   },
   {
-    "id": 596,
     "city": "Áno Kalentíni",
     "lat": "39.2515",
     "lng": "21.1679",
@@ -7164,7 +6567,6 @@
     "population_proper": ""
   },
   {
-    "id": 597,
     "city": "Psará",
     "lat": "38.5414",
     "lng": "25.5630",
@@ -7176,7 +6578,6 @@
     "population_proper": ""
   },
   {
-    "id": 598,
     "city": "Laimós",
     "lat": "40.8359",
     "lng": "21.1404",
@@ -7188,7 +6589,6 @@
     "population_proper": ""
   },
   {
-    "id": 599,
     "city": "Megálo Chorió",
     "lat": "36.4551",
     "lng": "27.3469",
@@ -7200,7 +6600,6 @@
     "population_proper": ""
   },
   {
-    "id": 600,
     "city": "Anáfi",
     "lat": "36.3509",
     "lng": "25.7671",
@@ -7212,7 +6611,6 @@
     "population_proper": ""
   },
   {
-    "id": 601,
     "city": "Ágios Efstrátios",
     "lat": "39.5391",
     "lng": "24.9904",
@@ -7224,7 +6622,6 @@
     "population_proper": ""
   },
   {
-    "id": 602,
     "city": "Chóra Sfakíon",
     "lat": "35.2018",
     "lng": "24.1398",
@@ -7236,7 +6633,6 @@
     "population_proper": ""
   },
   {
-    "id": 603,
     "city": "Kastrí",
     "lat": "34.8345",
     "lng": "24.0864",
