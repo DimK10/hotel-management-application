@@ -24,7 +24,7 @@ public class HotelToHotelDTO {
      * @return the converted hotelDTO object
      * @throws Exception
      */
-    public HotelDTO converter(Hotel hotel) throws Exception {
+    public HotelDTO converter(Hotel hotel){
 
         HotelDTO hotelDTO = new HotelDTO();
 

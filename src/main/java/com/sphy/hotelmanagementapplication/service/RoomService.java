@@ -1,11 +1,12 @@
 package com.sphy.hotelmanagementapplication.service;
 
-import com.sphy.hotelmanagementapplication.converter.HotelToHotelDTO;
 import com.sphy.hotelmanagementapplication.converter.RoomDTOToRoom;
 import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
+import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
+import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
 import org.springframework.stereotype.Service;
@@ -41,10 +42,10 @@ public class RoomService {
      * save a room
      * @param roomDTO the room to be saved
      * @return the saved room for confirmation
-     * @throws Exception
+     * @throws ApiRequestException if there is no hotel added or the hotel is ni=ot exists
      */
-	public RoomDTO saveRoomDTO(RoomDTO roomDTO) throws Exception {
-		Room room = new Room();
+	public RoomDTO saveRoomDTO(RoomDTO roomDTO) throws ApiRequestException {
+        Room room = new Room();
 
 		Optional<Hotel> hotelOpt =
 				hotelRepository.findById(roomDTO.getHotel());
@@ -54,8 +55,11 @@ public class RoomService {
         if (hotelOpt.isPresent()){
             hotelOpt.get().getRooms().add(room);
             hotelRepository.save(hotelOpt.get());
-        }else{
-            throw new Exception("The Room can't be saved without a hotel");
+        }else if (!hotelOpt.isPresent()){
+            throw  new ApiRequestException("There is no hotel that room belongs");
+        }else {
+            throw  new ApiRequestException("The hotel does not exists");
+
         }
 
 		return roomToRoomDTO.converter(room);
@@ -65,24 +69,22 @@ public class RoomService {
      * save a list of rooms
      * @param roomsDTO the rooms to be saved
      * @return the saved rooms for confirmation
-     * @throws Exception
+     * @throws ApiRequestException if the rooms that are going to save does not have a hotel or the hotel does not exist
      */
-    public List<RoomDTO> saveRooms(List<RoomDTO> roomsDTO) throws Exception{
+    public List<RoomDTO> saveRooms(List<RoomDTO> roomsDTO) throws ApiRequestException {
         List<Room> rooms = new ArrayList<>();
-        for (RoomDTO roomDTO : roomsDTO){
 
-        }
 		for(RoomDTO roomDto : roomsDTO) {
-			if (roomDto.getHotel() == null) {
-				throw new Exception(
-						"One of the rooms provided does not have a hotel (room.getHotel == null)."
-								+ " Room with name: " + roomDto.getName() + " has no hotel"
-				);
-			}else {
+            if (roomDto.getHotel() == null) {
+                throw new ApiRequestException(
+                        " Room with name: " + roomDto.getName() + " has not have a hotel"
+                );
+            }else if (!hotelRepository.findById(roomDto.getHotel()).isPresent()){
+                throw new ApiRequestException("hotel with id: " + roomDto.getHotel() + " does not exist");
+            }else {
                 rooms.add(roomDTOToRoom.converter(roomDto));
             }
 		}
-
         Iterable<Room> roomsSaved = roomRepository.saveAll(rooms);
 
         roomsSaved.spliterator().forEachRemaining(rooms::add);
@@ -91,38 +93,44 @@ public class RoomService {
         for (Room room:rooms){
             roomDTOS.add(roomToRoomDTO.converter(room));
         }
-
-
         return roomDTOS;
     }
 
     /***
      * get all rooms
      * @return a list of all rooms
-     * @throws Exception
+     * @throws ApiRequestException if no room is saved
      */
-    public List<RoomDTO> getRooms() throws Exception {
-		List<Room> rooms = new ArrayList<>();
-        List<RoomDTO> roomsDTO = new ArrayList<>();
-        roomRepository.findAll().forEach(rooms::add);
-        for (Room room : rooms){
-            roomsDTO.add(roomToRoomDTO.converter(room));
-        }
-		return roomsDTO;
+    public List<RoomDTO> getRooms() throws ApiRequestException {
+
+
+            List<Room> rooms = new ArrayList<>();
+
+            roomRepository.findAll().forEach(rooms::add);
+
+
+            List<RoomDTO> roomsDTO = new ArrayList<>();
+
+            for (Room room : rooms) {
+                roomsDTO.add(roomToRoomDTO.converter(room));
+            }
+            return roomsDTO;
+
     }
 
     /***
      * find a room by his id
      * @param id of the room to be found
      * @return the room with the current id
-     * @throws Exception
+     * @throws ApiRequestException if there is no room with the given id
      */
-    public RoomDTO getRoomById(Long id) throws Exception {
-        Optional<Room> roomOpt = roomRepository.findById(id);
-
-        if (roomOpt.isPresent()){
-            return roomToRoomDTO.converter(roomOpt.get());
-        }else return null;
+    public RoomDTO getRoomById(Long id) throws ApiRequestException {
+        Optional<Room> room = roomRepository.findById(id);
+        if (!room.isPresent()){
+            throw new ApiRequestException("There is now room with id: " + id);
+        }else {
+            return roomToRoomDTO.converter(roomRepository.findById(id).get());
+        }
     }
 
 
@@ -130,55 +138,65 @@ public class RoomService {
      * get a room by his name
      * @param name of the room to be found
      * @return the room with the current name
-     * @throws Exception
+     * @throws ApiRequestException if there is no room with the given name
      */
-    public RoomDTO getRoomByName(String name) throws Exception {
-        Optional<Room> roomOpt = roomRepository.findByName(name);
-        if (roomOpt.isPresent()){
-            return roomToRoomDTO.converter(roomOpt.get());
-        }else return null;
+    public RoomDTO getRoomByName(String name) throws ApiRequestException {
+        Optional<Room> room = roomRepository.findByName(name);
+        if (!room.isPresent()){
+            throw new ApiRequestException("There is now room with name: " + name);
+        }else {
+            return roomToRoomDTO.converter(roomRepository.findByName(name).get());
+        }
     }
 
     /***
      * enables a room
      * @param id of the room to be enabled
      * @return a boolean if  the room enabled or not
+     * @throws ApiExceptionFront if the room does not exist or is already activated
      */
-	public boolean enableRoom(Long id){
-		if (roomRepository.existsById(id)){
+	public boolean enableRoom(Long id) throws ApiExceptionFront {
+        if (!roomRepository.existsById(id)) {
+            throw  new ApiExceptionFront("The room with id: " + id + " does not exist");
+        }else if (!roomRepository.findById(id).get().isDisabled()){
+            throw new ApiExceptionFront("The room with id: " + id + " is already activated");
+        }else {
 			Room room = roomRepository.findById(id).get();
 			room.setDisabled(false);
 			roomRepository.save(room);
 			return true;
-		}else return false;
-
+		}
 	}
 
     /***
      * disable a room by his id
      * @param id of the room to be disabled
      * @return a boolean if the room disabled or not
+     * @throws ApiExceptionFront if the room does not exist or is already deactivated
      */
-    public boolean disableRoom(Long id){
-       if (roomRepository.existsById(id)){
+    public boolean disableRoom(Long id) throws ApiExceptionFront {
+
+        if (!roomRepository.existsById(id)) {
+            throw new ApiExceptionFront("The room with id:" + id + " does not exist");
+        }else if (roomRepository.findById(id).get().isDisabled() ){
+            throw new ApiExceptionFront("The room with id: " + id + "is already deactivated");
+        }else {
 		   Room room = roomRepository.findById(id).get();
 		   room.setDisabled(true);
            roomRepository.save(room);
            return true;
-       }else return false;
-
+       }
     }
 
     /***
      * updates a room
      * @param roomDTO room to be updated
      * @return the updated room for confirmation
-     * @throws NullPointerException
+     * @throws ApiRequestException if the room that is going to update is not exists
      */
-    public RoomDTO updateRoom(RoomDTO roomDTO) throws NullPointerException{
-        Optional<Room> roomOpt = roomRepository.findById(roomDTO.getId());
-
-        if (roomOpt.isPresent()){
+    public RoomDTO updateRoom(RoomDTO roomDTO) throws ApiRequestException {
+        Optional<Room> room = roomRepository.findById(roomDTO.getId());
+        if (room.isPresent()){
             Room existingRoom = roomRepository.findById(roomDTO.getId()).orElse(null);
             existingRoom.setName(roomDTO.getName());
             Optional<Hotel> hotel = hotelRepository.findById(roomDTO.getHotel());
@@ -191,10 +209,13 @@ public class RoomService {
             hotelRepository.save(hotel.get());
 
             return roomToRoomDTO.converter(roomRepository.save(existingRoom));
+        }else{
 
+            throw new ApiRequestException("The room with id: " + roomDTO.getId() + " does not exist");
         }
-        return null;
     }
+
+
 
 
 

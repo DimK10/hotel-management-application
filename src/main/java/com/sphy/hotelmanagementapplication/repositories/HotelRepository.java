@@ -13,6 +13,7 @@ import java.util.Set;
 /***
  * created by dk
  */
+
 @Repository
 public interface HotelRepository extends CrudRepository<Hotel,Long> {
 
@@ -22,4 +23,6 @@ public interface HotelRepository extends CrudRepository<Hotel,Long> {
 	@EntityGraph(value = "Hotel.rooms", type = EntityGraphType.FETCH)
 	@Query("from Hotel")
 	Set<Hotel> findAllHotels();
+
+	boolean existsByName(String name);
 }
