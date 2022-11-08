@@ -8,25 +8,34 @@ import 'bootstrap-daterangepicker/daterangepicker.css';
 let dateNow = Date.now();
 
 const AdvancedSearch = (props) => {
-  const [dateFrom, setDateFrom] = useState(new Date());
-  const [dateTo, setDateTo] = useState(
-    new Date(new Date().setDate(new Date().getDate() + 7))
-  );
+  const [formData, setFormData] = useState({
+    location: '',
+    dateFrom: new Date(),
+    dateTo: new Date(new Date().setDate(new Date().getDate() + 7)),
+    adultsRange: 1,
+    stars: 1,
+  });
 
-  const [adultsRange, setAdultsRange] = useState(1);
+  const { location, dateFrom, dateTo, adultsRange, stars } = formData;
 
-  useEffect(() => {
-    if (dateTo instanceof Date) {
-      console.log(dateTo);
-    }
-  }, []);
+  const onChange = (e) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  // const [dateFrom, setDateFrom] = useState(new Date());
+  // const [dateTo, setDateTo] = useState(
+  //   new Date(new Date().setDate(new Date().getDate() + 7))
+  // );
+
+  // const [adultsRange, setAdultsRange] = useState(1);
+
+  useEffect(() => {}, []);
 
   return (
     <Fragment>
       <NavBar />
       <div className='container' style={{ marginTop: '10rem' }}>
         <div className='row'>
-          <div className='col-3'>
+          <div className='col-lg-3 col-md-12 col-sm-12'>
             <div className='row justify-content-center'>
               <div className='card-group'>
                 <div className='card mb-4'>
@@ -59,8 +68,9 @@ const AdvancedSearch = (props) => {
                         min='1'
                         max='10'
                         value={adultsRange}
+                        name='adultsRange'
                         onChange={(e) => {
-                          setAdultsRange(e.target.value);
+                          onChange(e);
                         }}
                       />
                     </div>
@@ -97,7 +107,7 @@ const AdvancedSearch = (props) => {
                         for='exampleFormControlInput1'
                         className='form-label'
                       >
-                        Location
+                        Stars
                       </label>
                       <input
                         type='text'
