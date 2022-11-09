@@ -51,12 +51,21 @@ public class OrderService {
         Optional<Client> clientOpt =
                 clientRepository.findById(orderDTO.getClient());
 
+        Optional<Room> room = roomRepository.findById(orderDTO.getRoom());
+
         order = orderDTOToOrder.converter(orderDTO);
 
         if (clientOpt.isPresent()){
             clientOpt.get().getOrders().add(order);
             clientRepository.save(clientOpt.get());
             orderRepository.save(order);
+            if (room.isPresent()){
+                room.get().getOrders().add(order);
+                roomRepository.save(room.get());
+            }else{
+                throw  new ApiRequestException("There is no room that order belongs to");
+            }
+
         }else {
             throw  new ApiRequestException("There is no client that order belongs to");
         }
@@ -80,8 +89,15 @@ public class OrderService {
                 );
             }else if (!clientRepository.findById(orderDto.getClient()).isPresent()){
                 throw new ApiRequestException("Client with id: " + orderDto.getClient() + " does not exist");
+            }else if (!roomRepository.findById(orderDto.getClient()).isPresent()) {
+                throw new ApiRequestException("Room with id: " + orderDto.getRoom() + " does not exist");
             }else {
                 orders.add(orderDTOToOrder.converter(orderDto));
+                clientRepository.save(orderDTOToOrder.converter(orderDto).getClient());
+                Room room = roomRepository.findById(orderDto.getRoom()).get();
+                room.getOrders().add(orderDTOToOrder.converter(orderDto));
+                roomRepository.save(room);
+
             }
         }
         Iterable<Order> ordersSaved = orderRepository.saveAll(orders);
@@ -91,6 +107,7 @@ public class OrderService {
         List<OrderDTO> ordersDTOS = new ArrayList<>();
         for (Order order : orders){
             ordersDTOS.add(orderToOrderDTO.converter(order));
+
         }
         return ordersDTOS;
     }
