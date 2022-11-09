@@ -47,6 +47,8 @@ const AdvancedSearch = (props) => {
     babyHighChair: false
   });
 
+  const [checkUncheck, setCheckUncheck] = useState(true);
+
   const [citiesArray, setCitiesArray] = useState(cities);
   const [citiesSuggestions, setCitiesSuggestions] = useState([]);
 
@@ -107,37 +109,38 @@ const AdvancedSearch = (props) => {
   const checkUncheckAll = () => {
     setFormData({
       ...formData,
-      parking: !formData.parking,
-      restaurant: !formData.restaurant,
-      roomService: !formData.roomService,
-      gym: !formData.gym,
-      spa: !formData.spa,
-      pool: !formData.pool,
-      freeWifi: !formData.freeWifi,
-      chargingStation: !formData.chargingStation,
-      viewToSeaMountain: !formData.viewToSeaMountain,
-      airConditioning: !formData.airConditioning,
-      fireplace: !formData.fireplace,
-      kitchen: !formData.kitchen,
-      refrigerator: !formData.refrigerator,
-      miniBar: !formData.miniBar,
-      washingMachine: !formData.washingMachine,
-      coffeeTeaMachine: !formData.coffeeTeaMachine,
-      tv: !formData.tv,
-      petsAllowed: !formData.petsAllowed,
-      airportTransport: !formData.airportTransport,
-      toiletGrabRails: !formData.toiletGrabRails,
-      bathtubGrabRails: !formData.bathtubGrabRails,
-      showerChair: !formData.showerChair,
-      raisedChair: !formData.raisedChair,
-      wheelchairRamps: !formData.wheelchairRamps,
-      emergencyPhones: !formData.emergencyPhones,
-      roomsAccessibleElevator: !formData.roomsAccessibleElevator,
-      safeDepositBox: !formData.safeDepositBox,
-      bathRobe: !formData.bathRobe,
-      hairDryer: !formData.hairDryer,
-      babyHighChair: !formData.babyHighChair
-    })
+      parking: checkUncheck,
+      restaurant: checkUncheck,
+      roomService: checkUncheck,
+      gym: checkUncheck,
+      spa: checkUncheck,
+      pool: checkUncheck,
+      freeWifi: checkUncheck,
+      chargingStation: checkUncheck,
+      viewToSeaMountain: checkUncheck,
+      airConditioning: checkUncheck,
+      fireplace: checkUncheck,
+      kitchen: checkUncheck,
+      refrigerator: checkUncheck,
+      miniBar: checkUncheck,
+      washingMachine: checkUncheck,
+      coffeeTeaMachine: checkUncheck,
+      tv: checkUncheck,
+      petsAllowed: checkUncheck,
+      airportTransport: checkUncheck,
+      toiletGrabRails: checkUncheck,
+      bathtubGrabRails: checkUncheck,
+      showerChair: checkUncheck,
+      raisedChair: checkUncheck,
+      wheelchairRamps: checkUncheck,
+      emergencyPhones: checkUncheck,
+      roomsAccessibleElevator: checkUncheck,
+      safeDepositBox: checkUncheck,
+      bathRobe: checkUncheck,
+      hairDryer: checkUncheck,
+      babyHighChair: checkUncheck,
+    });
+    setCheckUncheck(!checkUncheck);
   }
 
   useEffect(() => {
@@ -165,6 +168,7 @@ const AdvancedSearch = (props) => {
                         className='form-control'
                         id='locationInput'
                         placeholder='Location'
+                        name={location}
                         onChange={(e) => onLocationInputChange(e)}
                         onBlur={() => setCitiesSuggestions([])}
                         list='citiesOptions'
@@ -543,35 +547,7 @@ const AdvancedSearch = (props) => {
                         Baby high chair
                       </label>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className='row'>
-              <div className='card-group'>
-                <div className='card'>
-                  <div className='card-header'>
-                    <h5 className='text-center'>Categories</h5>
-                  </div>
-                  <div className='card-body'>
-                    <div className='mb-3'>
-                      <label htmlFor='starsRange' className='form-label'>
-                        Stars: {stars}
-                      </label>
-                      <input
-                        type='range'
-                        className='form-range'
-                        id='starsRange'
-                        name='stars'
-                        min='1'
-                        max='5'
-                        value={stars}
-                        onChange={(e) => {
-                          onChange(e);
-                        }}
-                      />
-                    </div>
-
+                    <hr/>
                     <div className='row'>
                       <div className='col-6'>
                         <button className='btn btn-primary px-4' type='button'>
@@ -583,6 +559,7 @@ const AdvancedSearch = (props) => {
                 </div>
               </div>
             </div>
+
           </div>
           <div className='col-9'>
             <SearchItem/>
