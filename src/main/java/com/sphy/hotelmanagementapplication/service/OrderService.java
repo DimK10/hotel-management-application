@@ -56,11 +56,9 @@ public class OrderService {
         if (clientOpt.isPresent()){
             clientOpt.get().getOrders().add(order);
             clientRepository.save(clientOpt.get());
-        }else if (!clientOpt.isPresent()){
-            throw  new ApiRequestException("There is no client that order belongs to");
+            orderRepository.save(order);
         }else {
-            throw  new ApiRequestException("The clint does not exists");
-
+            throw  new ApiRequestException("There is no client that order belongs to");
         }
 
         return orderToOrderDTO.converter(order);
