@@ -32,7 +32,7 @@ const AdvancedSearch = (props) => {
     washingMachine: false,
     coffeeTeaMachine: false,
     tv: false,
-    petsAllowd: false,
+    petsAllowed: false,
     airportTransport: false,
     toiletGrabRails: false,
     bathtubGrabRails: false,
@@ -40,7 +40,7 @@ const AdvancedSearch = (props) => {
     raisedChair: false,
     wheelchairRamps: false,
     emergencyPhones: false,
-    roomsAccesssibleElevator: false,
+    roomsAccessibleElevator: false,
     safeDepositBox: false,
     bathRobe: false,
     hairDryer: false,
@@ -50,10 +50,50 @@ const AdvancedSearch = (props) => {
   const [citiesArray, setCitiesArray] = useState(cities);
   const [citiesSuggestions, setCitiesSuggestions] = useState([]);
 
-  const {location, dateFrom, dateTo, adultsRange, stars} = formData;
+  const {
+    location,
+    dateFrom,
+    dateTo,
+    adultsRange,
+    stars,
+    parking,
+    restaurant,
+    roomService,
+    gym,
+    spa,
+    pool,
+    freeWifi,
+    chargingStation,
+    viewToSeaMountain,
+    airConditioning,
+    fireplace,
+    kitchen,
+    refrigerator,
+    miniBar,
+    washingMachine,
+    coffeeTeaMachine,
+    tv,
+    petsAllowed,
+    airportTransport,
+    toiletGrabRails,
+    bathtubGrabRails,
+    showerChair,
+    raisedChair,
+    wheelchairRamps,
+    emergencyPhones,
+    roomsAccessibleElevator,
+    safeDepositBox,
+    bathRobe,
+    hairDryer,
+    babyHighChair
+  } = formData;
 
   const onChange = (e) =>
     setFormData({...formData, [e.target.name]: e.target.value});
+
+  const onCheckboxChange = (e) =>
+    setFormData({...formData, [e.target.name]: e.target.checked});
+
 
   const onLocationInputChange = (e) => {
     // citiesSuggestions = citiesArray
@@ -63,6 +103,42 @@ const AdvancedSearch = (props) => {
       citiesArray.filter((city) => city.city.includes(e.target.value))
     );
   };
+
+  const checkUncheckAll = () => {
+    setFormData({
+      ...formData,
+      parking: !formData.parking,
+      restaurant: !formData.restaurant,
+      roomService: !formData.roomService,
+      gym: !formData.gym,
+      spa: !formData.spa,
+      pool: !formData.pool,
+      freeWifi: !formData.freeWifi,
+      chargingStation: !formData.chargingStation,
+      viewToSeaMountain: !formData.viewToSeaMountain,
+      airConditioning: !formData.airConditioning,
+      fireplace: !formData.fireplace,
+      kitchen: !formData.kitchen,
+      refrigerator: !formData.refrigerator,
+      miniBar: !formData.miniBar,
+      washingMachine: !formData.washingMachine,
+      coffeeTeaMachine: !formData.coffeeTeaMachine,
+      tv: !formData.tv,
+      petsAllowed: !formData.petsAllowed,
+      airportTransport: !formData.airportTransport,
+      toiletGrabRails: !formData.toiletGrabRails,
+      bathtubGrabRails: !formData.bathtubGrabRails,
+      showerChair: !formData.showerChair,
+      raisedChair: !formData.raisedChair,
+      wheelchairRamps: !formData.wheelchairRamps,
+      emergencyPhones: !formData.emergencyPhones,
+      roomsAccessibleElevator: !formData.roomsAccessibleElevator,
+      safeDepositBox: !formData.safeDepositBox,
+      bathRobe: !formData.bathRobe,
+      hairDryer: !formData.hairDryer,
+      babyHighChair: !formData.babyHighChair
+    })
+  }
 
   useEffect(() => {
   }, []);
@@ -155,34 +231,37 @@ const AdvancedSearch = (props) => {
                     <h5>Facilities</h5>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="check-uncheck"/>
+                             id="check-uncheck" onChange={() => checkUncheckAll()}/>
                       <label className="form-check-label" htmlFor="check-uncheck">
                         Check/UnCheck all
                       </label>
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="parking" name='parking' onChange={(e) => {
-                        onChange(e);
-                      }}/>
+                             id="parking" name='parking' checked={parking}
+                             onChange={(e) => {
+                               onCheckboxChange(e);
+                             }}/>
                       <label className="form-check-label" htmlFor="parking">
                         Parking
                       </label>
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="restaurant" name='restaurant' onChange={(e) => {
-                        onChange(e);
-                      }}/>
+                             id="restaurant" name='restaurant' checked={restaurant}
+                             onChange={(e) => {
+                               onCheckboxChange(e);
+                             }}/>
                       <label className="form-check-label" htmlFor="restaurant">
                         Restaurant
                       </label>
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="room-service" name="roomService" onChange={(e) => {
-                        onChange(e);
-                      }}/>
+                             id="room-service" name="roomService" checked={roomService}
+                             onChange={(e) => {
+                               onCheckboxChange(e);
+                             }}/>
                       <label className="form-check-label" htmlFor="room-service">
                         Room Service 24h
                       </label>
@@ -190,8 +269,8 @@ const AdvancedSearch = (props) => {
 
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="gym" name="gym" onChange={(e) => {
-                        onChange(e);
+                             id="gym" name="gym" checked={gym} onChange={(e) => {
+                        onCheckboxChange(e);
                       }}/>
                       <label className="form-check-label" htmlFor="gym">
                         Gym
@@ -199,8 +278,8 @@ const AdvancedSearch = (props) => {
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="spa" name="spa" onChange={(e) => {
-                        onChange(e);
+                             id="spa" name="spa" checked={spa} onChange={(e) => {
+                        onCheckboxChange(e);
                       }}/>
                       <label className="form-check-label" htmlFor="spa">
                         Spa
@@ -208,8 +287,8 @@ const AdvancedSearch = (props) => {
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="pool" name="pool" onChange={(e) => {
-                        onChange(e);
+                             id="pool" name="pool" checked={pool} onChange={(e) => {
+                        onCheckboxChange(e);
                       }}/>
                       <label className="form-check-label" htmlFor="pool">
                         Pool
@@ -217,9 +296,10 @@ const AdvancedSearch = (props) => {
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="free-wifi" name="freeWifi" onChange={(e) => {
-                        onChange(e);
-                      }}/>
+                             id="free-wifi" name="freeWifi" checked={freeWifi}
+                             onChange={(e) => {
+                               onCheckboxChange(e);
+                             }}/>
                       <label className="form-check-label" htmlFor="free-wifi">
                         Free Wifi
                       </label>
@@ -227,8 +307,9 @@ const AdvancedSearch = (props) => {
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
                              id="charging-station" name="chargingStation"
+                             checked={chargingStation}
                              onChange={(e) => {
-                               onChange(e);
+                               onCheckboxChange(e);
                              }}/>
                       <label className="form-check-label" htmlFor="charging-station">
                         Charging station for electric vehicles
@@ -236,8 +317,9 @@ const AdvancedSearch = (props) => {
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="view" name="viewToSeaMountain" onChange={(e) => {
-                        onChange(e);
+                             id="view" name="viewToSeaMountain"
+                             checked={viewToSeaMountain} onChange={(e) => {
+                        onCheckboxChange(e);
                       }}/>
                       <label className="form-check-label" htmlFor="view">
                         View to Sea/Mountain
@@ -245,54 +327,62 @@ const AdvancedSearch = (props) => {
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="air-condition" name="airCondition" onChange={(e) => {
-                        onChange(e);
-                      }}/>
+                             id="air-condition" name="airConditioning"
+                             checked={airConditioning}
+                             onChange={(e) => {
+                               onCheckboxChange(e);
+                             }}/>
                       <label className="form-check-label" htmlFor="air-condition">
-                        Air Conditioning
+                        Air conditioning
                       </label>
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="fireplace" name="fireplace" onChange={(e) => {
-                        onChange(e);
-                      }}/>
+                             id="fireplace" name="fireplace" checked={fireplace}
+                             onChange={(e) => {
+                               onCheckboxChange(e);
+                             }}/>
                       <label className="form-check-label" htmlFor="fireplace">
                         Fireplace
                       </label>
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="kitchen" name="kitchen" onChange={(e) => {
-                        onChange(e);
-                      }}/>
+                             id="kitchen" name="kitchen" checked={kitchen}
+                             onChange={(e) => {
+                               onCheckboxChange(e);
+                             }}/>
                       <label className="form-check-label" htmlFor="kitchen">
                         Kitchen
                       </label>
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="refrigerator" name="refrigerator" onChange={(e) => {
-                        onChange(e);
-                      }}/>
+                             id="refrigerator" name="refrigerator" checked={refrigerator}
+                             onChange={(e) => {
+                               onCheckboxChange(e);
+                             }}/>
                       <label className="form-check-label" htmlFor="refrigerator">
                         Refrigerator
                       </label>
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="mini-bar" name="miniBar" onChange={(e) => {
-                        onChange(e);
-                      }}/>
+                             id="mini-bar" name="miniBar" checked={miniBar}
+                             onChange={(e) => {
+                               onCheckboxChange(e);
+                             }}/>
                       <label className="form-check-label" htmlFor="mini-bar">
                         Mini Bar
                       </label>
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="washing-machine" name="wachingMachine" onChange={(e) => {
-                        onChange(e);
-                      }}/>
+                             id="washing-machine" name="washingMachine"
+                             checked={washingMachine}
+                             onChange={(e) => {
+                               onCheckboxChange(e);
+                             }}/>
                       <label className="form-check-label" htmlFor="washing-machine">
                         Washing Machine
                       </label>
@@ -300,8 +390,9 @@ const AdvancedSearch = (props) => {
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
                              id="cofee-tea-machine" name="coffeeTeaMachine"
+                             checked={coffeeTeaMachine}
                              onChange={(e) => {
-                               onChange(e);
+                               onCheckboxChange(e);
                              }}/>
                       <label className="form-check-label" htmlFor="cofee-tea-machine">
                         Cofee/Tea Machine
@@ -309,8 +400,8 @@ const AdvancedSearch = (props) => {
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="tv" name="tv" onChange={(e) => {
-                        onChange(e);
+                             id="tv" name="tv" checked={tv} onChange={(e) => {
+                        onCheckboxChange(e);
                       }}/>
                       <label className="form-check-label" htmlFor="tv">
                         TV
@@ -318,9 +409,10 @@ const AdvancedSearch = (props) => {
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="pets-allowed" name="petsAllowed" onChange={(e) => {
-                        onChange(e);
-                      }}/>
+                             id="pets-allowed" name="petsAllowed" checked={petsAllowed}
+                             onChange={(e) => {
+                               onCheckboxChange(e);
+                             }}/>
                       <label className="form-check-label" htmlFor="pets-allowed">
                         Pets Allowed
                       </label>
@@ -328,8 +420,9 @@ const AdvancedSearch = (props) => {
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
                              id="airport-transport" name="airportTransport"
+                             checked={airportTransport}
                              onChange={(e) => {
-                               onChange(e);
+                               onCheckboxChange(e);
                              }}/>
                       <label className="form-check-label" htmlFor="airport-transport">
                         Airport Transport
@@ -338,8 +431,9 @@ const AdvancedSearch = (props) => {
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
                              id="toilet-grab-rails" name="toiletGrabRails"
+                             checked={toiletGrabRails}
                              onChange={(e) => {
-                               onChange(e);
+                               onCheckboxChange(e);
                              }}/>
                       <label className="form-check-label" htmlFor="toilet-grab-rails">
                         Toilet with grab rails
@@ -348,8 +442,9 @@ const AdvancedSearch = (props) => {
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
                              id="bathtub-grab-rails" name="bathtubGrabRails"
+                             checked={bathtubGrabRails}
                              onChange={(e) => {
-                               onChange(e);
+                               onCheckboxChange(e);
                              }}/>
                       <label className="form-check-label" htmlFor="bathtub-grab-rails">
                         Bathtub with grab rails
@@ -357,18 +452,20 @@ const AdvancedSearch = (props) => {
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="shower-chair" name="showerChair" onChange={(e) => {
-                        onChange(e);
-                      }}/>
+                             id="shower-chair" name="showerChair" checked={showerChair}
+                             onChange={(e) => {
+                               onCheckboxChange(e);
+                             }}/>
                       <label className="form-check-label" htmlFor="shower-chair">
                         shower chair
                       </label>
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="raised-toilet" name="raisedChair" onChange={(e) => {
-                        onChange(e);
-                      }}/>
+                             id="raised-toilet" name="raisedChair" checked={raisedChair}
+                             onChange={(e) => {
+                               onCheckboxChange(e);
+                             }}/>
                       <label className="form-check-label" htmlFor="shower-chair">
                         Raised toilet
                       </label>
@@ -376,8 +473,9 @@ const AdvancedSearch = (props) => {
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
                              id="wheelchair-ramps" name="wheelchairRamps"
+                             checked={wheelchairRamps}
                              onChange={(e) => {
-                               onChange(e);
+                               onCheckboxChange(e);
                              }}/>
                       <label className="form-check-label" htmlFor="wheelchair-ramps">
                         Wheelchair ramps
@@ -386,8 +484,9 @@ const AdvancedSearch = (props) => {
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
                              id="emergency-phones" name="emergencyPhones"
+                             checked={emergencyPhones}
                              onChange={(e) => {
-                               onChange(e);
+                               onCheckboxChange(e);
                              }}/>
                       <label className="form-check-label" htmlFor="emergency-phones">
                         Emergency phones in room and bathroom
@@ -396,8 +495,9 @@ const AdvancedSearch = (props) => {
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
                              id="rooms-disabled-guests" name="roomsAccessibleElevator"
+                             checked={roomsAccessibleElevator}
                              onChange={(e) => {
-                               onChange(e);
+                               onCheckboxChange(e);
                              }}/>
                       <label className="form-check-label" htmlFor="rooms-disabled-guests">
                         Rooms for disabled guests accessible by elevator
@@ -405,35 +505,39 @@ const AdvancedSearch = (props) => {
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="safe-box" name="safeDepositBox" onChange={(e) => {
-                        onChange(e);
-                      }}/>
+                             id="safe-box" name="safeDepositBox" checked={safeDepositBox}
+                             onChange={(e) => {
+                               onCheckboxChange(e);
+                             }}/>
                       <label className="form-check-label" htmlFor="safe-box">
                         Safe deposit box
                       </label>
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="bathrobe" name="bathRobe" onChange={(e) => {
-                        onChange(e);
-                      }}/>
+                             id="bathrobe" name="bathRobe" checked={bathRobe}
+                             onChange={(e) => {
+                               onCheckboxChange(e);
+                             }}/>
                       <label className="form-check-label" htmlFor="bathrobe">
                         Bathrobe
                       </label>
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="hair-dryer" name="hairDryer" onChange={(e) => {
-                        onChange(e);
-                      }}/>
+                             id="hair-dryer" name="hairDryer" checked={hairDryer}
+                             onChange={(e) => {
+                               onCheckboxChange(e);
+                             }}/>
                       <label className="form-check-label" htmlFor="hair-dryer">
                         Hair dryer
                       </label>
                     </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
-                             id="baby-high-chair" name="babyHighHair" onChange={(e) => {
-                        onChange(e);
+                             id="baby-high-chair" name="babyHighChair"
+                             checked={babyHighChair} onChange={(e) => {
+                        onCheckboxChange(e);
                       }}/>
                       <label className="form-check-label" htmlFor="hair-dryer">
                         Baby high chair
