@@ -15,6 +15,36 @@ const AdvancedSearch = (props) => {
     dateTo: new Date(new Date().setDate(new Date().getDate() + 7)),
     adultsRange: 1,
     stars: 1,
+    parking: false,
+    restaurant: false,
+    roomService: false,
+    gym: false,
+    spa: false,
+    pool: false,
+    freeWifi: false,
+    chargingStation: false,
+    viewToSeaMountain: false,
+    airConditioning: false,
+    fireplace: false,
+    kitchen: false,
+    refrigerator: false,
+    miniBar: false,
+    washingMachine: false,
+    coffeTeaMachine: false,
+    tv: false,
+    petsAllowd: false,
+    airportTransport: false,
+    toiletGrabRails: false,
+    bathtubGrabRails: false,
+    showerChair: false,
+    raisedChair: false,
+    wheelchairRamps: false,
+    emergencyPhones: false,
+    roomsAccesssibleElevator: false,
+    safeDepositBox: false,
+    bathRobe: false,
+    hairDryer: false,
+    babyHighChair: false
   });
 
   const [citiesArray, setCitiesArray] = useState(cities);
@@ -123,6 +153,13 @@ const AdvancedSearch = (props) => {
                     </div>
                     <hr/>
                     <h5>Facilities</h5>
+                    <div className="form-check form-check-inline">
+                      <input className="form-check-input" type="checkbox" value=""
+                             id="check-uncheck"/>
+                      <label className="form-check-label" htmlFor="check-uncheck">
+                        Check/UnCheck all
+                      </label>
+                    </div>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
                              id="parking"/>
