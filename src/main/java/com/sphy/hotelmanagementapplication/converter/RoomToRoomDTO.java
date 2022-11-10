@@ -42,11 +42,12 @@ public class RoomToRoomDTO {
 
 		roomDTO.setDisabled(room.isDisabled());
 
+        if (!(room.getHotel() == null)) {
+            Optional<Hotel> hotel = hotelRepository.findById(room.getHotel().getId());
 
-        Optional<Hotel> hotel = hotelRepository.findById(room.getHotel().getId());
-
-        if (hotel.isPresent()){
-            roomDTO.setHotel(hotel.get().getId());
+            if (hotel.isPresent()) {
+                roomDTO.setHotel(hotel.get().getId());
+            }
         }
         return roomDTO;
     }

@@ -179,7 +179,7 @@ public class HotelServiceTest {
                             new OrderDTOToOrder(roomRepository, clientRepository)),adminRepository),
                     new HotelToHotelDTO(new RoomToRoomDTO(
                             new OrderToOrderDTO(roomRepository, clientRepository),hotelRepository)),roomService,
-                    new AdminService(adminRepository));
+                    new AdminService(adminRepository), roomService);
         }
 
         @Test

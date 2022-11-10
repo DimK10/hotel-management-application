@@ -45,22 +45,18 @@ public class RoomService {
      * @throws ApiRequestException if there is no hotel added or the hotel is ni=ot exists
      */
 	public RoomDTO saveRoomDTO(RoomDTO roomDTO) throws ApiRequestException {
-        Room room = new Room();
+        Room room = roomDTOToRoom.converter(roomDTO);
 
 		Optional<Hotel> hotelOpt =
 				hotelRepository.findById(roomDTO.getHotel());
 
-		room = roomDTOToRoom.converter(roomDTO);
-
         if (hotelOpt.isPresent()){
-            hotelOpt.get().getRooms().add(room);
-            hotelRepository.save(hotelOpt.get());
-        }else if (!hotelOpt.isPresent()){
+            roomRepository.save(room);
+        }else{
             throw  new ApiRequestException("There is no hotel that room belongs");
-        }else {
-            throw  new ApiRequestException("The hotel does not exists");
-
         }
+
+
 
 		return roomToRoomDTO.converter(room);
 	}
@@ -85,9 +81,8 @@ public class RoomService {
                 rooms.add(roomDTOToRoom.converter(roomDto));
             }
 		}
-        Iterable<Room> roomsSaved = roomRepository.saveAll(rooms);
 
-        roomsSaved.spliterator().forEachRemaining(rooms::add);
+        roomRepository.saveAll(rooms);
 
         List<RoomDTO> roomDTOS = new ArrayList<>();
         for (Room room:rooms){

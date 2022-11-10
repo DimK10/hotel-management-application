@@ -46,14 +46,13 @@ public class OrderService {
      * @throws ApiRequestException when there is no client or the client does not exist
      */
     public OrderDTO saveOrderDTO(OrderDTO orderDTO) throws ApiRequestException {
-        Order order = new Order();
 
         Optional<Client> clientOpt =
                 clientRepository.findById(orderDTO.getClient());
 
         Optional<Room> room = roomRepository.findById(orderDTO.getRoom());
 
-        order = orderDTOToOrder.converter(orderDTO);
+        Order order = orderDTOToOrder.converter(orderDTO);
 
         if (clientOpt.isPresent() && room.isPresent()){
             orderRepository.save(order);
