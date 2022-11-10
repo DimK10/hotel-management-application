@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import NavBar from '../layout/NavBar';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 
+import 'react-calendar/dist/Calendar.css';
+
 import 'bootstrap-daterangepicker/daterangepicker.css';
 import SearchItem from './SearchItem';
 
 import cities from '../../json/cities.json';
+import moment from "moment";
 
 const AdvancedSearch = (props) => {
   const [formData, setFormData] = useState({
@@ -90,6 +93,14 @@ const AdvancedSearch = (props) => {
     babyHighChair
   } = formData;
 
+  let disabledDates = [
+    new Date(2022, 11, 12),
+    new Date(2021, 7, 2),
+  ];
+
+  let disabledDate =moment(
+    new Date(2022, 10, 12));
+
   const onChange = (e) =>
     setFormData({...formData, [e.target.name]: e.target.value});
 
@@ -105,6 +116,21 @@ const AdvancedSearch = (props) => {
       citiesArray.filter((city) => city.city.includes(e.target.value))
     );
   };
+
+  const isInvalidDateFunc = (date) => {
+    console.log(date);
+
+    if(disabledDate.isSame(date)) {
+      console.log("-------------------------------inside if-------------------------------")
+      return true;
+    }
+    return false;
+  }
+
+  const handleEvent =(event, picker) => {
+    console.log(picker.startDate.toDate());
+    console.log(picker.endDate.toDate());
+  }
 
   const checkUncheckAll = () => {
     setFormData({
@@ -209,10 +235,12 @@ const AdvancedSearch = (props) => {
                         initialSettings={{
                           startDate: dateFrom,
                           endDate: dateTo,
-                        }}
+                          isInvalidDate: isInvalidDateFunc
+                        }} onApply={handleEvent}
                       >
                         <input type='text' className='form-control'/>
                       </DateRangePicker>
+
                     </div>
                     <div className='mb-3'>
                       <label htmlFor='starsRange' className='form-label'>
@@ -399,7 +427,7 @@ const AdvancedSearch = (props) => {
                                onCheckboxChange(e);
                              }}/>
                       <label className="form-check-label" htmlFor="cofee-tea-machine">
-                        Cofee/Tea Machine
+                        Coffee/Tea Machine
                       </label>
                     </div>
                     <div className="form-check form-check-inline">
