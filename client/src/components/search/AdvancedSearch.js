@@ -10,6 +10,7 @@ import SearchItem from './SearchItem';
 
 import cities from '../../json/cities.json';
 import moment from "moment";
+import {Link} from "react-router-dom";
 
 const AdvancedSearch = (props) => {
   const [formData, setFormData] = useState({
@@ -567,7 +568,21 @@ const AdvancedSearch = (props) => {
             </div>
 
           </div>
+          <div className="col-lg-9 col-md-12 col-sm-12">
+            <div className='input-group pb-3'>
+              <input
+                type='text'
+                className='form-control'
+                placeholder='Search for a hotel name'
+                aria-label='Search for a hotel name'
+                aria-describedby='button-addon2'
+              />
+              <button className='btn btn-primary px-4' type='button'>
+                Search
+              </button>
+            </div>
             <SearchItem/>
+          </div>
         </div>
       </div>
     </Fragment>
