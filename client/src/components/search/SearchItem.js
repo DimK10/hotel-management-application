@@ -1,12 +1,14 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 
+import '../../css/btnRaised.css'
+
 const SearchItem = (props) => {
   return (
     <Fragment>
       <div className="row">
         <div className="col">
-          <div className="card mb-3">
+          <div className="card mb-3 btn btn-raised shadow text-start p-0">
             <div className="row g-0">
               <div className="col-md-3">
                 <img
