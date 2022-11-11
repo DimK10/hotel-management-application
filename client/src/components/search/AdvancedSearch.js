@@ -439,6 +439,8 @@ const AdvancedSearch = (props) => {
                         Airport Transport
                       </label>
                     </div>
+                    <h6 className='mt-2 mb-2'>For people with special needs:</h6>
+                    <hr/>
                     <div className="form-check form-check-inline">
                       <input className="form-check-input" type="checkbox" value=""
                              id="toilet-grab-rails" name="toiletGrabRails"
@@ -581,6 +583,11 @@ const AdvancedSearch = (props) => {
                 Search
               </button>
             </div>
+            <SearchItem/>
+            <SearchItem/>
+            <SearchItem/>
+            <SearchItem/>
+            <SearchItem/>
             <SearchItem/>
           </div>
         </div>
