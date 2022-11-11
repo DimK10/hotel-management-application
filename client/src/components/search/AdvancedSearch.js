@@ -93,14 +93,6 @@ const AdvancedSearch = (props) => {
     babyHighChair
   } = formData;
 
-  let disabledDates = [
-    new Date(2022, 11, 12),
-    new Date(2021, 7, 2),
-  ];
-
-  let disabledDate =moment(
-    new Date(2022, 10, 12));
-
   const onChange = (e) =>
     setFormData({...formData, [e.target.name]: e.target.value});
 
@@ -109,23 +101,10 @@ const AdvancedSearch = (props) => {
 
 
   const onLocationInputChange = (e) => {
-    // citiesSuggestions = citiesArray
-    //   .filter((city) => city.city.includes(e.target.value))
-
     setCitiesSuggestions(
       citiesArray.filter((city) => city.city.includes(e.target.value))
     );
   };
-
-  const isInvalidDateFunc = (date) => {
-    console.log(date);
-
-    if(disabledDate.isSame(date)) {
-      console.log("-------------------------------inside if-------------------------------")
-      return true;
-    }
-    return false;
-  }
 
   const handleEvent =(event, picker) => {
     console.log(picker.startDate.toDate());
@@ -235,7 +214,6 @@ const AdvancedSearch = (props) => {
                         initialSettings={{
                           startDate: dateFrom,
                           endDate: dateTo,
-                          isInvalidDate: isInvalidDateFunc
                         }} onApply={handleEvent}
                       >
                         <input type='text' className='form-control'/>
@@ -589,9 +567,7 @@ const AdvancedSearch = (props) => {
             </div>
 
           </div>
-          <div className='col-9'>
             <SearchItem/>
-          </div>
         </div>
       </div>
     </Fragment>
