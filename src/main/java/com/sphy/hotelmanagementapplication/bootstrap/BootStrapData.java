@@ -63,16 +63,14 @@ public class BootStrapData implements CommandLineRunner {
 
 
 
-        Order order = new Order(null, LocalDate.ofEpochDay(2007-12-03), LocalDate.ofEpochDay(2007-12-07), false, client,ena);
-        orderRepository.save(order);
+        Order order = new Order(null, LocalDate.of(2007, 12, 03), LocalDate.of(2007, 12, 07), false, client,ena);
         orderRepository.save(order);
 
 
         ena.getOrders().add(order);
         roomRepository.save(ena);
 
-        Order order1 = new Order(null, LocalDate.ofEpochDay(2007-12-03), LocalDate.ofEpochDay(2007-12-07), false, client,dio);
-        orderRepository.save(order1);
+        Order order1 = new Order(null, LocalDate.of( 2007, 12,03), LocalDate.of(2007, 12, 07), false, client,dio);
         orderRepository.save(order1);
         dio.getOrders().add(order1);
         roomRepository.save(dio);

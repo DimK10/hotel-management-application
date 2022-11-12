@@ -124,7 +124,7 @@ public class Room extends BaseEntity {
 				", name='" + name + '\'' +
 				", luxurity=" + luxurity +
 				", hotel=" + hotel +
-				", order=" + orders +
+//				", order=" + orders +
 				", price=" + price +
 				'}';
 	}

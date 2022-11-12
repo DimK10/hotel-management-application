@@ -9,8 +9,10 @@ import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.repositories.ClientRepository;
 import com.sphy.hotelmanagementapplication.repositories.OrderRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -46,20 +48,31 @@ public class OrderService {
      * @throws ApiRequestException when there is no client or the client does not exist
      */
     public OrderDTO saveOrderDTO(OrderDTO orderDTO) throws ApiRequestException {
+        boolean doesNotExist = false;
 
-        Optional<Client> clientOpt =
-                clientRepository.findById(orderDTO.getClient());
-
-        Optional<Room> room = roomRepository.findById(orderDTO.getRoom());
+        if (orderDTO.getClient() == null){
+            throw new ApiRequestException("There is no client in the order");
+        }
+        if (orderDTO.getRoom() == null){
+            throw new ApiRequestException("There is no room in the order");
+        }
 
         Order order = orderDTOToOrder.converter(orderDTO);
 
-        if (clientOpt.isPresent() && room.isPresent()){
-            orderRepository.save(order);
+        Client client = order.getClient();
 
-        }else {
-            throw  new ApiRequestException("There is no client or room that order belongs to");
-        }
+        Room room = order.getRoom();
+
+            int conflict = 0;
+
+            conflict = orderRepository.OrderConflict(order.getCheckInDate(),order.getCheckOutDate(),room);
+
+            if (conflict == 0){
+                orderRepository.save(order);
+            }else {
+                throw new ApiExceptionFront("The room isn't available on the desirable dates");
+            }
+
 
         return orderToOrderDTO.converter(order);
     }
