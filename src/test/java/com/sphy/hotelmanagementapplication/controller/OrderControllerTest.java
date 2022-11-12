@@ -140,33 +140,6 @@ public class OrderControllerTest {
 
     }
 
-    @Test
-    void addOrders() throws Exception {
-        // Given
-
-        // When
-        when(orderService.saveOrders(any())).thenReturn(ordersDTO);
-
-        // Return
-        mockMvc.perform(
-                        post("/api/orders/create")
-                                .content(asJsonString(ordersDTO))
-                                .contentType(MediaType.APPLICATION_JSON)
-                                .accept(MediaType.APPLICATION_JSON)
-                )
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[*]")
-                        .isArray())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[*]",hasSize(2)))
-
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].id")
-                        .value("1"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[1].id")
-                        .value("2"));
-
-        verify(orderService, times(1)).saveOrders(any());
-    }
 
     @Test
     void findAllOrders() throws Exception {
