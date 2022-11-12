@@ -35,16 +35,6 @@ public class OrderController {
         return service.saveOrderDTO(orderDTO);
     }
 
-    /***
-     * create new orders
-     * @param ordersDTO is the list of the orders we want to save
-     * @return the list with the saved orders
-     */
-    @PostMapping("/api/orders/create")
-    public List<OrderDTO> addOrders(@RequestBody List<OrderDTO> ordersDTO) throws ApiRequestException {
-
-        return service.saveOrders(ordersDTO);
-    }
 
     /***
      * finds all orders
@@ -89,7 +79,7 @@ public class OrderController {
      * @throws ApiRequestException if the order does not exist or is already activated
      */
     @PostMapping("/api/order/enable/{id}")
-    ResponseEntity<String> enableRoom(@PathVariable Long id) throws ApiRequestException {
+    ResponseEntity<String> enableOrder(@PathVariable Long id) throws ApiRequestException {
 
         service.enableOrder(id);
         return ResponseEntity.status(HttpStatus.OK)
