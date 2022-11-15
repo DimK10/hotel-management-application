@@ -2,23 +2,32 @@ import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 
 import '../../css/btnRaised.css'
+import {Navigate, useNavigate} from "react-router-dom";
 
 const SearchItem = (props) => {
+
+  let navigate = useNavigate();
+
+  const onHotelCardClick = () => {
+    //todo move hotel info to stat
+    navigate('/order')
+  }
+
   return (
     <Fragment>
       <div className="row">
         <div className="col">
-          <div className="card mb-3 btn btn-raised shadow text-start p-0">
+          <div className="card mb-3 btn btn-raised shadow text-start p-0" onClick={() => onHotelCardClick()}>
             <div className="row g-0">
               <div className="col-md-3">
                 <img
                   src="https://images.unsplash.com/photo-1606046604972-77cc76aee944?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80"
-                  className="img-fluid rounded-start" alt="..."/>
+                  className="img-fluid rounded-start h-100" alt="..."/>
               </div>
               <div className="col-md-9">
                 <div className="card-body">
                   <h5 className="card-title">Hotel #1</h5>
-                  <h6 className="card-subtitle mb-2">Price range: 50-70€</h6>
+                  <h6 className="card-subtitle mb-2">Price: 50€</h6>
                   <p className="card-text">This is a hotel description about the hotwel
                     Lorem ipsum dolor sit amet, consectetur adipisicing
                     elit. Aspernatur corporis eveniet facilis in laborum molestias

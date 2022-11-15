@@ -16,6 +16,7 @@ import '@coreui/coreui/dist/css/coreui.min.css';
 import '@coreui/coreui/dist/js/coreui.js';
 import NotFound from "./components/error/NotFound";
 import SecuredPage from "./components/auth/SecuredPage";
+import PlaceNewOrder from "./components/order/PlaceNewOrder";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -36,6 +37,7 @@ const App = () => {
             <Route path='/sign-up' element={<Register/>}/>
             <Route path='/search' element={<AdvancedSearch />} />
             <Route path='/not-found' element={<NotFound />} />
+            <Route path='/order' element={<PlaceNewOrder />} />
             <Route path='/protected'
                    element={
               <SecuredPage>
