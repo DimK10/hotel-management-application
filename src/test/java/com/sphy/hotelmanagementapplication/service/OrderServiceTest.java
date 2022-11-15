@@ -145,7 +145,7 @@ public class OrderServiceTest {
 
 
         // when
-        when(orderRepository.findById(anyLong())).thenReturn(Optional.ofNullable(order));
+        when(orderRepository.findById(anyLong())).thenReturn(Optional.of(order));
 
 
         //then

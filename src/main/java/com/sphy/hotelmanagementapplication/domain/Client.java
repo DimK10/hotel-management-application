@@ -25,6 +25,7 @@ public class Client extends User {
     }
 
     public Client(Long id) {
+        super.setId(id);
     }
 
     public Long getId() {

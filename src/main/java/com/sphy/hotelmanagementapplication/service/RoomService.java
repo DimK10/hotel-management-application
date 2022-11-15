@@ -51,15 +51,11 @@ public class RoomService {
 				hotelRepository.findById(roomDTO.getHotel());
 
         if (hotelOpt.isPresent()){
-            roomRepository.save(room);
+            return roomToRoomDTO.converter(roomRepository.save(room));
         }else{
             throw  new ApiRequestException("There is no hotel that room belongs");
         }
-
-
-
-		return roomToRoomDTO.converter(room);
-	}
+    }
 
     /***
      * save a list of rooms
@@ -78,7 +74,7 @@ public class RoomService {
             }else if (!hotelRepository.findById(roomDto.getHotel()).isPresent()){
                 throw new ApiRequestException("hotel with id: " + roomDto.getHotel() + " does not exist");
             }else {
-                rooms.add(roomDTOToRoom.converter(roomDto));
+                 rooms.add(roomDTOToRoom.converter(roomDto));
             }
 		}
 
@@ -86,7 +82,7 @@ public class RoomService {
 
         List<RoomDTO> roomDTOS = new ArrayList<>();
         for (Room room:rooms){
-            roomDTOS.add(roomToRoomDTO.converter(room));
+            roomDTOS.add(roomToRoomDTO.converter(roomRepository.findById(room.getId()).get()));
         }
         return roomDTOS;
     }

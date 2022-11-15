@@ -6,6 +6,7 @@ import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -29,6 +30,7 @@ public class RoomToRoomDTO {
      * @param room the room object we want to convert
      * @return the converted roomDTO object
      */
+    @Transactional
     public RoomDTO converter(Room room){
         RoomDTO roomDTO = new RoomDTO();
 

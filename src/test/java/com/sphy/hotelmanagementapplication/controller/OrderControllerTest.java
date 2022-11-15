@@ -164,13 +164,13 @@ public class OrderControllerTest {
     @Test
     void findOrderById() throws Exception {
         // Given
-
+        Long id = 1L;
 
         // When
         when(orderService.getOrderById(anyLong())).thenReturn(orderDTO);
 
         // Return
-        mockMvc.perform(get("/api/orderId/1"))
+        mockMvc.perform(get("/api/orderId/{id}",id))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(1));

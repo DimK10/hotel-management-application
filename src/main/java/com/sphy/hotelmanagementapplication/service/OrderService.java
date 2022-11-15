@@ -55,7 +55,7 @@ public class OrderService {
 
         Order order = orderDTOToOrder.converter(orderDTO);
 
-        if (!client.isPresent()){
+        if (client.isEmpty()){
             throw new ApiRequestException("There is no client or the clint dies not exist in the order");
         }
         if (!room.isPresent()){
@@ -67,13 +67,10 @@ public class OrderService {
             conflict = orderRepository.OrderConflict(order.getCheckInDate(),order.getCheckOutDate(),room.get());
 
             if (conflict == 0){
-                orderRepository.save(order);
+                return orderToOrderDTO.converter(orderRepository.save(order));
             }else {
                 throw new ApiExceptionFront("The room isn't available on the desirable dates");
             }
-
-
-        return orderToOrderDTO.converter(order);
     }
 
     /***
@@ -106,7 +103,7 @@ public class OrderService {
      */
     public OrderDTO getOrderById(Long id) throws ApiRequestException {
         Optional<Order> order = orderRepository.findById(id);
-        if (!order.isPresent()){
+        if (order.isEmpty()){
             throw new ApiRequestException("There is now order with id: " + id);
         }else {
             return orderToOrderDTO.converter(orderRepository.findById(id).get());
