@@ -3,12 +3,22 @@ import PropTypes from 'prop-types';
 
 import '../../css/btnRaised.css'
 import {Navigate, useNavigate} from "react-router-dom";
+import moment from "moment";
+import {createNewOrderPreCheckout} from "../../actions/order";
+import {connect} from "react-redux";
 
-const SearchItem = (props) => {
+const SearchItem = ({checkInDate, checkOutDate, createNewOrderPreCheckout}) => {
 
   let navigate = useNavigate();
 
-  const onHotelCardClick = () => {
+  const onHotelCardClick = (e) => {
+
+
+    let formData = new FormData();
+    formData.append('checkInDate', checkInDate);
+    formData.append('checkOutDate', checkOutDate);
+
+    createNewOrderPreCheckout(checkInDate, checkOutDate);
     //todo move hotel info to stat
     navigate('/order')
   }
@@ -17,7 +27,8 @@ const SearchItem = (props) => {
     <Fragment>
       <div className="row">
         <div className="col">
-          <div className="card mb-3 btn btn-raised shadow text-start p-0" onClick={() => onHotelCardClick()}>
+          <div className="card mb-3 btn btn-raised shadow text-start p-0"
+               onClick={() => onHotelCardClick()}>
             <div className="row g-0">
               <div className="col-md-3">
                 <img
@@ -28,6 +39,8 @@ const SearchItem = (props) => {
                 <div className="card-body">
                   <h5 className="card-title">Hotel #1</h5>
                   <h6 className="card-subtitle mb-2">Price: 50€</h6>
+                  <h6
+                    className="card-subtitle mb-2">From: {moment(checkInDate).format('DD/MM/YYYY')} To: {moment(checkOutDate).format('DD/MM/YYYY')}</h6>
                   <p className="card-text">This is a hotel description about the hotwel
                     Lorem ipsum dolor sit amet, consectetur adipisicing
                     elit. Aspernatur corporis eveniet facilis in laborum molestias
@@ -75,4 +88,6 @@ const SearchItem = (props) => {
 
 SearchItem.propTypes = {};
 
-export default SearchItem;
+export default connect(null, {
+  createNewOrderPreCheckout
+})(SearchItem);

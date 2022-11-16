@@ -9,3 +9,8 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 export const ACCOUNT_DELETED = 'ACCOUNT_DELETED';
 export const CLEAR_PROFILE = 'CLEAR_PROFILE';
+
+
+// order
+export const NEW_ORDER_PRE_CHECKOUT = 'NEW_ORDER_PRE_CHECKOUT';
+export const ORDER_ERROR = 'ORDER_ERROR';

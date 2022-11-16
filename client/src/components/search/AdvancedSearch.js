@@ -15,8 +15,8 @@ import {Link} from "react-router-dom";
 const AdvancedSearch = (props) => {
   const [formData, setFormData] = useState({
     location: '',
-    dateFrom: new Date(),
-    dateTo: new Date(new Date().setDate(new Date().getDate() + 7)),
+    checkInDate: new Date(),
+    checkOutDate: new Date(new Date().setDate(new Date().getDate() + 7)),
     adultsRange: 1,
     stars: 1,
     parking: false,
@@ -58,8 +58,8 @@ const AdvancedSearch = (props) => {
 
   const {
     location,
-    dateFrom,
-    dateTo,
+    checkInDate,
+    checkOutDate,
     adultsRange,
     stars,
     parking,
@@ -213,8 +213,8 @@ const AdvancedSearch = (props) => {
                       </label>
                       <DateRangePicker
                         initialSettings={{
-                          startDate: dateFrom,
-                          endDate: dateTo,
+                          startDate: checkInDate,
+                          endDate: checkOutDate,
                         }} onApply={handleEvent}
                       >
                         <input type='text' className='form-control'/>
@@ -583,12 +583,12 @@ const AdvancedSearch = (props) => {
                 Search
               </button>
             </div>
-            <SearchItem/>
-            <SearchItem/>
-            <SearchItem/>
-            <SearchItem/>
-            <SearchItem/>
-            <SearchItem/>
+            <SearchItem checkInDate={checkInDate} checkOutDate={checkOutDate}/>
+            <SearchItem checkInDate={checkInDate} checkOutDate={checkOutDate}/>
+            <SearchItem checkInDate={checkInDate} checkOutDate={checkOutDate}/>
+            <SearchItem checkInDate={checkInDate} checkOutDate={checkOutDate}/>
+            <SearchItem checkInDate={checkInDate} checkOutDate={checkOutDate}/>
+            <SearchItem checkInDate={checkInDate} checkOutDate={checkOutDate}/>
           </div>
         </div>
       </div>
@@ -597,5 +597,8 @@ const AdvancedSearch = (props) => {
 };
 
 AdvancedSearch.propTypes = {};
+
+
+
 
 export default AdvancedSearch;

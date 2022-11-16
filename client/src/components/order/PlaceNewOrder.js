@@ -1,11 +1,15 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import NavBar from "../layout/NavBar";
+import moment from "moment/moment";
+import {connect} from "react-redux";
 
 
-const PlaceNewOrder = (props) => {
+const PlaceNewOrder = ({ checkInDate, checkOutDate }) => {
 
   // todo check if order details exist, else show nothing
+
+
   return (
     <Fragment>
       <NavBar/>
@@ -37,6 +41,9 @@ const PlaceNewOrder = (props) => {
                   <div className="col-sm-10">
                     <p id='staticText1' className="form-control-plaintext">50€ per
                       night</p>
+                    <h6
+                      className="card-subtitle mb-2">From: {moment(checkInDate).format('DD/MM/YYYY')} To: {moment(checkOutDate).format('DD/MM/YYYY')}</h6>
+
                   </div>
                 </div>
                 <hr/>
@@ -89,6 +96,15 @@ const PlaceNewOrder = (props) => {
   );
 }
 
-PlaceNewOrder.propTypes = {};
+PlaceNewOrder.propTypes = {
+  checkInDate: PropTypes.instanceOf(Date),
+  checkOutDate: PropTypes.instanceOf(Date)
+};
 
-export default PlaceNewOrder;
+const mapStateToProps = ({ checkInDate, checkOutDate }) => ({
+  checkInDate,
+  checkOutDate,
+});
+
+
+export default connect(mapStateToProps)(PlaceNewOrder);
