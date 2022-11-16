@@ -1,14 +1,14 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import NavBar from "../layout/NavBar";
 import moment from "moment/moment";
 import {connect} from "react-redux";
+import {getNewOrder} from "../../actions/order";
 
 
 const PlaceNewOrder = ({ checkInDate, checkOutDate }) => {
 
   // todo check if order details exist, else show nothing
-
 
   return (
     <Fragment>
@@ -97,14 +97,15 @@ const PlaceNewOrder = ({ checkInDate, checkOutDate }) => {
 }
 
 PlaceNewOrder.propTypes = {
+  getNewOrder: PropTypes.func.isRequired,
   checkInDate: PropTypes.instanceOf(Date),
   checkOutDate: PropTypes.instanceOf(Date)
 };
 
-const mapStateToProps = ({ checkInDate, checkOutDate }) => ({
-  checkInDate,
-  checkOutDate,
+const mapStateToProps = (state) => ({
+  checkInDate: state.order.checkInDate,
+  checkOutDate: state.order.checkOutDate,
 });
 
 
-export default connect(mapStateToProps)(PlaceNewOrder);
+export default connect(mapStateToProps, { getNewOrder })(PlaceNewOrder);

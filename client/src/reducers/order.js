@@ -1,4 +1,4 @@
-import {NEW_ORDER_PRE_CHECKOUT, ORDER_ERROR} from "../actions/types";
+import {GET_NEW_ORDER, NEW_ORDER_PRE_CHECKOUT, ORDER_ERROR} from "../actions/types";
 
 const initialState = {
   checkInDate: new Date(),
@@ -28,6 +28,7 @@ export default function (state = initialState, action) {
         ...state,
         error: payload,
       }
+    case GET_NEW_ORDER:
     default:
       return state;
   }

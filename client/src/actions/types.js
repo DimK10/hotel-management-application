@@ -12,5 +12,6 @@ export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 
 
 // order
+export const GET_NEW_ORDER = 'GET_NEW_ORDER';
 export const NEW_ORDER_PRE_CHECKOUT = 'NEW_ORDER_PRE_CHECKOUT';
 export const ORDER_ERROR = 'ORDER_ERROR';

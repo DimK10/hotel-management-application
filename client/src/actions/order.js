@@ -1,6 +1,17 @@
-import { NEW_ORDER_PRE_CHECKOUT, ORDER_ERROR } from "./types";
+import {GET_NEW_ORDER, NEW_ORDER_PRE_CHECKOUT, ORDER_ERROR} from "./types";
 
-// Get order pre checkout
+// Get newly created order
+export const getNewOrder = () => async (dispach) => {
+  try {
+    dispach({
+      type: GET_NEW_ORDER
+    });
+  } catch (err) {
+
+  }
+}
+
+// Create order pre checkout
 export const createNewOrderPreCheckout = (checkInDate, checkOutDate) => async (dispatch) => {
   try {
     dispatch({
@@ -11,7 +22,7 @@ export const createNewOrderPreCheckout = (checkInDate, checkOutDate) => async (d
     dispatch({
       type: ORDER_ERROR,
       payload: {
-        msg: 'An error occurred',
+        msg: err,
         status: null,
       },
     });
