@@ -38,7 +38,7 @@ public class RoomController {
 
     /***
      * create new rooms
-     * @param roomsDTO is the list of the hotels we want to save
+     * @param roomsDTO is the list of the rooms we want to save
      * @return the list with the saved rooms
      */
     @PostMapping("/api/rooms/create")

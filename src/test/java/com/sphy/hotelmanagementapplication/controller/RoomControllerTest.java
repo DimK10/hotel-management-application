@@ -49,9 +49,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class RoomControllerTest {
 
 	@Mock
-	HotelService hotelService;
-
-	@Mock
 	RoomService roomService;
 
 	@InjectMocks

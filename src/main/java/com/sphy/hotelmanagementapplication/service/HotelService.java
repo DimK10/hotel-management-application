@@ -34,12 +34,15 @@ public class HotelService {
 
 	private final AdminService adminService;
 
-	public HotelService(HotelRepository hotelRepository, AdminRepository adminRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, AdminService adminService) {
+	private final RoomService roomService;
+
+	public HotelService(HotelRepository hotelRepository, AdminRepository adminRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, AdminService adminService, RoomService roomService1) {
 		this.hotelRepository = hotelRepository;
 		this.adminRepository = adminRepository;
 		this.hotelDTOToHotel = hotelDTOToHotel;
 		this.hotelToHotelDTO = hotelToHotelDTO;
 		this.adminService = adminService;
+		this.roomService = roomService;
 	}
 
 	/***
@@ -173,23 +176,29 @@ public class HotelService {
 	 * @throws ApiRequestException if the hotel does not have an Owner or does not have rooms
 	 */
 	public HotelDTO saveHotelDTO(HotelDTO hotelDTO) throws ApiRequestException{
-		Hotel hotel = new Hotel();
 		Optional<Admin> adminOpt =
 				adminRepository.findById(hotelDTO.getOwner());
 
 		Set<RoomDTO> roomOpt = hotelDTO.getRooms();
 
-		if (adminOpt.isPresent() && roomOpt.size()>0){
-			hotel = hotelDTOToHotel.converter(hotelDTO);
-		}
 		if (!adminOpt.isPresent()){
 			throw new ApiRequestException("There is no Owner registered with that id, or the id is null!");
 		}
-		if (roomOpt.size() == 0){
+		if (roomOpt.isEmpty()){
 			throw new ApiRequestException("If you wont to save hotels you mast add one or more rooms");
 		}
+		List<RoomDTO> roomDTOS = new ArrayList<>();
+		roomDTOS.addAll(hotelDTO.getRooms());
+		hotelDTO.getRooms().clear();
+		Hotel hotel = hotelDTOToHotel.converter(hotelDTO);
+		hotelRepository.save(hotel);
+		for(RoomDTO roomDTO : roomDTOS){
+			roomDTO.setHotel(hotel.getId());
+		}
+		roomService.saveRooms(roomDTOS);
 
-		return hotelToHotelDTO.converter(hotel);
+		return hotelToHotelDTO.converter(hotelRepository.findById(hotel.getId()).get());
+
 	}
 
 	/***
@@ -209,13 +218,23 @@ public class HotelService {
 			if (hotelDTO.getRooms() == null){
 				throw new ApiRequestException("In hotel with name: " + hotelDTO.getName() + " In hotel with name: " + hotelDTO.getName() + " there are no rooms");
 			}
-
-			hotels.add(hotelDTOToHotel.converter(hotelDTO));
+			List<RoomDTO> roomDTOS = new ArrayList<>();
+			roomDTOS.addAll(hotelDTO.getRooms());
+			hotelDTO.getRooms().clear();
+			Hotel hotel = hotelDTOToHotel.converter(hotelDTO);
+			hotelRepository.save(hotel);
+			for(RoomDTO roomDTO : roomDTOS){
+				roomDTO.setHotel(hotel.getId());
+			}
+			roomService.saveRooms(roomDTOS);
+			hotels.add(hotelRepository.findById(hotel.getId()).get());
 		}
 
-		hotelRepository.saveAll(hotels);
-
-		return hotelsDTO;
+		List<HotelDTO> hotelDTOS = new ArrayList<>();
+		for (Hotel hotel:hotels){
+			hotelDTOS.add(hotelToHotelDTO.converter(hotel));
+		}
+		return hotelDTOS;
 	}
 
 }

@@ -24,7 +24,11 @@ public class Client extends User {
         super(id, emailVerify, username, firstname, lastname, email, Role.CLIENT);
     }
 
-	public Long getId() {
+    public Client(Long id) {
+        super.setId(id);
+    }
+
+    public Long getId() {
 		return super.getId();
 	}
 

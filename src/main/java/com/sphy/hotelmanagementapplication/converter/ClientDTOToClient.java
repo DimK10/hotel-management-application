@@ -4,6 +4,7 @@ import com.sphy.hotelmanagementapplication.domain.Client;
 import com.sphy.hotelmanagementapplication.dto.ClientDTO;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /***
  * created by gp
@@ -22,6 +23,7 @@ public class ClientDTOToClient {
      * @param clientDTO the clint object to be converted
      * @return the converted Client object
      */
+    @Transactional
     public Client converter(ClientDTO clientDTO) {
         Client client = new Client();
         client.setId(clientDTO.getId());
@@ -34,7 +36,7 @@ public class ClientDTOToClient {
         client.setTransactionId(clientDTO.getTransactionId());
 
         for (OrderDTO orderDTO : clientDTO.getOrders()) {
-            client.getOrders().add(orderDTOToOrder.Converter(orderDTO));
+            client.getOrders().add(orderDTOToOrder.converter(orderDTO));
         }
 
         return client;

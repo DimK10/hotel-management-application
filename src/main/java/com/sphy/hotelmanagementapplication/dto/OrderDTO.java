@@ -18,6 +18,18 @@ public class OrderDTO implements Serializable {
 
     private Long room;
 
+    private boolean canceled;
+
+
+    public boolean isCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
+    }
+
+
     public Long getId() {
         return id;
     }
