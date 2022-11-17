@@ -7,7 +7,6 @@ import { cilUser, cilLockLocked } from '@coreui/icons';
 const Login = (props) => {
   return (
     <Fragment>
-      <Fragment>
         <NavBar />
         <div className='bg-light min-vh-100 d-flex flex-row align-items-center'>
           <div className='container'>
@@ -57,7 +56,6 @@ const Login = (props) => {
             </div>
           </div>
         </div>
-      </Fragment>
     </Fragment>
   );
 };
