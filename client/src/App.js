@@ -17,6 +17,7 @@ import '@coreui/coreui/dist/js/coreui.js';
 import NotFound from "./components/error/NotFound";
 import SecuredPage from "./components/auth/SecuredPage";
 import PlaceNewOrder from "./components/order/PlaceNewOrder";
+import Dashboard from "./components/dashboard/Dashboard";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -45,6 +46,10 @@ const App = () => {
               </SecuredPage>
             } />
 
+
+          {/* Admin routes */}
+          {/*  TODO ADD SECURED ROUTE */}
+            <Route path='/dashboard' element={<Dashboard />} />
           </Routes>
         </Router>
       </Fragment>

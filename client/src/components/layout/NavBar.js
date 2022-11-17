@@ -25,7 +25,7 @@ const NavBar = (props) => {
             <li className='nav-item'>
               <Link
                 className={`nav-link ${
-                  window.location.pathname == '/' ? 'active' : ''
+                  window.location.pathname === '/' ? 'active' : ''
                 }`}
                 to='/'
               >
@@ -35,7 +35,7 @@ const NavBar = (props) => {
             <li className='nav-item'>
               <Link
                 className={`nav-link ${
-                  window.location.pathname == '/sign-in' ? 'active' : ''
+                  window.location.pathname === '/sign-in' ? 'active' : ''
                 }`}
                 to='/sign-in'
               >
@@ -45,7 +45,7 @@ const NavBar = (props) => {
             <li className='nav-item'>
               <Link
                 className={`nav-link ${
-                  window.location.pathname == '/sign-up' ? 'active' : ''
+                  window.location.pathname === '/sign-up' ? 'active' : ''
                 }`}
                 to='/sign-up'
               >
