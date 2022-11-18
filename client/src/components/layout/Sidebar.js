@@ -14,7 +14,7 @@ import {
   cilUser
 } from "@coreui/icons";
 import {cibCoreui, cibCoreuiC} from '@coreui/icons';
-import '../../css/adminNavbarFix.css'
+
 
 Sidebar.propTypes = {};
 

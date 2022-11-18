@@ -11,17 +11,17 @@ import {
   cilTask,
   cilUser
 } from "@coreui/icons";
+import '../../css/wrapperFix.css'
 
-import '../../css/adminNavbarFix.css'
 import {Sidebar} from '@coreui/coreui/dist/js/coreui.js';
 
 const Dashboard = props => {
   return (
     <Fragment>
 
-
+      <SidebarComp/>
       <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-        <SidebarComp/>
+
         <header className="header header-sticky mb-4">
           <div className="container-fluid">
             <button className="header-toggler px-md-0 me-md-3" type="button"
