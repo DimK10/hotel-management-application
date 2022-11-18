@@ -14,6 +14,8 @@ import {
   cilUser
 } from "@coreui/icons";
 import {cibCoreui, cibCoreuiC} from '@coreui/icons';
+import 'simplebar/dist/simplebar.css';
+import 'simplebar/dist/simplebar'
 
 
 Sidebar.propTypes = {};
