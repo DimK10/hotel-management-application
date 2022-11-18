@@ -25,8 +25,10 @@ function Sidebar(props) {
     <Fragment>
       <div className="sidebar sidebar-dark sidebar-fixed" id="sidebar">
         <div className="sidebar-brand d-none d-md-flex">
-          <CIcon className='sidebar-brand-full' icon={cibCoreuiC} />
-          <CIcon className='sidebar-brand-narrow' icon={cibCoreuiC} />
+          <h1 className='sidebar-brand-full '>H</h1>
+          <h5 className='sidebar-brand-narrow'>H</h5>
+          {/*<CIcon className='sidebar-brand-full' icon={cibCoreuiC} />*/}
+          {/*<CIcon className='sidebar-brand-narrow' icon={cibCoreuiC} />*/}
         </div>
         <ul className="sidebar-nav" data-coreui="navigation" data-simplebar="">
           <li className="nav-item"><a className="nav-link" href="index.html">

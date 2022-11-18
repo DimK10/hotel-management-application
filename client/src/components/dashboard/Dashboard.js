@@ -29,8 +29,7 @@ const Dashboard = props => {
               <CIcon className='icon icon-lg' icon={cilMenu}/>
             </button>
             <a className="header-brand d-md-none" href="#">
-              <CIcon  icon={cibCoreui}/>
-
+              <h5>H</h5>
 
             </a>
             <ul className="header-nav d-none d-md-flex">
