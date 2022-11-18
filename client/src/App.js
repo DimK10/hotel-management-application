@@ -12,8 +12,11 @@ import setAuthToken from './utils/setAuthToken';
 import store from './store';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '@coreui/coreui/dist/css/coreui.min.css';
-import '@coreui/coreui/dist/js/coreui.js';
+import '@coreui/coreui/dist/css/coreui.css';
+// import '@coreui/coreui/dist/js/coreui.js';
+
+// import '@coreui/coreui'
+
 import NotFound from "./components/error/NotFound";
 import SecuredPage from "./components/auth/SecuredPage";
 import PlaceNewOrder from "./components/order/PlaceNewOrder";

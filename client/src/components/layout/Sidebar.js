@@ -14,6 +14,7 @@ import {
   cilUser
 } from "@coreui/icons";
 import {cibCoreui, cibCoreuiC} from '@coreui/icons';
+import '../../css/adminNavbarFix.css'
 
 Sidebar.propTypes = {};
 
@@ -196,6 +197,42 @@ function Sidebar(props) {
                                               target="_blank">
             <CIcon className='nav-icon' icon={cilDescription} />
             Docs</a></li>
+          <li className="nav-item"><a className="nav-link nav-link-danger"
+                                      href="https://coreui.io/pro/" target="_top">
+            <CIcon className='nav-icon' icon={cilLayers} />
+            Try CoreUI
+            <div className="fw-semibold">PRO</div>
+          </a></li>
+          <li className="nav-item"><a className="nav-link nav-link-danger"
+                                      href="https://coreui.io/pro/" target="_top">
+            <CIcon className='nav-icon' icon={cilLayers} />
+            Try CoreUI
+            <div className="fw-semibold">PRO</div>
+          </a></li>
+          <li className="nav-item"><a className="nav-link nav-link-danger"
+                                      href="https://coreui.io/pro/" target="_top">
+            <CIcon className='nav-icon' icon={cilLayers} />
+            Try CoreUI
+            <div className="fw-semibold">PRO</div>
+          </a></li>
+          <li className="nav-item"><a className="nav-link nav-link-danger"
+                                      href="https://coreui.io/pro/" target="_top">
+            <CIcon className='nav-icon' icon={cilLayers} />
+            Try CoreUI
+            <div className="fw-semibold">PRO</div>
+          </a></li>
+          <li className="nav-item"><a className="nav-link nav-link-danger"
+                                      href="https://coreui.io/pro/" target="_top">
+            <CIcon className='nav-icon' icon={cilLayers} />
+            Try CoreUI
+            <div className="fw-semibold">PRO</div>
+          </a></li>
+          <li className="nav-item"><a className="nav-link nav-link-danger"
+                                      href="https://coreui.io/pro/" target="_top">
+            <CIcon className='nav-icon' icon={cilLayers} />
+            Try CoreUI
+            <div className="fw-semibold">PRO</div>
+          </a></li>
           <li className="nav-item"><a className="nav-link nav-link-danger"
                                       href="https://coreui.io/pro/" target="_top">
             <CIcon className='nav-icon' icon={cilLayers} />
