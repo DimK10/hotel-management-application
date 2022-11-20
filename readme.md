@@ -4,4 +4,6 @@
 
 This application was developed as a part of a learning project.
 It features a hotel management information system, in which a user can book a hotel, and the 
-hotel user can organize the availability of the rooms left. 
+hotel user can organize the availability of the rooms left.
+
+For more info, please check the [business requirements of the app.](https://github.com/DimK10/hotel-management-application/wiki/Business-requirements-of-the-application)
