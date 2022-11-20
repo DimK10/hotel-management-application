@@ -4,6 +4,7 @@ import com.sphy.hotelmanagementapplication.dto.UserDTO;
 import com.sphy.hotelmanagementapplication.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class UserController {
      * @return the saved user
      */
     @PostMapping("/api/signIn")
-    public UserDTO saveUser(UserDTO userDTO){
+    public UserDTO saveUser(@RequestBody UserDTO userDTO){
 
         return userService.saveUser(userDTO);
 

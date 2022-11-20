@@ -24,9 +24,9 @@ public class UserToUserDTO {
 
         userDTO.setHashedPassword(user.getHashedPassword());
 
-        userDTO.setFirstname(userDTO.getFirstname());
+        userDTO.setFirstname(user.getFirstname());
 
-        userDTO.setLastname(userDTO.getLastname());
+        userDTO.setLastname(user.getLastname());
 
         userDTO.setRole(String.valueOf(user.getRole()));
 
