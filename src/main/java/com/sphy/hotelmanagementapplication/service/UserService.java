@@ -17,11 +17,11 @@ import java.util.List;
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    private UserToUserDTO userToUserDTO;
+    private final UserToUserDTO userToUserDTO;
 
-    private UserDTOToUser userDTOToUser;
+    private final UserDTOToUser userDTOToUser;
 
     public UserService(UserRepository userRepository, UserToUserDTO userToUserDTO, UserDTOToUser userDTOToUser) {
         this.userRepository = userRepository;
@@ -29,7 +29,13 @@ public class UserService {
         this.userDTOToUser = userDTOToUser;
     }
 
-    public UserDTO saveUser(UserDTO userDTO){
+    /***
+     * save a user
+     * @param userDTO the user to be saves
+     * @return the saved user
+     * @throws ApiRequestException if the necessary properties are not included in the request
+     */
+    public UserDTO saveUser(UserDTO userDTO) throws ApiRequestException{
 
         if (userDTO.getUsername().isBlank() || userDTO.getHashedPassword().isBlank()
                 || userDTO.getEmail().isBlank() || userDTO.getRole().isBlank()){
@@ -39,6 +45,10 @@ public class UserService {
         }
     }
 
+    /***
+     * get all users
+     * @return all users
+     */
     public List<UserDTO> getUsers(){
 
         List<User> users = new ArrayList<>();

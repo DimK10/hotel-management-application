@@ -2,10 +2,12 @@ package com.sphy.hotelmanagementapplication.converter;
 
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.UserDTO;
+import org.springframework.stereotype.Component;
 
 /***
  * created by gp
  */
+@Component
 public class UserDTOToUser {
 
     /***

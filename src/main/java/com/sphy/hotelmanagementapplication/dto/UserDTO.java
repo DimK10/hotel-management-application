@@ -1,9 +1,11 @@
 package com.sphy.hotelmanagementapplication.dto;
 
+import java.io.Serializable;
+
 /***
  * created by gp
  */
-public class UserDTO {
+public class UserDTO implements Serializable{
 
     private Long id;
 
@@ -22,7 +24,6 @@ public class UserDTO {
     private String transactionId;
 
     private String role;
-
 
     public UserDTO() {
     }

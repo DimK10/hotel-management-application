@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 /***
  * created by gp
  */
-@NoRepositoryBean
+@Repository
 public interface UserRepository extends CrudRepository<User,Long> {
 }
