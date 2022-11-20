@@ -2,9 +2,6 @@ package com.sphy.hotelmanagementapplication.domain;
 
 import javax.persistence.*;
 
-import java.io.Serializable;
-import java.util.Objects;
-
 /***
  * crated by gp
  */
@@ -22,16 +19,11 @@ public class User extends BaseEntity{
     private String hashedPassword;
     private String transactionId;
 
-    protected enum Role{
+    public enum Role{
         CLIENT,ADMIN
     }
     @Enumerated(EnumType.STRING)
     protected Role role;
-
-
-
-
-
 
     public User() {
 		     super();
@@ -112,9 +104,6 @@ public class User extends BaseEntity{
     public void setRole(Role role) {
         this.role = role;
     }
-
-
-
 
     public String getTransactionId() {
         return transactionId;
