@@ -7,6 +7,7 @@ import com.sphy.hotelmanagementapplication.dto.UserDTO;
  * created by gp
  */
 public class UserDTOToUser {
+
     /***
      * converts a userDTO object to user
      * @param userDTO the userDTO object we want to convert
