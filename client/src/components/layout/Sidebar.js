@@ -73,7 +73,7 @@ function Sidebar(props) {
               window.location.pathname === '/orders' ? 'active' : ''
             }`} to='/orders'>
               <CIcon className='nav-icon' icon={cilMoney}/>
-              List of Rooms
+              List of Orders
             </Link>
           </li>
           <li className="nav-divider"></li>
