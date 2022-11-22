@@ -23,6 +23,7 @@ import NotFound from "./components/error/NotFound";
 import SecuredPage from "./components/auth/SecuredPage";
 import PlaceNewOrder from "./components/order/PlaceNewOrder";
 import Dashboard from "./components/dashboard/Dashboard";
+import Hotels from "./components/hotels/Hotels";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -55,6 +56,7 @@ const App = () => {
           {/* Admin routes */}
           {/*  TODO ADD SECURED ROUTE */}
             <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/hotels' element={<Hotels />} />
           </Routes>
         </Router>
       </Fragment>
