@@ -15,7 +15,9 @@ const HeaderNav = props => {
         <header className="header header-sticky mb-4">
           <div className="container-fluid">
             <button className="header-toggler px-md-0 me-md-3" type="button"
-                    onClick={() => {Sidebar.getOrCreateInstance(document.querySelector('#sidebar')).toggle()}}>
+                    onClick={() => {
+                      Sidebar.getOrCreateInstance(document.querySelector('#sidebar')).toggle()
+                    }}>
               <CIcon className='icon icon-lg' icon={cilMenu}/>
             </button>
             <a className="header-brand d-md-none" href="#">
@@ -31,16 +33,18 @@ const HeaderNav = props => {
 
           </div>
           <div className="header-divider"></div>
-          <Breadcrumb />
+          <Breadcrumb/>
         </header>
+        <div className="container">
+          {props.children}
+        </div>
       </div>
+
 
     </Fragment>
   );
 };
 
-HeaderNav.propTypes = {
-
-};
+HeaderNav.propTypes = {};
 
 export default HeaderNav;
