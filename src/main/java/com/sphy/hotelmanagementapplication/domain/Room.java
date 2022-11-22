@@ -44,6 +44,8 @@ public class Room extends BaseEntity {
 		this.disabled = disabled;
 	}
 
+    public Room(Long id) {
+    }
 
 
     public String getName() {
@@ -122,7 +124,7 @@ public class Room extends BaseEntity {
 				", name='" + name + '\'' +
 				", luxurity=" + luxurity +
 				", hotel=" + hotel +
-				", order=" + orders +
+//				", order=" + orders +
 				", price=" + price +
 				'}';
 	}

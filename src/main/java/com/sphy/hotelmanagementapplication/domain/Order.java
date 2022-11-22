@@ -1,22 +1,24 @@
 package com.sphy.hotelmanagementapplication.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 /***
  * created by gp
  */
-@Entity
 @Table(name = "orders")
+@Entity(name = "orders")
 public class Order extends BaseEntity {
 
-
+    @Column(name = "check_in")
     private LocalDate checkInDate;
+
+    @Column(name = "check_out")
     private LocalDate checkOutDate;
+
+    @Column(name = "is_canceled")
+    private boolean canceled;
+
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -31,15 +33,24 @@ public class Order extends BaseEntity {
     }
 
 
-    public Order(Long id, LocalDate checkInDate, LocalDate checkOutDate,Client client) {
+    public Order(Long id, LocalDate checkInDate, LocalDate checkOutDate, boolean canceled, Client client, Room room) {
 		super(id);
 		this.checkInDate = checkInDate;
-
+        this.room = room;
         this.checkOutDate = checkOutDate;
+        this.canceled = canceled;
         this.client=client;
     }
 
-	public void setId(Long id) {
+    public boolean isCanceled() {
+        return canceled;
+    }
+
+    public void setCanceled(boolean canceled) {
+        this.canceled = canceled;
+    }
+
+    public void setId(Long id) {
 		super.setId(id);
 	}
 
