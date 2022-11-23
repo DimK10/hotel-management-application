@@ -6,16 +6,24 @@ import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.UserDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.repositories.UserRepository;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /***
  * created by gp
  */
 @Service
-public class UserService {
+@Transactional
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -23,10 +31,35 @@ public class UserService {
 
     private final UserDTOToUser userDTOToUser;
 
-    public UserService(UserRepository userRepository, UserToUserDTO userToUserDTO, UserDTOToUser userDTOToUser) {
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(UserRepository userRepository, UserToUserDTO userToUserDTO, UserDTOToUser userDTOToUser, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userToUserDTO = userToUserDTO;
         this.userDTOToUser = userDTOToUser;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    /***
+     * take username, password and the role and create a userDetails
+     * @param username the username of the user
+     * @return userDetails from user
+     * @throws UsernameNotFoundException if the user does not exist
+     */
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+       User user = userRepository.findByUsername(username);
+
+       if (user == null){
+           throw new UsernameNotFoundException("The user does not exists");
+       }
+
+       Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+
+       authorities.add( new SimpleGrantedAuthority(user.getRole().toString()));
+
+       return new org.springframework.security.core.userdetails.User(
+               user.getUsername(),user.getHashedPassword(), authorities);
     }
 
     /***
@@ -41,6 +74,7 @@ public class UserService {
                 || userDTO.getEmail().isBlank() || userDTO.getRole().isBlank()){
             throw new ApiRequestException("Informations are incomplete");
         }else {
+            userDTO.setHashedPassword(passwordEncoder.encode(userDTO.getHashedPassword()));
           return   userToUserDTO.converter(userRepository.save(userDTOToUser.converter(userDTO)));
         }
     }
@@ -63,4 +97,6 @@ public class UserService {
 
         return usersDTO;
     }
+
+
 }
