@@ -98,5 +98,9 @@ public class UserService implements UserDetailsService {
         return usersDTO;
     }
 
+    public User findByUsername(String username){
+
+        return userRepository.findByUsername(username);
+    }
 
 }
