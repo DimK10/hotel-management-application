@@ -4,7 +4,6 @@ import com.sphy.hotelmanagementapplication.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -47,14 +46,13 @@ public class JwtUtil {
 
     public String generateToken(UserDetails userDetails){
         Map<String, Object> claims = new HashMap<>();
-        claims.put("authorities", userService.loadUserByUsername(userDetails.getUsername()).getAuthorities());
         return createToken(claims, userDetails.getUsername());
     }
 
     private String createToken(Map<String, Object> claims, String subject){
         return  Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
-                .signWith(SignatureAlgorithm.ES256, SECRET_KEY).compact();
+                .signWith(SignatureAlgorithm.HS512, SECRET_KEY).compact();
     }
 
     public Boolean validateToken(String token, UserDetails userDetails){
