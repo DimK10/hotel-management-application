@@ -2,8 +2,6 @@ package com.sphy.hotelmanagementapplication.controller;
 
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.UserDTO;
-import com.sphy.hotelmanagementapplication.exception.ApiException403;
-import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.security.AuthenticationRequest;
 import com.sphy.hotelmanagementapplication.security.AuthenticationResponse;
@@ -12,7 +10,6 @@ import com.sphy.hotelmanagementapplication.service.UserService;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,7 +46,7 @@ public class UserController {
      * @param userDTO the user to be saved
      * @return the saved user
      */
-    @PostMapping("/api/signIn")
+    @PostMapping("/api/signup")
     public UserDTO saveUser(@RequestBody UserDTO userDTO){
 
         return userService.saveUser(userDTO);
@@ -62,23 +59,17 @@ public class UserController {
      * @return a jwt
      * @throws ApiRequestException if the username and password does not mach or does not exist
      */
-    @PostMapping("/api/logIn")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws ApiException403 {
+    @PostMapping("/api/login")
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)  {
 
 
             User user = userService.findByUsername(authenticationRequest.getUsername());
-
-            if (!passwordEncoder.matches(authenticationRequest.getPassword(), user.getHashedPassword())){
-                throw new ApiException403("Incorrect Username or password");
-            }
 
             final UserDetails userDetails = userService.loadUserByUsername(authenticationRequest.getUsername());
 
             final String jwt = jwtUtil.generateToken(userDetails);
 
             return ResponseEntity.ok(new AuthenticationResponse(jwt));
-
-
     }
 
     /***
@@ -89,7 +80,4 @@ public class UserController {
     public List<UserDTO> getUsers(){
         return userService.getUsers();
     }
-
-
-
 }

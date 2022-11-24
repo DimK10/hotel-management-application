@@ -1,6 +1,5 @@
 package com.sphy.hotelmanagementapplication.Filter;
 
-import com.sphy.hotelmanagementapplication.exception.ApiException403;
 import com.sphy.hotelmanagementapplication.security.JwtUtil;
 import com.sphy.hotelmanagementapplication.service.UserService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,7 +14,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.SignatureException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
@@ -58,8 +56,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
                             .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                     SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-                } else {
-                    throw new ApiException403("Bad credentials");
                 }
             }
         }
