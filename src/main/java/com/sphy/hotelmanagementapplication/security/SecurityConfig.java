@@ -17,7 +17,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 /***
  * created by gp
  */
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig{
@@ -50,7 +49,7 @@ public class SecurityConfig{
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/api/logIn", "/api/signIn").permitAll()
+                .authorizeRequests().antMatchers("/api/login", "/api/signup").permitAll()
                 .anyRequest().authenticated()
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

@@ -1,5 +1,8 @@
 package com.sphy.hotelmanagementapplication.security;
 
+/***
+ * created by gp
+ */
 public class AuthenticationRequest {
 
     private String username;

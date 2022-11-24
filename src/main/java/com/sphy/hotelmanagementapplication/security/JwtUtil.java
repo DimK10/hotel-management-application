@@ -12,6 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+/***
+ * created by gp
+ */
 @Service
 public class JwtUtil {
 
@@ -23,27 +26,52 @@ public class JwtUtil {
         this.userService = userService;
     }
 
+    /***
+     * extract username from a jwt token
+     * @param token jwt token
+     * @return username
+     */
     public String extractUsername(String token){
         return extractClaim(token, Claims::getSubject);
     }
 
+    /***
+     * extract expiration date from a jwt token
+     * @param token jwt token
+     * @return the expiration date
+     */
     public Date extractExpiration(String token){
         return extractClaim(token, Claims::getExpiration);
     }
+
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
+    /***
+     * extracts all claims from a jwt token
+     * @param token jwt token
+     * @return all claims
+     */
     private Claims extractAllClaims(String token){
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     }
 
+    /***
+     * checks if thw jwt token is expired
+     * @param token jwt token
+     */
     private Boolean isTokenExpired(String token){
         return extractExpiration(token).before(new Date());
     }
 
+    /***
+     * creates a token
+     * @param userDetails the details of the user
+     * @return a jwt token
+     */
     public String generateToken(UserDetails userDetails){
         Map<String, Object> claims = new HashMap<>();
         return createToken(claims, userDetails.getUsername());
@@ -55,6 +83,11 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY).compact();
     }
 
+    /***
+     * checks if a token is valid
+     * @param token jwt token
+     * @param userDetails the details of the user
+     */
     public Boolean validateToken(String token, UserDetails userDetails){
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
