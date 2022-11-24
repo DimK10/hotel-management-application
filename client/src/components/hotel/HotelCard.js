@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import moment from "moment/moment";
 import CIcon from "@coreui/icons-react";
-import {cilDelete, cilPencil} from "@coreui/icons";
+import {cilDelete, cilPencil, cilTrash} from "@coreui/icons";
 
 const HotelCard = props => {
   return (
@@ -66,7 +66,7 @@ const HotelCard = props => {
                      </div>
                      <div className="col-auto">
                        <button type="button" className="btn btn-danger" style={{ color: '#fff' }}>
-                         <CIcon className="btn-icon" icon={cilDelete} />
+                         <CIcon className="btn-icon" icon={cilTrash} />
                          <span className="d-inline-block" style={{ marginLeft: '.3rem' }}>Delete</span>
                        </button>
                      </div>
