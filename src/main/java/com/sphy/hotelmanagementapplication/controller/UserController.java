@@ -2,6 +2,7 @@ package com.sphy.hotelmanagementapplication.controller;
 
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.UserDTO;
+import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.security.AuthenticationRequest;
 import com.sphy.hotelmanagementapplication.security.AuthenticationResponse;
@@ -65,11 +66,17 @@ public class UserController {
 
             User user = userService.findByUsername(authenticationRequest.getUsername());
 
-            final UserDetails userDetails = userService.loadUserByUsername(authenticationRequest.getUsername());
+            if (passwordEncoder.matches(authenticationRequest.getPassword(), user.getHashedPassword())) {
 
-            final String jwt = jwtUtil.generateToken(userDetails);
+                final UserDetails userDetails = userService.loadUserByUsername(authenticationRequest.getUsername());
 
-            return ResponseEntity.ok(new AuthenticationResponse(jwt));
+                final String jwt = jwtUtil.generateToken(userDetails);
+
+                return ResponseEntity.ok(new AuthenticationResponse(jwt));
+
+            }else {
+                throw new ApiExceptionFront("incorrect username or password");
+            }
     }
 
     /***
