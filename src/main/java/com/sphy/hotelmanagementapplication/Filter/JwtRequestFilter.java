@@ -1,5 +1,6 @@
 package com.sphy.hotelmanagementapplication.Filter;
 
+import com.sphy.hotelmanagementapplication.exception.ApiException403;
 import com.sphy.hotelmanagementapplication.security.JwtUtil;
 import com.sphy.hotelmanagementapplication.service.UserService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.SignatureException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
@@ -30,34 +32,39 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
-        final  String authorizationHeader = request.getHeader("Authorization");
+        final String authorizationHeader = request.getHeader("Authorization");
 
         String userName = null;
 
         String jwt = null;
 
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer")){
+
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer")) {
 
             jwt = authorizationHeader.substring(7);
             userName = jwtUtil.extractUsername(jwt);
-        }
 
-        if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null){
 
-            UserDetails userDetails = this.userService.loadUserByUsername(userName);
+            if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            if (jwtUtil.validateToken(jwt, userDetails)){
+                UserDetails userDetails = this.userService.loadUserByUsername(userName);
 
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                        new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                if (jwtUtil.validateToken(jwt, userDetails)) {
 
-                usernamePasswordAuthenticationToken
-                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                    usernamePasswordAuthenticationToken
+                            .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                    SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                } else {
+                    throw new ApiException403("Bad credentials");
+                }
             }
         }
 
-        filterChain.doFilter(request, response);
+
+            filterChain.doFilter(request, response);
+        }
     }
-}

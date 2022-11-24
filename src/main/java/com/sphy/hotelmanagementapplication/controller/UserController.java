@@ -2,6 +2,7 @@ package com.sphy.hotelmanagementapplication.controller;
 
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.UserDTO;
+import com.sphy.hotelmanagementapplication.exception.ApiException403;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.security.AuthenticationRequest;
@@ -62,12 +63,14 @@ public class UserController {
      * @throws ApiRequestException if the username and password does not mach or does not exist
      */
     @PostMapping("/api/logIn")
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws ApiExceptionFront{
+    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws ApiException403 {
 
-        try{
+
             User user = userService.findByUsername(authenticationRequest.getUsername());
 
-            passwordEncoder.matches(authenticationRequest.getPassword(), user.getHashedPassword());
+            if (!passwordEncoder.matches(authenticationRequest.getPassword(), user.getHashedPassword())){
+                throw new ApiException403("Incorrect Username or password");
+            }
 
             final UserDetails userDetails = userService.loadUserByUsername(authenticationRequest.getUsername());
 
@@ -75,9 +78,7 @@ public class UserController {
 
             return ResponseEntity.ok(new AuthenticationResponse(jwt));
 
-        }catch (BadCredentialsException e){
-            throw new ApiExceptionFront("Incorrect Username or password");
-        }
+
     }
 
     /***
