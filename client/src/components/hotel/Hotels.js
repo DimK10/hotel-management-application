@@ -34,7 +34,7 @@ const Hotel = props => {
               <th scope="col">#</th>
               <th scope="col">Name</th>
               <th scope="col">Location</th>
-              <th scope="col">Number of Rooms</th>
+              <th scope="col" className="d-none d-md-table-cell">Number of Rooms</th>
               <th scope="col">Edit/Delete</th>
             </tr>
             </thead>
@@ -43,7 +43,7 @@ const Hotel = props => {
               <th scope="row">1</th>
               <td>Hotel#1</td>
               <td>Athens</td>
-              <td>4</td>
+              <td className="d-none d-md-table-cell">4</td>
               <td className="flex-row">
                 <button type="button" className="btn btn-success"
                         style={{color: '#fff', marginRight: '0.3rem'}}
@@ -69,7 +69,7 @@ const Hotel = props => {
               <th scope="row">2</th>
               <td>Hotel#2</td>
               <td>Thessaloniki</td>
-              <td>6</td>
+              <td className="d-none d-md-table-cell">6</td>
               <td className="flex-row">
                 <button type="button" className="btn btn-success"
                         style={{color: '#fff', marginRight: '0.3rem'}}
@@ -95,7 +95,7 @@ const Hotel = props => {
               <th scope="row">3</th>
               <td>Hotel#3</td>
               <td>Larisa</td>
-              <td>8</td>
+              <td className="d-none d-md-table-cell">8</td>
               <td className="flex-row">
                 <button type="button" className="btn btn-success"
                         style={{color: '#fff', marginRight: '0.3rem'}}
