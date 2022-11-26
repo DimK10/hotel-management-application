@@ -90,7 +90,7 @@ jobs:
           docker pull dimk10/hotel-management-application
           docker stop dimk10/hotel-management-application
           docker rm dimk10/hotel-management-application
-          docker run --restart=always -p 80:80 -v $PWD:/app -d dimk10/hotel-management-application dimk10/hotel-management-application .
+          docker run --restart=always -p 80:80 -d dimk10/hotel-management-application dimk10/hotel-management-application .
           ENDSSH
 
       - notify_slack_error
