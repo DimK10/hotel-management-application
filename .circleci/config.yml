@@ -87,9 +87,9 @@ jobs:
           echo 'hotel-management-application.webapplicationonline.eu ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBXYypj+xteI9nFnA2RqJqNxkHHmp5BZfeAW1Qkng17R $EMAIL' >> ~/.ssh/known_hosts
           ssh -o StrictHostKeyChecking=no $USER@$SERVER \<<'ENDSSH'
           docker pull dimk10/hotel-management-application
-          docker stop dimk10/hotel-management-application
-          docker rm dimk10/hotel-management-application
-          docker run --restart=always -p 80:80 -d dimk10/hotel-management-application dimk10/hotel-management-application .
+          docker stop hotel-management-application
+          docker rm hotel-management-application
+          docker run --name=hotel-management-application --restart=always -p 80:80 -d dimk10/hotel-management-application dimk10/hotel-management-application .
           ENDSSH
 
       - notify_slack_error
