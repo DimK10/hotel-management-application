@@ -76,11 +76,16 @@ jobs:
       - attach_workspace:
           at: src
       - add_ssh_keys
+
+      - setup_remote_docker:
+          version: 20.10.14
+          docker_layer_caching: true
+
       - run: |
           docker build -t dimk10/hotel-management-application .
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker push dimk10/hotel-management-application
-          echo 'hotel-management-application.webapplicationonline.eu ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBXYypj+xteI9nFnA2RqJqNxkHHmp5BZfeAW1Qkng17R $EMAIL' >> ~/.ssh/known_hosts
+          echo 'hotel-management-application.webapplicationonline.eu ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBXYypj+xteI9nFnA2RqJqNxkHHmp5BZfeAW1Qkng17R' >> ~/.ssh/known_hosts
           ssh $USER@$SERVER \<<'ENDSSH'
           docker pull dimk10/hotel-management-application
           docker stop dimk10/hotel-management-application
