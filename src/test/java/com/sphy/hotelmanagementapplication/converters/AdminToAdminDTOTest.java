@@ -8,7 +8,6 @@ import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.AdminDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
