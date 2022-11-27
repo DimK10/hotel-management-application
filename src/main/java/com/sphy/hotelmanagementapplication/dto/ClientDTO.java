@@ -20,6 +20,13 @@ public class ClientDTO {
     private String transactionId;
     private Set<OrderDTO> orders = new HashSet<>();
 
+    public ClientDTO() {
+    }
+
+    public ClientDTO(long l) {
+        this.id = l;
+    }
+
     public Long getId() {
         return id;
     }
