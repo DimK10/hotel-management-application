@@ -45,7 +45,6 @@ public class AdminDTOToAdminTest {
        admin.setEmail("papadopoulos@gmail.com");
        admin.setEmailVerify(true);
        admin.setTransactionId("1234567");
-
        admin.getHotels().add(hotel);
 
        adminDTO.setId(1L);
@@ -56,8 +55,6 @@ public class AdminDTOToAdminTest {
        adminDTO.setEmail("papadopoulos@gmail.com");
        adminDTO.setEmailVerify(true);
        adminDTO.setTransactionId("1234567");
-
-       HotelDTO hotelDTO = new HotelDTO(1L);
        adminDTO.getHotels().add(hotelDTO);
 
        adminDTOToAdmin = new AdminDTOToAdmin(hotelRepository);
