@@ -10,7 +10,7 @@ const FirstPage = (props) => {
       <div className='container'>
         <div className='jumbotron' style={{ marginTop: '7rem' }}>
           <h1 className='display-4'>
-            Search The place You want To Stay For Your Next Location. Hello Spyros
+            Search The place You want To Stay For Your Next Location.
           </h1>
           <p className='lead'>
             You can do this by silpy searching for a place below, or from
