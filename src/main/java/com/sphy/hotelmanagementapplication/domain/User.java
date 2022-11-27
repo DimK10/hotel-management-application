@@ -2,9 +2,6 @@ package com.sphy.hotelmanagementapplication.domain;
 
 import javax.persistence.*;
 
-import java.io.Serializable;
-import java.util.Objects;
-
 /***
  * crated by gp
  */
