@@ -14,7 +14,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.when;
 
 /***
  * crated by gp
@@ -71,9 +76,21 @@ public class RoomToRoomDTOTest {
         //given
 
         //when
+        when(hotelRepository.findById(anyLong())).thenReturn(Optional.of(hotel));
+        when(orderToOrderDTO.converter(any())).thenReturn(orderDTO);
+
+
 
         //then
         assertEquals(roomDTO.getId() , roomToRoomDTO.converter(room).getId());
+        assertEquals(roomDTO.getName() , roomToRoomDTO.converter(room).getName());
+        assertEquals(roomDTO.getPrice() , roomToRoomDTO.converter(room).getPrice());
+        assertEquals(roomDTO.getHotel() , roomToRoomDTO.converter(room).getHotel());
+        assertEquals(roomDTO.getOrders() , roomToRoomDTO.converter(room).getOrders());
+
+
+
+
 
     }
 }

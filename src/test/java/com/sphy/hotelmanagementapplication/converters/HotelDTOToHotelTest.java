@@ -64,7 +64,7 @@ public class HotelDTOToHotelTest {
         //given
 
         //when
-        when(adminRepository.findById(anyLong())).thenReturn(Optional.ofNullable(admin));
+        when(adminRepository.findById(anyLong())).thenReturn(Optional.of(admin));
 
         //then
         assertEquals(hotel , hotelDTOToHotel.converter(hotelDTO));

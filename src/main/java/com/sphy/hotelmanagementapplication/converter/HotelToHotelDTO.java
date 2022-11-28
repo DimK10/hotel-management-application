@@ -29,7 +29,7 @@ public class HotelToHotelDTO {
 
         hotelDTO.setId(hotel.getId());
         hotelDTO.setName(hotel.getName());
-        hotelDTO.setAreaName(hotel.getName());
+        hotelDTO.setAreaName(hotel.getAreaName());
         hotelDTO.setStars(hotel.getStars());
         hotelDTO.setOwner(hotel.getOwner().getId());
 

@@ -77,6 +77,12 @@ public class AdminToAdminDTOTest {
 
         //then
         assertEquals(adminDTO.getId() , adminToAdminDTO.converter(admin).getId());
+        assertEquals(adminDTO.getLastname() , adminToAdminDTO.converter(admin).getLastname());
+        assertEquals(adminDTO.getFirstname() , adminToAdminDTO.converter(admin).getFirstname());
+        assertEquals(adminDTO.getUsername(), adminToAdminDTO.converter(admin).getUsername());
+        assertEquals(adminDTO.getHashedPassword(), adminToAdminDTO.converter(admin).getHashedPassword());
+        assertEquals(adminDTO.getEmail(), adminToAdminDTO.converter(admin).getEmail());
+        assertEquals(adminDTO.getHotels(), adminToAdminDTO.converter(admin).getHotels());
 
     }
 }

@@ -15,6 +15,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 /***
  * crated by gp
@@ -68,9 +70,22 @@ public class ClientToClientDTOTest {
         //given
 
         //when
+        when(orderToOrderDTO.converter(any())).thenReturn(orderDTO);
+
 
         //then
         assertEquals(clientDTO.getId() , clientToClientDTO.converter(client).getId());
+        assertEquals(clientDTO.getFirstname() , clientToClientDTO.converter(client).getFirstname());
+        assertEquals(clientDTO.getLastname() , clientToClientDTO.converter(client).getLastname());
+        assertEquals(clientDTO.getUsername() , clientToClientDTO.converter(client).getUsername());
+        assertEquals(clientDTO.getHashedPassword() , clientToClientDTO.converter(client).getHashedPassword());
+        assertEquals(clientDTO.getEmail() , clientToClientDTO.converter(client).getEmail());
+        assertEquals(clientDTO.getOrders(), clientToClientDTO.converter(client).getOrders());
+
+
+
+
+
 
     }
 }
