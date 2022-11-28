@@ -144,6 +144,6 @@ workflows:
           context: slack-secrets
           filters:
             branches:
-              only: 33-add-deploy-orb-to-circleci-conf-and-deploy-app-on-commit
+              only: main
 #      - notify:
 #          context: slack-secrets

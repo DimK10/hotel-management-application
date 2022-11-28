@@ -14,7 +14,7 @@ const FirstPage = (props) => {
           </h1>
           <p className='lead'>
             You can do this by simply searching for a place below, or from
-            choosing from one of our suggestions. Test text.
+            choosing from one of our suggestions.
           </p>
           <hr className='my-5' />
         </div>
