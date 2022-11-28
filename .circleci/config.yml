@@ -73,6 +73,8 @@ jobs:
       - store_test_results:
           path: target/surefire-reports
 
+  deploy:
+    steps:
       - attach_workspace:
           at: src
       - add_ssh_keys
@@ -104,5 +106,13 @@ workflows:
     jobs:
       - build:
           context: slack-secrets
+
+      - deploy:
+          requires:
+            - build
+          context: slack-secrets
+          filters:
+            branches:
+              only: 33-add-deploy-orb-to-circleci-conf-and-deploy-app-on-commit
 #      - notify:
 #          context: slack-secrets

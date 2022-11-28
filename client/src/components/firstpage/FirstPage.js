@@ -13,8 +13,8 @@ const FirstPage = (props) => {
             Search The place You want To Stay For Your Next Location.
           </h1>
           <p className='lead'>
-            You can do this by silpy searching for a place below, or from
-            choosing from one of our suggestions.
+            You can do this by simply searching for a place below, or from
+            choosing from one of our suggestions. Test text.
           </p>
           <hr className='my-5' />
         </div>
