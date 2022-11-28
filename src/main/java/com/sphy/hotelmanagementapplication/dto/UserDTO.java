@@ -1,5 +1,7 @@
 package com.sphy.hotelmanagementapplication.dto;
 
+import org.springframework.data.annotation.Transient;
+
 import java.io.Serializable;
 
 /***
@@ -21,11 +23,20 @@ public class UserDTO implements Serializable{
 
     private String hashedPassword;
 
-    private String transactionId;
-
     private String role;
 
+    @Transient
+    private String password;
+
     public UserDTO() {
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Long getId() {
@@ -85,14 +96,6 @@ public class UserDTO implements Serializable{
         this.username = username;
     }
 
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
-
     public String getRole() {
         return role;
     }
@@ -111,8 +114,8 @@ public class UserDTO implements Serializable{
                 ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +
                 ", hashedPassword='" + hashedPassword + '\'' +
-                ", transactionId='" + transactionId + '\'' +
                 ", role='" + role + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 }

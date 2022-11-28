@@ -70,11 +70,11 @@ public class UserService implements UserDetailsService {
      */
     public UserDTO saveUser(UserDTO userDTO) throws ApiRequestException{
 
-        if (userDTO.getUsername().isBlank() || userDTO.getHashedPassword().isBlank()
+        if (userDTO.getUsername().isBlank() || userDTO.getPassword().isBlank()
                 || userDTO.getEmail().isBlank() || userDTO.getRole().isBlank()){
             throw new ApiRequestException("Informations are incomplete");
         }else {
-            userDTO.setHashedPassword(passwordEncoder.encode(userDTO.getHashedPassword()));
+            userDTO.setHashedPassword(passwordEncoder.encode(userDTO.getPassword()));
           return   userToUserDTO.converter(userRepository.save(userDTOToUser.converter(userDTO)));
         }
     }

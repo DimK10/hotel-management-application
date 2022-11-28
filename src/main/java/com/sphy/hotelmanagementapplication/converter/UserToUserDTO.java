@@ -36,7 +36,7 @@ public class UserToUserDTO {
 
         userDTO.setId(user.getId());
 
-        userDTO.setTransactionId(user.getTransactionId());
+        userDTO.setPassword(user.getPassword());
 
         return userDTO;
 

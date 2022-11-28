@@ -1,5 +1,7 @@
 package com.sphy.hotelmanagementapplication.dto;
 
+import org.springframework.data.annotation.Transient;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,10 @@ public class AdminDTO implements Serializable {
     private String email;
     private String hashedPassword;
     private String transactionId;
+
+    @Transient
+    private String password;
+
 
     private List<HotelDTO> hotels = new ArrayList<>();
 
@@ -92,6 +98,14 @@ public class AdminDTO implements Serializable {
         this.hotels = hotels;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         return "AdminDTO{" +
@@ -103,6 +117,7 @@ public class AdminDTO implements Serializable {
                 ", email='" + email + '\'' +
                 ", hashedPassword='" + hashedPassword + '\'' +
                 ", transactionId='" + transactionId + '\'' +
+                ", password='" + password + '\'' +
                 ", hotels=" + hotels +
                 '}';
     }

@@ -1,5 +1,7 @@
 package com.sphy.hotelmanagementapplication.domain;
 
+import org.springframework.data.annotation.Transient;
+
 import javax.persistence.*;
 
 /***
@@ -17,7 +19,9 @@ public class User extends BaseEntity{
     private String lastname;
     private String email;
     private String hashedPassword;
-    private String transactionId;
+
+    @Transient
+    protected String password;
 
     public enum Role{
         CLIENT,ADMIN
@@ -29,17 +33,26 @@ public class User extends BaseEntity{
 		     super();
 	  }
 
-    public User(Long id, boolean emailVerify, String username, String firstname, String lastname, String email, Role role) {
+    public User(Long id, boolean emailVerify, String username, String firstname, String lastname, String email, String password, Role role) {
         super(id);
         this.emailVerify = emailVerify;
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
+        this.password = password;
         this.role = role;
     }
 
-	public Long getId() {
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Long getId() {
 		return super.getId();
 	}
 
@@ -105,14 +118,6 @@ public class User extends BaseEntity{
         this.role = role;
     }
 
-    public String getTransactionId() {
-        return transactionId;
-    }
-
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
-    }
-
 	@Override
 	public boolean equals(Object o) {
 		return super.equals(o);
@@ -126,13 +131,14 @@ public class User extends BaseEntity{
 
     @Override
     public String toString() {
-        return "User{" +"id=" + this.getId() +
-                ", EmailVerify=" + emailVerify +
+        return "User{" +
+                "emailVerify=" + emailVerify +
                 ", username='" + username + '\'' +
                 ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +
                 ", hashedPassword='" + hashedPassword + '\'' +
+                ", password='" + password + '\'' +
                 ", role=" + role +
                 '}';
     }
