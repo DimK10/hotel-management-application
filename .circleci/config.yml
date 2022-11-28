@@ -73,6 +73,9 @@ jobs:
       - store_test_results:
           path: target/surefire-reports
 
+      - notify_slack_error
+      - notify_slack_pass
+
   deploy:
     docker:
       # specify the version you desire here
