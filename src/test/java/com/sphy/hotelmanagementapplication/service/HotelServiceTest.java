@@ -23,8 +23,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 /***
@@ -288,7 +287,7 @@ public class HotelServiceTest {
 
 
             //then
-            List<HotelDTO> hotelDTOList = hotelService.getHotels();
+            List<HotelDTO> hotelDTOList = hotelService.getHotels(any(), any(), anyString());
 
             assertEquals(2, hotelDTOList.size());
             assertTrue(EqualsBuilder.reflectionEquals(hotelDTOS, hotelDTOList));

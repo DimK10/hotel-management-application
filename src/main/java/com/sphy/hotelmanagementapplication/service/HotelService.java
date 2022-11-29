@@ -10,12 +10,16 @@ import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /***
  * created by gp
@@ -53,7 +57,7 @@ public class HotelService {
 	 */
 	public HotelDTO getHotelById(Long id) throws ApiRequestException {
 		Optional<Hotel> hotel = hotelRepository.findById(id);
-		if (!hotel.isPresent()){
+		if (hotel.isEmpty()){
 			throw new ApiRequestException("There is no hotel with id: " + id);
 		}else {
 			return hotelToHotelDTO.converter(hotelRepository.findById(id).get());
@@ -67,19 +71,23 @@ public class HotelService {
 	 * @return a list of all hotels
 	 * @throws ApiRequestException if There are no hotels
 	 */
-	public List<HotelDTO> getHotels() throws ApiRequestException {
+	public List<HotelDTO> getHotels(Integer pageNo, Integer pageSize, String sortBy) throws ApiRequestException {
 
-			List<Hotel> hotels = new ArrayList<>();
-			List<HotelDTO> hotelDTOS = new ArrayList<>();
+		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
-			hotelRepository.findAll().spliterator().forEachRemaining(hotels::add);
+		List<HotelDTO> pageResult = hotelRepository
+				.findAll(paging)
+				.getContent()
+				.stream()
+				.map(hotelToHotelDTO::converter)
+				.collect(Collectors.toList());
 
-			for (Hotel hotel : hotels) {
-				hotelDTOS.add(hotelToHotelDTO.converter(hotel));
-			}
 
-			return hotelDTOS;
-
+		if (!pageResult.isEmpty()) {
+			return pageResult;
+		}else {
+			return new ArrayList<>();
+		}
 	}
 
 

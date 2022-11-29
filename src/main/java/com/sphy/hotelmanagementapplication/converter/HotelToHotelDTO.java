@@ -43,4 +43,5 @@ public class HotelToHotelDTO {
         return hotelDTO;
 
     }
+
 }
