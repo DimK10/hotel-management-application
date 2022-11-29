@@ -9,11 +9,15 @@ import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /***
  * created by gp
@@ -92,21 +96,23 @@ public class RoomService {
      * @return a list of all rooms
      * @throws ApiRequestException if no room is saved
      */
-    public List<RoomDTO> getRooms() throws ApiRequestException {
+    public List<RoomDTO> getRooms(Integer pageNo, Integer pageSize, String sortBy) throws ApiRequestException {
+
+            Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+
+            List<RoomDTO> pageResult = roomRepository
+                    .findAll(paging)
+                    .getContent()
+                    .stream()
+                    .map(roomToRoomDTO::converter)
+                    .collect(Collectors.toList());
 
 
-            List<Room> rooms = new ArrayList<>();
-
-            roomRepository.findAll().forEach(rooms::add);
-
-
-            List<RoomDTO> roomsDTO = new ArrayList<>();
-
-            for (Room room : rooms) {
-                roomsDTO.add(roomToRoomDTO.converter(room));
+            if (!pageResult.isEmpty()) {
+                return pageResult;
+            }else {
+                return new ArrayList<>();
             }
-            return roomsDTO;
-
     }
 
     /***
@@ -117,7 +123,7 @@ public class RoomService {
      */
     public RoomDTO getRoomById(Long id) throws ApiRequestException {
         Optional<Room> room = roomRepository.findById(id);
-        if (!room.isPresent()){
+        if (room.isEmpty()){
             throw new ApiRequestException("There is now room with id: " + id);
         }else {
             return roomToRoomDTO.converter(roomRepository.findById(id).get());
@@ -133,7 +139,7 @@ public class RoomService {
      */
     public RoomDTO getRoomByName(String name) throws ApiRequestException {
         Optional<Room> room = roomRepository.findByName(name);
-        if (!room.isPresent()){
+        if (room.isEmpty()){
             throw new ApiRequestException("There is now room with name: " + name);
         }else {
             return roomToRoomDTO.converter(roomRepository.findByName(name).get());
