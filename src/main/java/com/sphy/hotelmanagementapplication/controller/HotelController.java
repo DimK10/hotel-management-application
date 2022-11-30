@@ -48,6 +48,16 @@ public class HotelController {
 	}
 
     /***
+     * counts all the hotels in the database
+     * @return the number of hotels that exists in the database
+     */
+    @GetMapping("/api/hotels/quantity")
+    public int countHotels(){
+
+        return service.countHotels();
+    }
+
+    /***
      * Finds all hotels
      * @return all hotels
      * @throws ApiRequestException if There are no hotels
