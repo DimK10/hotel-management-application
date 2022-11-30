@@ -42,7 +42,7 @@ public class OrderToOrderDTO {
         orderDTO.setCheckOutDate(order.getCheckOutDate());
         orderDTO.setCanceled(order.isCanceled());
 
-        if (order.getRoom().getId() != null){
+        if (order.getRoom() != null){
 
             Optional<Room> room = roomRepository.findById(order.getRoom().getId());
 
@@ -52,7 +52,7 @@ public class OrderToOrderDTO {
         }
 
 
-        if (order.getClient().getId() != null){
+        if (order.getClient() != null){
 
             Optional<Client> client = clientRepository.findById(order.getClient().getId());
 
