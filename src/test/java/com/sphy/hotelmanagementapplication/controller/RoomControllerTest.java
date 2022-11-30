@@ -160,6 +160,22 @@ class RoomControllerTest {
 	}
 
 	@Test
+	void countRooms() throws Exception {
+
+		//given
+
+		//when
+		when(roomService.countRooms()).thenReturn(1);
+
+		//then
+		mockMvc.perform(
+						get("/api/rooms/quantity"))
+				.andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("@")
+						.value(1));
+	}
+
+	@Test
 	void findAllRooms() throws Exception {
 		// Given
 
