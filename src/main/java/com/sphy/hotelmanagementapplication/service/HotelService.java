@@ -10,16 +10,13 @@ import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /***
  * created by gp
@@ -75,18 +72,23 @@ public class HotelService {
 
 		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
-		List<HotelDTO> pageResult = hotelRepository
-				.findAll(paging)
-				.getContent()
-				.stream()
-				.map(hotelToHotelDTO::converter)
-				.collect(Collectors.toList());
+		Page<Hotel> pageResult = hotelRepository.findAll(paging);
+		
+		List<HotelDTO> hotelDTOS = new ArrayList<>();
 
+		for (Hotel hotel: pageResult.getContent()){
+			hotelDTOS.add(hotelToHotelDTO.converter(hotel));
+		}
 
-		if (!pageResult.isEmpty()) {
-			return pageResult;
+		Page<HotelDTO> hotelDTOPage = new PageImpl<>(hotelDTOS, paging,hotelDTOS.size());
+
+		if (!hotelDTOPage.isEmpty()) {
+			System.out.println(hotelDTOPage.getContent());
+			return hotelDTOPage.getContent();
+
 		}else {
-			return new ArrayList<>();
+			return new ArrayList<HotelDTO>() {
+			};
 		}
 	}
 
@@ -244,5 +246,4 @@ public class HotelService {
 		}
 		return hotelDTOS;
 	}
-
 }

@@ -32,7 +32,12 @@ public class HotelToHotelDTO {
         hotelDTO.setName(hotel.getName());
         hotelDTO.setAreaName(hotel.getName());
         hotelDTO.setStars(hotel.getStars());
-        hotelDTO.setOwner(hotel.getOwner().getId());
+
+        if (hotel.getOwner() != null) {
+            hotelDTO.setOwner(hotel.getOwner().getId());
+        } else {
+            hotelDTO.setOwner(null);
+        }
 
         for (Room room : hotel.getRooms()){
             hotelDTO.getRooms().add(roomToRoomDTO.converter(room));
