@@ -48,6 +48,16 @@ public class RoomController {
     }
 
     /***
+     * counts all the rooms in the database
+     * @return the number of rooms that exists in the database
+     */
+    @GetMapping("/api/rooms/quantity")
+    public int countRooms(){
+
+        return service.countRooms();
+    }
+
+    /***
      * finds all rooms
      * @return all rooms
      * @throws ApiRequestException if no room is saved
