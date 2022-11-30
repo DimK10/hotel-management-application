@@ -62,6 +62,15 @@ public class HotelService {
 
 	}
 
+	/***
+	 * counts all the hotels in the database
+	 * @return the number of hotels that exists in the database
+	 */
+	public int countHotels(){
+
+		return hotelRepository.countAll();
+	}
+
 
 	/***
 	 * get all hotels
