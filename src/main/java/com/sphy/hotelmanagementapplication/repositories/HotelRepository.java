@@ -13,7 +13,6 @@ import java.util.Set;
 /***
  * created by dk
  */
-
 @Repository
 public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long> {
 
@@ -25,4 +24,7 @@ public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long> 
 	Set<Hotel> findAllHotels();
 
 	boolean existsByName(String name);
+
+	@Query("SELECT count(*) from Hotel")
+	int countAll();
 }
