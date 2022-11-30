@@ -91,6 +91,15 @@ public class RoomService {
     }
 
     /***
+     * counts all the rooms in the database
+     * @return the number of rooms that exists in the database
+     */
+    public int countRooms(){
+
+        return roomRepository.countAll();
+    }
+
+    /***
      * get all rooms
      * @return a list of all rooms
      * @throws ApiRequestException if no room is saved
