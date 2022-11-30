@@ -184,9 +184,8 @@ public class HotelControllerTest {
     void findAllHotels() throws Exception {
         // Given
 
-
         // When
-        when(hotelService.getHotels(any(),any(),anyString())).thenReturn(hotelDTOS1);
+        when(hotelService.getHotels(0,10,"id")).thenReturn(hotelDTOS1);
 
         // Return
         mockMvc.perform(get("/api/hotels"))
@@ -197,8 +196,6 @@ public class HotelControllerTest {
                         Matchers.equalTo("hotelDTO")
                 ));
 
-        // verify that roomService was executed inside findAllRooms() only once
-        verify(hotelService, times(1)).getHotels(any(), any(), anyString());
     }
 
     @Test
