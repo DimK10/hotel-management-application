@@ -51,17 +51,17 @@ public class HotelServiceTest {
 
         HotelService hotelService;
 
-        List<Hotel> hotels;
+        List<Hotel> hotels = new ArrayList<>();
 
-        List<HotelDTO> hotelDTOS;
+        List<HotelDTO> hotelDTOS = new ArrayList<>();
 
-        List<Room> rooms;
+        List<Room> rooms = new ArrayList<>();
 
-        List<Room> rooms1;
+        List<Room> rooms1 = new ArrayList<>();
 
-        List<RoomDTO> roomDTOS;
+        List<RoomDTO> roomDTOS = new ArrayList<>();
 
-        List<RoomDTO> roomDTOS1;
+        List<RoomDTO> roomDTOS1 = new ArrayList<>();
 
         final Long id = 1L;
         final String name = "hotel";
@@ -122,10 +122,6 @@ public class HotelServiceTest {
 
             hotels.add(hotel);
             hotels.add(hotel1);
-
-            hotelDTOS= new ArrayList<>();
-            roomDTOS = new ArrayList<>();
-            roomDTOS1 = new ArrayList<>();
 
             HotelDTO hotelDTO = new HotelDTO(1L);
             hotelDTO.setOwner(admin.getId());
@@ -307,6 +303,19 @@ public class HotelServiceTest {
         @Test
         void updateHotel() {
             // todo
+        }
+
+        @Test
+        void getHotels(){
+
+            //given
+
+            //when
+            when(hotelRepository.countAll()).thenReturn(1);
+
+            //then
+            assertEquals(1, hotelService.countHotels());
+
         }
 
     }
