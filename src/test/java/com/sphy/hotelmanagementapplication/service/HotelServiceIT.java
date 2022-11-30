@@ -14,6 +14,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/***
+ * created by gp
+ */
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 public class HotelServiceIT {
