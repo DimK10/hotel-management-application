@@ -4,14 +4,13 @@ import com.sphy.hotelmanagementapplication.converter.RoomDTOToRoom;
 import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -98,21 +97,25 @@ public class RoomService {
      */
     public List<RoomDTO> getRooms(Integer pageNo, Integer pageSize, String sortBy) throws ApiRequestException {
 
-            Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
-            List<RoomDTO> pageResult = roomRepository
-                    .findAll(paging)
-                    .getContent()
-                    .stream()
-                    .map(roomToRoomDTO::converter)
-                    .collect(Collectors.toList());
+        Page<Room> pageResult = roomRepository.findAll(paging);
 
+        List<RoomDTO> roomDTOS = new ArrayList<>();
 
-            if (!pageResult.isEmpty()) {
-                return pageResult;
-            }else {
-                return new ArrayList<>();
-            }
+        for (Room room: pageResult.getContent()){
+            roomDTOS.add(roomToRoomDTO.converter(room));
+        }
+
+        Page<RoomDTO> roomDTOPage = new PageImpl<>(roomDTOS, paging,roomDTOS.size());
+
+        if (!roomDTOPage.isEmpty()) {
+            System.out.println(roomDTOPage.getContent());
+            return roomDTOPage.getContent();
+
+        }else {
+            return new ArrayList<RoomDTO>();
+        }
     }
 
     /***
