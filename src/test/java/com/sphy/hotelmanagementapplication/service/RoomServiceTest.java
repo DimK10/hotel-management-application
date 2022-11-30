@@ -192,4 +192,17 @@ class RoomServiceTest {
 	void updateRoom() {
 		// todo
 	}
+
+	@Test
+	void getRooms(){
+
+		//given
+
+		//when
+		when(roomRepository.countAll()).thenReturn(1);
+
+		//then
+		assertEquals(1, roomService.countRooms());
+
+	}
 }
