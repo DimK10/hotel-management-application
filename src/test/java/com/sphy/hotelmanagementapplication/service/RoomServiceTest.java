@@ -194,7 +194,7 @@ class RoomServiceTest {
 	}
 
 	@Test
-	void getRooms(){
+	void countRooms(){
 
 		//given
 

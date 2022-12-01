@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /***
  * created by gp
  */
+@Transactional
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 public class RoomServiceIT {
@@ -27,9 +29,11 @@ public class RoomServiceIT {
         @Autowired
         RoomRepository roomRepository;
 
+        @Test
+        void getRooms() throws Exception {
 
-        @BeforeEach
-        void setUp() {
+            //given
+            int expected = 6;
 
             Room room1 = new Room(1L);
             Room room2 = new Room(2L);
@@ -44,20 +48,16 @@ public class RoomServiceIT {
             roomRepository.save(room4);
             roomRepository.save(room5);
             roomRepository.save(room6);
-        }
-
-
-        @Test
-        void getHotels() throws Exception {
-
-            //given
-            int expected = 6;
 
             //when
-            List<RoomDTO> hotelDTOS = roomService.getRooms(0,expected,"id");
+            List<RoomDTO> roomDTOS = roomService.getRooms(0,expected,"id");
 
             //then
-            assertEquals(expected, hotelDTOS.size());
+            assertEquals(expected, roomDTOS.size());
+            assertEquals(roomDTOS.get(0).getId(), 1);
+            assertEquals(roomDTOS.get(2).getId(), 3);
+            assertEquals(roomDTOS.get(5).getId(), 6);
+
 
         }
 
