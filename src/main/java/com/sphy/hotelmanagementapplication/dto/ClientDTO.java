@@ -32,6 +32,7 @@ public class ClientDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
 
     public ClientDTO() {
     }
