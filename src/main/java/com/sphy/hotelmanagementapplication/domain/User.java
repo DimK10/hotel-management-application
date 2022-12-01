@@ -1,8 +1,8 @@
 package com.sphy.hotelmanagementapplication.domain;
 
 import org.springframework.data.annotation.Transient;
-
 import javax.persistence.*;
+
 
 /***
  * crated by gp

@@ -21,9 +21,8 @@ public class AdminToAdminDTO {
      * converts an Admin Object to AdminDTO
      * @param admin Admin object we want to convert
      * @return the converted AdminDTO object
-     * @throws Exception
      */
-    public AdminDTO converter(Admin admin) throws Exception {
+    public AdminDTO converter(Admin admin){
 
         AdminDTO adminDTO = new AdminDTO();
 

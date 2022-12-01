@@ -106,6 +106,17 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}/client/build</directory>
+				<filtering>false</filtering>
+				<targetPath>public/</targetPath>
+			</resource>
+			<resource>
+				<directory>${project.basedir}/src/main/resources</directory>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -193,9 +204,6 @@
 							</execution>
 							<execution>
 								<id>npm test</id>
-								<goals>
-									<goal>test</goal>
-								</goals>
 								<phase>test</phase>
 								<configuration>
 									<arguments>test</arguments>
@@ -205,6 +213,7 @@
 								</configuration>
 							</execution>
 							<execution>
+
 								<id>npm build</id>
 								<goals>
 									<goal>npm</goal>
@@ -213,6 +222,24 @@
 								<configuration>
 									<arguments>run build</arguments>
 								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>compile</phase>
+								<configuration>
+									<target>
+										<copy todir="${project.build.directory}/classes/public">
+											<fileset dir="${project.basedir}/client/build"/>
+										</copy>
+									</target>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
 							</execution>
 						</executions>
 					</plugin>

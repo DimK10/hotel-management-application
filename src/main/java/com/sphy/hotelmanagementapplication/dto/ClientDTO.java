@@ -22,6 +22,7 @@ public class ClientDTO {
     private String transactionId;
     private Set<OrderDTO> orders = new HashSet<>();
 
+
     @Transient
     private String password;
 
@@ -31,6 +32,13 @@ public class ClientDTO {
 
     public void setPassword(String password) {
         this.password = password;
+
+    public ClientDTO() {
+    }
+
+    public ClientDTO(long l) {
+        this.id = l;
+
     }
 
     public Long getId() {

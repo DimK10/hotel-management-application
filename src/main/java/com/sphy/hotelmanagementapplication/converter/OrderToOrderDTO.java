@@ -42,17 +42,25 @@ public class OrderToOrderDTO {
         orderDTO.setCheckOutDate(order.getCheckOutDate());
         orderDTO.setCanceled(order.isCanceled());
 
-        Optional<Room> room = roomRepository.findById(order.getRoom().getId());
+        if (order.getRoom() != null){
 
-        if (room.isPresent()){
-            orderDTO.setRoom(room.get().getId());
+            Optional<Room> room = roomRepository.findById(order.getRoom().getId());
+
+            if (room.isPresent() && room.get().getId() != 0){
+                orderDTO.setRoom(room.get().getId());
+            }
         }
 
-        Optional<Client> client = clientRepository.findById(order.getClient().getId());
 
-        if (client.isPresent()){
-            orderDTO.setClient(client.get().getId());
+        if (order.getClient() != null){
+
+            Optional<Client> client = clientRepository.findById(order.getClient().getId());
+
+            if (client.isPresent() && client.get().getId() != 0) {
+                orderDTO.setClient(client.get().getId());
+            }
         }
+
 
         return orderDTO;
     }
