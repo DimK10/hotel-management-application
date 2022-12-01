@@ -2,9 +2,7 @@ package com.sphy.hotelmanagementapplication.domain;
 
 import javax.persistence.*;
 
-import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /***
@@ -20,8 +18,8 @@ public class Client extends User {
     public Client() {
     }
 
-    public Client(Long id, boolean emailVerify, String username, String firstname, String lastname, String email) {
-        super(id, emailVerify, username, firstname, lastname, email, Role.CLIENT);
+    public Client(Long id, boolean emailVerify, String username, String firstname, String lastname, String email, String password) {
+        super(id, emailVerify, username, firstname, lastname, email, password, Role.CLIENT);
     }
 
     public Client(Long id) {

@@ -25,15 +25,24 @@ public class ClientDTOToClient {
      */
     @Transactional
     public Client converter(ClientDTO clientDTO) {
+
         Client client = new Client();
+
         client.setId(clientDTO.getId());
+
         client.setEmail(clientDTO.getEmail());
+
         client.setFirstname(clientDTO.getFirstname());
+
         client.setLastname(clientDTO.getLastname());
+
         client.setUsername(clientDTO.getUsername());
+
         client.setHashedPassword(clientDTO.getHashedPassword());
+
         client.setEmailVerify(clientDTO.isEmailVerify());
-        client.setTransactionId(clientDTO.getTransactionId());
+
+        client.setPassword(clientDTO.getPassword());
 
         for (OrderDTO orderDTO : clientDTO.getOrders()) {
             client.getOrders().add(orderDTOToOrder.converter(orderDTO));

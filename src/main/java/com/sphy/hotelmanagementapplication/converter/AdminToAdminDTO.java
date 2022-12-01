@@ -26,14 +26,22 @@ public class AdminToAdminDTO {
 
         AdminDTO adminDTO = new AdminDTO();
 
+
         adminDTO.setId(admin.getId());
+
         adminDTO.setFirstname(admin.getFirstname());
+
         adminDTO.setLastname(admin.getLastname());
+
         adminDTO.setUsername(admin.getUsername());
+
         adminDTO.setEmail(admin.getEmail());
+
         adminDTO.setEmailVerify(admin.isEmailVerify());
+
         adminDTO.setHashedPassword(admin.getHashedPassword());
-        adminDTO.setTransactionId(admin.getTransactionId());
+
+        adminDTO.setPassword(admin.getPassword());
 
         for (Hotel hotel : admin.getHotels()){
             adminDTO.getHotels().add(hotelToHotelDTO.converter(hotel));

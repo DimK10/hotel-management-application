@@ -18,8 +18,8 @@ public class Admin extends User {
     public Admin() {
     }
 
-    public Admin(Long id, boolean emailVerify, String username, String firstname, String lastname, String email) {
-        super(id, emailVerify, username, firstname, lastname, email, Role.ADMIN);
+    public Admin(Long id, boolean emailVerify, String username, String firstname, String lastname, String email, String password) {
+        super(id, emailVerify, username, firstname, lastname, email, password, Role.ADMIN);
     }
 
     public Admin(Long id) {

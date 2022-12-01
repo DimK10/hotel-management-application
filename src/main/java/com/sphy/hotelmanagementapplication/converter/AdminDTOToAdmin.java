@@ -32,13 +32,20 @@ public class AdminDTOToAdmin {
         Admin admin = new Admin();
 
         admin.setId(adminDTO.getId());
+
         admin.setFirstname(adminDTO.getFirstname());
+
         admin.setLastname(adminDTO.getLastname());
+
         admin.setUsername(adminDTO.getUsername());
+
         admin.setEmail(adminDTO.getEmail());
+
         admin.setEmailVerify(adminDTO.isEmailVerify());
+
         admin.setHashedPassword(adminDTO.getHashedPassword());
-        admin.setTransactionId(adminDTO.getTransactionId());
+
+        admin.setPassword(adminDTO.getPassword());
 
         for (HotelDTO hotelDTO : adminDTO.getHotels()) {
             Optional<Hotel> hotelOPT = hotelRepository.findById(hotelDTO.getId());

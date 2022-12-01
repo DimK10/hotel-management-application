@@ -43,7 +43,6 @@ public class ClientDTOToClientTest {
         client.setHashedPassword("asdfghjk");
         client.setEmail("papadopoulos@gmail.com");
         client.setEmailVerify(true);
-        client.setTransactionId("1234567");
         client.getOrders().add(order);
 
         clientDTO.setId(1L);
