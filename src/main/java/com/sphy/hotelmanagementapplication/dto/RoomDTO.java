@@ -28,7 +28,10 @@ public class RoomDTO implements Serializable {
 	public RoomDTO() {
 	}
 
-	public Long getId() {
+    public RoomDTO(long l) {
+    }
+
+    public Long getId() {
 		return Id;
 	}
 

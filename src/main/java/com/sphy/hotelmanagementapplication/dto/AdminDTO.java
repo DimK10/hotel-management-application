@@ -20,6 +20,13 @@ public class AdminDTO implements Serializable {
 
     private List<HotelDTO> hotels = new ArrayList<>();
 
+    public AdminDTO() {
+    }
+
+    public AdminDTO(long l) {
+        this.id = l;
+    }
+
     public Long getId() {
         return id;
     }

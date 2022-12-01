@@ -22,7 +22,6 @@ public class HotelToHotelDTO {
      * converts a hotel object to hotelDTO
      * @param hotel the hotel object we want to convert
      * @return the converted hotelDTO object
-     * @throws Exception
      */
     public HotelDTO converter(Hotel hotel){
 
@@ -30,7 +29,7 @@ public class HotelToHotelDTO {
 
         hotelDTO.setId(hotel.getId());
         hotelDTO.setName(hotel.getName());
-        hotelDTO.setAreaName(hotel.getName());
+        hotelDTO.setAreaName(hotel.getAreaName());
         hotelDTO.setStars(hotel.getStars());
         hotelDTO.setOwner(hotel.getOwner().getId());
 
