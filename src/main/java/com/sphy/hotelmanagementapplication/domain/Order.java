@@ -42,6 +42,10 @@ public class Order extends BaseEntity {
         this.client=client;
     }
 
+    public Order(long l) {
+        super(l);
+    }
+
     public boolean isCanceled() {
         return canceled;
     }

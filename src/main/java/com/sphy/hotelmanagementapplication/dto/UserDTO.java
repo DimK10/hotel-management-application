@@ -3,34 +3,40 @@ package com.sphy.hotelmanagementapplication.dto;
 import org.springframework.data.annotation.Transient;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /***
  * created by gp
  */
-public class AdminDTO implements Serializable {
+public class UserDTO implements Serializable{
 
     private Long id;
+
     private boolean emailVerify;
+
     private String username;
+
     private String firstname;
+
     private String lastname;
+
     private String email;
+
     private String hashedPassword;
-    private String transactionId;
+
+    private String role;
 
     @Transient
     private String password;
 
-
-    private List<HotelDTO> hotels = new ArrayList<>();
-
-    public AdminDTO() {
+    public UserDTO() {
     }
 
-    public AdminDTO(long l) {
-        this.id = l;
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Long getId() {
@@ -39,22 +45,6 @@ public class AdminDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public boolean isEmailVerify() {
-        return emailVerify;
-    }
-
-    public void setEmailVerify(boolean emailVerify) {
-        this.emailVerify = emailVerify;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getFirstname() {
@@ -89,33 +79,34 @@ public class AdminDTO implements Serializable {
         this.hashedPassword = hashedPassword;
     }
 
-    public String getTransactionId() {
-        return transactionId;
+    public boolean isEmailVerify() {
+        return emailVerify;
     }
 
-    public void setTransactionId(String transactionId) {
-        this.transactionId = transactionId;
+    public void setEmailVerify(boolean emailVerify) {
+        this.emailVerify = emailVerify;
+
     }
 
-    public List<HotelDTO> getHotels() {
-        return hotels;
+    public String getUsername() {
+        return username;
     }
 
-    public void setHotels(List<HotelDTO> hotels) {
-        this.hotels = hotels;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getRole() {
+        return role;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override
     public String toString() {
-        return "AdminDTO{" +
+        return "UserDTO{" +
                 "id=" + id +
                 ", emailVerify=" + emailVerify +
                 ", username='" + username + '\'' +
@@ -123,9 +114,8 @@ public class AdminDTO implements Serializable {
                 ", lastname='" + lastname + '\'' +
                 ", email='" + email + '\'' +
                 ", hashedPassword='" + hashedPassword + '\'' +
-                ", transactionId='" + transactionId + '\'' +
+                ", role='" + role + '\'' +
                 ", password='" + password + '\'' +
-                ", hotels=" + hotels +
                 '}';
     }
 }
