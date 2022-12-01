@@ -44,7 +44,6 @@ public class AdminDTOToAdminTest {
        admin.setHashedPassword("asdfghjk");
        admin.setEmail("papadopoulos@gmail.com");
        admin.setEmailVerify(true);
-       admin.setTransactionId("1234567");
        admin.getHotels().add(hotel);
 
        adminDTO.setId(1L);
