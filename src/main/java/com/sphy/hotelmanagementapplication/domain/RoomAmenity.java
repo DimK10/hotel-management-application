@@ -2,6 +2,8 @@ package com.sphy.hotelmanagementapplication.domain;
 
 import java.util.Objects;
 import java.util.Set;
+
+import javax.persistence.AttributeOverride;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -22,12 +24,14 @@ import javax.persistence.JoinColumn;
  */
 
 @Entity
-@Table(name="amenityRoom")
-public class RoomAmenity{
+@Table(name="RAmenity")
+@AttributeOverride(name = "id", column = @Column(name = "amenity_id"))
+public class RoomAmenity extends BaseEntity{
 	
-	@Id
-	@Column(name="amenityRoom_id")
-	private Long id;
+//	@Id
+//	@Column(name="amenityRoom_id")
+//	private Long id;
+
 	@Enumerated(EnumType.STRING)
 	private AmenitiesRoom amenitiesR;
 	
@@ -61,17 +65,16 @@ public class RoomAmenity{
 
 	
 	public RoomAmenity(Long id, AmenitiesRoom amenitiesR) {
-		super();
-		this.id = id;
+		super(id);
 		this.amenitiesR = amenitiesR;
 	}// Constructor with fields
 	
 	public Long getId() {
-		return id;
+		return super.getId();
 	} // method getId()
 
 	public void setId(Long id) {
-		this.id = id;
+		super.setId(id);
 	} // method setId()
 
 	public AmenitiesRoom getAmenitiesR() {
@@ -81,23 +84,18 @@ public class RoomAmenity{
 	public void setAmenitiesR(AmenitiesRoom amenitiesR) {
 		this.amenitiesR = amenitiesR;
 	} // method setAmenitiesR()
-	
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
+		if (!super.equals(o)) return false;
 		RoomAmenity that = (RoomAmenity) o;
-		return Objects.equals(id, that.id);
-	}// equals
+		return amenitiesR == that.amenitiesR;
+	}
 
 	@Override
 	public int hashCode() {
-		return id != null ? id.hashCode() : 0;
-	}// hashCode
-
-	@Override
-	public String toString() {
-		return "RoomAmenity [id=" + id + ", amenitiesR=" + amenitiesR + "]";
-	}// toString
-
+		return Objects.hash(super.hashCode(), amenitiesR);
+	}
 }// Class

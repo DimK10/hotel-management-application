@@ -20,13 +20,13 @@ import com.sphy.hotelmanagementapplication.domain.RoomAmenity.AmenitiesRoom;
 
 @Service
 public class AmenityRoomService {
-	@Autowired
+
+
 	private AmenityRoomRepository amenityRoomRepository ;
 	
 	private RoomRepository roomRepository;
 
 	public AmenityRoomService(AmenityRoomRepository amenityRoomRepository, RoomRepository roomRepository) {
-		super();
 		this.amenityRoomRepository = amenityRoomRepository;
 		this.roomRepository = roomRepository;
 	}
@@ -42,7 +42,7 @@ public class AmenityRoomService {
 	}
 	
 	public Optional<RoomAmenity> getRoomAmenity(Long id) {
-		return AmenityRoomRepository.findById(id);
+		return amenityRoomRepository.findById(id);
 	}
 	
 	public void addRoomAmenity(RoomAmenity amenitiesR) {

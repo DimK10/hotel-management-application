@@ -13,8 +13,7 @@ import com.sphy.hotelmanagementapplication.domain.RoomAmenity.AmenitiesRoom;
  */
 
 @Repository
-public interface AmenityRoomRepository extends CrudRepository <RoomAmenity,Long> {	
-	RoomAmenity findbyAmenitiesRoom(AmenitiesRoom amenitiesR);
+public interface AmenityRoomRepository extends CrudRepository <RoomAmenity,Long> {
 	Optional<RoomAmenity> findById(Long id);
 
 }

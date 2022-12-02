@@ -3,14 +3,17 @@ package com.sphy.hotelmanagementapplication.domain;
 import java.util.Objects;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /***
  * created by AKd
  */
-
+@Entity
+@Table(name = "HAmenity")
 public class HotelAmenity {
 	
 	@Id
