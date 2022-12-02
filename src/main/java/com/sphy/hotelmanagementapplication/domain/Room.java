@@ -1,10 +1,15 @@
 package com.sphy.hotelmanagementapplication.domain;
 
 import javax.persistence.*;
+
+
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sphy.hotelmanagementapplication.domain.RoomAmenity.AmenitiesRoom;
+
 
 /***
  * created by gp
@@ -29,7 +34,16 @@ public class Room extends BaseEntity {
 
 	private boolean disabled;
 
+	@ManyToMany
+	@ElementCollection(targetClass = RoomAmenity.class) // created by AKd
+	@CollectionTable(name = "AmenitiesForRooms",		// created by AKd
+				joinColumns = @JoinColumn(name = "room_id")) // created by AKd
+    @MapKeyJoinColumn(name = "amenitiesR")	// created by AKd
+	@Column(name = "price")					// created by AKd
+	private Map <AmenitiesRoom,Integer> AmenitiesWithPrices; // created by AKd
+	private Set<RoomAmenity> roomAmenity = new HashSet<>();// created by AKd
 
+	
 
     public Room() {
     }
@@ -105,7 +119,18 @@ public class Room extends BaseEntity {
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
 	}
-
+	
+	// created by AKd
+	public Set<RoomAmenity> getRoomAmenity(){
+		return roomAmenity;
+	}
+	
+	// created by AKd
+	public void setRoomAmenity(Set<RoomAmenity> roomAmenity) {
+		this.roomAmenity = roomAmenity;
+	}
+	
+	
 	@Override
     public boolean equals(Object o) {
         return super.equals(o);
