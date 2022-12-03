@@ -4,7 +4,7 @@ import com.sphy.hotelmanagementapplication.domain.Hotel;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -13,9 +13,8 @@ import java.util.Set;
 /***
  * created by dk
  */
-
 @Repository
-public interface HotelRepository extends CrudRepository<Hotel,Long> {
+public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long> {
 
     Optional<Hotel> findByName(String name);
 
@@ -25,4 +24,7 @@ public interface HotelRepository extends CrudRepository<Hotel,Long> {
 	Set<Hotel> findAllHotels();
 
 	boolean existsByName(String name);
+
+	@Query("SELECT count(*) from Hotel")
+	int countAll();
 }

@@ -6,9 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sphy.hotelmanagementapplication.domain.Room;
-import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
-import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.RoomService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +22,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -33,8 +30,6 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -165,11 +160,27 @@ class RoomControllerTest {
 	}
 
 	@Test
+	void countRooms() throws Exception {
+
+		//given
+
+		//when
+		when(roomService.countRooms()).thenReturn(1);
+
+		//then
+		mockMvc.perform(
+						get("/api/rooms/quantity"))
+				.andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("@")
+						.value(1));
+	}
+
+	@Test
 	void findAllRooms() throws Exception {
 		// Given
 
 		// When
-		when(roomService.getRooms()).thenReturn(roomDTOS);
+		when(roomService.getRooms(0,10,"id")).thenReturn(roomDTOS);
 
 		// Return
 		mockMvc.perform(get("/api/rooms"))
@@ -180,8 +191,6 @@ class RoomControllerTest {
 						Matchers.equalTo("roomDTO1")
 				));
 
-		// verify that roomService was executed inside findAllRooms() only once
-		verify(roomService, times(1)).getRooms();
 	}
 
 	@Test

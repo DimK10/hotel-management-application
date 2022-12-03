@@ -10,6 +10,7 @@ import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -53,12 +54,21 @@ public class HotelService {
 	 */
 	public HotelDTO getHotelById(Long id) throws ApiRequestException {
 		Optional<Hotel> hotel = hotelRepository.findById(id);
-		if (!hotel.isPresent()){
+		if (hotel.isEmpty()){
 			throw new ApiRequestException("There is no hotel with id: " + id);
 		}else {
 			return hotelToHotelDTO.converter(hotelRepository.findById(id).get());
 		}
 
+	}
+
+	/***
+	 * counts all the hotels in the database
+	 * @return the number of hotels that exists in the database
+	 */
+	public int countHotels(){
+
+		return hotelRepository.countAll();
 	}
 
 
@@ -67,19 +77,28 @@ public class HotelService {
 	 * @return a list of all hotels
 	 * @throws ApiRequestException if There are no hotels
 	 */
-	public List<HotelDTO> getHotels() throws ApiRequestException {
+	public List<HotelDTO> getHotels(Integer pageNo, Integer pageSize, String sortBy) throws ApiRequestException {
 
-			List<Hotel> hotels = new ArrayList<>();
-			List<HotelDTO> hotelDTOS = new ArrayList<>();
+		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
-			hotelRepository.findAll().spliterator().forEachRemaining(hotels::add);
+		Page<Hotel> pageResult = hotelRepository.findAll(paging);
+		
+		List<HotelDTO> hotelDTOS = new ArrayList<>();
 
-			for (Hotel hotel : hotels) {
-				hotelDTOS.add(hotelToHotelDTO.converter(hotel));
-			}
+		for (Hotel hotel: pageResult.getContent()){
+			hotelDTOS.add(hotelToHotelDTO.converter(hotel));
+		}
 
-			return hotelDTOS;
+		Page<HotelDTO> hotelDTOPage = new PageImpl<>(hotelDTOS, paging,hotelDTOS.size());
 
+		if (!hotelDTOPage.isEmpty()) {
+			System.out.println(hotelDTOPage.getContent());
+			return hotelDTOPage.getContent();
+
+		}else {
+			return new ArrayList<HotelDTO>() {
+			};
+		}
 	}
 
 
@@ -236,5 +255,4 @@ public class HotelService {
 		}
 		return hotelDTOS;
 	}
-
 }
