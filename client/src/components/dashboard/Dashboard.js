@@ -46,6 +46,7 @@ const Dashboard = props => {
           </div>
           <div className="row mt-5">
             <div className="col">
+              {/*TODO make a separate component for the cards below */}
               <div className="card mb-3 btn btn-raised shadow text-start p-0"
                    style={{background: "rgba(54, 162, 235, 1)", color: "white"}}
                    onClick={() => onCardClick('/hotels')}
