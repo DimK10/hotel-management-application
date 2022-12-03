@@ -33,14 +33,24 @@ const Orders = props => {
             <h4 className="mb-4 mr-auto">List of orders made</h4>
           </div>
           <div className="col-auto">
-            <label htmlFor="rows-select" style={{marginRight: ".5rem"}}>Number of
-              records:</label>
-            <select
-              className="custom-select" id="rows-select">
-              <option value="10" defaultValue={true}>10</option>
-              <option value="20">20</option>
-              <option value="30">30</option>
-            </select>
+            <div className="row">
+              <div className="col">
+                <label htmlFor="rows-select" style={{marginRight: ".5rem"}}>Number of
+                  records:</label>
+              </div>
+              <div className="col">
+                <select
+                  className="form-select" id="rows-select">
+                  <option value="10" defaultValue={true}>10</option>
+                  <option value="20">20</option>
+                  <option value="30">30</option>
+                  <option value="40">40</option>
+                  <option value="50">50</option>
+                </select>
+              </div>
+            </div>
+
+
           </div>
         </div>
 

@@ -46,15 +46,23 @@ const Register = (props) => {
                       placeholder='Password'
                     />
                   </div>
-                  <div className='input-group mb-4'>
+                  <div className='input-group mb-3'>
                     <span className='input-group-text'>
                       <CIcon icon={cilLockLocked} />
                     </span>
                     <input
-                      class='form-control'
+                      className='form-control'
                       type='password'
                       placeholder='Repeat password'
                     />
+                  </div>
+                  <div className='input-group mb-4'>
+                    <select
+                      className="form-select" id="role-select">
+                      <option value="" defaultValue={true}>What do you want to do?</option>
+                      <option value="customer">I am a customer and I want to order rooms</option>
+                      <option value="manager">I want to manage hotels and their rooms</option>
+                    </select>
                   </div>
                   <button className='btn btn-block btn-success' type='button'>
                     Create Account
