@@ -22,7 +22,7 @@ public class Room extends BaseEntity {
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", fetch =  FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Order> orders =new HashSet<>();
 
     private long price;
