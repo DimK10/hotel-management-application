@@ -27,6 +27,7 @@ import Hotels from "./components/hotel/Hotels";
 import Rooms from "./components/room/Rooms";
 import Orders from "./components/order/Orders";
 import Calendar from './components/calendar/Calendar'
+import CreateHotel from "./components/hotel/CreateHotel";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -60,6 +61,7 @@ const App = () => {
           {/*  TODO ADD SECURED ROUTE */}
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/hotels' element={<Hotels />} />
+            <Route path='/hotels/new' element={<CreateHotel />} />
             <Route path='/rooms' element={<Rooms />} />
             <Route path='/orders' element={<Orders />} />
             <Route path='/calendar' element={<Calendar />} />

@@ -12,8 +12,8 @@ const Hotel = props => {
 
   return (
     <Fragment>
-      <SidebarComp/>
-      <HeaderNav>
+        <SidebarComp/>
+        <HeaderNav>
         <div className="row">
           <div className='input-group pb-3 mb-4'>
             <input
