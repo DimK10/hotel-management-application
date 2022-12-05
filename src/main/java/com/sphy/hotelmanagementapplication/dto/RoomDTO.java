@@ -23,6 +23,8 @@ public class RoomDTO implements Serializable {
 
 	private boolean disabled;
 
+	private int capacity;
+
 	public RoomDTO() {
 	}
 
@@ -85,6 +87,14 @@ public class RoomDTO implements Serializable {
 		this.disabled = disabled;
 	}
 
+	public int getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+
 	@Override
 	public String toString() {
 		return "RoomDTO{" +
@@ -95,6 +105,7 @@ public class RoomDTO implements Serializable {
 				", orders=" + orders +
 				", price=" + price +
 				", disabled=" + disabled +
+				", capacity=" + capacity +
 				'}';
 	}
 }

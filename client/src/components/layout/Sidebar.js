@@ -75,6 +75,14 @@ function Sidebar(props) {
               List of Rooms
             </Link>
           </li>
+          <li className="nav-item">
+            <Link className={`nav-link ${
+                window.location.pathname === '/rooms/new' ? 'active' : ''
+            }`} to='/rooms/new'>
+              <CIcon className='nav-icon' icon={cilPlus}/>
+              Add New Room
+            </Link>
+          </li>
           <li className="nav-title">Orders</li>
           <li className="nav-item">
             <Link className={`nav-link ${

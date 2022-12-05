@@ -52,6 +52,7 @@ public class HotelToHotelDTOTest {
         hotel.setName("grand lala");
         hotel.setStars(5);
         hotel.getRooms().add(room);
+        hotel.setAddress("address");
 
         hotelDTO.setOwner(admin.getId());
         hotelDTO.setAreaName("Athens");
@@ -59,6 +60,7 @@ public class HotelToHotelDTOTest {
         hotelDTO.setName("grand lala");
         hotelDTO.setStars(5);
         hotelDTO.getRooms().add(roomDTO);
+        hotelDTO.setAddress("address");
 
         hotelToHotelDTO = new HotelToHotelDTO(roomToRoomDTO);
     }
@@ -78,6 +80,7 @@ public class HotelToHotelDTOTest {
         assertEquals(hotelDTO.getStars() , hotelToHotelDTO.converter(hotel).getStars());
         assertEquals(hotelDTO.getOwner() , hotelToHotelDTO.converter(hotel).getOwner());
         assertEquals(hotelDTO.getRooms() , hotelToHotelDTO.converter(hotel).getRooms());
+        assertEquals(hotelDTO.getAddress() , hotelToHotelDTO.converter(hotel).getAddress());
 
 
 

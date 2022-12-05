@@ -29,6 +29,8 @@ public class Room extends BaseEntity {
 
 	private boolean disabled;
 
+    private int capacity; // The capacity of people in the room
+
 
 
     public Room() {
@@ -106,7 +108,15 @@ public class Room extends BaseEntity {
 		this.disabled = disabled;
 	}
 
-	@Override
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    @Override
     public boolean equals(Object o) {
         return super.equals(o);
 
@@ -126,6 +136,7 @@ public class Room extends BaseEntity {
 				", hotel=" + hotel +
 //				", order=" + orders +
 				", price=" + price +
+                ", capacity=" + capacity +
 				'}';
 	}
 }

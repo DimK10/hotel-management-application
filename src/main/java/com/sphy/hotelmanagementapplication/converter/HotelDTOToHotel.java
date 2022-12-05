@@ -34,6 +34,7 @@ public class HotelDTOToHotel {
         hotel.setId(hotelDTO.getId());
         hotel.setName(hotelDTO.getName());
         hotel.setAreaName(hotelDTO.getName());
+        hotel.setAddress(hotelDTO.getAddress());
         hotel.setStars(hotelDTO.getStars());
 
         hotel.setOwner(adminRepository.findById(hotelDTO.getOwner()).get());
