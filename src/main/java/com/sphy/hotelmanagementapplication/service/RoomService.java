@@ -4,16 +4,19 @@ import com.sphy.hotelmanagementapplication.converter.RoomDTOToRoom;
 import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /***
  * created by gp
@@ -88,25 +91,40 @@ public class RoomService {
     }
 
     /***
+     * counts all the rooms in the database
+     * @return the number of rooms that exists in the database
+     */
+    public int countRooms(){
+
+        return roomRepository.countAll();
+    }
+
+    /***
      * get all rooms
      * @return a list of all rooms
      * @throws ApiRequestException if no room is saved
      */
-    public List<RoomDTO> getRooms() throws ApiRequestException {
+    public List<RoomDTO> getRooms(Integer pageNo, Integer pageSize, String sortBy) throws ApiRequestException {
 
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
-            List<Room> rooms = new ArrayList<>();
+        Page<Room> pageResult = roomRepository.findAll(paging);
 
-            roomRepository.findAll().forEach(rooms::add);
+        List<RoomDTO> roomDTOS = new ArrayList<>();
 
+        for (Room room: pageResult.getContent()){
+            roomDTOS.add(roomToRoomDTO.converter(room));
+        }
 
-            List<RoomDTO> roomsDTO = new ArrayList<>();
+        Page<RoomDTO> roomDTOPage = new PageImpl<>(roomDTOS, paging,roomDTOS.size());
 
-            for (Room room : rooms) {
-                roomsDTO.add(roomToRoomDTO.converter(room));
-            }
-            return roomsDTO;
+        if (!roomDTOPage.isEmpty()) {
+            System.out.println(roomDTOPage.getContent());
+            return roomDTOPage.getContent();
 
+        }else {
+            return new ArrayList<RoomDTO>();
+        }
     }
 
     /***
@@ -117,7 +135,7 @@ public class RoomService {
      */
     public RoomDTO getRoomById(Long id) throws ApiRequestException {
         Optional<Room> room = roomRepository.findById(id);
-        if (!room.isPresent()){
+        if (room.isEmpty()){
             throw new ApiRequestException("There is now room with id: " + id);
         }else {
             return roomToRoomDTO.converter(roomRepository.findById(id).get());
@@ -133,7 +151,7 @@ public class RoomService {
      */
     public RoomDTO getRoomByName(String name) throws ApiRequestException {
         Optional<Room> room = roomRepository.findByName(name);
-        if (!room.isPresent()){
+        if (room.isEmpty()){
             throw new ApiRequestException("There is now room with name: " + name);
         }else {
             return roomToRoomDTO.converter(roomRepository.findByName(name).get());

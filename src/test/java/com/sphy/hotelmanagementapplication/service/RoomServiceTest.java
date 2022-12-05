@@ -10,7 +10,6 @@ import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.repositories.ClientRepository;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
-import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,9 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 /***
@@ -98,22 +95,6 @@ class RoomServiceTest {
 	@Test
 	void saveRooms() {
 		// todo
-	}
-
-	@Test
-	void getRooms() throws Exception {
-		// given
-
-
-		// when
-		when(roomRepository.findAll()).thenReturn(rooms);
-
-
-		//then
-		List<RoomDTO> roomDTOList = roomService.getRooms();
-
-		assertEquals(2, roomDTOList.size());
-		assertTrue(EqualsBuilder.reflectionEquals(roomDTOS,roomDTOList));
 	}
 
 	@Test
@@ -210,5 +191,18 @@ class RoomServiceTest {
 	@Test
 	void updateRoom() {
 		// todo
+	}
+
+	@Test
+	void countRooms(){
+
+		//given
+
+		//when
+		when(roomRepository.countAll()).thenReturn(1);
+
+		//then
+		assertEquals(1, roomService.countRooms());
+
 	}
 }
