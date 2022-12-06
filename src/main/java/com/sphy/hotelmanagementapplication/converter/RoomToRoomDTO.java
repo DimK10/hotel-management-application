@@ -14,6 +14,7 @@ import java.util.Set;
 /***
  * created by gp
  */
+@Transactional
 @Component
 public class RoomToRoomDTO {
 
