@@ -183,7 +183,7 @@ class RoomControllerTest {
 		when(roomService.getRooms(0,10,"id")).thenReturn(roomDTOS);
 
 		// Return
-		mockMvc.perform(get("/api/rooms"))
+		mockMvc.perform(get("/api/rooms/0/10/id"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$", Matchers.hasSize(2)))
 				.andExpect(jsonPath(

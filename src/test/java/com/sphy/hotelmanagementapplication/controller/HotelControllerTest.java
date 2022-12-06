@@ -200,7 +200,7 @@ public class HotelControllerTest {
         when(hotelService.getHotels(0,10,"id")).thenReturn(hotelDTOS1);
 
         // Return
-        mockMvc.perform(get("/api/hotels"))
+        mockMvc.perform(get("/api/hotels/0/10/id"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(jsonPath(
