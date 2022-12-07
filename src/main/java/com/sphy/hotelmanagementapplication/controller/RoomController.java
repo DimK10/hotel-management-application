@@ -2,8 +2,8 @@ package com.sphy.hotelmanagementapplication.controller;
 
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
-
 import com.sphy.hotelmanagementapplication.service.RoomService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,13 +48,30 @@ public class RoomController {
     }
 
     /***
+     * counts all the rooms in the database
+     * @return the number of rooms that exists in the database
+     */
+    @GetMapping("/api/rooms/quantity")
+    public int countRooms(){
+
+        return service.countRooms();
+    }
+
+    /***
      * finds all rooms
      * @return all rooms
      * @throws ApiRequestException if no room is saved
      */
     @GetMapping("/api/rooms")
-    public List<RoomDTO> findAllRooms() throws ApiRequestException {
-            return service.getRooms();
+    public ResponseEntity<List<RoomDTO>> findAllRooms(
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "10") Integer pageSize,
+            @RequestParam(defaultValue = "id") String sortBy)
+            throws ApiRequestException {
+
+        List<RoomDTO> rooms = service.getRooms(pageNo, pageSize, sortBy);
+
+        return new ResponseEntity<List<RoomDTO>>(rooms, new HttpHeaders(), HttpStatus.OK);
     }
 
     /***

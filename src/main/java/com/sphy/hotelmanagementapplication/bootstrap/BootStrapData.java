@@ -27,12 +27,12 @@ public class BootStrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Client client = new Client(null, true,"pelatis", "mitsos","allatsas", "pelatis@gmail.com");
+        Client client = new Client(null, true,"pelatis", "mitsos","allatsas", "pelatis@gmail.com", "asfgbafbf");
         client.setHashedPassword("hfdgjakdhgakj");
         client.setHashedPassword("avbasbvabcba");
         clientRepository.save(client);
 
-        Admin admin = new Admin(null, true, "ksenodoxos", "thanos", "poul", "ksenodoxos@gmail.com");
+        Admin admin = new Admin(null, true, "ksenodoxos", "thanos", "poul", "ksenodoxos@gmail.com", "afgbafbsfb");
         admin.setHashedPassword("skjdfhgakhdfj");
         adminRepository.save(admin);
 

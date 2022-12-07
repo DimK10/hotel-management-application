@@ -42,16 +42,13 @@ public class HotelControllerTest {
     @InjectMocks
     HotelController hotelController;
 
-    List<Hotel> hotels;
-    List<HotelDTO> hotelDTOS1;
+    List<Hotel> hotels = new ArrayList<>();
+    List<HotelDTO> hotelDTOS1 = new ArrayList<>();
 
     MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
-
-        hotels=new ArrayList<>();
-
 
         Hotel hotel = new Hotel(1L);
         hotel.setName("hotel");
@@ -63,7 +60,6 @@ public class HotelControllerTest {
         hotels.add(hotel);
         hotels.add(hotel1);
 
-        hotelDTOS1 = new ArrayList<>();
         RoomDTO room = new RoomDTO();
         room.setId(1L);
         HotelDTO hotelDTO = new HotelDTO();
@@ -95,6 +91,22 @@ public class HotelControllerTest {
         mockMvc = MockMvcBuilders
                 .standaloneSetup(hotelController)
                 .build();
+    }
+
+    @Test
+    void countHotels() throws Exception {
+
+        //given
+
+        //when
+        when(hotelService.countHotels()).thenReturn(1);
+
+        //then
+        mockMvc.perform(
+                        get("/api/hotels/quantity"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("@")
+                        .value(1));
     }
 
     @Test
@@ -184,9 +196,8 @@ public class HotelControllerTest {
     void findAllHotels() throws Exception {
         // Given
 
-
         // When
-        when(hotelService.getHotels()).thenReturn(hotelDTOS1);
+        when(hotelService.getHotels(0,10,"id")).thenReturn(hotelDTOS1);
 
         // Return
         mockMvc.perform(get("/api/hotels"))
@@ -197,8 +208,6 @@ public class HotelControllerTest {
                         Matchers.equalTo("hotelDTO")
                 ));
 
-        // verify that roomService was executed inside findAllRooms() only once
-        verify(hotelService, times(1)).getHotels();
     }
 
     @Test

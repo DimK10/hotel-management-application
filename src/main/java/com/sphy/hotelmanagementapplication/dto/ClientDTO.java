@@ -1,5 +1,7 @@
 package com.sphy.hotelmanagementapplication.dto;
 
+import org.springframework.data.annotation.Transient;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -19,6 +21,26 @@ public class ClientDTO {
     private String hashedPassword;
     private String transactionId;
     private Set<OrderDTO> orders = new HashSet<>();
+
+
+    @Transient
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public ClientDTO() {
+    }
+
+    public ClientDTO(long l) {
+        this.id = l;
+
+    }
 
     public Long getId() {
         return id;
@@ -92,7 +114,7 @@ public class ClientDTO {
 		this.orders = orders;
 	}
 
-	@Override
+    @Override
     public String toString() {
         return "ClientDTO{" +
                 "id=" + id +
@@ -104,6 +126,7 @@ public class ClientDTO {
                 ", hashedPassword='" + hashedPassword + '\'' +
                 ", transactionId='" + transactionId + '\'' +
                 ", orders=" + orders +
+                ", password='" + password + '\'' +
                 '}';
     }
 }

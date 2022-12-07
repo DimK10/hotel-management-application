@@ -3,12 +3,13 @@ package com.sphy.hotelmanagementapplication.converter;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Order;
 import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.dto.OrderDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Optional;
+import java.util.Set;
 
 /***
  * created by gp
@@ -44,11 +45,18 @@ public class RoomToRoomDTO {
 
 		roomDTO.setDisabled(room.isDisabled());
 
-        if (!(room.getHotel() == null)) {
+        roomDTO.setCapacity(room.getCapacity());
+
+        if (room.getHotel() != null) {
             Optional<Hotel> hotel = hotelRepository.findById(room.getHotel().getId());
 
-            if (hotel.isPresent()) {
-                roomDTO.setHotel(hotel.get().getId());
+            hotel.ifPresent(value -> roomDTO.setHotel(value.getId()));
+        }
+
+        if (room.getOrders() != null){
+
+            for (Order order : room.getOrders()){
+                roomDTO.getOrders().add(orderToOrderDTO.converter(order));
             }
         }
         return roomDTO;

@@ -20,6 +20,13 @@ public class OrderDTO implements Serializable {
 
     private boolean canceled;
 
+    public OrderDTO() {
+    }
+
+    public OrderDTO(long l) {
+        this.id = l;
+    }
+
 
     public boolean isCanceled() {
         return canceled;

@@ -1,9 +1,7 @@
 package com.sphy.hotelmanagementapplication.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /***
@@ -25,10 +23,15 @@ public class RoomDTO implements Serializable {
 
 	private boolean disabled;
 
+	private int capacity;
+
 	public RoomDTO() {
 	}
 
-	public Long getId() {
+    public RoomDTO(long l) {
+    }
+
+    public Long getId() {
 		return Id;
 	}
 
@@ -84,6 +87,14 @@ public class RoomDTO implements Serializable {
 		this.disabled = disabled;
 	}
 
+	public int getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+
 	@Override
 	public String toString() {
 		return "RoomDTO{" +
@@ -94,6 +105,7 @@ public class RoomDTO implements Serializable {
 				", orders=" + orders +
 				", price=" + price +
 				", disabled=" + disabled +
+				", capacity=" + capacity +
 				'}';
 	}
 }
