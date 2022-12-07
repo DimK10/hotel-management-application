@@ -12,9 +12,9 @@ const Hotel = props => {
 
   return (
     <Fragment>
-      <SidebarComp/>
-      <HeaderNav>
-        <div className="container">
+        <SidebarComp/>
+        <HeaderNav>
+        <div className="row">
           <div className='input-group pb-3 mb-4'>
             <input
               type='text'
@@ -27,7 +27,24 @@ const Hotel = props => {
               Search
             </button>
           </div>
-          <h4 className="mb-4">List of your Hotels</h4>
+        </div>
+        <div className="row">
+          <div className="col">
+            <h4 className="mb-4 mr-auto">List of your Hotels</h4>
+          </div>
+          <div className="col-auto">
+            <label htmlFor="rows-select" style={{marginRight: ".5rem"}}>Number of
+              records:</label>
+            <select
+              className="custom-select" id="rows-select">
+              <option value="10" defaultValue={true}>10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="row">
           <table className="table table-hover table-responsive">
             <thead>
             <tr>
@@ -55,7 +72,8 @@ const Hotel = props => {
                 >
                   <CIcon className="btn-icon" icon={cilPencil}/>
                 </button>
-                <button type="button" className="btn btn-danger" style={{color: '#fff'}}
+                <button type="button" className="btn btn-danger"
+                        style={{color: '#fff'}}
                         data-coreui-toggle="tooltip" data-coreui-placement="top"
                         title="Delete this hotel"
                         onMouseOver={(e) => {
@@ -81,7 +99,8 @@ const Hotel = props => {
                 >
                   <CIcon className="btn-icon" icon={cilPencil}/>
                 </button>
-                <button type="button" className="btn btn-danger" style={{color: '#fff'}}
+                <button type="button" className="btn btn-danger"
+                        style={{color: '#fff'}}
                         data-coreui-toggle="tooltip" data-coreui-placement="top"
                         title="Delete this hotel"
                         onMouseOver={(e) => {
@@ -107,7 +126,8 @@ const Hotel = props => {
                 >
                   <CIcon className="btn-icon" icon={cilPencil}/>
                 </button>
-                <button type="button" className="btn btn-danger" style={{color: '#fff'}}
+                <button type="button" className="btn btn-danger"
+                        style={{color: '#fff'}}
                         data-coreui-toggle="tooltip" data-coreui-placement="top"
                         title="Delete this hotel"
                         onMouseOver={(e) => {
@@ -124,7 +144,8 @@ const Hotel = props => {
               <li className="page-item disabled">
                 <a className="page-link">&laquo;</a>
               </li>
-              <li className="page-item active"><a className="page-link" href="#">1</a></li>
+              <li className="page-item active"><a className="page-link" href="#">1</a>
+              </li>
               <li className="page-item"><a className="page-link" href="#">2</a></li>
               <li className="page-item"><a className="page-link" href="#">3</a></li>
               <li className="page-item">

@@ -45,6 +45,8 @@ public class RoomToRoomDTO {
 
 		roomDTO.setDisabled(room.isDisabled());
 
+        roomDTO.setCapacity(room.getCapacity());
+
         if (room.getHotel() != null) {
             Optional<Hotel> hotel = hotelRepository.findById(room.getHotel().getId());
 
