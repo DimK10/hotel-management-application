@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.List;
 /***
  * created by gp
  */
+// TODO ADD TESTS FOR ALL METHODS
 @RestController
 public class UserController {
 
@@ -78,6 +80,17 @@ public class UserController {
                 throw new ApiExceptionFront("incorrect username or password");
             }
     }
+
+	/**
+	 * Gets all user info - password and hashed password are removed
+	 * @param token The jwt token taken from request header
+	 * @return The user the token belongs to
+	 */
+	@GetMapping("/api/auth")
+	public UserDTO getUser(@RequestHeader(name="Authorization") String token) {
+		String username = jwtUtil.extractUsername(token);
+		return userService.getUserByUsername(username);
+	}
 
     /***
      * find all users

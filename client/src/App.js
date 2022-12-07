@@ -29,15 +29,16 @@ import Orders from "./components/order/Orders";
 import Calendar from './components/calendar/Calendar'
 import CreateHotel from "./components/hotel/CreateHotel";
 import CreateRoom from "./components/room/CreateRoom";
+import Logout from "./components/auth/Logout";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 
 const App = () => {
-  // useEffect(() => {
-  //   store.dispatch(loadUser());
-  // }, []);
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
 
   return (
     <Provider store={store}>
@@ -47,26 +48,51 @@ const App = () => {
             <Route path='/' element={<FirstPage/>}/>
             <Route path='/sign-in' element={<Login/>}/>
             <Route path='/sign-up' element={<Register/>}/>
-            <Route path='/search' element={<AdvancedSearch />} />
-            <Route path='/not-found' element={<NotFound />} />
-            <Route path='/order' element={<PlaceNewOrder />} />
+            <Route path='/logout' element={<Logout/>}/>
+            <Route path='/search' element={<AdvancedSearch/>}/>
+            <Route path='/not-found' element={<NotFound/>}/>
+            <Route path='/order' element={<PlaceNewOrder/>}/>
             <Route path='/protected'
                    element={
+                     <SecuredPage>
+                       <AdvancedSearch/>
+                     </SecuredPage>
+                   }/>
+
+
+            {/* Admin routes */}
+            {/*  TODO ADD SECURED ROUTE */}
+            <Route path='/dashboard' element={
               <SecuredPage>
-                <AdvancedSearch/>
+              <Dashboard />
+            </SecuredPage>}/>
+            <Route path='/hotels' element={
+              <SecuredPage>
+                <Hotels/>
               </SecuredPage>
-            } />
-
-
-          {/* Admin routes */}
-          {/*  TODO ADD SECURED ROUTE */}
-            <Route path='/dashboard' element={<Dashboard />} />
-            <Route path='/hotels' element={<Hotels />} />
-            <Route path='/hotels/new' element={<CreateHotel />} />
-            <Route path='/rooms' element={<Rooms />} />
-            <Route path='/rooms/new' element={<CreateRoom />} />
-            <Route path='/orders' element={<Orders />} />
-            <Route path='/calendar' element={<Calendar />} />
+            }/>
+            <Route path='/hotels/new' element={
+              <SecuredPage>
+                <CreateHotel/>
+            </SecuredPage>}/>
+            <Route path='/rooms' element={
+              <SecuredPage>
+                <Rooms/>
+              </SecuredPage>
+            }/>
+            <Route path='/rooms/new' element={
+              <SecuredPage>
+                <CreateRoom/>
+              </SecuredPage>
+            }/>
+            <Route path='/orders' element={
+              <SecuredPage>
+                <Orders/>
+              </SecuredPage>
+            }/>
+            <Route path='/calendar' element={<SecuredPage>
+              <Calendar/>
+            </SecuredPage>}/>
           </Routes>
         </Router>
       </Fragment>
