@@ -25,9 +25,7 @@ const HeaderNav = props => {
 
             </a>
             <ul className="header-nav d-none d-md-flex">
-              <li className="nav-item"><a className="nav-link" href="#">Dashboard</a></li>
-              <li className="nav-item"><a className="nav-link" href="#">Users</a></li>
-              <li className="nav-item"><a className="nav-link" href="#">Settings</a></li>
+              <li className="nav-item"><a className="nav-link" href="#">Logout</a></li>
             </ul>
 
 
