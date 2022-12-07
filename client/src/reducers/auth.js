@@ -10,7 +10,7 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  token: localStorage.getItem('token'),
+  jwt: localStorage.getItem('jwt'),
   isAuthenticated: null,
   loading: true,
   user: null,
@@ -29,7 +29,7 @@ export default function (state = initialState, action) {
       };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
-      localStorage.setItem('token', payload.token);
+      localStorage.setItem('jwt', payload.jwt);
       return {
         ...state,
         ...payload,
@@ -41,10 +41,10 @@ export default function (state = initialState, action) {
     case LOGIN_FAIL:
     case LOGOUT:
     case ACCOUNT_DELETED:
-      localStorage.removeItem('token');
+      localStorage.removeItem('jwt');
       return {
         ...state,
-        token: null,
+        jwt: null,
         isAuthenticated: false,
         loading: false,
       };

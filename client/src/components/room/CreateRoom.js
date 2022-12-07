@@ -72,7 +72,7 @@ function CreateRoom(props) {
                                 </div>
                                 {/*todo add vaslidation if vaslue is null*/}
                                 {/*todo add fetch hotel names and id's*/}
-                                <select className="form-select" aria-label="Select Hotel" required="true" value={hotel}>
+                                <select className="form-select" aria-label="Select Hotel" required="true" value="">
                                     <option disabled="true" value="null" selected="true">Which hotel this room belongs
                                         to?
                                     </option>

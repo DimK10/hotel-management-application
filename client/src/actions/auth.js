@@ -1,4 +1,5 @@
 import axios from 'axios';
+import jwt from 'jwt-decode'
 import { setAlert } from './alert';
 import {
   REGISTER_SUCCESS,
@@ -14,8 +15,8 @@ import setAuthToken from '../utils/setAuthToken';
 
 // Load User
 export const loadUser = () => async (dispatch) => {
-  if (localStorage.token) {
-    setAuthToken(localStorage.token);
+  if (localStorage.jwt) {
+    setAuthToken(localStorage.jwt);
   }
 
   try {
@@ -67,21 +68,24 @@ export const register =
   };
 
 // Login user
-export const login = (email, password) => async (dispatch) => {
+export const login = (username, password) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
 
-  const body = JSON.stringify({ email, password });
+  const body = JSON.stringify({ username, password });
 
   try {
-    const res = await axios.post('/api/auth', body, config);
+    const res = await axios.post('api/login', body, config);
+
+    const token = res.data.jwt;
+    const username = jwt(token).sub;
 
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: res.data,
+      payload: { ...res.data, user: username },
     });
 
     dispatch(loadUser());
