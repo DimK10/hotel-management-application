@@ -5,6 +5,7 @@ import {cilMenu} from "@coreui/icons";
 import Breadcrumb from "./Breadcrumb";
 
 import {Sidebar} from '@coreui/coreui/dist/js/coreui.js';
+import {Link} from "react-router-dom";
 
 const HeaderNav = props => {
 
@@ -25,7 +26,9 @@ const HeaderNav = props => {
 
             </a>
             <ul className="header-nav d-none d-md-flex">
-              <li className="nav-item"><a className="nav-link" href="#">Logout</a></li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/logout">Logout</Link>
+              </li>
             </ul>
 
 

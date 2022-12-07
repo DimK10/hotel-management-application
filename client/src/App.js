@@ -29,6 +29,7 @@ import Orders from "./components/order/Orders";
 import Calendar from './components/calendar/Calendar'
 import CreateHotel from "./components/hotel/CreateHotel";
 import CreateRoom from "./components/room/CreateRoom";
+import Logout from "./components/auth/Logout";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -47,6 +48,7 @@ const App = () => {
             <Route path='/' element={<FirstPage/>}/>
             <Route path='/sign-in' element={<Login/>}/>
             <Route path='/sign-up' element={<Register/>}/>
+            <Route path='/logout' element={<Logout/>}/>
             <Route path='/search' element={<AdvancedSearch/>}/>
             <Route path='/not-found' element={<NotFound/>}/>
             <Route path='/order' element={<PlaceNewOrder/>}/>
