@@ -97,16 +97,16 @@ jobs:
       - checkout
 
       # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - hotel-management-application-{{ checksum "pom.xml" }}
-            # fallback to using the latest cache if no exact match is found
-            - hotel-management-application-
-
-      - save_cache:
-          paths:
-            - ~/.m2
-          key: hotel-management-application-{{ checksum "pom.xml" }}
+#      - restore_cache:
+#          keys:
+#            - hotel-management-application-{{ checksum "pom.xml" }}
+#            # fallback to using the latest cache if no exact match is found
+#            - hotel-management-application-
+#
+#      - save_cache:
+#          paths:
+#            - ~/.m2
+#          key: hotel-management-application-{{ checksum "pom.xml" }}
 
 
       - attach_workspace:
