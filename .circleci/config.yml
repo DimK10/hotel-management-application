@@ -126,16 +126,14 @@ jobs:
             sudo mv ~/docker-compose /usr/local/bin/docker-compose
 
       - run: |
-          MYSQLDB_USER=$MYSQLDB_USER MYSQLDB_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD MYSQLDB_DATABASE=$MYSQLDB_DATABASE MYSQLDB_LOCAL_PORT=$MYSQLDB_LOCAL_PORT MYSQLDB_DOCKER_PORT=$MYSQLDB_DOCKER_PORT SPRING_LOCAL_PORT=$SPRING_LOCAL_PORT SPRING_DOCKER_PORT=$SPRING_DOCKER_PORT SECRET_KEY=$SECRET_KEY docker-compose push
           docker login -u $DOCKER_USER -p $DOCKER_PASS
-          docker push dimk10/hotel-management-application
+          MYSQLDB_USER=$MYSQLDB_USER MYSQLDB_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD MYSQLDB_DATABASE=$MYSQLDB_DATABASE MYSQLDB_LOCAL_PORT=$MYSQLDB_LOCAL_PORT MYSQLDB_DOCKER_PORT=$MYSQLDB_DOCKER_PORT SPRING_LOCAL_PORT=$SPRING_LOCAL_PORT SPRING_DOCKER_PORT=$SPRING_DOCKER_PORT SECRET_KEY=$SECRET_KEY docker-compose push
           echo 'hotel-management-application.webapplicationonline.eu ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBXYypj+xteI9nFnA2RqJqNxkHHmp5BZfeAW1Qkng17R $EMAIL' >> ~/.ssh/known_hosts
           ssh -o StrictHostKeyChecking=no $USER@$SERVER \<<'ENDSSH'
           docker-compose pull dimk10/hotel-management-application
           docker stop hotel-management-application
           docker rm hotel-management-application
           MYSQLDB_USER=$MYSQLDB_USER MYSQLDB_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD MYSQLDB_DATABASE=$MYSQLDB_DATABASE MYSQLDB_LOCAL_PORT=$MYSQLDB_LOCAL_PORT MYSQLDB_DOCKER_PORT=$MYSQLDB_DOCKER_PORT SPRING_LOCAL_PORT=$SPRING_LOCAL_PORT SPRING_DOCKER_PORT=$SPRING_DOCKER_PORT SECRET_KEY=$SECRET_KEY docker-compose up -d
-          
           ENDSSH
 
       - notify_slack_error
