@@ -120,6 +120,7 @@ jobs:
           name: Install Docker Compose
           command: |
             set -x
+            sudo chown -R $(whoami) /usr/local/bin
             curl -L https://github.com/docker/compose/releases/download/2.12.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
             sudo chmod +x /usr/local/bin/docker-compose
             sudo mv /usr/local/bin/docker-compose /usr/bin/docker-compose
