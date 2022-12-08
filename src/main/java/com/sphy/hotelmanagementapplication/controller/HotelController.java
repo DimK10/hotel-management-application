@@ -5,9 +5,11 @@ import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.service.HotelService;
+import org.springframework.core.annotation.AliasFor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -62,14 +64,15 @@ public class HotelController {
      * @return all hotels
      * @throws ApiRequestException if There are no hotels
      */
-    @GetMapping("/api/hotels")
+    @GetMapping("/api/hotels/{pageNo}/{pageSize}/{sortBy}")
+    @Transactional
     public ResponseEntity<List<HotelDTO>> findAllRooms(
-            @RequestParam(defaultValue = "0") Integer pageNo,
-            @RequestParam(defaultValue = "10") Integer pageSize,
-            @RequestParam(defaultValue = "id") String sortBy)
+            @PathVariable Integer pageNo,
+            @PathVariable Integer pageSize,
+            @PathVariable String sortBy)
             throws ApiRequestException {
 
-        List<HotelDTO> hotelDTOS = service.getHotels(pageNo, pageSize, sortBy);
+        List<HotelDTO> hotelDTOS = service.getHotels(pageNo,pageSize, sortBy);
 
         return new ResponseEntity<List<HotelDTO>>(hotelDTOS, new HttpHeaders(), HttpStatus.OK);
     }

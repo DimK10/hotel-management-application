@@ -62,11 +62,11 @@ public class RoomController {
      * @return all rooms
      * @throws ApiRequestException if no room is saved
      */
-    @GetMapping("/api/rooms")
+    @GetMapping("/api/rooms/{pageNo}/{pageSize}/{sortBy}")
     public ResponseEntity<List<RoomDTO>> findAllRooms(
-            @RequestParam(defaultValue = "0") Integer pageNo,
-            @RequestParam(defaultValue = "10") Integer pageSize,
-            @RequestParam(defaultValue = "id") String sortBy)
+            @PathVariable Integer pageNo,
+            @PathVariable Integer pageSize,
+            @PathVariable String sortBy)
             throws ApiRequestException {
 
         List<RoomDTO> rooms = service.getRooms(pageNo, pageSize, sortBy);

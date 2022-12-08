@@ -5,10 +5,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.transaction.annotation.Transactional;
 
 /***
  * created by gp
  */
+@Transactional
 @Entity(name = "rooms")
 @DiscriminatorValue("rooms")
 public class Room extends BaseEntity {
@@ -22,7 +24,7 @@ public class Room extends BaseEntity {
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", fetch =  FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Order> orders =new HashSet<>();
 
     private long price;
