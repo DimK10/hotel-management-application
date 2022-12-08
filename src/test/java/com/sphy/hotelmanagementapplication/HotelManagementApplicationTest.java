@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
+@ActiveProfiles(value = "dev")
 class HotelManagementApplicationTest {
 
 	// This test tests if the app can be run - and the spring context loads properly
