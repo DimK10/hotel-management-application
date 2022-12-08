@@ -12,6 +12,7 @@ import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +78,7 @@ public class HotelService {
 	 * @return a list of all hotels
 	 * @throws ApiRequestException if There are no hotels
 	 */
+	@Transactional
 	public List<HotelDTO> getHotels(Integer pageNo, Integer pageSize, String sortBy) throws ApiRequestException {
 
 		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));

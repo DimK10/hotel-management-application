@@ -4,10 +4,12 @@ import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 /***
  * created by gp
  */
+@Transactional
 @Component
 public class HotelToHotelDTO {
 
@@ -23,6 +25,7 @@ public class HotelToHotelDTO {
      * @param hotel the hotel object we want to convert
      * @return the converted hotelDTO object
      */
+    @Transactional
     public HotelDTO converter(Hotel hotel){
 
         HotelDTO hotelDTO = new HotelDTO();
