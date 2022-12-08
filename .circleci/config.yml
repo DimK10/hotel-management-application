@@ -134,7 +134,8 @@ jobs:
           docker-compose pull dimk10/hotel-management-application
           docker stop hotel-management-application
           docker rm hotel-management-application
-          docker run --name=hotel-management-application --restart=always -p 32768:80 -e SECRET=$SECRET_KEY -d dimk10/hotel-management-application dimk10/hotel-management-application .          ENDSSH
+          docker run --name=hotel-management-application --restart=always -p 32768:80 -e SECRET=$SECRET_KEY -d dimk10/hotel-management-application dimk10/hotel-management-application .          
+          ENDSSH
 
       - notify_slack_error
       - notify_slack_pass
