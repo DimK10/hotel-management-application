@@ -16,7 +16,7 @@ import com.sphy.hotelmanagementapplication.domain.RoomAmenity.AmenitiesRoom;
  */
 @Entity(name = "rooms")
 @DiscriminatorValue("rooms")
-@AttributeOverride(name = "id", column = @Column(name = "room_id"))
+@AttributeOverride(name = "id", column = @Column(name = "room_id")) // created by AKd
 public class Room extends BaseEntity {
 
 
@@ -35,11 +35,11 @@ public class Room extends BaseEntity {
 
 	private boolean disabled;
 
-	@ManyToMany
-	@JoinTable(
-			name = "room_amenity",
-			joinColumns = @JoinColumn(name = "room_id"),
-			inverseJoinColumns = @JoinColumn(name = "amenity_id")
+	@ManyToMany  // created by AKd
+	@JoinTable(  // created by AKd
+			name = "room_amenity",  // created by AKd
+			joinColumns = @JoinColumn(name = "room_id"),  // created by AKd
+			inverseJoinColumns = @JoinColumn(name = "RAmenity_id") // created by AKd
 	)
 	private Set<RoomAmenity> roomAmenity = new HashSet<>();// created by AKd
 

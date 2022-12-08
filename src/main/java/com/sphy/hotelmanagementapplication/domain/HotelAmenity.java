@@ -2,6 +2,7 @@ package com.sphy.hotelmanagementapplication.domain;
 
 import java.util.Objects;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,11 +15,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "HAmenity")
-public class HotelAmenity {
-	
-	@Id
-	@Column(name="amenityHotel_id")
-	private Long id;
+@AttributeOverride(name = "id", column = @Column(name = "HAmenity_id"))
+public class HotelAmenity extends BaseEntity {
+		
 	@Enumerated(EnumType.STRING)
 	private AmenitiesHotel amenitiesH;
 	
@@ -41,17 +40,16 @@ public class HotelAmenity {
 	}
 
 	public HotelAmenity(Long id, AmenitiesHotel amenitiesH) {
-		//super();
-		this.id = id;
+		super(id);
 		this.amenitiesH = amenitiesH;
-	}
+	}// Constructor with fields
 
 	public Long getId() {
-		return id;
+		return super.getId();
 	}
 
 	public void setId(Long id) {
-		this.id = id;
+		super.setId(id);
 	}
 
 	public AmenitiesHotel getAmenitiesH() {
@@ -62,39 +60,23 @@ public class HotelAmenity {
 		this.amenitiesH = amenitiesH;
 	}
 
-	
-	@Override
-	public int hashCode() {
-		return id != null ? id.hashCode() : 0;
-	}// hashCode
-	
-	//@Override
-	//public int hashCode() {
-	//	return Objects.hash(amenitiesH, id);
-	//}
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
+		if (!super.equals(o)) return false;
 		HotelAmenity that = (HotelAmenity) o;
-		return Objects.equals(id, that.id);
-	}// equals
-	
-	//public boolean equals(Object obj) {
-	//	if (this == obj)
-	//		return true;
-	//	if (obj == null)
-	//		return false;
-	//	if (getClass() != obj.getClass())
-	//		return false;
-	//	HotelAmenity other = (HotelAmenity) obj;
-	//	return amenitiesH == other.amenitiesH && Objects.equals(id, other.id);
-	//}
+		return amenitiesH == that.amenitiesH;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(super.hashCode(), amenitiesH);
+	}
 
 	@Override
 	public String toString() {
-		return "HotelAmenity [id=" + id + ", amenitiesH=" + amenitiesH + "]";
+		return "HotelAmenity [id=" + super.getId() + ", amenitiesH=" + amenitiesH + "]";
 	}
 	
-}
+}// Class
