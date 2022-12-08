@@ -116,6 +116,16 @@ jobs:
       - setup_remote_docker:
           version: 20.10.14
 
+      - run:
+          name: Install Docker Compose
+          command: |
+            set -x
+            curl -L https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+            chmod +x /usr/local/bin/docker-compose
+      - run:
+          name: Build service
+          command: make
+
       - run: |
           MYSQLDB_USER=$MYSQLDB_USER MYSQLDB_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD MYSQLDB_DATABASE=$MYSQLDB_DATABASE MYSQLDB_LOCAL_PORT=$MYSQLDB_LOCAL_PORT MYSQLDB_DOCKER_PORT=$MYSQLDB_DOCKER_PORT SPRING_LOCAL_PORT=$SPRING_LOCAL_PORT SPRING_DOCKER_PORT=$SPRING_DOCKER_PORT SECRET_KEY=$SECRET_KEY docker-compose up -d
           docker login -u $DOCKER_USER -p $DOCKER_PASS
