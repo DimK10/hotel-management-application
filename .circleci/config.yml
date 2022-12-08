@@ -118,7 +118,10 @@ jobs:
 
       - run: |
           sudo chown -R $(whoami) /usr/local/bin
-          curl -L https://github.com/docker/compose/releases/download/2.12.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+          curl -L https://github.com/docker/compose/releases/download/2.12.0/docker-compose-`uname -s`-`uname -m` -o ~/docker-compose
+          chmod +x ~/docker-compose
+          sudo mv ~/docker-compose /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
           MYSQLDB_USER=$MYSQLDB_USER MYSQLDB_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD MYSQLDB_DATABASE=$MYSQLDB_DATABASE MYSQLDB_LOCAL_PORT=$MYSQLDB_LOCAL_PORT MYSQLDB_DOCKER_PORT=$MYSQLDB_DOCKER_PORT SPRING_LOCAL_PORT=$SPRING_LOCAL_PORT SPRING_DOCKER_PORT=$SPRING_DOCKER_PORT SECRET_KEY=$SECRET_KEY docker-compose up -d
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           docker push dimk10/hotel-management-application
