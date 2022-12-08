@@ -114,7 +114,16 @@ jobs:
       - add_ssh_keys
 
       - setup_remote_docker:
-          version: 20.10.20
+          version: 20.10.14
+
+      - run:
+          name: Install Docker Compose
+          environment:
+            COMPOSE_VERSION: '1.29.2'
+          command: |
+            curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
+            chmod +x ~/docker-compose
+            sudo mv ~/docker-compose /usr/local/bin/docker-compose
 
       - run: |
           MYSQLDB_USER=$MYSQLDB_USER MYSQLDB_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD MYSQLDB_DATABASE=$MYSQLDB_DATABASE MYSQLDB_LOCAL_PORT=$MYSQLDB_LOCAL_PORT MYSQLDB_DOCKER_PORT=$MYSQLDB_DOCKER_PORT SPRING_LOCAL_PORT=$SPRING_LOCAL_PORT SPRING_DOCKER_PORT=$SPRING_DOCKER_PORT SECRET_KEY=$SECRET_KEY docker compose up -d
