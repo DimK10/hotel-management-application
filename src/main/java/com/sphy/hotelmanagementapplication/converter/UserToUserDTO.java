@@ -22,7 +22,7 @@ public class UserToUserDTO {
 
         userDTO.setUsername(user.getUsername());
 
-        userDTO.setHashedPassword(user.getHashedPassword());
+//        userDTO.setHashedPassword(user.getHashedPassword());
 
         userDTO.setFirstname(user.getFirstname());
 
@@ -36,7 +36,7 @@ public class UserToUserDTO {
 
         userDTO.setId(user.getId());
 
-        userDTO.setPassword(user.getPassword());
+//        userDTO.setPassword(user.getPassword());
 
         return userDTO;
 

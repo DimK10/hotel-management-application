@@ -11,7 +11,7 @@ const SecuredPage = ({ loadUser, auth, children }) => {
     loadUser();
   }, []);
 
-  if (auth.token === null && auth.isAuthenticated === null) {
+  if (auth.jwt === null && auth.isAuthenticated === null) {
     return <Navigate to='/not-found' />
   }
 

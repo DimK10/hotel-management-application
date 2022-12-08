@@ -22,6 +22,8 @@ public class Hotel extends BaseEntity {
     @Column(name = "area_name")
     private String areaName;
 
+    private String address;
+
     private boolean disabled;
 
     @ManyToOne
@@ -102,6 +104,13 @@ public class Hotel extends BaseEntity {
         this.disabled = disabled;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     @Override
 	public boolean equals(Object o) {
@@ -120,6 +129,7 @@ public class Hotel extends BaseEntity {
                 ", name='" + name + '\'' +
                 ", stars=" + stars +
                 ", areaName='" + areaName + '\'' +
+                ", address='" + address + '\'' +
                 ", owner=" + owner +
 //                ", rooms=" + rooms +
                 '}';

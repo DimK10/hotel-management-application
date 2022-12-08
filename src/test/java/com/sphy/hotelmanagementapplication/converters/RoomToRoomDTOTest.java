@@ -58,6 +58,7 @@ public class RoomToRoomDTOTest {
         room.setName("kala");
         room.getOrders().add(order);
         room.setPrice(500L);
+        room.setCapacity(5);
 
         roomDTO.setId(1L);
         roomDTO.setHotel(hotel.getId());
@@ -66,6 +67,7 @@ public class RoomToRoomDTOTest {
         roomDTO.setName("kala");
         roomDTO.getOrders().add(orderDTO);
         roomDTO.setPrice(500L);
+        roomDTO.setCapacity(5);
 
         roomToRoomDTO = new RoomToRoomDTO(orderToOrderDTO, hotelRepository);
     }
@@ -87,6 +89,7 @@ public class RoomToRoomDTOTest {
         assertEquals(roomDTO.getPrice() , roomToRoomDTO.converter(room).getPrice());
         assertEquals(roomDTO.getHotel() , roomToRoomDTO.converter(room).getHotel());
         assertEquals(roomDTO.getOrders() , roomToRoomDTO.converter(room).getOrders());
+        assertEquals(roomDTO.getCapacity() , roomToRoomDTO.converter(room).getCapacity());
 
 
 

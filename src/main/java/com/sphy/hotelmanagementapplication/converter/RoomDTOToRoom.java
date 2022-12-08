@@ -44,6 +44,8 @@ public class RoomDTOToRoom {
 
         room.setLuxurity(roomDTO.getLuxurity());
 
+        room.setCapacity(roomDTO.getCapacity());
+
         for (OrderDTO orderDTO : roomDTO.getOrders()){
             room.getOrders().add(orderDTOToOrder.converter(orderDTO));
         }
