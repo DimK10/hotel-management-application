@@ -25,13 +25,9 @@ import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name="RAmenity")
-@AttributeOverride(name = "id", column = @Column(name = "amenity_id"))
+@AttributeOverride(name = "id", column = @Column(name = "RAmenity_id"))
 public class RoomAmenity extends BaseEntity{
 	
-//	@Id
-//	@Column(name="amenityRoom_id")
-//	private Long id;
-
 	@Enumerated(EnumType.STRING)
 	private AmenitiesRoom amenitiesR;
 	
@@ -98,4 +94,11 @@ public class RoomAmenity extends BaseEntity{
 	public int hashCode() {
 		return Objects.hash(super.hashCode(), amenitiesR);
 	}
+	
+	@Override
+	public String toString() {
+		return "RoomAmenity [id=" + super.getId() + ", amenitiesR=" + amenitiesR + "]";
+	}
+	
+	
 }// Class
