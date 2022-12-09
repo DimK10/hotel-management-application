@@ -116,25 +116,25 @@ jobs:
       - setup_remote_docker:
           version: 20.10.14
 
-      - run:
-          name: Install Docker Compose
-          environment:
-            COMPOSE_VERSION: '1.29.2'
-          command: |
-            curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
-            chmod +x ~/docker-compose
-            sudo mv ~/docker-compose /usr/local/bin/docker-compose
+      # - run:
+      #     name: Install Docker Compose
+      #     environment:
+      #       COMPOSE_VERSION: '1.29.2'
+      #     command: |
+      #       curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
+      #       chmod +x ~/docker-compose
+      #       sudo mv ~/docker-compose /usr/local/bin/docker-compose
 
       - run: |
+          docker build -t dimk10/hotel-management-application .
           docker login -u $DOCKER_USER -p $DOCKER_PASS
-          MYSQLDB_USER=$MYSQLDB_USER MYSQLDB_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD MYSQLDB_DATABASE=$MYSQLDB_DATABASE MYSQLDB_LOCAL_PORT=$MYSQLDB_LOCAL_PORT MYSQLDB_DOCKER_PORT=$MYSQLDB_DOCKER_PORT SPRING_LOCAL_PORT=$SPRING_LOCAL_PORT SPRING_DOCKER_PORT=$SPRING_DOCKER_PORT SECRET_KEY=$SECRET_KEY docker-compose up -d
-          MYSQLDB_USER=$MYSQLDB_USER MYSQLDB_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD MYSQLDB_DATABASE=$MYSQLDB_DATABASE MYSQLDB_LOCAL_PORT=$MYSQLDB_LOCAL_PORT MYSQLDB_DOCKER_PORT=$MYSQLDB_DOCKER_PORT SPRING_LOCAL_PORT=$SPRING_LOCAL_PORT SPRING_DOCKER_PORT=$SPRING_DOCKER_PORT SECRET_KEY=$SECRET_KEY docker-compose push
+          docker push dimk10/hotel-management-application
           echo 'hotel-management-application.webapplicationonline.eu ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBXYypj+xteI9nFnA2RqJqNxkHHmp5BZfeAW1Qkng17R $EMAIL' >> ~/.ssh/known_hosts
           ssh -o StrictHostKeyChecking=no $USER@$SERVER \<<'ENDSSH'
-          docker-compose pull dimk10/hotel-management-application
+          docker pull dimk10/hotel-management-application
           docker stop hotel-management-application
           docker rm hotel-management-application
-          docker run --name=hotel-management-application --restart=always -p 32768:80 -e SECRET=$SECRET_KEY -d dimk10/hotel-management-application dimk10/hotel-management-application .          
+          docker run --name=hotel-management-application --restart=always -p 32768:80 -e SECRET_KEY=$SECRET_KEY -e MYSQLDB_USER=hms_root -e MYSQLDB_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD -e MYSQLDB_DATABASE=hms_dev -e MYSQLDB_LOCAL_PORT=3307 -e MYSQLDB_DOCKER_PORT=3306 -e SPRING_LOCAL_PORT=80 -e SPRING_DOCKER_PORT=32768 -d dimk10/hotel-management-application dimk10/hotel-management-application .
           ENDSSH
 
       - notify_slack_error
