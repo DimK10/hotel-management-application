@@ -134,7 +134,7 @@ jobs:
           docker pull dimk10/hotel-management-application
           docker stop hotel-management-application
           docker rm hotel-management-application
-          docker run --name=hotel-management-application --restart=always -p 32768:80 -e SECRET_KEY=$SECRET_KEY -e MYSQLDB_USER=hms_root -e MYSQLDB_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD -e MYSQLDB_DATABASE=hms_dev -e MYSQLDB_LOCAL_PORT=3307 -e MYSQLDB_DOCKER_PORT=3306 -e SPRING_LOCAL_PORT=80 -e SPRING_DOCKER_PORT=32768 -d dimk10/hotel-management-application dimk10/hotel-management-application .
+          docker run --name=hotel-management-application --restart=always -p 32768:80 -e SECRET_KEY=$SECRET_KEY -e MYSQLDB_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD -d dimk10/hotel-management-application dimk10/hotel-management-application .
           ENDSSH
 
       - notify_slack_error
