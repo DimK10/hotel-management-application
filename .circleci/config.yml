@@ -116,6 +116,15 @@ jobs:
       - setup_remote_docker:
           version: 20.10.14
 
+      # - run:
+      #     name: Install Docker Compose
+      #     environment:
+      #       COMPOSE_VERSION: '1.29.2'
+      #     command: |
+      #       curl -L "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o ~/docker-compose
+      #       chmod +x ~/docker-compose
+      #       sudo mv ~/docker-compose /usr/local/bin/docker-compose
+
       - run: |
           docker build -t dimk10/hotel-management-application .
           docker login -u $DOCKER_USER -p $DOCKER_PASS
@@ -125,7 +134,7 @@ jobs:
           docker pull dimk10/hotel-management-application
           docker stop hotel-management-application
           docker rm hotel-management-application
-          docker run --name=hotel-management-application --restart=always -p 32768:80 -e SECRET=$SECRET_KEY -d dimk10/hotel-management-application dimk10/hotel-management-application .
+          docker run --name=hotel-management-application --restart=always -p 32768:80 -d -e MYSQLDB_ROOT_PASSWORD='$MYSQLDB_ROOT_PASSWORD' -e SECRET_KEY='$SECRET_KEY' dimk10/hotel-management-application dimk10/hotel-management-application .
           ENDSSH
 
       - notify_slack_error
