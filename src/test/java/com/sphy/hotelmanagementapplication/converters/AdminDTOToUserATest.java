@@ -1,7 +1,5 @@
 package com.sphy.hotelmanagementapplication.converters;
 
-import com.sphy.hotelmanagementapplication.converter.AdminDTOToAdmin;
-import com.sphy.hotelmanagementapplication.domain.Admin;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.dto.AdminDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
@@ -18,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * crated by gp
  */
 @ExtendWith(MockitoExtension.class)
-public class AdminDTOToAdminTest {
+public class AdminDTOToUserATest {
 
     @Mock
     AdminDTOToAdmin adminDTOToAdmin;
@@ -26,7 +24,7 @@ public class AdminDTOToAdminTest {
     @Mock
     HotelRepository hotelRepository;
 
-    Admin admin = new Admin();
+    UserA userA = new UserA();
 
     AdminDTO adminDTO = new AdminDTO();
 
@@ -37,14 +35,14 @@ public class AdminDTOToAdminTest {
    @BeforeEach
    void setUp() throws Exception{
 
-       admin.setId(1L);
-       admin.setUsername("ksenodoxos");
-       admin.setFirstname("giorgos");
-       admin.setLastname("papadopoulos");
-       admin.setHashedPassword("asdfghjk");
-       admin.setEmail("papadopoulos@gmail.com");
-       admin.setEmailVerify(true);
-       admin.getHotels().add(hotel);
+       userA.setId(1L);
+       userA.setUsername("ksenodoxos");
+       userA.setFirstname("giorgos");
+       userA.setLastname("papadopoulos");
+       userA.setHashedPassword("asdfghjk");
+       userA.setEmail("papadopoulos@gmail.com");
+       userA.setEmailVerify(true);
+       userA.getHotels().add(hotel);
 
        adminDTO.setId(1L);
        adminDTO.setUsername("ksenodoxos");
@@ -67,7 +65,7 @@ public class AdminDTOToAdminTest {
         //when
 
         //then
-        assertEquals(admin , adminDTOToAdmin.converter(adminDTO));
+        assertEquals(userA, adminDTOToAdmin.converter(adminDTO));
 
     }
 }

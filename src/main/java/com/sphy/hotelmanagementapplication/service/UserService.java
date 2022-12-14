@@ -40,6 +40,17 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
+
+	/***
+	 * get an admin by his id
+	 * @param id the id of the admin to be found
+	 * @return the admin with the current id
+	 */
+	public User getUserById(Long id){
+		return userRepository.findById(id).orElse(null);
+	}
+
+
     /***
      * take username, password and the role and create a userDetails
      * @param username the username of the user

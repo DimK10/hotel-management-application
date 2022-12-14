@@ -1,7 +1,6 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sphy.hotelmanagementapplication.domain.Client;
 import com.sphy.hotelmanagementapplication.domain.Order;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
@@ -65,9 +64,9 @@ public class OrderControllerTest {
     void setUp() throws Exception {
 
         Room room = new Room(1L);
-        Client client = new Client(1L);
+        UserB userB = new UserB(1L);
         order.setId(1L);
-        order.setClient(client);
+        order.setClient(userB);
         order.setRoom(room);
         order.setCheckInDate(LocalDate.ofEpochDay(2022 - 2 - 3));
         order.setCheckOutDate(LocalDate.ofEpochDay(2022 - 2 - 8));
@@ -76,13 +75,13 @@ public class OrderControllerTest {
         orders.add(order);
 
         Room room1 = new Room(2L);
-        Client client1 = new Client(2L);
+        UserB userB1 = new UserB(2L);
         order1.setId(id2);
         order1.setRoom(room1);
         order1.setCanceled(false);
         order1.setCheckOutDate(LocalDate.ofEpochDay(2022 - 3 - 23));
         order1.setCheckInDate(LocalDate.ofEpochDay(2022 - 3 - 18));
-        order1.setClient(client1);
+        order1.setClient(userB1);
 
         orders.add(order1);
 
@@ -94,7 +93,7 @@ public class OrderControllerTest {
         ordersDTO.add(orderDTO);
 
         orderDTO1.setId(2L);
-        orderDTO1.setClient(client1.getId());
+        orderDTO1.setClient(userB1.getId());
         orderDTO1.setRoom(room1.getId());
         orderDTO1.setCanceled(false);
 

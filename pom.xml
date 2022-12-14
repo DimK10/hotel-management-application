@@ -108,7 +108,7 @@
 	<build>
 		<resources>
 			<resource>
-				<directory>${project.basedir}/client/build</directory>
+				<directory>${project.basedir}/userB/build</directory>
 				<filtering>false</filtering>
 				<targetPath>public/</targetPath>
 			</resource>
@@ -161,7 +161,7 @@
 									<outputDirectory>${basedir}/target/classes/static</outputDirectory>
 									<resources>
 										<resource>
-											<directory>client/build</directory>
+											<directory>userB/build</directory>
 										</resource>
 									</resources>
 								</configuration>
@@ -173,7 +173,7 @@
 						<artifactId>frontend-maven-plugin</artifactId>
 						<version>${frontend-maven-plugin.version}</version>
 						<configuration>
-							<workingDirectory>client</workingDirectory>
+							<workingDirectory>userB</workingDirectory>
 							<nodeVersion>${node.version}</nodeVersion>
 							<downloadRoot>${node.url}</downloadRoot>
 						</configuration>
@@ -233,7 +233,7 @@
 								<configuration>
 									<target>
 										<copy todir="${project.build.directory}/classes/public">
-											<fileset dir="${project.basedir}/client/build"/>
+											<fileset dir="${project.basedir}/userB/build"/>
 										</copy>
 									</target>
 								</configuration>

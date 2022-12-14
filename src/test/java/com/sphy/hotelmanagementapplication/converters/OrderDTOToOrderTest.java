@@ -1,11 +1,9 @@
 package com.sphy.hotelmanagementapplication.converters;
 
 import com.sphy.hotelmanagementapplication.converter.OrderDTOToOrder;
-import com.sphy.hotelmanagementapplication.domain.Client;
 import com.sphy.hotelmanagementapplication.domain.Order;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
-import com.sphy.hotelmanagementapplication.repositories.ClientRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,10 +11,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDate;
-import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
 
 /***
  * crated by gp
@@ -37,7 +33,7 @@ public class OrderDTOToOrderTest {
 
     OrderDTO orderDTO = new OrderDTO();
 
-    Client client = new Client(1L);
+    UserB userB = new UserB(1L);
 
     Room room = new Room(1L);
 
@@ -48,14 +44,14 @@ public class OrderDTOToOrderTest {
         order.setId(1L);
         order.setCheckInDate(LocalDate.of(1993,4,12));
         order.setCheckOutDate(LocalDate.of(1993,4,15));
-        order.setClient(client);
+        order.setClient(userB);
         order.setRoom(room);
 
         orderDTO.setCanceled(false);
         orderDTO.setId(1L);
         orderDTO.setCheckInDate(LocalDate.of(1993,4,12));
         orderDTO.setCheckOutDate(LocalDate.of(1993,4,15));
-        orderDTO.setClient(client.getId());
+        orderDTO.setClient(userB.getId());
         orderDTO.setRoom(1L);
 
         orderDTOToOrder = new OrderDTOToOrder(roomRepository, clientRepository);

@@ -1,10 +1,8 @@
 package com.sphy.hotelmanagementapplication.service;
 
-import com.sphy.hotelmanagementapplication.domain.Admin;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +39,7 @@ public class HotelServiceIT {
         //given
         int expected = 1;
 
-		Admin owner = new Admin(1L);
+		UserA owner = new UserA(1L);
 
         Hotel hotel1 = new Hotel(1L);
 		hotel1.setOwner(owner);

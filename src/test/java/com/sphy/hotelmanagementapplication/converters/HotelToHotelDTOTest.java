@@ -2,10 +2,8 @@ package com.sphy.hotelmanagementapplication.converters;
 
 import com.sphy.hotelmanagementapplication.converter.HotelToHotelDTO;
 import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
-import com.sphy.hotelmanagementapplication.domain.Admin;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
-import com.sphy.hotelmanagementapplication.dto.AdminDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,11 +12,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 /***
@@ -37,7 +32,7 @@ public class HotelToHotelDTOTest {
 
     HotelDTO hotelDTO = new HotelDTO();
 
-    Admin admin = new Admin(1L);
+    UserA userA = new UserA(1L);
 
     Room room = new Room(1L);
 
@@ -46,7 +41,7 @@ public class HotelToHotelDTOTest {
     @BeforeEach
     void setUp() throws Exception{
 
-        hotel.setOwner(admin);
+        hotel.setOwner(userA);
         hotel.setAreaName("Athens");
         hotel.setDisabled(false);
         hotel.setName("grand lala");
@@ -54,7 +49,7 @@ public class HotelToHotelDTOTest {
         hotel.getRooms().add(room);
         hotel.setAddress("address");
 
-        hotelDTO.setOwner(admin.getId());
+        hotelDTO.setOwner(userA.getId());
         hotelDTO.setAreaName("Athens");
         hotelDTO.setDisabled(false);
         hotelDTO.setName("grand lala");

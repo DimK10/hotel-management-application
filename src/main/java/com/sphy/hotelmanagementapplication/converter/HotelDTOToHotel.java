@@ -3,7 +3,8 @@ package com.sphy.hotelmanagementapplication.converter;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
-import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
+import com.sphy.hotelmanagementapplication.repositories.UserRepository;
+
 import org.springframework.stereotype.Component;
 
 /***
@@ -14,12 +15,12 @@ public class HotelDTOToHotel {
 
     private final RoomDTOToRoom roomDTOToRoom ;
 
-    private final AdminRepository adminRepository;
+    private final UserRepository userRepository;
 
 
-    public HotelDTOToHotel(RoomDTOToRoom roomDTOToRoom, AdminRepository adminRepository) {
+    public HotelDTOToHotel(RoomDTOToRoom roomDTOToRoom, UserRepository userRepository) {
         this.roomDTOToRoom = roomDTOToRoom;
-        this.adminRepository = adminRepository;
+        this.userRepository = userRepository;
     }
 
     /***
@@ -37,7 +38,7 @@ public class HotelDTOToHotel {
         hotel.setAddress(hotelDTO.getAddress());
         hotel.setStars(hotelDTO.getStars());
 
-        hotel.setOwner(adminRepository.findById(hotelDTO.getOwner()).get());
+        hotel.setOwner(userRepository.findById(hotelDTO.getOwner()).get());
 
         for (RoomDTO roomDTO : hotelDTO.getRooms()){
             hotel.getRooms().add(roomDTOToRoom.converter(roomDTO));

@@ -3,6 +3,8 @@ package com.sphy.hotelmanagementapplication.dto;
 import org.springframework.data.annotation.Transient;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /***
  * created by gp
@@ -27,6 +29,10 @@ public class UserDTO implements Serializable{
 
     @Transient
     private String password;
+
+	private Set<HotelDTO> hotelDTOS = new HashSet<>();
+
+	private Set<OrderDTO> orderDTOS = new HashSet<>();
 
     public UserDTO() {
     }
@@ -104,18 +110,36 @@ public class UserDTO implements Serializable{
         this.role = role;
     }
 
-    @Override
-    public String toString() {
-        return "UserDTO{" +
-                "id=" + id +
-                ", emailVerify=" + emailVerify +
-                ", username='" + username + '\'' +
-                ", firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", email='" + email + '\'' +
-                ", hashedPassword='" + hashedPassword + '\'' +
-                ", role='" + role + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+	public Set<HotelDTO> getHotelDTOS() {
+		return hotelDTOS;
+	}
+
+	public void setHotelDTOS(Set<HotelDTO> hotelDTOS) {
+		this.hotelDTOS = hotelDTOS;
+	}
+
+	public Set<OrderDTO> getOrderDTOS() {
+		return orderDTOS;
+	}
+
+	public void setOrderDTOS(Set<OrderDTO> orderDTOS) {
+		this.orderDTOS = orderDTOS;
+	}
+
+	@Override
+	public String toString() {
+		return "UserDTO{" +
+				"id=" + id +
+				", emailVerify=" + emailVerify +
+				", username='" + username + '\'' +
+				", firstname='" + firstname + '\'' +
+				", lastname='" + lastname + '\'' +
+				", email='" + email + '\'' +
+				", hashedPassword='" + hashedPassword + '\'' +
+				", role='" + role + '\'' +
+				", password='" + password + '\'' +
+				", hotelDTOS=" + hotelDTOS +
+				", orderDTOS=" + orderDTOS +
+				'}';
+	}
 }

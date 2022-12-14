@@ -27,8 +27,8 @@ public class Hotel extends BaseEntity {
     private boolean disabled;
 
     @ManyToOne
-    @JoinColumn(name = "admin_id")
-    private Admin owner;
+    @JoinColumn(name = "user_id")
+    private User owner;
 
     @OneToMany(mappedBy = "hotel", fetch =  FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Room> rooms = new HashSet<>();
@@ -56,11 +56,11 @@ public class Hotel extends BaseEntity {
 		super.setId(id);
 	}
 
-    public Admin getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(Admin owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 

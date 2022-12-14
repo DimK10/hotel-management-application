@@ -1,15 +1,15 @@
 package com.sphy.hotelmanagementapplication.service;
 
 import com.sphy.hotelmanagementapplication.converter.*;
-import com.sphy.hotelmanagementapplication.domain.Admin;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.domain.User;
+import com.sphy.hotelmanagementapplication.domain.User.Role;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
-import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
-import com.sphy.hotelmanagementapplication.repositories.ClientRepository;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
+import com.sphy.hotelmanagementapplication.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,6 +19,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
@@ -39,10 +41,7 @@ public class HotelServiceTest {
         HotelRepository hotelRepository;
 
         @Mock
-        ClientRepository clientRepository;
-
-        @Mock
-        AdminRepository adminRepository;
+		UserRepository userRepository;
 
         @Mock
         RoomService roomService;
@@ -72,7 +71,8 @@ public class HotelServiceTest {
             rooms = new ArrayList<>();
             rooms1 = new ArrayList<>();
 
-            Admin admin = new Admin(1L);
+            User admin = new User(1L);
+			admin.setRole(Role.ADMIN);
 
             Hotel hotel = new Hotel(1L);
             hotel.setOwner(admin);
@@ -167,12 +167,23 @@ public class HotelServiceTest {
             roomDTOS1.add(roomDTO4);
             hotelDTO.getRooms().add(roomDTO2);
 
-            hotelService = new HotelService(hotelRepository,adminRepository,
+            hotelService = new HotelService(hotelRepository, userRepository,
                     new HotelDTOToHotel(new RoomDTOToRoom(hotelRepository,
-                            new OrderDTOToOrder(roomRepository, clientRepository)),adminRepository),
+                            new OrderDTOToOrder(roomRepository, userRepository)), userRepository),
                     new HotelToHotelDTO(new RoomToRoomDTO(
-                            new OrderToOrderDTO(roomRepository, clientRepository),hotelRepository)),roomService,
-                    new AdminService(adminRepository), roomService);
+                            new OrderToOrderDTO(roomRepository, userRepository),hotelRepository)),roomService,
+                    new UserService(userRepository, new UserToUserDTO(), new UserDTOToUser(new HotelToHotelDTO(new RoomToRoomDTO(
+							new OrderToOrderDTO(roomRepository, userRepository), hotelRepository)), new OrderToOrderDTO(roomRepository, userRepository)), new PasswordEncoder() {
+						@Override
+						public String encode(CharSequence rawPassword) {
+							return null;
+						}
+
+						@Override
+						public boolean matches(CharSequence rawPassword, String encodedPassword) {
+							return false;
+						}
+					}), roomService);
         }
 
         @Test
@@ -188,8 +199,9 @@ public class HotelServiceTest {
         @Test
         void getHotelById() throws Exception {
             // given
-            Admin admin = new Admin(1L);
-            Optional<Admin> adminOptional = Optional.of(admin);
+            User admin = new User(1L);
+			admin.setRole(Role.ADMIN);
+            Optional<User> adminOptional = Optional.of(admin);
 
             Hotel hotel = new Hotel(1L);
             hotel.setName("hotel");
@@ -219,7 +231,8 @@ public class HotelServiceTest {
         @Test
         void getHotelByName() throws Exception {
             // given
-            Admin admin = new Admin(1L);
+            User admin = new User(1L);
+			admin.setRole(Role.ADMIN);
 
             Hotel hotel = new Hotel(1L);
             hotel.setOwner(admin);

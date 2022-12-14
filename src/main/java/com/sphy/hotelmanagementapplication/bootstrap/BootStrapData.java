@@ -1,42 +1,42 @@
 package com.sphy.hotelmanagementapplication.bootstrap;
 
 import com.sphy.hotelmanagementapplication.domain.*;
+import com.sphy.hotelmanagementapplication.domain.User.Role;
 import com.sphy.hotelmanagementapplication.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 
 
 @Component
 public class BootStrapData implements CommandLineRunner {
-    private final ClientRepository clientRepository;
+    private final UserRepository userRepository;
     private final HotelRepository hotelRepository;
     private final OrderRepository orderRepository;
     private final RoomRepository roomRepository;
-    private final AdminRepository adminRepository;
 
 
-    public BootStrapData(ClientRepository clientRepository, HotelRepository hotelRepository, OrderRepository orderRepository, RoomRepository roomRepository, AdminRepository adminRepository) {
-        this.clientRepository = clientRepository;
+    public BootStrapData(UserRepository userRepository, HotelRepository hotelRepository, OrderRepository orderRepository, RoomRepository roomRepository) {
+        this.userRepository = userRepository;
         this.hotelRepository = hotelRepository;
         this.orderRepository = orderRepository;
         this.roomRepository = roomRepository;
-        this.adminRepository = adminRepository;
     }
 
     @Override
     public void run(String... args) throws Exception {
-        Client client = new Client(null, true,"pelatis", "mitsos","allatsas", "pelatis@gmail.com", "asfgbafbf");
+        User client = new User(null, true,"pelatis", "mitsos","allatsas", "pelatis@gmail.com", "asfgbafbf", Role.CLIENT, new HashSet<>(), new HashSet<>());
         client.setHashedPassword("hfdgjakdhgakj");
         client.setHashedPassword("avbasbvabcba");
-        clientRepository.save(client);
+        userRepository.save(client);
 
 
-        Admin admin = new Admin(null, true, "geo_46", "thanos", "poul", "geopapadopoulos@gmail.com", "soula sagapo");
+        User admin = new User(null, true, "geo_46", "thanos", "poul", "geopapadopoulos@gmail.com", "soula sagapo", Role.ADMIN, new HashSet<>(), new HashSet<>());
         admin.setHashedPassword("8b608a44e4bce1cea800d857480aed7024916dd27b01e18980058584f2d84301b7399541ba221e34");
 
-        adminRepository.save(admin);
+        userRepository.save(admin);
 
         Room ena = new Room( null, "ena",5,54, false);
         roomRepository.save(ena);
@@ -59,7 +59,7 @@ public class BootStrapData implements CommandLineRunner {
         roomRepository.save(ena);
         roomRepository.save(dio);
         admin.getHotels().add(ksenia);
-        adminRepository.save(admin);
+        userRepository.save(admin);
 
 
         ksenia.getRooms().add(ena);
@@ -88,15 +88,5 @@ public class BootStrapData implements CommandLineRunner {
 //        roomRepository.save(dio);
 //        hotelRepository.save(ksenia);
 //        orderRepository.save(order);
-
-
-
-
-
-
-
-
-
-
     }
 }

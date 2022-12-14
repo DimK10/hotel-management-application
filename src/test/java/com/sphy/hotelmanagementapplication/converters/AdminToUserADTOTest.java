@@ -1,8 +1,6 @@
 package com.sphy.hotelmanagementapplication.converters;
 
-import com.sphy.hotelmanagementapplication.converter.AdminToAdminDTO;
 import com.sphy.hotelmanagementapplication.converter.HotelToHotelDTO;
-import com.sphy.hotelmanagementapplication.domain.Admin;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.AdminDTO;
@@ -22,14 +20,14 @@ import static org.mockito.Mockito.when;
  * crated by gp
  */
 @ExtendWith(MockitoExtension.class)
-public class AdminToAdminDTOTest {
+public class AdminToUserADTOTest {
 
     @Mock
     AdminToAdminDTO adminToAdminDTO;
 
     @Mock
     HotelToHotelDTO hotelToHotelDTO;
-    Admin admin = new Admin();
+    UserA userA = new UserA();
 
     AdminDTO adminDTO = new AdminDTO();
 
@@ -43,14 +41,14 @@ public class AdminToAdminDTOTest {
         hotel.getRooms().add(new Room(1L));
         hotelDTO.getRooms().add(new RoomDTO(1L));
 
-        admin.setId(1L);
-        admin.setUsername("ksenodoxos");
-        admin.setFirstname("giorgos");
-        admin.setLastname("papadopoulos");
-        admin.setHashedPassword("asdfghjk");
-        admin.setEmail("papadopoulos@gmail.com");
-        admin.setEmailVerify(true);
-        admin.getHotels().add(hotel);
+        userA.setId(1L);
+        userA.setUsername("ksenodoxos");
+        userA.setFirstname("giorgos");
+        userA.setLastname("papadopoulos");
+        userA.setHashedPassword("asdfghjk");
+        userA.setEmail("papadopoulos@gmail.com");
+        userA.setEmailVerify(true);
+        userA.getHotels().add(hotel);
 
         adminDTO.setId(1L);
         adminDTO.setUsername("ksenodoxos");
@@ -75,13 +73,13 @@ public class AdminToAdminDTOTest {
         when(hotelToHotelDTO.converter(any())).thenReturn(hotelDTO);
 
         //then
-        assertEquals(adminDTO.getId() , adminToAdminDTO.converter(admin).getId());
-        assertEquals(adminDTO.getLastname() , adminToAdminDTO.converter(admin).getLastname());
-        assertEquals(adminDTO.getFirstname() , adminToAdminDTO.converter(admin).getFirstname());
-        assertEquals(adminDTO.getUsername(), adminToAdminDTO.converter(admin).getUsername());
-        assertEquals(adminDTO.getHashedPassword(), adminToAdminDTO.converter(admin).getHashedPassword());
-        assertEquals(adminDTO.getEmail(), adminToAdminDTO.converter(admin).getEmail());
-        assertEquals(adminDTO.getHotels(), adminToAdminDTO.converter(admin).getHotels());
+        assertEquals(adminDTO.getId() , adminToAdminDTO.converter(userA).getId());
+        assertEquals(adminDTO.getLastname() , adminToAdminDTO.converter(userA).getLastname());
+        assertEquals(adminDTO.getFirstname() , adminToAdminDTO.converter(userA).getFirstname());
+        assertEquals(adminDTO.getUsername(), adminToAdminDTO.converter(userA).getUsername());
+        assertEquals(adminDTO.getHashedPassword(), adminToAdminDTO.converter(userA).getHashedPassword());
+        assertEquals(adminDTO.getEmail(), adminToAdminDTO.converter(userA).getEmail());
+        assertEquals(adminDTO.getHotels(), adminToAdminDTO.converter(userA).getHotels());
 
     }
 }

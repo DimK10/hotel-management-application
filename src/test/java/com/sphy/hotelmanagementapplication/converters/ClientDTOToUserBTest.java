@@ -1,8 +1,6 @@
 package com.sphy.hotelmanagementapplication.converters;
 
-import com.sphy.hotelmanagementapplication.converter.ClientDTOToClient;
 import com.sphy.hotelmanagementapplication.converter.OrderDTOToOrder;
-import com.sphy.hotelmanagementapplication.domain.Client;
 import com.sphy.hotelmanagementapplication.domain.Order;
 import com.sphy.hotelmanagementapplication.dto.ClientDTO;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
@@ -18,14 +16,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * crated by gp
  */
 @ExtendWith(MockitoExtension.class)
-public class ClientDTOToClientTest {
+public class ClientDTOToUserBTest {
 
     @Mock
     ClientDTOToClient clientDTOToClient;
     @Mock
     OrderDTOToOrder orderDTOToOrder;
 
-    Client client = new Client();
+    UserB userB = new UserB();
 
     ClientDTO clientDTO = new ClientDTO();
 
@@ -36,14 +34,14 @@ public class ClientDTOToClientTest {
     @BeforeEach
     void setUp() throws Exception{
 
-        client.setId(1L);
-        client.setUsername("pelatis");
-        client.setFirstname("giorgos");
-        client.setLastname("papadopoulos");
-        client.setHashedPassword("asdfghjk");
-        client.setEmail("papadopoulos@gmail.com");
-        client.setEmailVerify(true);
-        client.getOrders().add(order);
+        userB.setId(1L);
+        userB.setUsername("pelatis");
+        userB.setFirstname("giorgos");
+        userB.setLastname("papadopoulos");
+        userB.setHashedPassword("asdfghjk");
+        userB.setEmail("papadopoulos@gmail.com");
+        userB.setEmailVerify(true);
+        userB.getOrders().add(order);
 
         clientDTO.setId(1L);
         clientDTO.setUsername("pelatis");
@@ -66,7 +64,7 @@ public class ClientDTOToClientTest {
         //when
 
         //then
-        assertEquals(client , clientDTOToClient.converter(clientDTO));
+        assertEquals(userB, clientDTOToClient.converter(clientDTO));
 
     }
 }

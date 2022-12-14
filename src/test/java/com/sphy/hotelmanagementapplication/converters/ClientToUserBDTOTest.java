@@ -1,10 +1,6 @@
 package com.sphy.hotelmanagementapplication.converters;
 
-import com.sphy.hotelmanagementapplication.converter.ClientDTOToClient;
-import com.sphy.hotelmanagementapplication.converter.ClientToClientDTO;
-import com.sphy.hotelmanagementapplication.converter.OrderDTOToOrder;
 import com.sphy.hotelmanagementapplication.converter.OrderToOrderDTO;
-import com.sphy.hotelmanagementapplication.domain.Client;
 import com.sphy.hotelmanagementapplication.domain.Order;
 import com.sphy.hotelmanagementapplication.dto.ClientDTO;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
@@ -22,7 +18,7 @@ import static org.mockito.Mockito.when;
  * crated by gp
  */
 @ExtendWith(MockitoExtension.class)
-public class ClientToClientDTOTest {
+public class ClientToUserBDTOTest {
 
 
     @Mock
@@ -30,7 +26,7 @@ public class ClientToClientDTOTest {
     @Mock
     OrderToOrderDTO orderToOrderDTO;
 
-    Client client = new Client();
+    UserB userB = new UserB();
 
     ClientDTO clientDTO = new ClientDTO();
 
@@ -41,14 +37,14 @@ public class ClientToClientDTOTest {
     @BeforeEach
     void setUp() throws Exception{
 
-        client.setId(1L);
-        client.setUsername("pelatis");
-        client.setFirstname("giorgos");
-        client.setLastname("papadopoulos");
-        client.setHashedPassword("asdfghjk");
-        client.setEmail("papadopoulos@gmail.com");
-        client.setEmailVerify(true);
-        client.getOrders().add(order);
+        userB.setId(1L);
+        userB.setUsername("pelatis");
+        userB.setFirstname("giorgos");
+        userB.setLastname("papadopoulos");
+        userB.setHashedPassword("asdfghjk");
+        userB.setEmail("papadopoulos@gmail.com");
+        userB.setEmailVerify(true);
+        userB.getOrders().add(order);
 
         clientDTO.setId(1L);
         clientDTO.setUsername("pelatis");
@@ -73,13 +69,13 @@ public class ClientToClientDTOTest {
 
 
         //then
-        assertEquals(clientDTO.getId() , clientToClientDTO.converter(client).getId());
-        assertEquals(clientDTO.getFirstname() , clientToClientDTO.converter(client).getFirstname());
-        assertEquals(clientDTO.getLastname() , clientToClientDTO.converter(client).getLastname());
-        assertEquals(clientDTO.getUsername() , clientToClientDTO.converter(client).getUsername());
-        assertEquals(clientDTO.getHashedPassword() , clientToClientDTO.converter(client).getHashedPassword());
-        assertEquals(clientDTO.getEmail() , clientToClientDTO.converter(client).getEmail());
-        assertEquals(clientDTO.getOrders(), clientToClientDTO.converter(client).getOrders());
+        assertEquals(clientDTO.getId() , clientToClientDTO.converter(userB).getId());
+        assertEquals(clientDTO.getFirstname() , clientToClientDTO.converter(userB).getFirstname());
+        assertEquals(clientDTO.getLastname() , clientToClientDTO.converter(userB).getLastname());
+        assertEquals(clientDTO.getUsername() , clientToClientDTO.converter(userB).getUsername());
+        assertEquals(clientDTO.getHashedPassword() , clientToClientDTO.converter(userB).getHashedPassword());
+        assertEquals(clientDTO.getEmail() , clientToClientDTO.converter(userB).getEmail());
+        assertEquals(clientDTO.getOrders(), clientToClientDTO.converter(userB).getOrders());
 
 
 

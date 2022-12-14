@@ -2,11 +2,11 @@ package com.sphy.hotelmanagementapplication.converters;
 
 import com.sphy.hotelmanagementapplication.converter.HotelDTOToHotel;
 import com.sphy.hotelmanagementapplication.converter.RoomDTOToRoom;
-import com.sphy.hotelmanagementapplication.domain.Admin;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
+import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.AdminDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
-import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
+import com.sphy.hotelmanagementapplication.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,13 +30,14 @@ public class HotelDTOToHotelTest {
     RoomDTOToRoom roomDTOToRoom;
 
     @Mock
-    AdminRepository adminRepository;
+	UserRepository userRepository;
 
     Hotel hotel = new Hotel();
 
     HotelDTO hotelDTO = new HotelDTO();
 
-    Admin admin = new Admin(1L);
+    User admin = new User(1L);
+
 
     AdminDTO adminDTO = new AdminDTO(1L);
 
@@ -55,7 +56,7 @@ public class HotelDTOToHotelTest {
         hotelDTO.setName("grand Athens");
         hotelDTO.setStars(5);
 
-        hotelDTOToHotel = new HotelDTOToHotel(roomDTOToRoom, adminRepository);
+        hotelDTOToHotel = new HotelDTOToHotel(roomDTOToRoom, userRepository);
     }
 
     @Test
@@ -64,7 +65,7 @@ public class HotelDTOToHotelTest {
         //given
 
         //when
-        when(adminRepository.findById(anyLong())).thenReturn(Optional.of(admin));
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(admin));
 
         //then
         assertEquals(hotel , hotelDTOToHotel.converter(hotelDTO));
