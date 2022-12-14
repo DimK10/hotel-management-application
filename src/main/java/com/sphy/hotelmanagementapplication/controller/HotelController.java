@@ -64,15 +64,16 @@ public class HotelController {
      * @return all hotels
      * @throws ApiRequestException if There are no hotels
      */
-    @GetMapping("/api/hotels/{pageNo}/{pageSize}/{sortBy}")
+    @GetMapping("/api/hotels/{pageNo}/{pageSize}/{sortBy}/{userId}")
     @Transactional
     public ResponseEntity<List<HotelDTO>> findAllRooms(
             @PathVariable Integer pageNo,
             @PathVariable Integer pageSize,
-            @PathVariable String sortBy)
+            @PathVariable String sortBy,
+            @PathVariable Long userId)
             throws ApiRequestException {
 
-        List<HotelDTO> hotelDTOS = service.getHotels(pageNo,pageSize, sortBy);
+        List<HotelDTO> hotelDTOS = service.getHotels(pageNo,pageSize, sortBy, userId);
 
         return new ResponseEntity<List<HotelDTO>>(hotelDTOS, new HttpHeaders(), HttpStatus.OK);
     }

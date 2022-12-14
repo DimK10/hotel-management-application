@@ -17,6 +17,8 @@ const AdvancedSearch = (props) => {
     location: '',
     checkInDate: new Date(),
     checkOutDate: new Date(new Date().setDate(new Date().getDate() + 7)),
+    priceFrom: 0,
+    priceTo: 0,
     adultsRange: 1,
     stars: 1,
     parking: false,

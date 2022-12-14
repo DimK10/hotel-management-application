@@ -47,7 +47,11 @@ public class BootStrapData implements CommandLineRunner {
 
 
         Hotel ksenia = new Hotel(null, "ksenia", 5,"athens", false);
+        Hotel ksenia2 = new Hotel(null, "ksenia2", 5,"athens", false);
+        Hotel ksenia3 = new Hotel(null, "ksenia3", 5,"athens", false);
         hotelRepository.save(ksenia);
+        hotelRepository.save(ksenia2);
+        hotelRepository.save(ksenia3);
         ksenia.setOwner(admin);
         hotelRepository.save(ksenia);
         ena.setHotel(ksenia);

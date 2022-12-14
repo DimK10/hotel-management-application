@@ -197,10 +197,10 @@ public class HotelControllerTest {
         // Given
 
         // When
-        when(hotelService.getHotels(0,10,"id")).thenReturn(hotelDTOS1);
+        when(hotelService.getHotels(0,10,"id", 1L)).thenReturn(hotelDTOS1);
 
         // Return
-        mockMvc.perform(get("/api/hotels/0/10/id"))
+        mockMvc.perform(get("/api/hotels/0/10/id/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(jsonPath(
