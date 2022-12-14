@@ -32,6 +32,7 @@ public class UserToUserDTO {
 
 		userDTO.setUsername(user.getUsername());
 
+//		userDTO.setHashedPassword(user.getHashedPassword());
 		userDTO.setHashedPassword(null);
 
 		userDTO.setFirstname(user.getFirstname());

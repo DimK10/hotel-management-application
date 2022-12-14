@@ -33,8 +33,8 @@ public class BootStrapData implements CommandLineRunner {
         userRepository.save(client);
 
 
-        User admin = new User(null, true, "geo_46", "thanos", "poul", "geopapadopoulos@gmail.com", "soula sagapo", Role.ADMIN, new HashSet<>(), new HashSet<>());
-        admin.setHashedPassword("8b608a44e4bce1cea800d857480aed7024916dd27b01e18980058584f2d84301b7399541ba221e34");
+        User admin = new User(null, true, "geo_46", "thanos", "poul", "geopapadopoulos@gmail.com", "soula_sagapo", Role.ADMIN, new HashSet<>(), new HashSet<>());
+        admin.setHashedPassword("5c54105254c53d8e67ce12cddc0dc00a85ebd4156c68b2c8ee955d6d9066396ed4780bea29e02ef5");
 
         userRepository.save(admin);
 

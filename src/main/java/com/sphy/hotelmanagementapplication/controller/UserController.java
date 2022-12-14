@@ -88,6 +88,7 @@ public class UserController {
 	 */
 	@GetMapping("/api/auth")
 	public UserDTO getUser(@RequestHeader(name="Authorization") String token) {
+		token = token.substring(7);
 		String username = jwtUtil.extractUsername(token);
 		return userService.getUserByUsername(username);
 	}
