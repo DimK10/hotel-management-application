@@ -37,7 +37,11 @@ public class UserDTO implements Serializable{
     public UserDTO() {
     }
 
-    public String getPassword() {
+	public UserDTO(Long id) {
+		this.id = id;
+	}
+
+	public String getPassword() {
         return password;
     }
 

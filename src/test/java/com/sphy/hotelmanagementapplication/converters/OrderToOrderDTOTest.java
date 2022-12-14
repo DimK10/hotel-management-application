@@ -3,9 +3,11 @@ package com.sphy.hotelmanagementapplication.converters;
 import com.sphy.hotelmanagementapplication.converter.OrderToOrderDTO;
 import com.sphy.hotelmanagementapplication.domain.Order;
 import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
+import com.sphy.hotelmanagementapplication.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,7 +34,7 @@ public class OrderToOrderDTOTest {
     RoomRepository roomRepository;
 
     @Mock
-    ClientRepository clientRepository;
+	UserRepository userRepository;
 
 
 
@@ -40,7 +42,7 @@ public class OrderToOrderDTOTest {
 
     OrderDTO orderDTO = new OrderDTO();
 
-    UserB userB = new UserB(1L);
+    User client = new User(1L);
 
     Room room = new Room(1L);
 
@@ -53,17 +55,17 @@ public class OrderToOrderDTOTest {
         order.setId(1L);
         order.setCheckInDate(LocalDate.of(1993,4,12));
         order.setCheckOutDate(LocalDate.of(1993,4,15));
-        order.setClient(userB);
+        order.setClient(client);
         order.setRoom(room);
 
         orderDTO.setCanceled(false);
         orderDTO.setId(1L);
         orderDTO.setCheckInDate(LocalDate.of(1993,4,12));
         orderDTO.setCheckOutDate(LocalDate.of(1993,4,15));
-        orderDTO.setClient(userB.getId());
+        orderDTO.setClient(client.getId());
         orderDTO.setRoom(roomDTO.getId());
 
-        orderToOrderDTO = new OrderToOrderDTO(roomRepository, clientRepository);
+        orderToOrderDTO = new OrderToOrderDTO(roomRepository, userRepository);
     }
 
     @Test
@@ -72,7 +74,7 @@ public class OrderToOrderDTOTest {
         //given
 
         //when
-        when(clientRepository.findById(anyLong())).thenReturn(Optional.of(userB));
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(client));
 
 
         //then

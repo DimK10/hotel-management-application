@@ -4,8 +4,8 @@ import com.sphy.hotelmanagementapplication.converter.HotelDTOToHotel;
 import com.sphy.hotelmanagementapplication.converter.RoomDTOToRoom;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.User;
-import com.sphy.hotelmanagementapplication.dto.AdminDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
+import com.sphy.hotelmanagementapplication.dto.UserDTO;
 import com.sphy.hotelmanagementapplication.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -37,9 +37,6 @@ public class HotelDTOToHotelTest {
     HotelDTO hotelDTO = new HotelDTO();
 
     User admin = new User(1L);
-
-
-    AdminDTO adminDTO = new AdminDTO(1L);
 
     @BeforeEach
     void setUp() throws Exception{

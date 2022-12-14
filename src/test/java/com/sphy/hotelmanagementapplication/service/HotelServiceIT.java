@@ -1,6 +1,7 @@
 package com.sphy.hotelmanagementapplication.service;
 
 import com.sphy.hotelmanagementapplication.domain.Hotel;
+import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ public class HotelServiceIT {
         //given
         int expected = 1;
 
-		UserA owner = new UserA(1L);
+		User owner = new User(1L);
 
         Hotel hotel1 = new Hotel(1L);
 		hotel1.setOwner(owner);
@@ -59,7 +60,7 @@ public class HotelServiceIT {
 
         //when
 
-        List<HotelDTO> hotelDTOS = hotelService.getHotels(0,expected,"id", 2L);
+        List<HotelDTO> hotelDTOS = hotelService.getHotels(0,expected,"id", 1L);
 
         //then
         assertEquals(expected, hotelDTOS.size());
