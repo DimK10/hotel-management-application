@@ -99,11 +99,12 @@ public class HotelControllerTest {
         //given
 
         //when
-        when(hotelService.countHotels()).thenReturn(1);
+        when(hotelService.countHotels(anyLong())).thenReturn(1);
 
         //then
         mockMvc.perform(
-                        get("/api/hotels/quantity"))
+                        get("/api/hotels/quantity/{userId}",1L))
+
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("@")
                         .value(1));

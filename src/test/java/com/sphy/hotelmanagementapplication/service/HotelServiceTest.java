@@ -323,10 +323,10 @@ public class HotelServiceTest {
 		//given
 
 		//when
-		when(hotelRepository.countAll()).thenReturn(1);
+		when(hotelRepository.countAll(anyLong())).thenReturn(1);
 
 		//then
-		assertEquals(1, hotelService.countHotels());
+		assertEquals(1, hotelService.countHotels(1L));
 
 	}
 

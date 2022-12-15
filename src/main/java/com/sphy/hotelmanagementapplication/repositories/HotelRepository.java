@@ -29,8 +29,8 @@ public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long> 
 
 	boolean existsByName(String name);
 
-	@Query("SELECT count(h) from Hotel")
-	int countAll();
+	@Query("SELECT count(h) from Hotel h where h.owner.id = :id")
+	int countAll(@Param("id") Long id);
 
 	@Query(value = "select h from Hotel h where h.owner.id = :id",
 	countQuery = "select count (h) from  Hotel h where h.owner.id = :id")

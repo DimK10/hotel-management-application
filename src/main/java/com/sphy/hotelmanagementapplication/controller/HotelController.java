@@ -50,18 +50,18 @@ public class HotelController {
 	}
 
     /***
-     * counts all the hotels in the database
+     * counts all the hotels in the database for a specific user id
      * @return the number of hotels that exists in the database
      */
-    @GetMapping("/api/hotels/quantity")
-    public int countHotels(){
+    @GetMapping("/api/hotels/quantity/{userId}")
+    public int countHotels(@PathVariable Long userId){
 
-        return service.countHotels();
+        return service.countHotels(userId);
     }
 
     /***
      * Finds all hotels
-     * @return all hotels
+     * @return all hotels for a specific user id
      * @throws ApiRequestException if There are no hotels
      */
     @GetMapping("/api/hotels/{pageNo}/{pageSize}/{sortBy}/{userId}")

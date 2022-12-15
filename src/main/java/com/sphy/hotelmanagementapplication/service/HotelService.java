@@ -65,12 +65,12 @@ public class HotelService {
 	}
 
 	/***
-	 * counts all the hotels in the database
+	 * counts all the hotels in the database for a specific user id
 	 * @return the number of hotels that exists in the database
 	 */
-	public int countHotels(){
+	public int countHotels(Long userId){
 
-		return hotelRepository.countAll();
+		return hotelRepository.countAll(userId);
 	}
 
 
