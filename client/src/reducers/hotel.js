@@ -15,5 +15,7 @@ export default function (state = initialState, action) {
         ...state,
         hotels: payload
       }
+    default:
+      return state;
   }
 }
