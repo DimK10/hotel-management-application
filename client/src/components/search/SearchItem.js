@@ -1,8 +1,7 @@
 import React, {Fragment} from 'react';
-import PropTypes from 'prop-types';
 
 import '../../css/btnRaised.css'
-import {Navigate, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import moment from "moment";
 import {createNewOrderPreCheckout} from "../../actions/order";
 import {connect} from "react-redux";

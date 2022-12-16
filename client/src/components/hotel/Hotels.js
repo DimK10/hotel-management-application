@@ -2,23 +2,22 @@ import React, {Fragment, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import SidebarComp from "../layout/Sidebar";
 import HeaderNav from "../layout/HeaderNav";
-import HotelCard from "./HotelCard";
-import CIcon from "@coreui/icons-react";
-import {cilPencil, cilTrash} from "@coreui/icons";
-import {Tooltip} from '@coreui/coreui/dist/js/coreui';
 import {connect} from "react-redux";
 import {getAllHotelsByPage} from "../../actions/hotel";
 import HotelTable from "./HotelTable";
+import Loading from "../layout/Loading";
 
 
-const Hotel = ({getAllHotelsByPage, hotels, auth}) => {
+const Hotel = ({getAllHotelsByPage, hotelState, auth}) => {
+
+  const {loading, user} = auth;
+  const {loading: hotelsLoading, hotels} = hotelState;
 
   useEffect(() => {
-
-    const {user} = auth;
-
-    getAllHotelsByPage(0, 10, 'id', user?.id);
-  }, [getAllHotelsByPage]);
+    if (!loading && !hotelsLoading) {
+      getAllHotelsByPage(0, 10, 'id', user?.id);
+    }
+  }, [auth, getAllHotelsByPage]);
 
 
   return (
@@ -27,9 +26,12 @@ const Hotel = ({getAllHotelsByPage, hotels, auth}) => {
       <HeaderNav>
         {hotels.length > 0
           ?
-          <HotelTable hotels={hotels}/>
+          <HotelTable key={1} hotels={hotels}/>
           :
+
+
           <h2>No hotels found</h2>
+
         }
       </HeaderNav>
     </Fragment>
@@ -37,13 +39,13 @@ const Hotel = ({getAllHotelsByPage, hotels, auth}) => {
 };
 
 Hotel.propTypes = {
-  hotels: PropTypes.array.isRequired,
+  hotelState: PropTypes.object.isRequired,
   getAllHotelsByPage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  hotels: state.hotel.hotels
+  hotelState: state.hotel
 })
 
 export default connect(mapStateToProps, {getAllHotelsByPage})(Hotel);

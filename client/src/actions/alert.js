@@ -1,5 +1,5 @@
-import { v4 as uuidv4 } from 'uuid';
-import { SET_ALERT, REMOVE_ALERT } from './types';
+import {v4 as uuidv4} from 'uuid';
+import {REMOVE_ALERT, SET_ALERT} from './types';
 
 // This is the return from mapDispatchToProps in the documentation
 export const setAlert =

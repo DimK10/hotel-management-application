@@ -1,7 +1,6 @@
 import React, {Fragment, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import { connect } from "react-redux";
-import store from "../../store";
+import {connect} from "react-redux";
 import {loadUser} from "../../actions/auth";
 import {Navigate} from "react-router-dom";
 

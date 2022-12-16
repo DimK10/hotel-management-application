@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, {Fragment} from 'react';
 import NavBar from './../layout/NavBar';
 import CIcon from '@coreui/icons-react';
-import { cilUser, cilEnvelopeOpen, cilLockLocked } from '@coreui/icons';
+import {cilEnvelopeOpen, cilLockLocked, cilUser} from '@coreui/icons';
 
 const Register = (props) => {
   return (

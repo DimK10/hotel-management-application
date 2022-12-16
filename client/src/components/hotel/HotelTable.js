@@ -1,5 +1,4 @@
 import React, {Fragment} from 'react';
-import PropTypes from 'prop-types';
 import CIcon from "@coreui/icons-react";
 import {cilPencil, cilTrash} from "@coreui/icons";
 import {Tooltip} from '@coreui/coreui/dist/js/coreui';
@@ -58,7 +57,7 @@ function HotelTable({hotels}) {
                   <th scope="row">{hotels.indexOf(hotel) + 1}</th>
                   <td>{hotel.name}</td>
                   <td>{hotel.areaName}</td>
-                  <td className="d-none d-md-table-cell">4</td>
+                  <td className="d-none d-md-table-cell">{hotel.rooms.length}</td>
                   <td className="flex-row">
                     <button type="button" className="btn btn-success"
                             style={{color: '#fff', marginRight: '0.3rem'}}
@@ -86,7 +85,7 @@ function HotelTable({hotels}) {
           }
           </tbody>
         </table>
-        <nav aria-label="Page navigation example">
+        <nav aria-label="Page navigation">
           <ul className="pagination justify-content-center ">
             <li className="page-item disabled">
               <a className="page-link">&laquo;</a>

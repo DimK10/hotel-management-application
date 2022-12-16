@@ -1,8 +1,8 @@
-import { GET_ALL_HOTELS } from '../actions/types';
+import {GET_ALL_HOTELS} from '../actions/types';
 
 
 const initialState = {
-  loading: false,
+  loading: true,
   hotels: []
 }
 

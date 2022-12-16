@@ -1,8 +1,6 @@
 import React, {Fragment} from 'react';
-import PropTypes from 'prop-types';
-import moment from "moment/moment";
 import CIcon from "@coreui/icons-react";
-import {cilDelete, cilPencil, cilTrash} from "@coreui/icons";
+import {cilPencil, cilTrash} from "@coreui/icons";
 
 const HotelCard = props => {
   return (

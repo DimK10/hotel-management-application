@@ -1,5 +1,4 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
 import NavBar from '../layout/NavBar';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 
@@ -9,8 +8,6 @@ import 'bootstrap-daterangepicker/daterangepicker.css';
 import SearchItem from './SearchItem';
 
 import cities from '../../json/cities.json';
-import moment from "moment";
-import {Link} from "react-router-dom";
 
 const AdvancedSearch = (props) => {
   const [formData, setFormData] = useState({

@@ -1,12 +1,10 @@
 import React, {Fragment} from 'react';
-import PropTypes from 'prop-types';
 import SidebarComp from "../layout/Sidebar";
 
 import '../../css/wrapperFix.css'
 import HeaderNav from "../layout/HeaderNav";
 import MainChart from "./MainChart";
 import {Link, useNavigate} from "react-router-dom";
-import moment from "moment/moment";
 
 const Dashboard = props => {
 

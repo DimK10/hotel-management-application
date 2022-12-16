@@ -1,7 +1,6 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+import React, {Fragment} from 'react';
 import NavBar from '../layout/NavBar';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const FirstPage = (props) => {
   return (

@@ -1,4 +1,5 @@
-import { SET_ALERT, REMOVE_ALERT } from '../actions/types.js';
+import {REMOVE_ALERT, SET_ALERT} from '../actions/types.js';
+
 const initialState = [];
 
 export default function (state = initialState, action) {

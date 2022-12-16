@@ -2,7 +2,7 @@ import React, {Fragment, useState} from 'react';
 import PropTypes from 'prop-types';
 import NavBar from '../layout/NavBar';
 import CIcon from '@coreui/icons-react';
-import {cilUser, cilLockLocked} from '@coreui/icons';
+import {cilLockLocked, cilUser} from '@coreui/icons';
 import {connect} from "react-redux";
 import {login} from "../../actions/auth";
 import {Navigate} from "react-router-dom";

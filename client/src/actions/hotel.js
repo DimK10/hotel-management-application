@@ -1,4 +1,4 @@
-import {AUTH_ERROR, GET_ALL_HOTELS, HOTEL_ERROR} from "./types";
+import {GET_ALL_HOTELS, HOTEL_ERROR} from "./types";
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 

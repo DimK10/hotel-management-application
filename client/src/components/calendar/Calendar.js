@@ -1,5 +1,4 @@
 import React, {Fragment} from 'react';
-import PropTypes from 'prop-types';
 import SidebarComp from "../layout/Sidebar";
 import HeaderNav from "../layout/HeaderNav";
 import Kalend, {CalendarView} from 'kalend' // import component
