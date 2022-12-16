@@ -95,7 +95,6 @@ public class HotelService {
 		Page<HotelDTO> hotelDTOPage = new PageImpl<>(hotelDTOS, paging,hotelDTOS.size());
 
 		if (!hotelDTOPage.isEmpty()) {
-			System.out.println(hotelDTOPage.getContent());
 			return hotelDTOPage.getContent();
 
 		}else {

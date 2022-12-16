@@ -119,7 +119,6 @@ public class RoomService {
         Page<RoomDTO> roomDTOPage = new PageImpl<>(roomDTOS, paging,roomDTOS.size());
 
         if (!roomDTOPage.isEmpty()) {
-            System.out.println(roomDTOPage.getContent());
             return roomDTOPage.getContent();
 
         }else {
