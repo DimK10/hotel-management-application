@@ -3,18 +3,23 @@ import PropTypes from 'prop-types';
 import SidebarComp from "../layout/Sidebar";
 import HeaderNav from "../layout/HeaderNav";
 import {connect} from "react-redux";
-import {getAllHotelsByPage} from "../../actions/hotel";
+import {getAllHotelsByPage, getCountOfHotels} from "../../actions/hotel";
 import HotelTable from "./HotelTable";
 import Loading from "../layout/Loading";
 
 
-const Hotel = ({getAllHotelsByPage, hotelState, auth}) => {
+const Hotel = ({getCountOfHotels, getAllHotelsByPage, hotelState, auth}) => {
 
   const {loading, user} = auth;
-  const {loading: hotelsLoading, hotels} = hotelState;
+  const {loading: hotelsLoading, count, hotels} = hotelState;
 
   useEffect(() => {
-    if (!loading && !hotelsLoading) {
+    if (!loading)
+      getCountOfHotels(user?.id);
+  },[auth, getCountOfHotels])
+
+  useEffect(() => {
+    if (!loading) {
       getAllHotelsByPage(0, 10, 'id', user?.id);
     }
   }, [auth, getAllHotelsByPage]);
@@ -24,14 +29,18 @@ const Hotel = ({getAllHotelsByPage, hotelState, auth}) => {
     <Fragment>
       <SidebarComp/>
       <HeaderNav>
-        {hotels.length > 0
-          ?
-          <HotelTable key={1} hotels={hotels}/>
-          :
-
-
-          <h2>No hotels found</h2>
-
+        {
+          hotelsLoading
+            ?
+            <Loading key={1}/>
+            :
+            (
+              hotels.length > 0
+                ?
+                <HotelTable key={1} count={count} hotels={hotels}/>
+                :
+                <h2>No hotels found</h2>
+            )
         }
       </HeaderNav>
     </Fragment>
@@ -48,4 +57,4 @@ const mapStateToProps = state => ({
   hotelState: state.hotel
 })
 
-export default connect(mapStateToProps, {getAllHotelsByPage})(Hotel);
+export default connect(mapStateToProps, {getCountOfHotels, getAllHotelsByPage})(Hotel);

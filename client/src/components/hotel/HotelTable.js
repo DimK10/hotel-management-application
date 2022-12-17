@@ -1,10 +1,18 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import CIcon from "@coreui/icons-react";
 import {cilPencil, cilTrash} from "@coreui/icons";
 import {Tooltip} from '@coreui/coreui/dist/js/coreui';
+import Pagination from "../layout/Pagination";
 
 
-function HotelTable({hotels}) {
+function HotelTable({count, hotels}) {
+
+  const [pages, setPages] = useState(1);
+
+  const handleSelectChange = (e) => {
+    setPages(count / e.target.value );
+  }
+
   return (
     <Fragment>
       <div className="row">
@@ -29,7 +37,7 @@ function HotelTable({hotels}) {
           <label htmlFor="rows-select" style={{marginRight: ".5rem"}}>Number of
             records:</label>
           <select
-            className="custom-select" id="rows-select">
+            className="custom-select" id="rows-select" onChange={(e) => handleSelectChange(e)}>
             <option value="10" defaultValue={true}>10</option>
             <option value="20">20</option>
             <option value="30">30</option>
@@ -85,20 +93,7 @@ function HotelTable({hotels}) {
           }
           </tbody>
         </table>
-        <nav aria-label="Page navigation">
-          <ul className="pagination justify-content-center ">
-            <li className="page-item disabled">
-              <a className="page-link">&laquo;</a>
-            </li>
-            <li className="page-item active"><a className="page-link" href="#">1</a>
-            </li>
-            <li className="page-item"><a className="page-link" href="#">2</a></li>
-            <li className="page-item"><a className="page-link" href="#">3</a></li>
-            <li className="page-item">
-              <a className="page-link" href="#">&raquo;</a>
-            </li>
-          </ul>
-        </nav>
+        <Pagination pages={pages} />
       </div>
     </Fragment>
   );

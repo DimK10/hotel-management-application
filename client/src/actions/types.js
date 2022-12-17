@@ -13,6 +13,7 @@ export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 
 // hotel
 export const GET_ALL_HOTELS = 'GET_ALL_HOTELS';
+export const GET_COUNT_OF_HOTELS = 'GET_COUNT_OF_HOTELS';
 export const HOTEL_ERROR = 'HOTEL_ERROR';
 
 // order

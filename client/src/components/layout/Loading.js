@@ -2,17 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 
-
 function Loading(props) {
   return (
-    <div className="spinner-border" role="status">
-      <span className="visually-hidden">Loading...</span>
+    <div className="container text-center">
+      <div className="spinner-border text-center" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </div>
     </div>
   );
 }
 
-Loading.propTypes = {
-
-};
+Loading.propTypes = {};
 
 export default Loading;
