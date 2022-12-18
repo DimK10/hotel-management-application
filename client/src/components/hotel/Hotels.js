@@ -37,7 +37,7 @@ const Hotel = ({getCountOfHotels, getAllHotelsByPage, hotelState, auth}) => {
             (
               hotels.length > 0
                 ?
-                <HotelTable key={1} count={count} hotels={hotels}/>
+                <HotelTable key={1} />
                 :
                 <h2>No hotels found</h2>
             )

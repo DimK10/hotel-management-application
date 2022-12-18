@@ -3,19 +3,44 @@ import CIcon from "@coreui/icons-react";
 import {cilPencil, cilTrash} from "@coreui/icons";
 import {Tooltip} from '@coreui/coreui/dist/js/coreui';
 import Pagination from "../layout/Pagination";
+import PropTypes from "prop-types";
+import {connect} from "react-redux";
+import {getAllHotelsByPage} from "../../actions/hotel";
 
 
-function HotelTable({count, hotels}) {
+function HotelTable({auth, hotelState, getAllHotelsByPage}) {
+
+  const [pageSize, setPageSize] = useState(10);
 
   const [pages, setPages] = useState(1);
 
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const {user, loading} = auth;
+
+  const {loading: hotelsLoading, count, hotels} = hotelState;
+
   useEffect(() => {
-    setPages(count / 10 );
+    setPages(count / 10);
   }, [count]);
 
 
   const handleSelectChange = (e) => {
-    setPages((count / e.target.value) +  (count % e.target.value > 0 ? 1 : 0));
+    setPageSize(e.target.value);
+    setPages((count / e.target.value) + (count % e.target.value > 0 ? 1 : 0));
+  }
+
+  const changePage = (e) => {
+    e.preventDefault();
+
+    if (!loading) {
+
+      console.log(e.target.textContent);
+
+      let selectedPage = e.target.textContent - 1;
+
+      getAllHotelsByPage(selectedPage, pageSize, 'id', user?.id)
+    }
   }
 
   return (
@@ -42,7 +67,8 @@ function HotelTable({count, hotels}) {
           <label htmlFor="rows-select" style={{marginRight: ".5rem"}}>Number of
             records:</label>
           <select
-            className="custom-select" id="rows-select" onChange={(e) => handleSelectChange(e)}>
+            className="custom-select" id="rows-select"
+            onChange={(e) => handleSelectChange(e)}>
             <option value="10" defaultValue={true}>10</option>
             <option value="20">20</option>
             <option value="30">30</option>
@@ -98,12 +124,21 @@ function HotelTable({count, hotels}) {
           }
           </tbody>
         </table>
-        <Pagination pages={pages} />
+        <Pagination pages={pages} changePage={changePage}/>
       </div>
     </Fragment>
   );
 }
 
-HotelTable.propTypes = {};
+HotelTable.propTypes = {
+  auth: PropTypes.object.isRequired,
+  hotelState: PropTypes.object.isRequired,
+  getAllHotelsByPage: PropTypes.func.isRequired
+};
 
-export default HotelTable;
+const mapStateToProps = state => ({
+  auth: state.auth,
+  hotelState: state.hotel
+})
+
+export default connect(mapStateToProps, {getAllHotelsByPage})(HotelTable);

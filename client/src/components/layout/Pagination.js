@@ -2,7 +2,7 @@ import React, {Fragment, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 
 
-function Pagination({pages}) {
+function Pagination({pages, changePage}) {
 
   const [pagesArr, setPagesArr] = useState([]);
 
@@ -31,13 +31,9 @@ function Pagination({pages}) {
             pages > 0
             &&
             [pagesArr.map((page) => <li key={page}
-                                               className={`page-item  ${page === 1 ? 'active' : ''}`}>
-              <a className="page-link" href="#">{page}</a></li>)]
+                                        className={`page-item  ${page === 1 ? 'active' : ''}`}>
+              <a className="page-link" href="" onClick={(e) => changePage(e)}>{page}</a></li>)]
           }
-          {/*<li className="page-item active"><a className="page-link" href="#">1</a>*/}
-          {/*</li>*/}
-          {/*<li className="page-item"><a className="page-link" href="#">2</a></li>*/}
-          {/*<li className="page-item"><a className="page-link" href="#">3</a></li>*/}
           <li className="page-item">
             <a className="page-link" href="#">&raquo;</a>
           </li>
