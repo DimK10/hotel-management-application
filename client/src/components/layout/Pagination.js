@@ -13,11 +13,6 @@ function Pagination({
   const [pagesArr, setPagesArr] = useState([]);
 
   useEffect(() => {
-    console.log(pagesArr)
-    console.log(currentPage)
-  }, [currentPage])
-
-  useEffect(() => {
 
     let arr = [];
 

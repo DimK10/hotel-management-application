@@ -21,7 +21,7 @@ function HotelTable({auth, hotelState, getAllHotelsByPage}) {
   const {loading: hotelsLoading, count, hotels} = hotelState;
 
   useEffect(() => {
-    setPages(count / 10);
+    setPages(Math.floor(count / 10));
   }, [count]);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ function HotelTable({auth, hotelState, getAllHotelsByPage}) {
   const handleSelectChange = (e) => {
     setCurrentPage(1);
     setPageSize(e.target.value);
-    setPages((count / e.target.value) + (count % e.target.value > 0 ? 1 : 0));
+    setPages(Math.floor((count / e.target.value) + (count % e.target.value > 0 ? 1 : 0)));
   }
 
   const changePage = (e) => {
@@ -40,10 +40,8 @@ function HotelTable({auth, hotelState, getAllHotelsByPage}) {
 
     if (!loading) {
 
-      console.log(e.target.textContent);
       setCurrentPage(parseInt(e.target.textContent));
       let selectedPage = e.target.textContent - 1;
-
       getAllHotelsByPage(selectedPage, pageSize, 'id', user?.id)
     }
   }
@@ -54,10 +52,8 @@ function HotelTable({auth, hotelState, getAllHotelsByPage}) {
 
     if (!loading) {
 
-      setCurrentPage(currentPage + 1);
-      let selectedPage = currentPage - 1;
-
-      getAllHotelsByPage(selectedPage, pageSize, 'id', user?.id)
+      setCurrentPage(prevState => prevState + 1);
+      getAllHotelsByPage(currentPage, pageSize, 'id', user?.id)
     }
   }
 
@@ -66,10 +62,10 @@ function HotelTable({auth, hotelState, getAllHotelsByPage}) {
 
     if (!loading) {
 
-      setCurrentPage(currentPage - 1);
-      let selectedPage = currentPage - 1;
-
-      getAllHotelsByPage(selectedPage, pageSize, 'id', user?.id)
+      // This will be used to set the page as zero indexed number (due to how pagination is configured in backend)
+      let page = currentPage - 2;
+      setCurrentPage(prevState => prevState - 1);
+      getAllHotelsByPage(page, pageSize, 'id', user?.id)
     }
   }
 
