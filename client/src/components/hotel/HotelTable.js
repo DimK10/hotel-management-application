@@ -36,7 +36,7 @@ function HotelTable({auth, hotelState, getAllHotelsByPage}) {
     if (!loading) {
 
       console.log(e.target.textContent);
-
+      setCurrentPage(e.target.textContent);
       let selectedPage = e.target.textContent - 1;
 
       getAllHotelsByPage(selectedPage, pageSize, 'id', user?.id)
@@ -93,7 +93,7 @@ function HotelTable({auth, hotelState, getAllHotelsByPage}) {
             hotels.map((hotel) => (
               <Fragment>
                 <tr>
-                  <th scope="row">{hotels.indexOf(hotel) + 1}</th>
+                  <th scope="row">{10*(currentPage - 1) + hotels.indexOf(hotel) + 1}</th>
                   <td>{hotel.name}</td>
                   <td>{hotel.areaName}</td>
                   <td className="d-none d-md-table-cell">{hotel.rooms.length}</td>
