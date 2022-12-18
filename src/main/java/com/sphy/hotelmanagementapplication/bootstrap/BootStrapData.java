@@ -45,34 +45,37 @@ public class BootStrapData implements CommandLineRunner {
         Room dio = new Room(null, "dio",4,30, false);
         roomRepository.save(dio);
 
+
+		for (int i = 0; i < 100; i++) {
+			Hotel hotel = new Hotel(null, ("ksenia" + i), 5,"athens", false);
+
+			hotel.setOwner(admin);
+			admin.getHotels().add(hotel);
+
+			hotelRepository.save(hotel);
+			userRepository.save(admin);
+		}
+
+//        Hotel ksenia = new Hotel(null, "ksenia", 5,"athens", false);
+//        Hotel ksenia2 = new Hotel(null, "ksenia2", 5,"athens", false);
+//        Hotel ksenia3 = new Hotel(null, "ksenia3", 5,"athens", false);
+//        hotelRepository.save(ksenia);
+//        hotelRepository.save(ksenia2);
+//        hotelRepository.save(ksenia3);
+//        ksenia.setOwner(admin);
+//        hotelRepository.save(ksenia);
+//        ena.setHotel(ksenia);
+//        dio.setHotel(ksenia);
+//        roomRepository.save(ena);
+//        roomRepository.save(dio);
+//        admin.getHotels().add(ksenia);
+//        userRepository.save(admin);
 //
-//		for (int i = 0; i < 101; i++) {
-//			Hotel hotel = new Hotel(null, ("ksenia" + i), 5,"athens", false);
-//			hotel.setOwner(admin);
 //
-//			hotelRepository.save(hotel);
-//		}
-
-        Hotel ksenia = new Hotel(null, "ksenia", 5,"athens", false);
-        Hotel ksenia2 = new Hotel(null, "ksenia2", 5,"athens", false);
-        Hotel ksenia3 = new Hotel(null, "ksenia3", 5,"athens", false);
-        hotelRepository.save(ksenia);
-        hotelRepository.save(ksenia2);
-        hotelRepository.save(ksenia3);
-        ksenia.setOwner(admin);
-        hotelRepository.save(ksenia);
-        ena.setHotel(ksenia);
-        dio.setHotel(ksenia);
-        roomRepository.save(ena);
-        roomRepository.save(dio);
-        admin.getHotels().add(ksenia);
-        userRepository.save(admin);
-
-
-        ksenia.getRooms().add(ena);
-        hotelRepository.save(ksenia);
-        ksenia.getRooms().add(dio);
-        hotelRepository.save(ksenia);
+//        ksenia.getRooms().add(ena);
+//        hotelRepository.save(ksenia);
+//        ksenia.getRooms().add(dio);
+//        hotelRepository.save(ksenia);
 
 
 

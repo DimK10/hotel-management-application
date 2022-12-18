@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import CIcon from "@coreui/icons-react";
 import {cilPencil, cilTrash} from "@coreui/icons";
 import {Tooltip} from '@coreui/coreui/dist/js/coreui';
@@ -9,8 +9,13 @@ function HotelTable({count, hotels}) {
 
   const [pages, setPages] = useState(1);
 
+  useEffect(() => {
+    setPages(count / 10 );
+  }, [count]);
+
+
   const handleSelectChange = (e) => {
-    setPages(count / e.target.value );
+    setPages((count / e.target.value) +  (count % e.target.value > 0 ? 1 : 0));
   }
 
   return (
