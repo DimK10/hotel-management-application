@@ -24,6 +24,10 @@ function HotelTable({auth, hotelState, getAllHotelsByPage}) {
     setPages(count / 10);
   }, [count]);
 
+  useEffect(() => {
+    getAllHotelsByPage(currentPage - 1, pageSize, 'id', user?.id)
+  }, [pages]);
+
 
   const handleSelectChange = (e) => {
     setPageSize(e.target.value);
