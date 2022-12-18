@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useReducer, useState} from 'react';
 import CIcon from "@coreui/icons-react";
 import {cilPencil, cilTrash} from "@coreui/icons";
 import {Tooltip} from '@coreui/coreui/dist/js/coreui';
@@ -30,6 +30,7 @@ function HotelTable({auth, hotelState, getAllHotelsByPage}) {
 
 
   const handleSelectChange = (e) => {
+    setCurrentPage(1);
     setPageSize(e.target.value);
     setPages((count / e.target.value) + (count % e.target.value > 0 ? 1 : 0));
   }
@@ -40,8 +41,33 @@ function HotelTable({auth, hotelState, getAllHotelsByPage}) {
     if (!loading) {
 
       console.log(e.target.textContent);
-      setCurrentPage(e.target.textContent);
+      setCurrentPage(parseInt(e.target.textContent));
       let selectedPage = e.target.textContent - 1;
+
+      getAllHotelsByPage(selectedPage, pageSize, 'id', user?.id)
+    }
+  }
+
+
+  const moveToNextPage = (e) => {
+    e.preventDefault();
+
+    if (!loading) {
+
+      setCurrentPage(currentPage + 1);
+      let selectedPage = currentPage - 1;
+
+      getAllHotelsByPage(selectedPage, pageSize, 'id', user?.id)
+    }
+  }
+
+  const moveToPreviousPage = (e) => {
+    e.preventDefault();
+
+    if (!loading) {
+
+      setCurrentPage(currentPage - 1);
+      let selectedPage = currentPage - 1;
 
       getAllHotelsByPage(selectedPage, pageSize, 'id', user?.id)
     }
@@ -97,7 +123,8 @@ function HotelTable({auth, hotelState, getAllHotelsByPage}) {
             hotels.map((hotel) => (
               <Fragment>
                 <tr>
-                  <th scope="row">{10*(currentPage - 1) + hotels.indexOf(hotel) + 1}</th>
+                  <th
+                    scope="row">{pageSize * (currentPage - 1) + hotels.indexOf(hotel) + 1}</th>
                   <td>{hotel.name}</td>
                   <td>{hotel.areaName}</td>
                   <td className="d-none d-md-table-cell">{hotel.rooms.length}</td>
@@ -128,7 +155,8 @@ function HotelTable({auth, hotelState, getAllHotelsByPage}) {
           }
           </tbody>
         </table>
-        <Pagination pages={pages} changePage={changePage}/>
+        <Pagination pages={pages} changePage={changePage} moveToNextPage={moveToNextPage}
+                    moveToPreviousPage={moveToPreviousPage} currentPage={currentPage}/>
       </div>
     </Fragment>
   );
