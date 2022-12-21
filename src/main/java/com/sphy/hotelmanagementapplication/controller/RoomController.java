@@ -1,5 +1,6 @@
 package com.sphy.hotelmanagementapplication.controller;
 
+import com.sphy.hotelmanagementapplication.dto.RoomAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 /***
  * created by gp
@@ -17,6 +19,7 @@ import java.util.List;
 public class RoomController {
 
     private final RoomService service;
+
 
 
     public RoomController(RoomService service) {
@@ -122,6 +125,12 @@ public class RoomController {
             return ResponseEntity.status(HttpStatus.OK)
                     .body("Room with id " + id + " was successfully deactivated");
 
+    }
+
+    @GetMapping("/api/room/amenities/{roomId}")
+    public Set<RoomAmenityDTO> findRoomAmenitiesByRoomId(@PathVariable Long id) throws ApiRequestException {
+
+        return service.getRoomAmenitiesByRoomId(id);
     }
 
 }
