@@ -25,7 +25,6 @@ public class HotelToHotelDTO {
      * converts a hotel object to hotelDTO
      * @param hotel the hotel object we want to convert
      * @return the converted hotelDTO object
-     * @throws Exception
      */
     public HotelDTO converter(Hotel hotel){
 

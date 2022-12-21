@@ -8,8 +8,8 @@ import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
-import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
-import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
+import com.sphy.hotelmanagementapplication.repository.AdminRepository;
+import com.sphy.hotelmanagementapplication.repository.HotelRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

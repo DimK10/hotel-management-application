@@ -1,13 +1,11 @@
 package com.sphy.hotelmanagementapplication.converter;
 
 import com.sphy.hotelmanagementapplication.domain.Hotel;
-import com.sphy.hotelmanagementapplication.domain.Order;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
-import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
+import com.sphy.hotelmanagementapplication.repository.HotelRepository;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -34,7 +32,8 @@ public class RoomToRoomDTO {
      * @param room the room object we want to convert
      * @return the converted roomDTO object
      */
-    @Transactional
+
+
     public RoomDTO converter(Room room){
         RoomDTO roomDTO = new RoomDTO();
 
@@ -55,9 +54,11 @@ public class RoomToRoomDTO {
                 roomDTO.setHotel(hotel.get().getId());
             }
         }
-        
-        for(RoomAmenity roomAmenity : room.getRoomAmenity()) {
-        	roomDTO.getRoomAmenityDTO().add(roomAmenityToRoomAmenityDTO.converter(roomAmenity));
+
+        if (!room.getRoomAmenity().isEmpty()) {
+            for (RoomAmenity roomAmenity : room.getRoomAmenity()) {
+                roomDTO.getRoomAmenityDTO().add(roomAmenityToRoomAmenityDTO.converter(roomAmenity));
+            }
         }
         
         return roomDTO;

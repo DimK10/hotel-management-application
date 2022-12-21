@@ -5,9 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
-import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
-import com.sphy.hotelmanagementapplication.repositories.AmenityHotelRepository;
-import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
+import com.sphy.hotelmanagementapplication.repository.AmenityHotelRepository;
+import com.sphy.hotelmanagementapplication.repository.HotelRepository;
 
 /***
  * created by AKd

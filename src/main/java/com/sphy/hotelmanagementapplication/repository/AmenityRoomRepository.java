@@ -1,4 +1,4 @@
-package com.sphy.hotelmanagementapplication.repositories;
+package com.sphy.hotelmanagementapplication.repository;
 
 import java.util.Optional;
 

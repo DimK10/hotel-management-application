@@ -33,7 +33,7 @@ public class Hotel extends BaseEntity {
     private Set<Room> rooms = new HashSet<>();
 
     
-    @ManyToMany  // created by AKd
+    @ManyToMany(fetch = FetchType.EAGER)  // created by AKd
 	@JoinTable(  // created by AKd
 			name = "hotel_amenity",  // created by AKd
 			joinColumns = @JoinColumn(name = "hotel_id"),  // created by AKd

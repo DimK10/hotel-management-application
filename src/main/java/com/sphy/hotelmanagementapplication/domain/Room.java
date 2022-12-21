@@ -35,11 +35,12 @@ public class Room extends BaseEntity {
 
 	private boolean disabled;
 
-	@ManyToMany  // created by AKd
+	@ManyToMany(fetch = FetchType.EAGER)  // created by AKd
 	@JoinTable(  // created by AKd
 			name = "room_amenity",  // created by AKd
 			joinColumns = @JoinColumn(name = "room_id"),  // created by AKd
-			inverseJoinColumns = @JoinColumn(name = "RAmenity_id") // created by AKd
+			inverseJoinColumns = @JoinColumn(name = "RAmenity_id") // created by AKd,
+
 	)
 	private Set<RoomAmenity> roomAmenity = new HashSet<>();// created by AKd
 

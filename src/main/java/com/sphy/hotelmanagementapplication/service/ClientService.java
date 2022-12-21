@@ -1,7 +1,7 @@
 package com.sphy.hotelmanagementapplication.service;
 
 import com.sphy.hotelmanagementapplication.domain.Client;
-import com.sphy.hotelmanagementapplication.repositories.ClientRepository;
+import com.sphy.hotelmanagementapplication.repository.ClientRepository;
 import org.springframework.stereotype.Service;
 
 @Service

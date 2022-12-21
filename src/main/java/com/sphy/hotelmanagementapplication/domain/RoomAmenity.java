@@ -60,8 +60,7 @@ public class RoomAmenity extends BaseEntity{
 	}
 
 	
-	public RoomAmenity(Long id, AmenitiesRoom amenitiesR) {
-		super(id);
+	public RoomAmenity(AmenitiesRoom amenitiesR) {
 		this.amenitiesR = amenitiesR;
 	}// Constructor with fields
 	

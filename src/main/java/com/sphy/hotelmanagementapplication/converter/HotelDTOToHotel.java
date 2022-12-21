@@ -4,7 +4,7 @@ import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.dto.HotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
-import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
+import com.sphy.hotelmanagementapplication.repository.AdminRepository;
 import org.springframework.stereotype.Component;
 
 /***

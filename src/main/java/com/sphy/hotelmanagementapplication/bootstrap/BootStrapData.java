@@ -1,11 +1,13 @@
 package com.sphy.hotelmanagementapplication.bootstrap;
 
 import com.sphy.hotelmanagementapplication.domain.*;
-import com.sphy.hotelmanagementapplication.repositories.*;
+import com.sphy.hotelmanagementapplication.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Component
@@ -15,16 +17,20 @@ public class BootStrapData implements CommandLineRunner {
     private final OrderRepository orderRepository;
     private final RoomRepository roomRepository;
     private final AdminRepository adminRepository;
+    private final AmenityHotelRepository amenityHotelRepository;
+    private final AmenityRoomRepository amenityRoomRepository;
     //private final HotelAmenity hotelAmenity;
 
 
-    public BootStrapData(ClientRepository clientRepository, HotelRepository hotelRepository, OrderRepository orderRepository, RoomRepository roomRepository, AdminRepository adminRepository) {
+    public BootStrapData(ClientRepository clientRepository, HotelRepository hotelRepository, OrderRepository orderRepository, RoomRepository roomRepository, AdminRepository adminRepository, AmenityHotelRepository amenityHotelRepository, AmenityRoomRepository amenityRoomRepository) {
         this.clientRepository = clientRepository;
         this.hotelRepository = hotelRepository;
         this.orderRepository = orderRepository;
         this.roomRepository = roomRepository;
         this.adminRepository = adminRepository;
-		//this.hotelAmenity = new HotelAmenity();
+        this.amenityHotelRepository = amenityHotelRepository;
+        //this.hotelAmenity = new HotelAmenity();
+        this.amenityRoomRepository = amenityRoomRepository;
     }
 
     @Override
@@ -57,8 +63,20 @@ public class BootStrapData implements CommandLineRunner {
         admin.getHotels().add(ksenia);
         adminRepository.save(admin);
 
-        //HotelAmenity amenity = new HotelAmenity();//? creates a new HotelAmenity object with the amenitiesH field set to GYM, and adds it to the hotelAmenity set of the ksenia Hotel object.
-        //amenity.setAmenitiesH(HotelAmenity.AmenitiesHotel.GYM);//?
+        Set<HotelAmenity> amenitySet = new HashSet<>();
+
+        HotelAmenity amenity1 = new HotelAmenity();
+        amenity1.setAmenitiesH(HotelAmenity.AmenitiesHotel.AIRPORTTRANSPORT);
+
+        HotelAmenity amenity2 = new HotelAmenity();
+        amenity2.setAmenitiesH(HotelAmenity.AmenitiesHotel.GYM);
+
+        HotelAmenity amenity3 = new HotelAmenity();
+        amenity3.setAmenitiesH(HotelAmenity.AmenitiesHotel.SPA);
+
+        amenityHotelRepository.saveAll(amenitySet);
+
+        ksenia.getHotelAmenity().addAll(amenitySet);
         
         ksenia.getRooms().add(ena);
         //ksenia.getHotelAmenity().add(amenity); //?
@@ -74,29 +92,21 @@ public class BootStrapData implements CommandLineRunner {
 
 
         ena.getOrders().add(order);
+        RoomAmenity roomAmenity = new RoomAmenity(RoomAmenity.AmenitiesRoom.BABYHIGHCHAIR);
+        amenityRoomRepository.save(roomAmenity);
+        RoomAmenity roomAmenity1 = new RoomAmenity(RoomAmenity.AmenitiesRoom.MINIBAR);
+        amenityRoomRepository.save(roomAmenity1);
+
+
+
+        ena.getRoomAmenity().add(roomAmenity);
+        ena.getRoomAmenity().add(roomAmenity1);
         roomRepository.save(ena);
 
         Order order1 = new Order(null, LocalDate.of( 2007, 12,03), LocalDate.of(2007, 12, 07), false, client,dio);
         orderRepository.save(order1);
         dio.getOrders().add(order1);
         roomRepository.save(dio);
-    //        orderRepository.save(order);
-
-//        clientRepository.save(client);
-//        adminRepository.save(admin);
-//        roomRepository.save(ena);
-//        roomRepository.save(dio);
-//        hotelRepository.save(ksenia);
-//        orderRepository.save(order);
-
-
-
-
-
-
-
-
-
 
     }
 }
