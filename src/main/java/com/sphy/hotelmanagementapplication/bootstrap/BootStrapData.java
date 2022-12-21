@@ -15,6 +15,7 @@ public class BootStrapData implements CommandLineRunner {
     private final OrderRepository orderRepository;
     private final RoomRepository roomRepository;
     private final AdminRepository adminRepository;
+    //private final HotelAmenity hotelAmenity;
 
 
     public BootStrapData(ClientRepository clientRepository, HotelRepository hotelRepository, OrderRepository orderRepository, RoomRepository roomRepository, AdminRepository adminRepository) {
@@ -23,6 +24,7 @@ public class BootStrapData implements CommandLineRunner {
         this.orderRepository = orderRepository;
         this.roomRepository = roomRepository;
         this.adminRepository = adminRepository;
+		//this.hotelAmenity = new HotelAmenity();
     }
 
     @Override
@@ -55,12 +57,16 @@ public class BootStrapData implements CommandLineRunner {
         admin.getHotels().add(ksenia);
         adminRepository.save(admin);
 
-
+        //HotelAmenity amenity = new HotelAmenity();//? creates a new HotelAmenity object with the amenitiesH field set to GYM, and adds it to the hotelAmenity set of the ksenia Hotel object.
+        //amenity.setAmenitiesH(HotelAmenity.AmenitiesHotel.GYM);//?
+        
         ksenia.getRooms().add(ena);
+        //ksenia.getHotelAmenity().add(amenity); //?
         hotelRepository.save(ksenia);
         ksenia.getRooms().add(dio);
         hotelRepository.save(ksenia);
 
+        
 
 
         Order order = new Order(null, LocalDate.of(2007, 12, 03), LocalDate.of(2007, 12, 07), false, client,ena);

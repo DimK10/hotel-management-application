@@ -2,6 +2,8 @@ package com.sphy.hotelmanagementapplication.service;
 
 import com.sphy.hotelmanagementapplication.converter.OrderDTOToOrder;
 import com.sphy.hotelmanagementapplication.converter.OrderToOrderDTO;
+import com.sphy.hotelmanagementapplication.converter.RoomAmenityDTOToRoomAmenity;
+import com.sphy.hotelmanagementapplication.converter.RoomAmenityToRoomAmenityDTO;
 import com.sphy.hotelmanagementapplication.converter.RoomDTOToRoom;
 import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
@@ -42,6 +44,12 @@ class RoomServiceTest {
 
 	@Mock
 	ClientRepository clientRepository;
+	
+	@Mock
+    RoomAmenityDTOToRoomAmenity roomAmenityDTOToRoomAmenity;
+    
+    @Mock
+    RoomAmenityToRoomAmenityDTO roomAmenityToRoomAmenityDTO;
 
 	RoomService roomService;
 
@@ -87,7 +95,7 @@ class RoomServiceTest {
 
 
 		roomService = new RoomService(roomRepository,hotelRepository,new RoomDTOToRoom(hotelRepository,
-				new OrderDTOToOrder(roomRepository,clientRepository)),new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, clientRepository),hotelRepository));
+				new OrderDTOToOrder(roomRepository,clientRepository), roomAmenityDTOToRoomAmenity),new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, clientRepository),hotelRepository, roomAmenityToRoomAmenityDTO));
 
 	}
 

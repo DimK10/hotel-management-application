@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class HotelAmenity extends BaseEntity {
 		
 	@Enumerated(EnumType.STRING)
-	private AmenitiesHotel amenitiesH;
+	public AmenitiesHotel amenitiesH;
 	
 	public enum AmenitiesHotel {
 		PARKING,

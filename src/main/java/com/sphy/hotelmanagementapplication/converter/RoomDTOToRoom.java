@@ -3,6 +3,7 @@ package com.sphy.hotelmanagementapplication.converter;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
+import com.sphy.hotelmanagementapplication.dto.RoomAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import org.springframework.stereotype.Component;
@@ -11,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 /***
- * created by gp
+ * created by gp ,AKd
  */
 @Component
 public class RoomDTOToRoom {
@@ -20,11 +21,14 @@ public class RoomDTOToRoom {
 
 
     private final OrderDTOToOrder orderDTOToOrder;
+    
+    private final RoomAmenityDTOToRoomAmenity roomAmenityDTOToRoomAmenity;
 
 
-    public RoomDTOToRoom(HotelRepository hotelRepository,OrderDTOToOrder orderDTOToOrder) {
+    public RoomDTOToRoom(HotelRepository hotelRepository,OrderDTOToOrder orderDTOToOrder,RoomAmenityDTOToRoomAmenity roomAmenityDTOToRoomAmenity) {
         this.hotelRepository = hotelRepository;
         this.orderDTOToOrder = orderDTOToOrder;
+        this.roomAmenityDTOToRoomAmenity = roomAmenityDTOToRoomAmenity;
     }
 
     /***
@@ -53,6 +57,10 @@ public class RoomDTOToRoom {
 					hotelRepository.findById(roomDTO.getHotel());
 
 			hotel.ifPresent(room::setHotel);
+		}
+		
+		for(RoomAmenityDTO roomAmenityDTO : roomDTO.getRoomAmenityDTO()) {
+			room.getRoomAmenity().add(roomAmenityDTOToRoomAmenity.converter(roomAmenityDTO));
 		}
 
         return room;

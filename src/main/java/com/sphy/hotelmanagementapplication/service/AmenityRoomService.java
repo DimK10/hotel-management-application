@@ -63,8 +63,4 @@ public class AmenityRoomService {
 	public void deleteRoomAmenity(Long id) {
 		amenityRoomRepository.deleteById(id);
 	}
-	
-	
-	
-
 }

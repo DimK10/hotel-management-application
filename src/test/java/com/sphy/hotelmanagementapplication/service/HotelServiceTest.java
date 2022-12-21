@@ -46,7 +46,13 @@ public class HotelServiceTest {
 
         @Mock
         AdminRepository adminRepository;
-
+        
+        @Mock
+        RoomAmenityDTOToRoomAmenity roomAmenityDTOToRoomAmenity;
+        
+        @Mock
+        RoomAmenityToRoomAmenityDTO roomAmenityToRoomAmenityDTO;
+       
         @Mock
         RoomService roomService;
 
@@ -176,9 +182,9 @@ public class HotelServiceTest {
 
             hotelService = new HotelService(hotelRepository,adminRepository,
                     new HotelDTOToHotel(new RoomDTOToRoom(hotelRepository,
-                            new OrderDTOToOrder(roomRepository, clientRepository)),adminRepository),
+                            new OrderDTOToOrder(roomRepository, clientRepository), roomAmenityDTOToRoomAmenity),adminRepository, null),
                     new HotelToHotelDTO(new RoomToRoomDTO(
-                            new OrderToOrderDTO(roomRepository, clientRepository),hotelRepository)),roomService,
+                            new OrderToOrderDTO(roomRepository, clientRepository),hotelRepository, roomAmenityToRoomAmenityDTO), null),roomService,
                     new AdminService(adminRepository), roomService);
         }
 

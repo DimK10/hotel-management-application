@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /***
- * created by gp
+ * created by gp , AKd
  */
 @Entity
 @Table(name = "hotels")
@@ -40,7 +40,7 @@ public class Hotel extends BaseEntity {
 			inverseJoinColumns = @JoinColumn(name = "HAmenity_id") // created by AKd
 	)
 	private Set<HotelAmenity> hotelAmenity = new HashSet<>();// created by AKd
-    
+  
     
     public Hotel(Long id) {
         super(id);

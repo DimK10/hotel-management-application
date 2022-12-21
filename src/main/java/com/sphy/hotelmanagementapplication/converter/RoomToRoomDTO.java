@@ -3,6 +3,7 @@ package com.sphy.hotelmanagementapplication.converter;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Order;
 import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import org.springframework.stereotype.Component;
@@ -19,10 +20,13 @@ public class RoomToRoomDTO {
     private final OrderToOrderDTO orderToOrderDTO;
 
     private final HotelRepository hotelRepository;
+    
+    private final RoomAmenityToRoomAmenityDTO roomAmenityToRoomAmenityDTO;
 
-    public RoomToRoomDTO(OrderToOrderDTO orderToOrderDTO, HotelRepository hotelRepository) {
+    public RoomToRoomDTO(OrderToOrderDTO orderToOrderDTO, HotelRepository hotelRepository,RoomAmenityToRoomAmenityDTO roomAmenityToRoomAmenityDTO) {
         this.orderToOrderDTO = orderToOrderDTO;
         this.hotelRepository = hotelRepository;
+        this.roomAmenityToRoomAmenityDTO = roomAmenityToRoomAmenityDTO;
     }
 
     /***
@@ -51,6 +55,11 @@ public class RoomToRoomDTO {
                 roomDTO.setHotel(hotel.get().getId());
             }
         }
+        
+        for(RoomAmenity roomAmenity : room.getRoomAmenity()) {
+        	roomDTO.getRoomAmenityDTO().add(roomAmenityToRoomAmenityDTO.converter(roomAmenity));
+        }
+        
         return roomDTO;
     }
 }

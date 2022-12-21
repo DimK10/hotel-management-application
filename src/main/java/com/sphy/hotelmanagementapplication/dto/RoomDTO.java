@@ -6,8 +6,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
+
 /***
- * created by gp
+ * created by gp, AKd
  */
 public class RoomDTO implements Serializable {
 
@@ -20,6 +22,8 @@ public class RoomDTO implements Serializable {
 	private Long hotel;
 
 	private Set<OrderDTO> orders =new HashSet<>();
+	
+	private Set<RoomAmenityDTO> roomAmenityDTO = new HashSet<>();
 
 	private long price;
 
@@ -83,6 +87,15 @@ public class RoomDTO implements Serializable {
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
 	}
+	
+
+	public Set<RoomAmenityDTO> getRoomAmenityDTO() {
+		return roomAmenityDTO;
+	}
+
+	public void setRoomAmenityDTO(Set<RoomAmenityDTO> roomAmenityDTO) {
+		this.roomAmenityDTO = roomAmenityDTO;
+	}
 
 	@Override
 	public String toString() {
@@ -94,6 +107,6 @@ public class RoomDTO implements Serializable {
 				", orders=" + orders +
 				", price=" + price +
 				", disabled=" + disabled +
-				'}';
+				", roomAmenity=" + roomAmenityDTO + "}";
 	}
 }

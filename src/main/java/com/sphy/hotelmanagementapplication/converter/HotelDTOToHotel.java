@@ -1,13 +1,14 @@
 package com.sphy.hotelmanagementapplication.converter;
 
 import com.sphy.hotelmanagementapplication.domain.Hotel;
+import com.sphy.hotelmanagementapplication.dto.HotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
 import org.springframework.stereotype.Component;
 
 /***
- * created by gp
+ * created by gp, AKd
  */
 @Component
 public class HotelDTOToHotel {
@@ -15,11 +16,14 @@ public class HotelDTOToHotel {
     private final RoomDTOToRoom roomDTOToRoom ;
 
     private final AdminRepository adminRepository;
+    
+    private final HotelAmenityDTOToHotelAmenity hotelAmenityDTOToHotelAmenity;
 
 
-    public HotelDTOToHotel(RoomDTOToRoom roomDTOToRoom, AdminRepository adminRepository) {
+    public HotelDTOToHotel(RoomDTOToRoom roomDTOToRoom, AdminRepository adminRepository,HotelAmenityDTOToHotelAmenity hotelAmenityDTOToHotelAmenity) {
         this.roomDTOToRoom = roomDTOToRoom;
         this.adminRepository = adminRepository;
+        this.hotelAmenityDTOToHotelAmenity = hotelAmenityDTOToHotelAmenity;
     }
 
     /***
@@ -43,6 +47,10 @@ public class HotelDTOToHotel {
         }
 
         hotelDTO.setDisabled(hotel.isDisabled());
+        
+        for(HotelAmenityDTO hotelAmenityDTO : hotelDTO.getHotelAmenityDTO()) {
+        	hotel.getHotelAmenity().add(hotelAmenityDTOToHotelAmenity.converter(hotelAmenityDTO));
+        }
 
         return hotel;
 

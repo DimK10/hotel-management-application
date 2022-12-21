@@ -1,21 +1,24 @@
 package com.sphy.hotelmanagementapplication.converter;
 
 import com.sphy.hotelmanagementapplication.domain.Hotel;
+import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import org.springframework.stereotype.Component;
 
 /***
- * created by gp
+ * created by gp, AKd
  */
 @Component
 public class HotelToHotelDTO {
 
     private final RoomToRoomDTO roomToRoomDTO;
+    private final HotelAmenityToHotelAmenityDTO hotelAmenityToHotelAmenityDTO;
 
 
-    public HotelToHotelDTO(RoomToRoomDTO roomToRoomDTO) {
+    public HotelToHotelDTO(RoomToRoomDTO roomToRoomDTO,HotelAmenityToHotelAmenityDTO hotelAmenityToHotelAmenityDTO) {
         this.roomToRoomDTO = roomToRoomDTO;
+        this.hotelAmenityToHotelAmenityDTO = hotelAmenityToHotelAmenityDTO;
     }
 
     /***
@@ -37,7 +40,11 @@ public class HotelToHotelDTO {
         for (Room room : hotel.getRooms()){
             hotelDTO.getRooms().add(roomToRoomDTO.converter(room));
         }
-
+        
+        for(HotelAmenity hotelAmenity : hotel.getHotelAmenity()) {
+        	hotelDTO.getHotelAmenityDTO().add(hotelAmenityToHotelAmenityDTO.converter(hotelAmenity));
+        }
+        
         hotelDTO.setDisabled(hotel.isDisabled());
 
         return hotelDTO;

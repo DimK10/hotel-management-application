@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
-import com.sphy.hotelmanagementapplication.domain.RoomAmenity.AmenitiesRoom;
+
 
 /***
  * created by AKd
