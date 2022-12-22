@@ -10,7 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 
 const Login = () => {
 
-  const isAuthenticated = useSelector(state => state.isAuthenticated);
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
   const dispatch = useDispatch();
 

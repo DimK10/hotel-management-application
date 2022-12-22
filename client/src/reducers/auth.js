@@ -64,6 +64,23 @@
 
 import {createSlice} from "@reduxjs/toolkit";
 
+const registerOfLoginSuccess = (state, action) => {
+  const {payload, user} = action;
+  localStorage.setItem('jwt', payload.jwt);
+  state.jwt = payload.jwt;
+  state.isAuthenticated = true;
+  state.loading = false;
+  state.user = user;
+}
+
+const resetState = state => {
+  localStorage.removeItem('jwt');
+  state.jwt = null;
+  state.isAuthenticated = false;
+  state.loading = false;
+  state.user = null;
+}
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
@@ -74,36 +91,21 @@ const authSlice = createSlice({
   },
   reducers: {
     userLoaded: (state, action) => {
-      const { payload } = action;
+      const {payload} = action;
       state.isAuthenticated = true;
       state.loading = false;
       state.user = payload;
     },
-    registerOrLoginSuccess: (state, action) => {
-      const { payload, user } = action;
-      localStorage.setItem('jwt', payload.jwt);
-      state.jwt = payload.jwt;
-      state.isAuthenticated = true;
-      state.loading = false;
-      state.user = user;
-    },
-    authErrorOrLogOut: state => {
 
-      localStorage.removeItem('jwt');
-      state.jwt = null;
-      state.isAuthenticated = false;
-      state.loading = false;
-    },
-    cleaProfile: state => {
-      state.user = null;
-      state.jwt = null;
-      state.isAuthenticated = false;
-      state.loading = false;
-//         jwt: null,
-//         isAuthenticated: false,
-//         loading: false,
-    }
-
+    registerSuccess: registerOfLoginSuccess,
+    loginSuccess: registerOfLoginSuccess,
+    /* error reducers or auth reset reducers */
+    authError: resetState,
+    logOut: resetState,
+    loginFail: resetState,
+    registerFail: resetState,
+    accountDeleted: resetState,
+    cleaProfile: resetState
   }
 })
 

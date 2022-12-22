@@ -16,8 +16,13 @@ import authSlice from "../reducers/auth";
 
 const {
   userLoaded,
-  authErrorOrLogOut,
-  registerOrLoginSuccess,
+  registerSuccess,
+  loginSuccess,
+  authError,
+  logOut,
+  loginFail,
+  registerFail,
+  accountDeleted,
   cleaProfile
 } = authSlice.actions;
 
@@ -39,7 +44,7 @@ export const loadUser = () => async (dispatch) => {
     // dispatch({
     //   type: AUTH_ERROR,
     // });
-    dispatch(authErrorOrLogOut());
+    dispatch(authError());
   }
 };
 
@@ -63,7 +68,7 @@ export const register =
         //   payload: res.data,
         // });
 
-        dispatch(registerOrLoginSuccess(res.data));
+        dispatch(registerSuccess(res.data));
 
         dispatch(loadUser());
       } catch (err) {
@@ -76,7 +81,7 @@ export const register =
         // dispatch({
         //   type: REGISTER_FAIL,
         // });
-        dispatch(authErrorOrLogOut())
+        dispatch(registerFail())
       }
     };
 
@@ -101,7 +106,7 @@ export const login = (username, password) => async (dispatch) => {
     //   payload: {...res.data, user: username},
     // });
 
-    dispatch(registerOrLoginSuccess({jwt: token, user: username}));
+    dispatch(loginSuccess({jwt: token, user: username}));
 
     dispatch(loadUser());
   } catch (err) {
@@ -114,12 +119,11 @@ export const login = (username, password) => async (dispatch) => {
     // dispatch({
     //   type: LOGIN_FAIL,
     // });
-    dispatch(authErrorOrLogOut())
+    dispatch(loginFail())
   }
 };
 
 // Logout / Clear Profile
 export const logout = () => (dispatch) => {
   dispatch(cleaProfile());
-  dispatch(authErrorOrLogOut());
 };
