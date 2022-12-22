@@ -1,28 +1,29 @@
-import {GET_ALL_HOTELS, GET_COUNT_OF_HOTELS} from '../actions/types';
+import {createSlice} from "@reduxjs/toolkit";
 
-
-const initialState = {
-  loading: true,
-  count: 0,
-  hotels: []
-}
-
-export default function (state = initialState, action) {
-  const { type, payload } = action;
-
-  switch (type) {
-    case GET_ALL_HOTELS:
-      return {
-        ...state,
-        loading: false,
-        hotels: payload
-      }
-    case GET_COUNT_OF_HOTELS:
-      return {
-        ...state,
-        count: payload,
-      }
-    default:
-      return state;
+const hotelSlice = createSlice({
+  name: 'hotel',
+  initialState: {
+    loading: true,
+    count: 0,
+    hotels: [],
+    error: ''
+  },
+  reducers: {
+    getAllHotels: (state, action) => {
+      const { payload } = action;
+      state.loading = false;
+      state.hotels = payload
+    },
+    getCountOfHotels: (state, action) => {
+      const { payload } = action;
+      state.count = payload;
+    },
+    hotelError: (state, action) => {
+      const { payload } = action;
+      state.error = payload;
+      state.loading = false;
+    }
   }
-}
+})
+
+export default hotelSlice;

@@ -1,16 +1,7 @@
 import axios from 'axios';
 import jwt from 'jwt-decode'
 import alertSlice, {setAlertAction} from './alert';
-// import {
-//   AUTH_ERROR,
-//   CLEAR_PROFILE,
-//   LOGIN_FAIL,
-//   LOGIN_SUCCESS,
-//   LOGOUT,
-//   REGISTER_FAIL,
-//   REGISTER_SUCCESS,
-//   USER_LOADED,
-// } from './types';
+
 import setAuthToken from '../utils/setAuthToken';
 import authSlice from "../reducers/auth";
 
@@ -35,15 +26,8 @@ export const loadUser = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/auth');
 
-    // dispatch({
-    //   type: USER_LOADED,
-    //   payload: res.data,
-    // });
     dispatch(userLoaded(res.data));
   } catch (err) {
-    // dispatch({
-    //   type: AUTH_ERROR,
-    // });
     dispatch(authError());
   }
 };
@@ -63,11 +47,6 @@ export const register =
       try {
         const res = await axios.post('/api/users', body, config);
 
-        // dispatch({
-        //   type: REGISTER_SUCCESS,
-        //   payload: res.data,
-        // });
-
         dispatch(registerSuccess(res.data));
 
         dispatch(loadUser());
@@ -78,9 +57,6 @@ export const register =
           errors.forEach((error) => dispatch(setAlertAction(error.msg, 'danger')));
         }
 
-        // dispatch({
-        //   type: REGISTER_FAIL,
-        // });
         dispatch(registerFail())
       }
     };
@@ -101,11 +77,6 @@ export const login = (username, password) => async (dispatch) => {
     const token = res.data.jwt;
     const username = jwt(token).sub;
 
-    // dispatch({
-    //   type: LOGIN_SUCCESS,
-    //   payload: {...res.data, user: username},
-    // });
-
     dispatch(loginSuccess({jwt: token, user: username}));
 
     dispatch(loadUser());
@@ -116,9 +87,6 @@ export const login = (username, password) => async (dispatch) => {
       errors.forEach((error) => dispatch(setAlertAction(error.msg, 'danger')));
     }
 
-    // dispatch({
-    //   type: LOGIN_FAIL,
-    // });
     dispatch(loginFail())
   }
 };

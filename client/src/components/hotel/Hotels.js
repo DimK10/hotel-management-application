@@ -1,29 +1,28 @@
 import React, {Fragment, useEffect} from 'react';
-import PropTypes from 'prop-types';
 import SidebarComp from "../layout/Sidebar";
 import HeaderNav from "../layout/HeaderNav";
-import {connect} from "react-redux";
-import {getAllHotelsByPage, getCountOfHotels} from "../../actions/hotel";
+import {useDispatch, useSelector} from "react-redux";
+import {getAllHotelsByPage, getCountOfHotelsAction} from "../../actions/hotel";
 import HotelTable from "./HotelTable";
 import Loading from "../layout/Loading";
 
 
-const Hotel = ({getCountOfHotels, getAllHotelsByPage, hotelState, auth}) => {
+const Hotel = () => {
 
-  const {loading, user} = auth;
-  const {loading: hotelsLoading, count, hotels} = hotelState;
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (!loading)
-      getCountOfHotels(user?.id);
-  },[auth, getCountOfHotels])
+  const {loading: hotelsLoading, count, hotels} = useSelector(state => state.hotel);
+
+  const {loading, user, auth} = useSelector(state => state.auth);
+
 
   useEffect(() => {
     if (!loading) {
-      getAllHotelsByPage(0, 10, 'id', user?.id);
+      dispatch(getCountOfHotelsAction(user?.id));
+      dispatch(getAllHotelsByPage(0, 10, 'id', user?.id));
     }
-  }, [auth, getAllHotelsByPage]);
 
+  }, [loading, auth])
 
   return (
     <Fragment>
@@ -32,12 +31,12 @@ const Hotel = ({getCountOfHotels, getAllHotelsByPage, hotelState, auth}) => {
         {
           hotelsLoading
             ?
-            <Loading key={1}/>
+            <Loading key={'1'}/>
             :
             (
               hotels.length > 0
                 ?
-                <HotelTable key={1} />
+                <HotelTable key={'1'} />
                 :
                 <h2>No hotels found</h2>
             )
@@ -47,14 +46,4 @@ const Hotel = ({getCountOfHotels, getAllHotelsByPage, hotelState, auth}) => {
   );
 };
 
-Hotel.propTypes = {
-  hotelState: PropTypes.object.isRequired,
-  getAllHotelsByPage: PropTypes.func.isRequired
-};
-
-const mapStateToProps = state => ({
-  auth: state.auth,
-  hotelState: state.hotel
-})
-
-export default connect(mapStateToProps, {getCountOfHotels, getAllHotelsByPage})(Hotel);
+export default Hotel;

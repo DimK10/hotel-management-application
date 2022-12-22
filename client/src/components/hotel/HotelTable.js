@@ -4,11 +4,13 @@ import {cilPencil, cilTrash} from "@coreui/icons";
 import {Tooltip} from '@coreui/coreui/dist/js/coreui';
 import Pagination from "../layout/Pagination";
 import PropTypes from "prop-types";
-import {connect} from "react-redux";
+import {connect, useDispatch, useSelector} from "react-redux";
 import {getAllHotelsByPage} from "../../actions/hotel";
 
 
-function HotelTable({auth, hotelState, getAllHotelsByPage}) {
+function HotelTable() {
+
+  const dispatch = useDispatch();
 
   const [pageSize, setPageSize] = useState(10);
 
@@ -16,16 +18,16 @@ function HotelTable({auth, hotelState, getAllHotelsByPage}) {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  const {user, loading} = auth;
+  const {user, loading} = useSelector(state => state.auth);
 
-  const {loading: hotelsLoading, count, hotels} = hotelState;
+  const {loading: hotelsLoading, count, hotels} = useSelector(state => state.hotel);
 
   useEffect(() => {
     setPages(Math.floor(count / 10));
   }, [count]);
 
   useEffect(() => {
-    getAllHotelsByPage(currentPage - 1, pageSize, 'id', user?.id)
+    dispatch(getAllHotelsByPage(currentPage - 1, pageSize, 'id', user?.id));
   }, [pages]);
 
 
@@ -42,7 +44,7 @@ function HotelTable({auth, hotelState, getAllHotelsByPage}) {
 
       setCurrentPage(parseInt(e.target.textContent));
       let selectedPage = e.target.textContent - 1;
-      getAllHotelsByPage(selectedPage, pageSize, 'id', user?.id)
+      dispatch(getAllHotelsByPage(selectedPage, pageSize, 'id', user?.id));
     }
   }
 
@@ -53,7 +55,7 @@ function HotelTable({auth, hotelState, getAllHotelsByPage}) {
     if (!loading) {
 
       setCurrentPage(prevState => prevState + 1);
-      getAllHotelsByPage(currentPage, pageSize, 'id', user?.id)
+      dispatch(getAllHotelsByPage(currentPage, pageSize, 'id', user?.id));
     }
   }
 
@@ -65,7 +67,7 @@ function HotelTable({auth, hotelState, getAllHotelsByPage}) {
       // This will be used to set the page as zero indexed number (due to how pagination is configured in backend)
       let page = currentPage - 2;
       setCurrentPage(prevState => prevState - 1);
-      getAllHotelsByPage(page, pageSize, 'id', user?.id)
+      dispatch( getAllHotelsByPage(page, pageSize, 'id', user?.id));
     }
   }
 
@@ -158,15 +160,4 @@ function HotelTable({auth, hotelState, getAllHotelsByPage}) {
   );
 }
 
-HotelTable.propTypes = {
-  auth: PropTypes.object.isRequired,
-  hotelState: PropTypes.object.isRequired,
-  getAllHotelsByPage: PropTypes.func.isRequired
-};
-
-const mapStateToProps = state => ({
-  auth: state.auth,
-  hotelState: state.hotel
-})
-
-export default connect(mapStateToProps, {getAllHotelsByPage})(HotelTable);
+export default HotelTable;

@@ -1,36 +1,32 @@
-import {GET_NEW_ORDER, NEW_ORDER_PRE_CHECKOUT, ORDER_ERROR} from "../actions/types";
+import {createSlice} from "@reduxjs/toolkit";
+import moment from "moment/moment";
 
-const initialState = {
-  checkInDate: new Date(),
-  checkOutDate: new Date(),
-  client: null,
-  room: null,
-  canceled: false,
-  error: {}
-}
-
-export default function (state = initialState, action) {
-  const { type, payload } = action;
-
-  switch (type) {
-    case NEW_ORDER_PRE_CHECKOUT:
-      return {
-        ...state,
-        checkInDate: payload?.checkInDate,
-        checkOutDate: payload?.checkOutDate,
-        client: payload?.client,
-        room: payload?.room,
-        canceled: payload.canceled,
-
-      }
-    case ORDER_ERROR:
-      return {
-        ...state,
-        error: payload,
-      }
-    case GET_NEW_ORDER:
-    default:
-      return state;
+const orderSlice = createSlice({
+  name: 'order',
+  initialState: {
+    checkInDate: moment(new Date()).format('DD/MM/YYYY'),
+    checkOutDate: moment(new Date()).format('DD/MM/YYYY'),
+    loading: true,
+    client: null,
+    room: null,
+    canceled: false,
+    error: {}
+  },
+  reducers: {
+    newOrderPreCheckout: (state, action) => {
+      const { payload }  = action;
+      state.checkInDate = payload?.checkInDate;
+      state.checkOutDate = payload.checkOutDate;
+      state.client = payload?.client;
+      state.room = payload?.room;
+      state.canceled = payload.canceled;
+    },
+    orderError: (state, action) => {
+      const { payload } = action;
+      state.error = payload;
+      state.loading = false;
+    }
   }
-}
+})
 
+export default orderSlice;
