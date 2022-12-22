@@ -73,20 +73,22 @@ function HotelTable() {
 
   return (
     <Fragment>
-      <div className="row">
-        <div className='input-group pb-3 mb-4'>
-          <input
-            type='text'
-            className='form-control'
-            placeholder='Search for a hotel name'
-            aria-label='Search for a hotel name'
-            aria-describedby='button-addon2'
-          />
-          <button className='btn btn-primary px-4' type='button'>
-            Search
-          </button>
-        </div>
-      </div>
+      {/* TODO ADD LOGIC FOR SEARCH BAR IF THERE IS TIME */}
+      {/* Search Bar */}
+      {/*<div className="row">*/}
+      {/*  <div className='input-group pb-3 mb-4'>*/}
+      {/*    <input*/}
+      {/*      type='text'*/}
+      {/*      className='form-control'*/}
+      {/*      placeholder='Search for a hotel name'*/}
+      {/*      aria-label='Search for a hotel name'*/}
+      {/*      aria-describedby='button-addon2'*/}
+      {/*    />*/}
+      {/*    <button className='btn btn-primary px-4' type='button'>*/}
+      {/*      Search*/}
+      {/*    </button>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
       <div className="row">
         <div className="col">
           <h4 className="mb-4 mr-auto">List of your Hotels</h4>

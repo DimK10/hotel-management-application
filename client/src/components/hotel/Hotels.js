@@ -31,12 +31,12 @@ const Hotel = () => {
         {
           hotelsLoading
             ?
-            <Loading key={'1'}/>
+            <Loading key={'first'}/>
             :
             (
               hotels.length > 0
                 ?
-                <HotelTable key={'1'} />
+                <HotelTable key={'hTable'}/>
                 :
                 <h2>No hotels found</h2>
             )

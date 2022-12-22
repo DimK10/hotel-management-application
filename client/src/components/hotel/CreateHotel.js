@@ -3,12 +3,13 @@ import SidebarComp from "../layout/Sidebar";
 import HeaderNav from "../layout/HeaderNav";
 
 import cities from '../../json/cities.json';
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
-CreateHotel.propTypes = {};
+function CreateHotel() {
 
-function CreateHotel({auth}) {
+  const dispatch = useDispatch();
 
+  const auth = useSelector(state => state.auth);
 
     // TODO ADD ROOMS WITH CREATE HOTEL FORM
     const [formData, setFormData] = useState({
@@ -137,8 +138,4 @@ function CreateHotel({auth}) {
     );
 }
 
-const mapStateToProps = state => ({
-    auth: state.auth
-});
-
-export default connect(mapStateToProps)(CreateHotel);
+export default CreateHotel;

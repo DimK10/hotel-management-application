@@ -12,6 +12,8 @@ const Rooms = props => {
       <SidebarComp/>
       <HeaderNav>
 
+        {/* TODO ADD LOGIC FOR SEARCH BAR IF THERE IS TIME */}
+        {/* Search Bar */}
         <div className="row">
           <div className='input-group pb-3 mb-4'>
             <input
