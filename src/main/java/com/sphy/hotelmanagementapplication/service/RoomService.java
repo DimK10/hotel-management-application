@@ -212,9 +212,9 @@ public class RoomService {
 
 
     /***
-     *
-     * @param id
-     * @return
+     * Retrieves a set of RoomAmenity for the room with the given ID
+     * @param id The ID of the room for which to retrieve amenities
+     * @return A set of RoomAmenity representing the amenities of the room with the given ID
      */
     public Set<RoomAmenityDTO> getRoomAmenitiesByRoomId(Long id) {
 

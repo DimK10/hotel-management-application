@@ -1,9 +1,11 @@
 package com.sphy.hotelmanagementapplication.service;
 
+import com.sphy.hotelmanagementapplication.converter.HotelAmenityToHotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.converter.HotelDTOToHotel;
 import com.sphy.hotelmanagementapplication.converter.HotelToHotelDTO;
 import com.sphy.hotelmanagementapplication.domain.Admin;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
+import com.sphy.hotelmanagementapplication.dto.HotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
@@ -12,10 +14,7 @@ import com.sphy.hotelmanagementapplication.repository.AdminRepository;
 import com.sphy.hotelmanagementapplication.repository.HotelRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /***
  * created by gp
@@ -36,13 +35,16 @@ public class HotelService {
 
 	private final RoomService roomService;
 
-	public HotelService(HotelRepository hotelRepository, AdminRepository adminRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, AdminService adminService, RoomService roomService1) {
+	private final HotelAmenityToHotelAmenityDTO hotelAmenityToHotelAmenityDTO;
+
+	public HotelService(HotelRepository hotelRepository, AdminRepository adminRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, AdminService adminService, RoomService roomService1, HotelAmenityToHotelAmenityDTO hotelAmenityToHotelAmenityDTO) {
 		this.hotelRepository = hotelRepository;
 		this.adminRepository = adminRepository;
 		this.hotelDTOToHotel = hotelDTOToHotel;
 		this.hotelToHotelDTO = hotelToHotelDTO;
 		this.adminService = adminService;
 		this.roomService = roomService;
+		this.hotelAmenityToHotelAmenityDTO = hotelAmenityToHotelAmenityDTO;
 	}
 
 	/***
@@ -236,5 +238,23 @@ public class HotelService {
 		}
 		return hotelDTOS;
 	}
+
+
+	/***
+	 * Retrieves a set of HotelAmenity for the hotel with the given ID
+	 * @param id The ID of the hotel for which to retrieve amenities
+	 * @return A set of HotelAmenity representing the amenities of the hotel with the given ID
+	 */
+
+	public Set<HotelAmenityDTO> getHotelAmenitiesByHotelId(Long id){
+
+		Set<HotelAmenityDTO> amenitiesHotelDTO = new HashSet<>();
+
+		hotelRepository.findByHotelID(id)
+				.stream()
+				.map(hotelAmenity -> amenitiesHotelDTO.add(hotelAmenityToHotelAmenityDTO.converter(hotelAmenity)));
+		return amenitiesHotelDTO;
+	}
+
 
 }
