@@ -39,8 +39,7 @@ public class HotelAmenity extends BaseEntity {
 		
 	}
 
-	public HotelAmenity(Long id, AmenitiesHotel amenitiesH) {
-		super(id);
+	public HotelAmenity(AmenitiesHotel amenitiesH) {
 		this.amenitiesH = amenitiesH;
 	}// Constructor with fields
 

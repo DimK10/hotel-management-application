@@ -39,7 +39,7 @@ public class HotelAmenityDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "HotelAmenityDTO [id=" + id + ", hotelAmentities=" + hotelAmenities + "]";
+		return "HotelAmenityDTO [id=" + id + ", hotelAmenities=" + hotelAmenities + "]";
 	}
 
 }
