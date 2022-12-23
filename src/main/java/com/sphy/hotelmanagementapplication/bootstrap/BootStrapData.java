@@ -19,7 +19,7 @@ public class BootStrapData implements CommandLineRunner {
     private final AdminRepository adminRepository;
     private final AmenityHotelRepository amenityHotelRepository;
     private final AmenityRoomRepository amenityRoomRepository;
-    //private final HotelAmenity hotelAmenity;
+
 
 
     public BootStrapData(ClientRepository clientRepository, HotelRepository hotelRepository, OrderRepository orderRepository, RoomRepository roomRepository, AdminRepository adminRepository, AmenityHotelRepository amenityHotelRepository, AmenityRoomRepository amenityRoomRepository) {
@@ -29,7 +29,6 @@ public class BootStrapData implements CommandLineRunner {
         this.roomRepository = roomRepository;
         this.adminRepository = adminRepository;
         this.amenityHotelRepository = amenityHotelRepository;
-        //this.hotelAmenity = new HotelAmenity();
         this.amenityRoomRepository = amenityRoomRepository;
     }
 
@@ -66,20 +65,27 @@ public class BootStrapData implements CommandLineRunner {
         Set<HotelAmenity> amenitySet = new HashSet<>();
 
         HotelAmenity amenity1 = new HotelAmenity();
+        //amenityHotelRepository.save(amenity1);
         amenity1.setAmenitiesH(HotelAmenity.AmenitiesHotel.AIRPORTTRANSPORT);
 
         HotelAmenity amenity2 = new HotelAmenity();
+       // amenityHotelRepository.save(amenity2);
         amenity2.setAmenitiesH(HotelAmenity.AmenitiesHotel.GYM);
 
         HotelAmenity amenity3 = new HotelAmenity();
-        amenity3.setAmenitiesH(HotelAmenity.AmenitiesHotel.SPA);
+        //amenityHotelRepository.save(amenity3);
+        amenity3.setAmenitiesH(HotelAmenity.AmenitiesHotel.PETSALLOWED);
 
+       // ksenia.getHotelAmenity().add(amenity1);
+       // ksenia.getHotelAmenity().add(amenity2);
+       // ksenia.getHotelAmenity().add(amenity3);
         amenityHotelRepository.saveAll(amenitySet);
 
         ksenia.getHotelAmenity().addAll(amenitySet);
-        
+        hotelRepository.save(ksenia);
+
         ksenia.getRooms().add(ena);
-        //ksenia.getHotelAmenity().add(amenity); //?
+
         hotelRepository.save(ksenia);
         ksenia.getRooms().add(dio);
         hotelRepository.save(ksenia);
@@ -96,7 +102,6 @@ public class BootStrapData implements CommandLineRunner {
         amenityRoomRepository.save(roomAmenity);
         RoomAmenity roomAmenity1 = new RoomAmenity(RoomAmenity.AmenitiesRoom.MINIBAR);
         amenityRoomRepository.save(roomAmenity1);
-
 
 
         ena.getRoomAmenity().add(roomAmenity);
