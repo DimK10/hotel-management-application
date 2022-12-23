@@ -12,6 +12,5 @@ import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
  */
 
 public interface AmenityHotelRepository extends CrudRepository <HotelAmenity,Long> {
-	Optional<HotelAmenity> findById(Long id);
 
 }
