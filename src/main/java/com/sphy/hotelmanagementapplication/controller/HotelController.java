@@ -1,6 +1,7 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 
+import com.sphy.hotelmanagementapplication.dto.HotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.service.HotelService;
@@ -9,9 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 /***
- * created by gp
+ * created by gp , AKd
  */
 @RestController
 public class HotelController {
@@ -126,6 +128,19 @@ public class HotelController {
             return ResponseEntity.status(HttpStatus.OK)
                     .body("Hotel with id " + id + " was successfully deactivated");
 
+    }
+
+    /***
+     * Retrieves a set of HotelAmenity for the hotel with the given ID
+     * @param id The ID of the hotel for which to retrieve amenities
+     * @return A set of HotelAmenity representing the amenities of the hotel with the given ID
+     * @throws ApiRequestException if the id does not exist
+     */
+
+    @GetMapping("/api/hotel/amenities/{hotelId}")
+    public Set<HotelAmenityDTO> findHotelAmenitiesByHotelId(@PathVariable Long id)throws ApiRequestException{
+
+        return service.getHotelAmenitiesByHotelId(id);
     }
 
 
