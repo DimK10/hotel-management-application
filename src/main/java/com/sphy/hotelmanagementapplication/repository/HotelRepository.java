@@ -27,7 +27,9 @@ public interface HotelRepository extends CrudRepository<Hotel,Long> {
 
 	boolean existsByName(String name);
 
-	@Query("select h.hotelAmenity from Hotel h where h.id=id")
-	Set<HotelAmenity> findByHotelID(long id);
+
+
+	//@Query("select h.hotelAmenity from Hotel h where h.id=id")
+	//Set<HotelAmenity> findByHotelID(long id);
 
 }

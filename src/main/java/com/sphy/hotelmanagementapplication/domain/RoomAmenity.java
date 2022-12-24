@@ -87,6 +87,7 @@ public class RoomAmenity extends BaseEntity{
 		if (!super.equals(o)) return false;
 		RoomAmenity that = (RoomAmenity) o;
 		return amenitiesR == that.amenitiesR;
+
 	}
 
 	@Override

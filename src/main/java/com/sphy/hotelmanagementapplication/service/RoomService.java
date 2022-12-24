@@ -218,11 +218,13 @@ public class RoomService {
      */
     public Set<RoomAmenityDTO> getRoomAmenitiesByRoomId(Long id) {
 
-        Set<RoomAmenityDTO> amenitiesDTO = new HashSet<>();
-        roomRepository.findByRoomID(id)
-                .stream()
-                .map(roomAmenity ->  amenitiesDTO.add(roomAmenityToRoomAmenityDTO.converter(roomAmenity)));
+        Set<RoomAmenityDTO> amenitiesRoomDTO = new HashSet<>();
+        Optional<Room> roomOptional = roomRepository.findById(id);
+        roomOptional.ifPresent(room ->  room.getRoomAmenity()
+                                .forEach(roomAmenity -> {
+                                    amenitiesRoomDTO.add(roomAmenityToRoomAmenityDTO.converter(roomAmenity));
+                                }));
 
-        return amenitiesDTO;
+        return amenitiesRoomDTO;
     }
 }

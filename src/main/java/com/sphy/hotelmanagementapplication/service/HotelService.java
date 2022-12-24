@@ -249,10 +249,12 @@ public class HotelService {
 	public Set<HotelAmenityDTO> getHotelAmenitiesByHotelId(Long id){
 
 		Set<HotelAmenityDTO> amenitiesHotelDTO = new HashSet<>();
+		Optional<Hotel> hotelOptional = hotelRepository.findById(id);
+		hotelOptional.ifPresent(hotel -> hotel.getHotelAmenity()
+								.forEach(hotelAmenity -> {
+								amenitiesHotelDTO.add(hotelAmenityToHotelAmenityDTO.converter(hotelAmenity));
+								}));
 
-		hotelRepository.findByHotelID(id)
-				.stream()
-				.map(hotelAmenity -> amenitiesHotelDTO.add(hotelAmenityToHotelAmenityDTO.converter(hotelAmenity)));
 		return amenitiesHotelDTO;
 	}
 

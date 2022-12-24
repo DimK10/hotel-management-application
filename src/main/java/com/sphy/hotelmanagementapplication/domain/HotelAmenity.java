@@ -19,7 +19,7 @@ import javax.persistence.Table;
 public class HotelAmenity extends BaseEntity {
 		
 	@Enumerated(EnumType.STRING)
-	public AmenitiesHotel amenitiesH;
+	private AmenitiesHotel amenitiesH;
 	
 	public enum AmenitiesHotel {
 		PARKING,
@@ -66,6 +66,7 @@ public class HotelAmenity extends BaseEntity {
 		if (!super.equals(o)) return false;
 		HotelAmenity that = (HotelAmenity) o;
 		return amenitiesH == that.amenitiesH;
+
 	}
 
 	@Override

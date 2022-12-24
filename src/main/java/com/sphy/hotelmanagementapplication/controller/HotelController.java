@@ -132,15 +132,15 @@ public class HotelController {
 
     /***
      * Retrieves a set of HotelAmenity for the hotel with the given ID
-     * @param id The ID of the hotel for which to retrieve amenities
+     * @param hotelId The ID of the hotel for which to retrieve amenities
      * @return A set of HotelAmenity representing the amenities of the hotel with the given ID
      * @throws ApiRequestException if the id does not exist
      */
 
     @GetMapping("/api/hotel/amenities/{hotelId}")
-    public Set<HotelAmenityDTO> findHotelAmenitiesByHotelId(@PathVariable Long id)throws ApiRequestException{
+    public Set<HotelAmenityDTO> findHotelAmenitiesByHotelId(@PathVariable Long hotelId)throws ApiRequestException{
 
-        return service.getHotelAmenitiesByHotelId(id);
+        return service.getHotelAmenitiesByHotelId(hotelId);
     }
 
 

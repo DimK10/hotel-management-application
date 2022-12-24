@@ -62,31 +62,32 @@ public class BootStrapData implements CommandLineRunner {
         admin.getHotels().add(ksenia);
         adminRepository.save(admin);
 
-        Set<HotelAmenity> amenitySet = new HashSet<>();
+       Set<HotelAmenity> amenitySet = new HashSet<>();
 
         HotelAmenity amenity1 = new HotelAmenity();
-        //amenityHotelRepository.save(amenity1);
+
         amenity1.setAmenitiesH(HotelAmenity.AmenitiesHotel.AIRPORTTRANSPORT);
 
         HotelAmenity amenity2 = new HotelAmenity();
-       // amenityHotelRepository.save(amenity2);
+
         amenity2.setAmenitiesH(HotelAmenity.AmenitiesHotel.GYM);
 
         HotelAmenity amenity3 = new HotelAmenity();
-        //amenityHotelRepository.save(amenity3);
+
         amenity3.setAmenitiesH(HotelAmenity.AmenitiesHotel.PETSALLOWED);
 
-       // ksenia.getHotelAmenity().add(amenity1);
-       // ksenia.getHotelAmenity().add(amenity2);
-       // ksenia.getHotelAmenity().add(amenity3);
-        amenityHotelRepository.saveAll(amenitySet);
+          amenitySet.add(amenity1);
+          amenitySet.add(amenity2);
+          amenitySet.add(amenity3);
+          //ksenia.getHotelAmenity().add(amenity1);
+          //ksenia.getHotelAmenity().add(amenity2);
+          //ksenia.getHotelAmenity().add(amenity3);
+         amenityHotelRepository.saveAll(amenitySet);
 
-        ksenia.getHotelAmenity().addAll(amenitySet);
-        hotelRepository.save(ksenia);
+         ksenia.getHotelAmenity().addAll(amenitySet);
+
 
         ksenia.getRooms().add(ena);
-
-        hotelRepository.save(ksenia);
         ksenia.getRooms().add(dio);
         hotelRepository.save(ksenia);
 
@@ -98,19 +99,50 @@ public class BootStrapData implements CommandLineRunner {
 
 
         ena.getOrders().add(order);
-        RoomAmenity roomAmenity = new RoomAmenity(RoomAmenity.AmenitiesRoom.BABYHIGHCHAIR);
-        amenityRoomRepository.save(roomAmenity);
-        RoomAmenity roomAmenity1 = new RoomAmenity(RoomAmenity.AmenitiesRoom.MINIBAR);
-        amenityRoomRepository.save(roomAmenity1);
 
+        Set<RoomAmenity> amenityRset = new HashSet<>();
 
-        ena.getRoomAmenity().add(roomAmenity);
-        ena.getRoomAmenity().add(roomAmenity1);
+        RoomAmenity amenityR1 = new RoomAmenity();
+        amenityR1.setAmenitiesR(RoomAmenity.AmenitiesRoom.SHOWERCHAIR);
+
+        RoomAmenity amenityR2 = new RoomAmenity();
+        amenityR2.setAmenitiesR(RoomAmenity.AmenitiesRoom.REFRIGERATOR);
+
+        RoomAmenity amenityR3 = new RoomAmenity();
+        amenityR3.setAmenitiesR(RoomAmenity.AmenitiesRoom.COFFEETEAMACHINE);
+
+        amenityRset.add(amenityR1);
+        amenityRset.add(amenityR2);
+        amenityRset.add(amenityR3);
+        amenityRoomRepository.saveAll(amenityRset);
+        ena.getRoomAmenity().addAll(amenityRset);
+        //RoomAmenity roomAmenity = new RoomAmenity(RoomAmenity.AmenitiesRoom.BABYHIGHCHAIR);
+        //amenityRoomRepository.save(roomAmenity);
+        //RoomAmenity roomAmenity1 = new RoomAmenity(RoomAmenity.AmenitiesRoom.MINIBAR);
+        //amenityRoomRepository.save(roomAmenity1);
+
+        //ena.getRoomAmenity().add(roomAmenity);
+        //ena.getRoomAmenity().add(roomAmenity1);
         roomRepository.save(ena);
 
         Order order1 = new Order(null, LocalDate.of( 2007, 12,03), LocalDate.of(2007, 12, 07), false, client,dio);
         orderRepository.save(order1);
         dio.getOrders().add(order1);
+
+        Set<RoomAmenity> amenityRset1 = new HashSet<>();
+
+        RoomAmenity amenityR4 = new RoomAmenity();
+        amenityR4.setAmenitiesR(RoomAmenity.AmenitiesRoom.MINIBAR);
+
+        RoomAmenity amenityR5 = new RoomAmenity();
+        amenityR5.setAmenitiesR(RoomAmenity.AmenitiesRoom.BABYHIGHCHAIR);
+
+
+        amenityRset1.add(amenityR4);
+        amenityRset1.add(amenityR5);
+        amenityRoomRepository.saveAll(amenityRset1);
+
+        dio.getRoomAmenity().addAll(amenityRset1);
         roomRepository.save(dio);
 
     }

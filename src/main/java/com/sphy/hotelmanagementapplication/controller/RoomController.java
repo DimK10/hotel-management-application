@@ -129,15 +129,15 @@ public class RoomController {
 
     /***
      * Retrieves a set of RoomAmenity for the room with the given ID
-     * @param id The ID of the room for which to retrieve amenities
+     * @param roomId The ID of the room for which to retrieve amenities
      * @return A set of RoomAmenity representing the amenities of the room with the given ID
      * @throws ApiRequestException if the id does not exist
      */
 
     @GetMapping("/api/room/amenities/{roomId}")
-    public Set<RoomAmenityDTO> findRoomAmenitiesByRoomId(@PathVariable Long id) throws ApiRequestException {
+    public Set<RoomAmenityDTO> findRoomAmenitiesByRoomId(@PathVariable Long roomId) throws ApiRequestException {
 
-        return service.getRoomAmenitiesByRoomId(id);
+        return service.getRoomAmenitiesByRoomId(roomId);
     }
 
 }

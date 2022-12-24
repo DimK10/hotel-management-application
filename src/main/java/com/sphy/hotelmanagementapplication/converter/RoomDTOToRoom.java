@@ -58,10 +58,13 @@ public class RoomDTOToRoom {
 
 			hotel.ifPresent(room::setHotel);
 		}
-		
-		for(RoomAmenityDTO roomAmenityDTO : roomDTO.getRoomAmenityDTO()) {
-			room.getRoomAmenity().add(roomAmenityDTOToRoomAmenity.converter(roomAmenityDTO));
-		}
+
+        if (!roomDTO.getRoomAmenityDTO().isEmpty()) {
+
+            for (RoomAmenityDTO roomAmenityDTO : roomDTO.getRoomAmenityDTO()) {
+                room.getRoomAmenity().add(roomAmenityDTOToRoomAmenity.converter(roomAmenityDTO));
+            }
+        }
 
         return room;
     }

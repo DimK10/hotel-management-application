@@ -16,6 +16,6 @@ import java.util.Set;
 public interface RoomRepository extends CrudRepository<Room,Long> {
     Optional<Room> findByName(String name);
 
-    @Query("select r.roomAmenity from  rooms r where r.id = id")
-    Set<RoomAmenity> findByRoomID(Long id);
+   // @Query("select r.roomAmenity from  rooms r where r.id = id")
+    //Set<RoomAmenity> findByRoomID(Long id);
 }

@@ -47,9 +47,13 @@ public class HotelDTOToHotel {
         }
 
         hotelDTO.setDisabled(hotel.isDisabled());
-        
-        for(HotelAmenityDTO hotelAmenityDTO : hotelDTO.getHotelAmenityDTO()) {
-        	hotel.getHotelAmenity().add(hotelAmenityDTOToHotelAmenity.converter(hotelAmenityDTO));
+
+
+        if (!hotelDTO.getHotelAmenityDTO().isEmpty()) {
+
+            for (HotelAmenityDTO hotelAmenityDTO : hotelDTO.getHotelAmenityDTO()) {
+                hotel.getHotelAmenity().add(hotelAmenityDTOToHotelAmenity.converter(hotelAmenityDTO));
+            }
         }
 
         return hotel;
