@@ -18,6 +18,12 @@ const hotelSlice = createSlice({
       const { payload } = action;
       state.count = payload;
     },
+    createNewHotel: (state, action) => {
+      const { payload } = action;
+      state.loading = false;
+      state.count = state.count + 1;
+      state.hotels = [...state.hotels, payload];
+    },
     hotelError: (state, action) => {
       const { payload } = action;
       state.error = payload;

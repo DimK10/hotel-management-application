@@ -4,6 +4,7 @@ import HeaderNav from "../layout/HeaderNav";
 
 import cities from '../../json/cities.json';
 import {useDispatch, useSelector} from "react-redux";
+import {createNewHotelAction} from "../../actions/hotel";
 
 function CreateHotel() {
 
@@ -29,6 +30,7 @@ function CreateHotel() {
         name,
         stars,
         areaName,
+        address,
         disabled,
     } = formData;
 
@@ -46,6 +48,11 @@ function CreateHotel() {
         onChange(e);
     };
 
+    const onSubmit = async e => {
+        e.preventDefault();
+        dispatch(createNewHotelAction(formData));
+    };
+
     return (
         <Fragment>
             <SidebarComp/>
@@ -56,7 +63,7 @@ function CreateHotel() {
                             <div className="card-title">
                                 <h4>Add a new Hotel</h4>
                             </div>
-                            <form>
+                            <form onSubmit={e => onSubmit(e)}>
                                 <div className="mb-3">
                                     <label htmlFor="name" className="form-label">Hotel Name:</label>
                                     <input type="text" className="form-control" id="name"
