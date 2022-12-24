@@ -5,8 +5,11 @@ import '../../css/wrapperFix.css'
 import HeaderNav from "../layout/HeaderNav";
 import MainChart from "./MainChart";
 import {Link, useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const Dashboard = props => {
+
+  const {user} = useSelector(state => state.auth);
 
   let navigate = useNavigate();
 
@@ -20,7 +23,7 @@ const Dashboard = props => {
       <SidebarComp/>
       <HeaderNav>
         <div className="jumbotron">
-          <h1 className="display-4">Welcome back username!</h1>
+          <h1 className="display-4">Welcome back {user.firstname} {user.lastname} !</h1>
           <hr className="my-4"/>
           <div style={{margin: "5rem auto"}}>
             <div className="row">
