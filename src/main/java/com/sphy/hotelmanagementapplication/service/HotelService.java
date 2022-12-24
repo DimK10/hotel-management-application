@@ -64,6 +64,16 @@ public class HotelService {
 
 	}
 
+	public HotelDTO getHotelById(Long id, Long userId) throws ApiRequestException {
+		Optional<Hotel> hotel = hotelRepository.findHotelByIdAndOwner(id, userId);
+		if (hotel.isEmpty()){
+			throw new ApiRequestException("There is no hotel with id: " + id);
+		}else {
+			return hotelToHotelDTO.converter(hotelRepository.findById(id).get());
+		}
+
+	}
+
 	/***
 	 * counts all the hotels in the database for a specific user id
 	 * @return the number of hotels that exists in the database

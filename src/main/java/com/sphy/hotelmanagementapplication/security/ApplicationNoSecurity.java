@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * created by gp
  */
 @Configuration
-@Profile("dev")
+//@Profile("dev")
 public class ApplicationNoSecurity {
 
     @Bean

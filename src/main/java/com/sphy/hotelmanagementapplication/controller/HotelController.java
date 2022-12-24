@@ -1,14 +1,17 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 
+import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
-import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.service.HotelService;
-import org.springframework.core.annotation.AliasFor;
+import com.sphy.hotelmanagementapplication.service.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,10 +24,12 @@ import java.util.List;
 public class HotelController {
 
     private final HotelService service;
+    private final UserService userService;
 
-    public HotelController(HotelService hotelService) {
+
+    public HotelController(HotelService hotelService, UserService userService) {
         this.service = hotelService;
-
+        this.userService = userService;
     }
 
     /***
@@ -47,14 +52,14 @@ public class HotelController {
 
         return service.saveHotels(hotelsDTO);
 
-	}
+    }
 
     /***
      * counts all the hotels in the database for a specific user id
      * @return the number of hotels that exists in the database
      */
     @GetMapping("/api/hotels/quantity/{userId}")
-    public int countHotels(@PathVariable Long userId){
+    public int countHotels(@PathVariable Long userId) {
 
         return service.countHotels(userId);
     }
@@ -73,7 +78,7 @@ public class HotelController {
             @PathVariable Long userId)
             throws ApiRequestException {
 
-        List<HotelDTO> hotelDTOS = service.getHotels(pageNo,pageSize, sortBy, userId);
+        List<HotelDTO> hotelDTOS = service.getHotels(pageNo, pageSize, sortBy, userId);
 
         return new ResponseEntity<List<HotelDTO>>(hotelDTOS, new HttpHeaders(), HttpStatus.OK);
     }
@@ -85,9 +90,12 @@ public class HotelController {
      * @throws ApiRequestException if the hotel does not exist
      */
     @GetMapping("/api/hotelId/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public HotelDTO findHotelById(@PathVariable Long id) throws ApiRequestException {
 
-            return service.getHotelById(id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findByUsername(authentication.getName());
+        return service.getHotelById(id, user.getId());
 
     }
 
@@ -98,9 +106,9 @@ public class HotelController {
      * @throws ApiRequestException if the hotel does not exist
      */
     @GetMapping("/api/hotelName/{name}")
-    public HotelDTO findHotelByName (@PathVariable String name) throws ApiRequestException {
+    public HotelDTO findHotelByName(@PathVariable String name) throws ApiRequestException {
 
-            return service.getHotelByName(name);
+        return service.getHotelByName(name);
 
     }
 
@@ -113,7 +121,7 @@ public class HotelController {
     @PutMapping("/api/hotel/update")
     public HotelDTO updateHotel(@RequestBody HotelDTO hotelDTO) throws ApiRequestException {
 
-            return service.updateHotel(hotelDTO);
+        return service.updateHotel(hotelDTO);
 
     }
 
@@ -125,11 +133,11 @@ public class HotelController {
      * @throws ApiRequestException if the hotel does not exist or is already activated
      */
     @PostMapping("/api/hotel/enable/{id}")
-    ResponseEntity<String> enableHotel(@PathVariable Long id)throws ApiRequestException {
+    ResponseEntity<String> enableHotel(@PathVariable Long id) throws ApiRequestException {
 
-            service.enableHotel(id);
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body("Hotel with id " + id + " was successfully activated");
+        service.enableHotel(id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body("Hotel with id " + id + " was successfully activated");
 
     }
 
@@ -143,9 +151,9 @@ public class HotelController {
     @PostMapping("/api/hotel/disable/{id}")
     ResponseEntity<String> disableHotel(@PathVariable Long id) throws ApiRequestException {
 
-            service.disableHotel(id);
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body("Hotel with id " + id + " was successfully deactivated");
+        service.disableHotel(id);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body("Hotel with id " + id + " was successfully deactivated");
 
     }
 

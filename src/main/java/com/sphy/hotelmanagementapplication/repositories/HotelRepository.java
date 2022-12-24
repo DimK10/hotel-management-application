@@ -20,6 +20,9 @@ import java.util.Set;
 @Repository
 public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long> {
 
+	@Query("from Hotel h where h.id = :id and h.owner.id = :userId ")
+	Optional<Hotel> findHotelByIdAndOwner(@Param("id") Long id, @Param("userId") Long userId);
+
     Optional<Hotel> findByName(String name);
 
 	// fixme produces LazyInitializationException if getRooms is called
