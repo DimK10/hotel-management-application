@@ -6,7 +6,7 @@ import com.sphy.hotelmanagementapplication.domain.*;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
-import com.sphy.hotelmanagementapplication.repository.ClientRepository;
+import com.sphy.hotelmanagementapplication.repository.UserRepository;
 import com.sphy.hotelmanagementapplication.repository.OrderRepository;
 import com.sphy.hotelmanagementapplication.repository.RoomRepository;
 import org.springframework.stereotype.Service;
@@ -25,16 +25,16 @@ public class OrderService {
 
     private final RoomRepository roomRepository;
 
-    private final ClientRepository clientRepository;
+    private final UserRepository userRepository;
 
     private final OrderDTOToOrder orderDTOToOrder;
 
     private final OrderToOrderDTO orderToOrderDTO;
 
-    public OrderService(OrderRepository orderRepository, RoomRepository roomRepository, ClientRepository clientRepository, OrderDTOToOrder orderDTOToOrder, OrderToOrderDTO orderToOrderDTO) {
+    public OrderService(OrderRepository orderRepository, RoomRepository roomRepository, UserRepository userRepository, OrderDTOToOrder orderDTOToOrder, OrderToOrderDTO orderToOrderDTO) {
         this.orderRepository = orderRepository;
         this.roomRepository = roomRepository;
-        this.clientRepository = clientRepository;
+        this.userRepository = userRepository;
         this.orderDTOToOrder = orderDTOToOrder;
         this.orderToOrderDTO = orderToOrderDTO;
     }
@@ -49,7 +49,7 @@ public class OrderService {
         boolean doesNotExist = false;
 
         Optional<Room> room = roomRepository.findById(orderDTO.getRoom());
-        Optional<Client> client = clientRepository.findById(orderDTO.getClient());
+        Optional<User> client = userRepository.findById(orderDTO.getClient());
 
         Order order = orderDTOToOrder.converter(orderDTO);
 

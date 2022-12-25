@@ -1,11 +1,11 @@
 package com.sphy.hotelmanagementapplication.converter;
 
-import com.sphy.hotelmanagementapplication.domain.Client;
 import com.sphy.hotelmanagementapplication.domain.Order;
 import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
-import com.sphy.hotelmanagementapplication.repository.ClientRepository;
 import com.sphy.hotelmanagementapplication.repository.RoomRepository;
+import com.sphy.hotelmanagementapplication.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -19,13 +19,13 @@ public class OrderToOrderDTO {
 
     private final RoomRepository roomRepository;
 
-    private final ClientRepository clientRepository;
+    private final UserRepository userRepository;
 
 
 
-    public OrderToOrderDTO(RoomRepository roomRepository, ClientRepository clientRepository) {
+    public OrderToOrderDTO(RoomRepository roomRepository, UserRepository userRepository) {
         this.roomRepository = roomRepository;
-        this.clientRepository = clientRepository;
+        this.userRepository = userRepository;
     }
 
     /***
@@ -42,17 +42,25 @@ public class OrderToOrderDTO {
         orderDTO.setCheckOutDate(order.getCheckOutDate());
         orderDTO.setCanceled(order.isCanceled());
 
-        Optional<Room> room = roomRepository.findById(order.getRoom().getId());
+        if (order.getRoom() != null){
 
-        if (room.isPresent()){
-            orderDTO.setRoom(room.get().getId());
+            Optional<Room> room = roomRepository.findById(order.getRoom().getId());
+
+            if (room.isPresent() && room.get().getId() != 0){
+                orderDTO.setRoom(room.get().getId());
+            }
         }
 
-        Optional<Client> client = clientRepository.findById(order.getClient().getId());
 
-        if (client.isPresent()){
-            orderDTO.setClient(client.get().getId());
+        if (order.getClient() != null){
+
+            Optional<User> client = userRepository.findById(order.getClient().getId());
+
+            if (client.isPresent() && client.get().getId() != 0) {
+                orderDTO.setClient(client.get().getId());
+            }
         }
+
 
         return orderDTO;
     }

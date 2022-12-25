@@ -4,7 +4,7 @@ import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.dto.HotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
-import com.sphy.hotelmanagementapplication.repository.AdminRepository;
+import com.sphy.hotelmanagementapplication.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
 /***
@@ -15,14 +15,14 @@ public class HotelDTOToHotel {
 
     private final RoomDTOToRoom roomDTOToRoom ;
 
-    private final AdminRepository adminRepository;
-    
+    private final UserRepository userRepository;
+
     private final HotelAmenityDTOToHotelAmenity hotelAmenityDTOToHotelAmenity;
 
 
-    public HotelDTOToHotel(RoomDTOToRoom roomDTOToRoom, AdminRepository adminRepository,HotelAmenityDTOToHotelAmenity hotelAmenityDTOToHotelAmenity) {
+    public HotelDTOToHotel(RoomDTOToRoom roomDTOToRoom, UserRepository userRepository, HotelAmenityDTOToHotelAmenity hotelAmenityDTOToHotelAmenity) {
         this.roomDTOToRoom = roomDTOToRoom;
-        this.adminRepository = adminRepository;
+        this.userRepository = userRepository;
         this.hotelAmenityDTOToHotelAmenity = hotelAmenityDTOToHotelAmenity;
     }
 
@@ -38,9 +38,10 @@ public class HotelDTOToHotel {
         hotel.setId(hotelDTO.getId());
         hotel.setName(hotelDTO.getName());
         hotel.setAreaName(hotelDTO.getName());
+        hotel.setAddress(hotelDTO.getAddress());
         hotel.setStars(hotelDTO.getStars());
 
-        hotel.setOwner(adminRepository.findById(hotelDTO.getOwner()).get());
+        hotel.setOwner(userRepository.findById(hotelDTO.getOwner()).get());
 
         for (RoomDTO roomDTO : hotelDTO.getRooms()){
             hotel.getRooms().add(roomDTOToRoom.converter(roomDTO));

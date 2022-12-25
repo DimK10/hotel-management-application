@@ -23,16 +23,18 @@ public class Hotel extends BaseEntity {
     @Column(name = "area_name")
     private String areaName;
 
+    private String address;
+
     private boolean disabled;
 
     @ManyToOne
-    @JoinColumn(name = "admin_id")
-    private Admin owner;
+    @JoinColumn(name = "user_id")
+    private User owner;
 
     @OneToMany(mappedBy = "hotel", fetch =  FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Room> rooms = new HashSet<>();
 
-    
+
     @ManyToMany(fetch = FetchType.EAGER)  // created by AKd
 	@JoinTable(  // created by AKd
 			name = "hotel_amenity",  // created by AKd
@@ -40,8 +42,8 @@ public class Hotel extends BaseEntity {
 			inverseJoinColumns = @JoinColumn(name = "HAmenity_id") // created by AKd
 	)
 	private Set<HotelAmenity> hotelAmenity = new HashSet<>();// created by AKd
-  
-    
+
+
     public Hotel(Long id) {
         super(id);
     }
@@ -65,11 +67,11 @@ public class Hotel extends BaseEntity {
 		super.setId(id);
 	}
 
-    public Admin getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(Admin owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 
@@ -117,11 +119,18 @@ public class Hotel extends BaseEntity {
 	public Set<HotelAmenity> getHotelAmenity(){
 		return hotelAmenity;
 	}
-	
+
 	// created by AKd
 	public void setHotelAmenity(Set<HotelAmenity> hotelAmenity) {
 		this.hotelAmenity = hotelAmenity;
 	}
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     @Override
 	public boolean equals(Object o) {
@@ -140,6 +149,7 @@ public class Hotel extends BaseEntity {
                 ", name='" + name + '\'' +
                 ", stars=" + stars +
                 ", areaName='" + areaName + '\'' +
+                ", address='" + address + '\'' +
                 ", owner=" + owner +
 //                ", rooms=" + rooms +
                 '}';

@@ -28,6 +28,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
@@ -36,6 +40,7 @@
 			<scope>runtime</scope>
 			<version>1.4.200</version>
 		</dependency>
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -45,6 +50,14 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
@@ -58,15 +71,63 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.auth0</groupId>
+			<artifactId>java-jwt</artifactId>
+			<version>4.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-root</artifactId>
+			<version>0.11.5</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.9.0</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.4.0-b180830.0359</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}/userB/build</directory>
+				<filtering>false</filtering>
+				<targetPath>public/</targetPath>
+			</resource>
+			<resource>
+				<directory>${project.basedir}/src/main/resources</directory>
+				<filtering>false</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+
 				<configuration>
 					<excludes>
 						<exclude>
@@ -106,7 +167,7 @@
 									<outputDirectory>${basedir}/target/classes/static</outputDirectory>
 									<resources>
 										<resource>
-											<directory>client/build</directory>
+											<directory>userB/build</directory>
 										</resource>
 									</resources>
 								</configuration>
@@ -118,7 +179,7 @@
 						<artifactId>frontend-maven-plugin</artifactId>
 						<version>${frontend-maven-plugin.version}</version>
 						<configuration>
-							<workingDirectory>client</workingDirectory>
+							<workingDirectory>userB</workingDirectory>
 							<nodeVersion>${node.version}</nodeVersion>
 							<downloadRoot>${node.url}</downloadRoot>
 						</configuration>
@@ -149,9 +210,6 @@
 							</execution>
 							<execution>
 								<id>npm test</id>
-								<goals>
-									<goal>test</goal>
-								</goals>
 								<phase>test</phase>
 								<configuration>
 									<arguments>test</arguments>
@@ -161,6 +219,7 @@
 								</configuration>
 							</execution>
 							<execution>
+
 								<id>npm build</id>
 								<goals>
 									<goal>npm</goal>
@@ -169,6 +228,24 @@
 								<configuration>
 									<arguments>run build</arguments>
 								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>compile</phase>
+								<configuration>
+									<target>
+										<copy todir="${project.build.directory}/classes/public">
+											<fileset dir="${project.basedir}/userB/build"/>
+										</copy>
+									</target>
+								</configuration>
+								<goals>
+									<goal>run</goal>
+								</goals>
 							</execution>
 						</executions>
 					</plugin>

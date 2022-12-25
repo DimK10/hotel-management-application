@@ -1,10 +1,13 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sphy.hotelmanagementapplication.configuration.TestAppAdminConfiguration;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
+import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.service.HotelService;
+import com.sphy.hotelmanagementapplication.service.UserService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +15,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -34,24 +40,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * created by gp
  */
 @ExtendWith(MockitoExtension.class)
+@Import(TestAppAdminConfiguration.class)
 public class HotelControllerTest {
 
     @Mock
     HotelService hotelService;
 
+    @Mock
+    UserService userService;
+
     @InjectMocks
     HotelController hotelController;
 
-    List<Hotel> hotels;
-    List<HotelDTO> hotelDTOS1;
+    List<Hotel> hotels = new ArrayList<>();
+    List<HotelDTO> hotelDTOS1 = new ArrayList<>();
 
     MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
-
-        hotels=new ArrayList<>();
-
 
         Hotel hotel = new Hotel(1L);
         hotel.setName("hotel");
@@ -63,7 +70,6 @@ public class HotelControllerTest {
         hotels.add(hotel);
         hotels.add(hotel1);
 
-        hotelDTOS1 = new ArrayList<>();
         RoomDTO room = new RoomDTO();
         room.setId(1L);
         HotelDTO hotelDTO = new HotelDTO();
@@ -95,6 +101,23 @@ public class HotelControllerTest {
         mockMvc = MockMvcBuilders
                 .standaloneSetup(hotelController)
                 .build();
+    }
+
+    @Test
+    void countHotels() throws Exception {
+
+        //given
+
+        //when
+        when(hotelService.countHotels(anyLong())).thenReturn(1);
+
+        //then
+        mockMvc.perform(
+                        get("/api/hotels/quantity/{userId}",1L))
+
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("@")
+                        .value(1));
     }
 
     @Test
@@ -184,12 +207,11 @@ public class HotelControllerTest {
     void findAllHotels() throws Exception {
         // Given
 
-
         // When
-        when(hotelService.getHotels()).thenReturn(hotelDTOS1);
+        when(hotelService.getHotels(0,10,"id", 1L)).thenReturn(hotelDTOS1);
 
         // Return
-        mockMvc.perform(get("/api/hotels"))
+        mockMvc.perform(get("/api/hotels/0/10/id/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(jsonPath(
@@ -197,26 +219,33 @@ public class HotelControllerTest {
                         Matchers.equalTo("hotelDTO")
                 ));
 
-        // verify that roomService was executed inside findAllRooms() only once
-        verify(hotelService, times(1)).getHotels();
     }
 
     @Test
+    @WithMockUser
     void findHotelById() throws Exception {
         // Given
         HotelDTO hotelDTO = new HotelDTO();
         hotelDTO.setId(1L);
 
+        User admin = new User(1L);
+        admin.setRole(User.Role.ADMIN);
+
+        hotelDTO.setOwner(1L);
+
         // When
-        when(hotelService.getHotelById(anyLong())).thenReturn(hotelDTO);
+        when(hotelService.getHotelById(anyLong(), anyLong())).thenReturn(hotelDTO);
+        when(userService.getUserFromToken(anyString())).thenReturn(admin);
+
 
         // Return
-        mockMvc.perform(get("/api/hotelId/1"))
+        mockMvc.perform(get("/api/hotelId/1").header(HttpHeaders.AUTHORIZATION, "Bearer token"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(1));
 
-        verify(hotelService, times(1)).getHotelById(anyLong());
+        verify(userService, times(1)).getUserFromToken(anyString());
+        verify(hotelService, times(1)).getHotelById(anyLong(), anyLong());
     }
 
     @Test

@@ -1,15 +1,11 @@
 package com.sphy.hotelmanagementapplication.domain;
 
 import javax.persistence.*;
-
-
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sphy.hotelmanagementapplication.domain.RoomAmenity.AmenitiesRoom;
-
 
 /***
  * created by gp
@@ -28,12 +24,14 @@ public class Room extends BaseEntity {
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", fetch =  FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Order> orders =new HashSet<>();
 
     private long price;
 
 	private boolean disabled;
+
+    private int capacity; // The capacity of people in the room
 
 	@ManyToMany(fetch = FetchType.EAGER)  // created by AKd
 	@JoinTable(  // created by AKd
@@ -43,8 +41,6 @@ public class Room extends BaseEntity {
 
 	)
 	private Set<RoomAmenity> roomAmenity = new HashSet<>();// created by AKd
-
-	
 
     public Room() {
     }
@@ -120,18 +116,26 @@ public class Room extends BaseEntity {
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
 	}
-	
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
 	// created by AKd
 	public Set<RoomAmenity> getRoomAmenity(){
 		return roomAmenity;
 	}
-	
+
 	// created by AKd
 	public void setRoomAmenity(Set<RoomAmenity> roomAmenity) {
 		this.roomAmenity = roomAmenity;
 	}
-	
-	
+
+
 	@Override
     public boolean equals(Object o) {
         return super.equals(o);
@@ -152,6 +156,7 @@ public class Room extends BaseEntity {
 				", hotel=" + hotel +
 //				", order=" + orders +
 				", price=" + price +
+                ", capacity=" + capacity +
 				'}';
 	}
 }

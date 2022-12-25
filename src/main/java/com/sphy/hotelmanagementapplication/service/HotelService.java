@@ -3,16 +3,19 @@ package com.sphy.hotelmanagementapplication.service;
 import com.sphy.hotelmanagementapplication.converter.HotelAmenityToHotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.converter.HotelDTOToHotel;
 import com.sphy.hotelmanagementapplication.converter.HotelToHotelDTO;
-import com.sphy.hotelmanagementapplication.domain.Admin;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
+import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.HotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
-import com.sphy.hotelmanagementapplication.repository.AdminRepository;
 import com.sphy.hotelmanagementapplication.repository.HotelRepository;
+import com.sphy.hotelmanagementapplication.repository.UserRepository;
+
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -25,26 +28,26 @@ public class HotelService {
 
 	private final HotelRepository hotelRepository;
 
-	private final AdminRepository adminRepository;
+	private final UserRepository userRepository;
 
 	private final HotelDTOToHotel hotelDTOToHotel;
 
 	private final HotelToHotelDTO hotelToHotelDTO;
 
-	private final AdminService adminService;
+	private final UserService userService;
 
 	private final RoomService roomService;
 
 	private final HotelAmenityToHotelAmenityDTO hotelAmenityToHotelAmenityDTO;
 
-	public HotelService(HotelRepository hotelRepository, AdminRepository adminRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, AdminService adminService, RoomService roomService1, HotelAmenityToHotelAmenityDTO hotelAmenityToHotelAmenityDTO) {
+	public HotelService(HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, HotelAmenityToHotelAmenityDTO hotelAmenityToHotelAmenityDTO, UserRepository userRepository, UserService userService) {
 		this.hotelRepository = hotelRepository;
-		this.adminRepository = adminRepository;
 		this.hotelDTOToHotel = hotelDTOToHotel;
 		this.hotelToHotelDTO = hotelToHotelDTO;
-		this.adminService = adminService;
 		this.roomService = roomService;
 		this.hotelAmenityToHotelAmenityDTO = hotelAmenityToHotelAmenityDTO;
+		this.userRepository = userRepository;
+		this.userService = userService;
 	}
 
 	/***
@@ -55,12 +58,31 @@ public class HotelService {
 	 */
 	public HotelDTO getHotelById(Long id) throws ApiRequestException {
 		Optional<Hotel> hotel = hotelRepository.findById(id);
-		if (!hotel.isPresent()){
+		if (hotel.isEmpty()){
 			throw new ApiRequestException("There is no hotel with id: " + id);
 		}else {
 			return hotelToHotelDTO.converter(hotelRepository.findById(id).get());
 		}
 
+	}
+
+	public HotelDTO getHotelById(Long id, Long userId) throws ApiRequestException {
+		Optional<Hotel> hotel = hotelRepository.findHotelByIdAndOwner(id, userId);
+		if (hotel.isEmpty()){
+			throw new ApiRequestException("There is no hotel with id: " + id);
+		}else {
+			return hotelToHotelDTO.converter(hotelRepository.findById(id).get());
+		}
+
+	}
+
+	/***
+	 * counts all the hotels in the database for a specific user id
+	 * @return the number of hotels that exists in the database
+	 */
+	public int countHotels(Long userId){
+
+		return hotelRepository.countAll(userId);
 	}
 
 
@@ -69,19 +91,28 @@ public class HotelService {
 	 * @return a list of all hotels
 	 * @throws ApiRequestException if There are no hotels
 	 */
-	public List<HotelDTO> getHotels() throws ApiRequestException {
+	@Transactional
+	public List<HotelDTO> getHotels(Integer pageNo, Integer pageSize, String sortBy, Long userId) throws ApiRequestException {
 
-			List<Hotel> hotels = new ArrayList<>();
-			List<HotelDTO> hotelDTOS = new ArrayList<>();
+		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
-			hotelRepository.findAll().spliterator().forEachRemaining(hotels::add);
+		Page<Hotel> pageResult = hotelRepository.findAllHotelsByOwner(userId, paging);
 
-			for (Hotel hotel : hotels) {
-				hotelDTOS.add(hotelToHotelDTO.converter(hotel));
-			}
+		List<HotelDTO> hotelDTOS = new ArrayList<>();
 
-			return hotelDTOS;
+		for (Hotel hotel: pageResult.getContent()){
+			hotelDTOS.add(hotelToHotelDTO.converter(hotel));
+		}
 
+		Page<HotelDTO> hotelDTOPage = new PageImpl<>(hotelDTOS, paging,hotelDTOS.size());
+
+		if (!hotelDTOPage.isEmpty()) {
+			return hotelDTOPage.getContent();
+
+		}else {
+			return new ArrayList<HotelDTO>() {
+			};
+		}
 	}
 
 
@@ -164,7 +195,7 @@ public class HotelService {
 			existingHotel.setName(hotelDTO.getName());
 			existingHotel.setStars(hotelDTO.getStars());
 			existingHotel.setAreaName(hotelDTO.getAreaName());
-			Optional<Admin>  admin = adminRepository.findById(hotelDTO.getId());
+			Optional<User>  admin = userRepository.findById(hotelDTO.getId());
 			admin.ifPresent(existingHotel::setOwner);
 
 			return hotelToHotelDTO.converter(hotelRepository.save(existingHotel));
@@ -178,8 +209,8 @@ public class HotelService {
 	 * @throws ApiRequestException if the hotel does not have an Owner or does not have rooms
 	 */
 	public HotelDTO saveHotelDTO(HotelDTO hotelDTO) throws ApiRequestException{
-		Optional<Admin> adminOpt =
-				adminRepository.findById(hotelDTO.getOwner());
+		Optional<User> adminOpt =
+				userRepository.findById(hotelDTO.getOwner());
 
 		Set<RoomDTO> roomOpt = hotelDTO.getRooms();
 
@@ -213,7 +244,7 @@ public class HotelService {
 		List<Hotel> hotels = new ArrayList<>();
 		for (HotelDTO hotelDTO : hotelsDTO){
 
-			if (hotelDTO.getOwner() == null || adminService.getAdminById(hotelDTO.getOwner()) == null) {
+			if (hotelDTO.getOwner() == null || userService.getUserById(hotelDTO.getOwner()) == null) {
 				throw new ApiRequestException("In hotel with name: " + hotelDTO.getName() + " There Owner does not exist or you have not add one");
 			}
 
