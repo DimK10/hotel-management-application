@@ -6,6 +6,7 @@ const hotelSlice = createSlice({
     loading: true,
     count: 0,
     hotels: [],
+    hotel: {},
     error: ''
   },
   reducers: {
@@ -23,6 +24,11 @@ const hotelSlice = createSlice({
       state.loading = false;
       state.count = state.count + 1;
       state.hotels = [...state.hotels, payload];
+    },
+    getHotelById: (state, action) => {
+      const { payload } = action;
+      state.loading = false;
+      state.hotel = payload;
     },
     hotelError: (state, action) => {
       const { payload } = action;

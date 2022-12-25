@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 /***
@@ -91,12 +92,10 @@ public class HotelController {
      */
     @GetMapping("/api/hotelId/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public HotelDTO findHotelById(@PathVariable Long id) throws ApiRequestException {
+    public HotelDTO findHotelById(@RequestHeader(name="Authorization") String token, @PathVariable Long id) throws ApiRequestException {
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findByUsername(authentication.getName());
+        User user = userService.getUserFromToken(token);
         return service.getHotelById(id, user.getId());
-
     }
 
     /***

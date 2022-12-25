@@ -183,7 +183,7 @@ public class HotelServiceTest {
 					public boolean matches(CharSequence rawPassword, String encodedPassword) {
 						return false;
 					}
-				}), roomService);
+				}, jwtUtil), roomService);
 	}
 
 	@Test

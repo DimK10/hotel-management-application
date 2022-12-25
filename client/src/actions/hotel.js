@@ -7,6 +7,7 @@ import alertSlice from "../reducers/alert";
 
 const {
     getAllHotels,
+    getHotelById,
     getCountOfHotels,
     createNewHotel,
     hotelError,
@@ -76,4 +77,21 @@ export const createNewHotelAction = (formData) => async (dispatch) => {
 
     dispatch(createNewHotel(res.data))
     dispatch(setAlert("Hotel Created", "success"));
+}
+
+export const getHotelByIdAction = (hotelId) => async dispatch => {
+
+    // if (localStorage.jwt) {
+    //     setAuthToken(localStorage.jwt);
+    // }
+
+    try {
+
+        const res = await axios.get(`/api/hotelId/${hotelId}`);
+
+        dispatch(getHotelById(res.data));
+    } catch (err) {
+        dispatch(hotelError());
+    }
+
 }

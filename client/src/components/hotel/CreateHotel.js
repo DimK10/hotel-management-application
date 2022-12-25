@@ -69,7 +69,7 @@ function CreateHotel() {
                                     <input type="text" className="form-control" id="name"
                                            aria-describedby="name" placeholder="Hotel Name" onChange={(e) => {
                                         onChange(e);
-                                    }} required="true"/>
+                                    }} required={true}/>
                                 </div>
                                 <div className='mb-3 w-25'>
                                     <label htmlFor='stars' className='form-label'>
@@ -86,7 +86,7 @@ function CreateHotel() {
                                         onChange={(e) => {
                                             onChange(e);
                                         }}
-                                        required="true"
+                                        required={true}
                                     />
                                 </div>
                                 <div className='mb-3'>
@@ -102,7 +102,7 @@ function CreateHotel() {
                                         onChange={(e) => onLocationInputChange(e)}
                                         onBlur={() => setCitiesSuggestions([])}
                                         list='citiesOptions'
-                                        required="true"
+                                        required={true}
                                     />
                                     <datalist id='citiesOptions'>
                                         {citiesSuggestions.length > 0 &&
@@ -117,7 +117,7 @@ function CreateHotel() {
                                     <input type="text" className="form-control" id="address"
                                                aria-describedby="address" placeholder="Address" onChange={(e) => {
                                             onChange(e);
-                                        }} required="true"
+                                        }} required={true}
                                     />
                                 </div>
 

@@ -6,11 +6,14 @@ import Pagination from "../layout/Pagination";
 import PropTypes from "prop-types";
 import {connect, useDispatch, useSelector} from "react-redux";
 import {getAllHotelsByPage} from "../../actions/hotel";
+import {useNavigate} from "react-router-dom";
 
 
 function HotelTable() {
 
   const dispatch = useDispatch();
+
+  const navigate = useNavigate();
 
   const [pageSize, setPageSize] = useState(10);
 
@@ -71,6 +74,10 @@ function HotelTable() {
     }
   }
 
+  const onRowClick = (hotel) => {
+    navigate(`/hotels/${hotel.id}`);
+  }
+
   return (
     <Fragment>
       {/* TODO ADD LOGIC FOR SEARCH BAR IF THERE IS TIME */}
@@ -122,7 +129,7 @@ function HotelTable() {
 
             hotels.map((hotel) => (
               <Fragment>
-                <tr>
+                <tr style={{ cursor: 'pointer' }} onClick={e => onRowClick(hotel)}>
                   <th
                     scope="row">{pageSize * (currentPage - 1) + hotels.indexOf(hotel) + 1}</th>
                   <td>{hotel.name}</td>
