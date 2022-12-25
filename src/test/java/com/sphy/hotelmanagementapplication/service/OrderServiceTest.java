@@ -22,8 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -60,11 +59,14 @@ public class OrderServiceTest {
     Long id1 = 1L;
     Long id2 = 2L;
 
+    User admin = new User(id1);
+
+    User client = new User(id2);
+
     @BeforeEach
     void setUp() throws Exception {
 
         Room room = new Room(id1);
-        User admin = new User(id1);
 		admin.setRole(Role.ADMIN);
 
         order.setId(1L);
@@ -78,7 +80,6 @@ public class OrderServiceTest {
 
         Room room1 = new Room(id2);
 
-        User client = new User(id2);
 		client.setRole(Role.CLIENT);
 
         order1.setId(id2);
@@ -133,13 +134,15 @@ public class OrderServiceTest {
 
         // when
         when(orderRepository.findAll()).thenReturn(orders);
+        when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(admin));
+        when(userRepository.findById(2L)).thenReturn(Optional.ofNullable(client));
 
 
         //then
         List<OrderDTO> orderDTOList = orderService.getOrders();
 
         assertEquals(2, orderDTOList.size());
-        assertTrue(EqualsBuilder.reflectionEquals(ordersDTO, orderDTOList));
+        assertArrayEquals(ordersDTO.toArray(), orderDTOList.toArray());
     }
 
     @Test

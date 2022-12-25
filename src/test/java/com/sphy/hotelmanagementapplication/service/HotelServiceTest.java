@@ -10,6 +10,7 @@ import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
 import com.sphy.hotelmanagementapplication.repositories.UserRepository;
+import com.sphy.hotelmanagementapplication.security.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -183,7 +184,7 @@ public class HotelServiceTest {
 					public boolean matches(CharSequence rawPassword, String encodedPassword) {
 						return false;
 					}
-				}, jwtUtil), roomService);
+				}, new JwtUtil()), roomService);
 	}
 
 	@Test

@@ -2,6 +2,7 @@ package com.sphy.hotelmanagementapplication.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /***
  * created by gp
@@ -77,7 +78,20 @@ public class OrderDTO implements Serializable {
 		this.room = room;
 	}
 
-	@Override
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderDTO orderDTO = (OrderDTO) o;
+        return canceled == orderDTO.canceled && Objects.equals(id, orderDTO.id) && Objects.equals(checkInDate, orderDTO.checkInDate) && Objects.equals(checkOutDate, orderDTO.checkOutDate) && Objects.equals(client, orderDTO.client) && Objects.equals(room, orderDTO.room);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, checkInDate, checkOutDate, client, room, canceled);
+    }
+
+    @Override
     public String toString() {
         return "OrderDTO{" +
                 "id=" + id +
