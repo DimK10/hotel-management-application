@@ -7,9 +7,9 @@ import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
-import com.sphy.hotelmanagementapplication.repositories.ClientRepository;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
+import com.sphy.hotelmanagementapplication.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,7 +37,7 @@ class RoomServiceTest {
 	HotelRepository hotelRepository;
 
 	@Mock
-	ClientRepository clientRepository;
+	UserRepository userRepository;
 
 	RoomService roomService;
 
@@ -46,6 +46,7 @@ class RoomServiceTest {
 	List<RoomDTO> roomDTOS;
 
 	final Long id = 1L;
+
 	final String name = "room";
 
 	@BeforeEach
@@ -82,8 +83,8 @@ class RoomServiceTest {
 		roomDTOS.add(roomDTO2);
 
 
-		roomService = new RoomService(roomRepository,hotelRepository,new RoomDTOToRoom(hotelRepository,
-				new OrderDTOToOrder(roomRepository,clientRepository)),new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, clientRepository),hotelRepository));
+		roomService = new RoomService(roomRepository, hotelRepository, new RoomDTOToRoom(hotelRepository,
+				new OrderDTOToOrder(roomRepository, userRepository)), new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository));
 
 	}
 
@@ -118,7 +119,7 @@ class RoomServiceTest {
 		//then
 		RoomDTO roomDTOActual = roomService.getRoomById(anyLong());
 
-		assertEquals(room.getName(),roomDTOActual.getName());
+		assertEquals(room.getName(), roomDTOActual.getName());
 	}
 
 	@Test
@@ -142,7 +143,7 @@ class RoomServiceTest {
 		//then
 		RoomDTO roomDTOActual = roomService.getRoomByName(anyString());
 
-		assertEquals(room.getName(),roomDTOActual.getName());
+		assertEquals(room.getName(), roomDTOActual.getName());
 	}
 
 	@Test
@@ -163,7 +164,7 @@ class RoomServiceTest {
 		//then
 		boolean actual = roomService.enableRoom(anyLong());
 
-		assertEquals(expected,actual);
+		assertEquals(expected, actual);
 	}
 
 	@Test
@@ -185,7 +186,7 @@ class RoomServiceTest {
 		//then
 		boolean actual = roomService.disableRoom(anyLong());
 
-		assertEquals(expected,actual);
+		assertEquals(expected, actual);
 	}
 
 	@Test
@@ -194,7 +195,7 @@ class RoomServiceTest {
 	}
 
 	@Test
-	void countRooms(){
+	void countRooms() {
 
 		//given
 

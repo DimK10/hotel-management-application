@@ -1,5 +1,4 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
 import NavBar from '../layout/NavBar';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 
@@ -9,14 +8,15 @@ import 'bootstrap-daterangepicker/daterangepicker.css';
 import SearchItem from './SearchItem';
 
 import cities from '../../json/cities.json';
-import moment from "moment";
-import {Link} from "react-router-dom";
+import moment from "moment/moment";
 
 const AdvancedSearch = (props) => {
   const [formData, setFormData] = useState({
     location: '',
     checkInDate: new Date(),
     checkOutDate: new Date(new Date().setDate(new Date().getDate() + 7)),
+    priceFrom: 0,
+    priceTo: 0,
     adultsRange: 1,
     stars: 1,
     parking: false,
@@ -107,7 +107,7 @@ const AdvancedSearch = (props) => {
     );
   };
 
-  const handleEvent =(event, picker) => {
+  const handleEvent = (event, picker) => {
     console.log(picker.startDate.toDate());
     console.log(picker.endDate.toDate());
   }
@@ -597,8 +597,6 @@ const AdvancedSearch = (props) => {
 };
 
 AdvancedSearch.propTypes = {};
-
-
 
 
 export default AdvancedSearch;

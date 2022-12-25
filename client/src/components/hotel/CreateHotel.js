@@ -1,15 +1,16 @@
 import React, {Fragment, useState} from 'react';
-import PropTypes from 'prop-types';
 import SidebarComp from "../layout/Sidebar";
 import HeaderNav from "../layout/HeaderNav";
 
 import cities from '../../json/cities.json';
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {createNewHotelAction} from "../../actions/hotel";
 
-CreateHotel.propTypes = {};
+function CreateHotel() {
 
-function CreateHotel({auth}) {
+  const dispatch = useDispatch();
 
+  const auth = useSelector(state => state.auth);
 
     // TODO ADD ROOMS WITH CREATE HOTEL FORM
     const [formData, setFormData] = useState({
@@ -29,6 +30,7 @@ function CreateHotel({auth}) {
         name,
         stars,
         areaName,
+        address,
         disabled,
     } = formData;
 
@@ -46,6 +48,11 @@ function CreateHotel({auth}) {
         onChange(e);
     };
 
+    const onSubmit = async e => {
+        e.preventDefault();
+        dispatch(createNewHotelAction(formData));
+    };
+
     return (
         <Fragment>
             <SidebarComp/>
@@ -56,13 +63,13 @@ function CreateHotel({auth}) {
                             <div className="card-title">
                                 <h4>Add a new Hotel</h4>
                             </div>
-                            <form>
+                            <form onSubmit={e => onSubmit(e)}>
                                 <div className="mb-3">
                                     <label htmlFor="name" className="form-label">Hotel Name:</label>
                                     <input type="text" className="form-control" id="name"
                                            aria-describedby="name" placeholder="Hotel Name" onChange={(e) => {
                                         onChange(e);
-                                    }} required="true"/>
+                                    }} required={true}/>
                                 </div>
                                 <div className='mb-3 w-25'>
                                     <label htmlFor='stars' className='form-label'>
@@ -79,7 +86,7 @@ function CreateHotel({auth}) {
                                         onChange={(e) => {
                                             onChange(e);
                                         }}
-                                        required="true"
+                                        required={true}
                                     />
                                 </div>
                                 <div className='mb-3'>
@@ -95,7 +102,7 @@ function CreateHotel({auth}) {
                                         onChange={(e) => onLocationInputChange(e)}
                                         onBlur={() => setCitiesSuggestions([])}
                                         list='citiesOptions'
-                                        required="true"
+                                        required={true}
                                     />
                                     <datalist id='citiesOptions'>
                                         {citiesSuggestions.length > 0 &&
@@ -110,7 +117,7 @@ function CreateHotel({auth}) {
                                     <input type="text" className="form-control" id="address"
                                                aria-describedby="address" placeholder="Address" onChange={(e) => {
                                             onChange(e);
-                                        }} required="true"
+                                        }} required={true}
                                     />
                                 </div>
 
@@ -138,8 +145,4 @@ function CreateHotel({auth}) {
     );
 }
 
-const mapStateToProps = state => ({
-    auth: state.auth
-});
-
-export default connect(mapStateToProps)(CreateHotel);
+export default CreateHotel;

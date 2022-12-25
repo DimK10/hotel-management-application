@@ -10,7 +10,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserDTOToUser {
 
-    /***
+	private final HotelToHotelDTO hotelToHotelDTO;
+
+	private final OrderToOrderDTO orderToOrderDTO;
+
+	public UserDTOToUser(HotelToHotelDTO hotelToHotelDTO, OrderToOrderDTO orderToOrderDTO) {
+		this.hotelToHotelDTO = hotelToHotelDTO;
+		this.orderToOrderDTO = orderToOrderDTO;
+	}
+
+	/***
      * converts a userDTO object to user
      * @param userDTO the userDTO object we want to convert
      * @return the converted user
@@ -36,6 +45,14 @@ public class UserDTOToUser {
         user.setId(userDTO.getId());
 
         user.setPassword(userDTO.getPassword());
+
+		if (user.getHotels() != null && !user.getHotels().isEmpty()) {
+			user.getHotels().forEach(hotel -> userDTO.getHotelDTOS().add(hotelToHotelDTO.converter(hotel)));
+		}
+
+		if (user.getOrders() != null && !user.getOrders().isEmpty()) {
+			user.getOrders().forEach(order -> userDTO.getOrderDTOS().add(orderToOrderDTO.converter(order)));
+		}
 
         return user;
 

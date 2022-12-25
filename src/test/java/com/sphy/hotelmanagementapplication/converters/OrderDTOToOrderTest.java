@@ -1,22 +1,21 @@
 package com.sphy.hotelmanagementapplication.converters;
 
 import com.sphy.hotelmanagementapplication.converter.OrderDTOToOrder;
-import com.sphy.hotelmanagementapplication.domain.Client;
 import com.sphy.hotelmanagementapplication.domain.Order;
 import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
-import com.sphy.hotelmanagementapplication.repositories.ClientRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
+import com.sphy.hotelmanagementapplication.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.time.LocalDate;
-import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
 
 /***
  * crated by gp
@@ -24,54 +23,54 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class OrderDTOToOrderTest {
 
-    @Mock
-    OrderDTOToOrder orderDTOToOrder;
+	@Mock
+	OrderDTOToOrder orderDTOToOrder;
 
-    @Mock
-    RoomRepository roomRepository;
+	@Mock
+	RoomRepository roomRepository;
 
-    @Mock
-    ClientRepository clientRepository;
+	@Mock
+	UserRepository userRepository;
 
-    Order order = new Order();
+	Order order = new Order();
 
-    OrderDTO orderDTO = new OrderDTO();
+	OrderDTO orderDTO = new OrderDTO();
 
-    Client client = new Client(1L);
+	User client = new User(1L);
 
-    Room room = new Room(1L);
+	Room room = new Room(1L);
 
-    @BeforeEach
-    void setUp() throws Exception{
+	@BeforeEach
+	void setUp() throws Exception {
 
-        order.setCanceled(false);
-        order.setId(1L);
-        order.setCheckInDate(LocalDate.of(1993,4,12));
-        order.setCheckOutDate(LocalDate.of(1993,4,15));
-        order.setClient(client);
-        order.setRoom(room);
+		order.setCanceled(false);
+		order.setId(1L);
+		order.setCheckInDate(LocalDate.of(1993, 4, 12));
+		order.setCheckOutDate(LocalDate.of(1993, 4, 15));
+		order.setClient(client);
+		order.setRoom(room);
 
-        orderDTO.setCanceled(false);
-        orderDTO.setId(1L);
-        orderDTO.setCheckInDate(LocalDate.of(1993,4,12));
-        orderDTO.setCheckOutDate(LocalDate.of(1993,4,15));
-        orderDTO.setClient(client.getId());
-        orderDTO.setRoom(1L);
+		orderDTO.setCanceled(false);
+		orderDTO.setId(1L);
+		orderDTO.setCheckInDate(LocalDate.of(1993, 4, 12));
+		orderDTO.setCheckOutDate(LocalDate.of(1993, 4, 15));
+		orderDTO.setClient(client.getId());
+		orderDTO.setRoom(1L);
 
-        orderDTOToOrder = new OrderDTOToOrder(roomRepository, clientRepository);
-    }
+		orderDTOToOrder = new OrderDTOToOrder(roomRepository, userRepository);
+	}
 
-    @Test
-    void converterTest() {
+	@Test
+	void converterTest() {
 
-        //given
+		//given
 
-        //when
+		//when
 
-        //then
-        assertEquals(order , orderDTOToOrder.converter(orderDTO));
+		//then
+		assertEquals(order, orderDTOToOrder.converter(orderDTO));
 
-    }
+	}
 
 }
 

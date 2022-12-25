@@ -21,8 +21,8 @@ public class Order extends BaseEntity {
 
 
     @ManyToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
+    @JoinColumn(name = "user_id")
+    private User client;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rooms_id")
@@ -33,13 +33,13 @@ public class Order extends BaseEntity {
     }
 
 
-    public Order(Long id, LocalDate checkInDate, LocalDate checkOutDate, boolean canceled, Client client, Room room) {
+    public Order(Long id, LocalDate checkInDate, LocalDate checkOutDate, boolean canceled, User client, Room room) {
 		super(id);
 		this.checkInDate = checkInDate;
         this.room = room;
         this.checkOutDate = checkOutDate;
         this.canceled = canceled;
-        this.client=client;
+        this.client = client;
     }
 
     public Order(long l) {
@@ -78,12 +78,12 @@ public class Order extends BaseEntity {
         this.checkOutDate = checkOutDate;
     }
 
-    public Client getClient() {
+    public User getClient() {
         return client;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClient(User User) {
+        this.client = User;
     }
 
     public Room getRoom() {

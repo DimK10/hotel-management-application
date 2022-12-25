@@ -1,5 +1,4 @@
 import React, {Fragment} from 'react';
-import PropTypes from 'prop-types';
 import SidebarComp from "../layout/Sidebar";
 import HeaderNav from "../layout/HeaderNav";
 import CIcon from "@coreui/icons-react";
@@ -13,6 +12,8 @@ const Rooms = props => {
       <SidebarComp/>
       <HeaderNav>
 
+        {/* TODO ADD LOGIC FOR SEARCH BAR IF THERE IS TIME */}
+        {/* Search Bar */}
         <div className="row">
           <div className='input-group pb-3 mb-4'>
             <input

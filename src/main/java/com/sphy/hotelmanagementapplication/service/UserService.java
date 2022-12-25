@@ -6,6 +6,7 @@ import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.UserDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.repositories.UserRepository;
+import com.sphy.hotelmanagementapplication.security.JwtUtil;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,12 +33,40 @@ public class UserService implements UserDetailsService {
     private final UserDTOToUser userDTOToUser;
 
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
-    public UserService(UserRepository userRepository, UserToUserDTO userToUserDTO, UserDTOToUser userDTOToUser, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, UserToUserDTO userToUserDTO, UserDTOToUser userDTOToUser, PasswordEncoder passwordEncoder, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.userToUserDTO = userToUserDTO;
         this.userDTOToUser = userDTOToUser;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
+    }
+
+
+	/***
+	 * get an admin by his id
+	 * @param id the id of the admin to be found
+	 * @return the admin with the current id
+	 */
+	public User getUserById(Long id){
+		return userRepository.findById(id).orElse(null);
+	}
+
+    /**
+     * Get user object, from jwt token, using username subject
+     * @param token The jwt token
+     * @return The user object associated with the jwt token
+     */
+    public User getUserFromToken(String token) {
+
+        if	(token.contains("Bearer")) {
+            token = token.substring(7);
+        }
+
+        String username = jwtUtil.extractUsername(token);
+
+        return userRepository.findByUsername(username);
     }
 
     /***

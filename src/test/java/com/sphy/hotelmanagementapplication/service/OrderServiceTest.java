@@ -2,13 +2,14 @@ package com.sphy.hotelmanagementapplication.service;
 
 import com.sphy.hotelmanagementapplication.converter.OrderDTOToOrder;
 import com.sphy.hotelmanagementapplication.converter.OrderToOrderDTO;
-import com.sphy.hotelmanagementapplication.domain.Client;
 import com.sphy.hotelmanagementapplication.domain.Order;
 import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.domain.User;
+import com.sphy.hotelmanagementapplication.domain.User.Role;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
-import com.sphy.hotelmanagementapplication.repositories.ClientRepository;
 import com.sphy.hotelmanagementapplication.repositories.OrderRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
+import com.sphy.hotelmanagementapplication.repositories.UserRepository;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,10 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 /***
@@ -41,7 +40,7 @@ public class OrderServiceTest {
     OrderRepository orderRepository;
 
     @Mock
-    ClientRepository clientRepository;
+	UserRepository userRepository;
 
     OrderService orderService;
 
@@ -60,13 +59,18 @@ public class OrderServiceTest {
     Long id1 = 1L;
     Long id2 = 2L;
 
+    User admin = new User(id1);
+
+    User client = new User(id2);
+
     @BeforeEach
     void setUp() throws Exception {
 
         Room room = new Room(id1);
-        Client client = new Client(id1);
+		admin.setRole(Role.ADMIN);
+
         order.setId(1L);
-        order.setClient(client);
+        order.setClient(admin);
         order.setRoom(room);
         order.setCheckInDate(LocalDate.ofEpochDay(2022 - 2 - 3));
         order.setCheckOutDate(LocalDate.ofEpochDay(2022 - 2 - 8));
@@ -75,18 +79,20 @@ public class OrderServiceTest {
         orders.add(order);
 
         Room room1 = new Room(id2);
-        Client client1 = new Client(id2);
+
+		client.setRole(Role.CLIENT);
+
         order1.setId(id2);
         order1.setRoom(room1);
         order1.setCanceled(false);
         order1.setCheckOutDate(LocalDate.ofEpochDay(2022 - 3 - 23));
         order1.setCheckInDate(LocalDate.ofEpochDay(2022 - 3 - 18));
-        order1.setClient(client1);
+        order1.setClient(client);
 
         orders.add(order1);
 
         orderDTO.setId(1L);
-        orderDTO.setClient(client.getId());
+        orderDTO.setClient(admin.getId());
         orderDTO.setRoom(room.getId());
         orderDTO.setCheckInDate(LocalDate.ofEpochDay(2022 - 2 - 3));
         orderDTO.setCheckOutDate(LocalDate.ofEpochDay(2022 - 2 - 8));
@@ -95,7 +101,7 @@ public class OrderServiceTest {
         ordersDTO.add(orderDTO);
 
         orderDTO1.setId(2L);
-        orderDTO1.setClient(client1.getId());
+        orderDTO1.setClient(client.getId());
         orderDTO1.setRoom(room1.getId());
         orderDTO1.setCheckInDate(LocalDate.ofEpochDay(2022 - 3 - 18));
         orderDTO1.setCheckOutDate(LocalDate.ofEpochDay(2022 - 3 - 23));
@@ -104,9 +110,9 @@ public class OrderServiceTest {
         ordersDTO.add(orderDTO1);
 
 
-        orderService = new OrderService(orderRepository, roomRepository, clientRepository,
-                new OrderDTOToOrder(roomRepository, clientRepository),
-                new OrderToOrderDTO(roomRepository, clientRepository));
+        orderService = new OrderService(orderRepository, roomRepository, userRepository,
+                new OrderDTOToOrder(roomRepository, userRepository),
+                new OrderToOrderDTO(roomRepository, userRepository));
 
     }
 
@@ -128,13 +134,15 @@ public class OrderServiceTest {
 
         // when
         when(orderRepository.findAll()).thenReturn(orders);
+        when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(admin));
+        when(userRepository.findById(2L)).thenReturn(Optional.ofNullable(client));
 
 
         //then
         List<OrderDTO> orderDTOList = orderService.getOrders();
 
         assertEquals(2, orderDTOList.size());
-        assertTrue(EqualsBuilder.reflectionEquals(ordersDTO, orderDTOList));
+        assertArrayEquals(ordersDTO.toArray(), orderDTOList.toArray());
     }
 
     @Test

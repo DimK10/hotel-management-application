@@ -1,15 +1,15 @@
-import { v4 as uuidv4 } from 'uuid';
-import { SET_ALERT, REMOVE_ALERT } from './types';
+import {v4 as uuidv4} from 'uuid';
+// import {REMOVE_ALERT, SET_ALERT} from './types';
+import alertSlice from '../reducers/alert'
+
+const { setAlert, removeAlert } = alertSlice.actions;
 
 // This is the return from mapDispatchToProps in the documentation
-export const setAlert =
+export const setAlertAction =
   (msg, alertType, timeout = 5000) =>
   (dispatch) => {
     const id = uuidv4();
-    dispatch({
-      type: SET_ALERT,
-      payload: { msg, alertType, id },
-    });
+    dispatch(setAlert({ msg, alertType, id }));
 
-    setTimeout(() => dispatch({ type: REMOVE_ALERT, payload: id }), timeout);
+    setTimeout(() =>dispatch(removeAlert(id)), timeout);
   };

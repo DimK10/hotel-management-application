@@ -1,14 +1,17 @@
 import React, {Fragment, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import { connect } from "react-redux";
-import store from "../../store";
+import {useDispatch, useSelector} from "react-redux";
 import {loadUser} from "../../actions/auth";
 import {Navigate} from "react-router-dom";
 
-const SecuredPage = ({ loadUser, auth, children }) => {
+const SecuredPage = ({ children }) => {
+
+  const dispatch = useDispatch();
+
+  const auth  = useSelector( state => state.auth);
 
   useEffect(() => {
-    loadUser();
+    dispatch(loadUser());
   }, []);
 
   if (auth.jwt === null && auth.isAuthenticated === null) {
@@ -23,11 +26,10 @@ const SecuredPage = ({ loadUser, auth, children }) => {
 };
 
 SecuredPage.propTypes = {
-  auth: PropTypes.object.isRequired
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth
-});
-
-export default connect(mapStateToProps, { loadUser })(SecuredPage);
+export default SecuredPage;

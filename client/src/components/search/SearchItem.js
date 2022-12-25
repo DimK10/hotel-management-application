@@ -1,13 +1,15 @@
 import React, {Fragment} from 'react';
-import PropTypes from 'prop-types';
 
 import '../../css/btnRaised.css'
-import {Navigate, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import moment from "moment";
 import {createNewOrderPreCheckout} from "../../actions/order";
-import {connect} from "react-redux";
+import {connect, useDispatch} from "react-redux";
+import PropTypes from "prop-types";
 
-const SearchItem = ({checkInDate, checkOutDate, createNewOrderPreCheckout}) => {
+const SearchItem = ({checkInDate, checkOutDate}) => {
+
+  const dispatch = useDispatch();
 
   let navigate = useNavigate();
 
@@ -18,7 +20,7 @@ const SearchItem = ({checkInDate, checkOutDate, createNewOrderPreCheckout}) => {
     formData.append('checkInDate', checkInDate);
     formData.append('checkOutDate', checkOutDate);
 
-    createNewOrderPreCheckout(checkInDate, checkOutDate);
+    dispatch(createNewOrderPreCheckout(checkInDate, checkOutDate));
     //todo move hotel info to stat
     navigate('/order')
   }
@@ -86,8 +88,9 @@ const SearchItem = ({checkInDate, checkOutDate, createNewOrderPreCheckout}) => {
   );
 };
 
-SearchItem.propTypes = {};
+SearchItem.propTypes = {
+  checkInDate: PropTypes.instanceOf(Date),
+  checkOutDate: PropTypes.instanceOf(Date),
+};
 
-export default connect(null, {
-  createNewOrderPreCheckout
-})(SearchItem);
+export default SearchItem;

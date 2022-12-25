@@ -1,14 +1,18 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import NavBar from "../layout/NavBar";
 import moment from "moment/moment";
-import {connect} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getNewOrder} from "../../actions/order";
 
 
-const PlaceNewOrder = ({ checkInDate, checkOutDate }) => {
+const PlaceNewOrder = () => {
 
   // todo check if order details exist, else show nothing
+
+  const dispatch = useDispatch();
+
+  const { checkInDate, checkOutDate } = useSelector(state => state.order);
 
   return (
     <Fragment>
@@ -42,7 +46,7 @@ const PlaceNewOrder = ({ checkInDate, checkOutDate }) => {
                     <p id='staticText1' className="form-control-plaintext">50€ per
                       night</p>
                     <h6
-                      className="card-subtitle mb-2">From: {moment(checkInDate).format('DD/MM/YYYY')} To: {moment(checkOutDate).format('DD/MM/YYYY')}</h6>
+                      className="card-subtitle mb-2">From: {checkInDate} To: {checkOutDate}</h6>
 
                   </div>
                 </div>
@@ -96,16 +100,6 @@ const PlaceNewOrder = ({ checkInDate, checkOutDate }) => {
   );
 }
 
-PlaceNewOrder.propTypes = {
-  getNewOrder: PropTypes.func.isRequired,
-  checkInDate: PropTypes.instanceOf(Date),
-  checkOutDate: PropTypes.instanceOf(Date)
-};
-
-const mapStateToProps = (state) => ({
-  checkInDate: state.order.checkInDate,
-  checkOutDate: state.order.checkOutDate,
-});
 
 
-export default connect(mapStateToProps, { getNewOrder })(PlaceNewOrder);
+export default PlaceNewOrder;

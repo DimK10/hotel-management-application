@@ -1,5 +1,4 @@
-import React, {Fragment, useEffect, useRef} from 'react';
-import PropTypes from 'prop-types';
+import React, {Fragment} from 'react';
 import CIcon from "@coreui/icons-react";
 import {cilMenu} from "@coreui/icons";
 import Breadcrumb from "./Breadcrumb";

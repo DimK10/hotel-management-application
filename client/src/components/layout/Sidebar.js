@@ -1,19 +1,14 @@
 import React, {Fragment} from 'react';
-import PropTypes from 'prop-types';
 import '@coreui/icons-react';
 import CIcon from "@coreui/icons-react";
 import {
-  cilAccountLogout,
-  cilBell, cilBug, cilCalculator, cilCalendar,
-  cilChartPie,
-  cilCursor, cilDescription,
-  cilDrop, cilHome, cilLayers, cilList, cilMoney, cilNotes,
-  cilPencil, cilPlus,
-  cilPuzzle, cilRoom,
-  cilSpeedometer, cilStar,
-  cilUser
+  cilCalendar,
+  cilHome,
+  cilMoney,
+  cilPlus,
+  cilRoom,
+  cilSpeedometer
 } from "@coreui/icons";
-import {cibCoreui, cibCoreuiC} from '@coreui/icons';
 import 'simplebar/dist/simplebar.css';
 import 'simplebar/dist/simplebar'
 import {Link} from "react-router-dom";

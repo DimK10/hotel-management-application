@@ -2,6 +2,7 @@ package com.sphy.hotelmanagementapplication.converter;
 
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.UserDTO;
+
 import org.springframework.stereotype.Component;
 
 /***
@@ -11,34 +12,56 @@ import org.springframework.stereotype.Component;
 public class UserToUserDTO {
 
 
-    /***
-     * converts a user object to userDTO
-     * @param user the user object we want to convert
-     * @return the converted user
-     */
-    public UserDTO converter(User user){
+	private final HotelToHotelDTO hotelToHotelDTO;
 
-        UserDTO userDTO = new UserDTO();
+	private final OrderToOrderDTO orderToOrderDTO;
 
-        userDTO.setUsername(user.getUsername());
+	public UserToUserDTO(HotelToHotelDTO hotelToHotelDTO, OrderToOrderDTO orderToOrderDTO) {
+		this.hotelToHotelDTO = hotelToHotelDTO;
+		this.orderToOrderDTO = orderToOrderDTO;
+	}
 
-//        userDTO.setHashedPassword(user.getHashedPassword());
+	/***
+	 * converts a user object to userDTO
+	 * @param user the user object we want to convert
+	 * @return the converted user
+	 */
+	public UserDTO converter(User user) {
 
-        userDTO.setFirstname(user.getFirstname());
+		UserDTO userDTO = new UserDTO();
 
-        userDTO.setLastname(user.getLastname());
+		userDTO.setUsername(user.getUsername());
 
-        userDTO.setRole(String.valueOf(user.getRole()));
+//		userDTO.setHashedPassword(user.getHashedPassword());
+		userDTO.setHashedPassword(null);
 
-        userDTO.setEmail(user.getEmail());
+		userDTO.setFirstname(user.getFirstname());
 
-        userDTO.setEmailVerify(user.isEmailVerify());
+		userDTO.setLastname(user.getLastname());
 
-        userDTO.setId(user.getId());
+		userDTO.setRole(String.valueOf(user.getRole()));
 
-//        userDTO.setPassword(user.getPassword());
+		userDTO.setEmail(user.getEmail());
 
-        return userDTO;
+		userDTO.setEmailVerify(user.isEmailVerify());
 
-    }
+		userDTO.setId(user.getId());
+
+		userDTO.setPassword(null);
+
+		if (user.getHotels() != null && !user.getHotels().isEmpty()) {
+			user
+					.getHotels()
+					.forEach(hotel -> userDTO.getHotelDTOS().add(hotelToHotelDTO.converter(hotel)));
+		}
+
+		if (user.getOrders() != null && !user.getOrders().isEmpty()) {
+			user
+					.getOrders()
+					.forEach(order -> userDTO.getOrderDTOS().add(orderToOrderDTO.converter(order)));
+		}
+
+		return userDTO;
+
+	}
 }

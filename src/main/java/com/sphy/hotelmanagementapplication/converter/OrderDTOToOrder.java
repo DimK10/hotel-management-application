@@ -1,11 +1,12 @@
 package com.sphy.hotelmanagementapplication.converter;
 
-import com.sphy.hotelmanagementapplication.domain.Client;
 import com.sphy.hotelmanagementapplication.domain.Order;
 import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
-import com.sphy.hotelmanagementapplication.repositories.ClientRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
+import com.sphy.hotelmanagementapplication.repositories.UserRepository;
+
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -19,12 +20,12 @@ public class OrderDTOToOrder {
 
     private final RoomRepository roomRepository;
 
-    private final ClientRepository clientRepository;
+    private final UserRepository userRepository;
 
-    public OrderDTOToOrder(RoomRepository roomRepository, ClientRepository clientRepository) {
+    public OrderDTOToOrder(RoomRepository roomRepository, UserRepository userRepository) {
 
         this.roomRepository = roomRepository;
-        this.clientRepository = clientRepository;
+        this.userRepository = userRepository;
     }
 
     /***
@@ -50,7 +51,7 @@ public class OrderDTOToOrder {
 
         if (orderDTO.getClient() != null){
 
-            Optional<Client> client =  clientRepository.findById(orderDTO.getClient());
+            Optional<User> client =  userRepository.findById(orderDTO.getClient());
 
             client.ifPresent(order::setClient);
         }

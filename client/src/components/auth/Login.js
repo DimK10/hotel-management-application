@@ -2,12 +2,17 @@ import React, {Fragment, useState} from 'react';
 import PropTypes from 'prop-types';
 import NavBar from '../layout/NavBar';
 import CIcon from '@coreui/icons-react';
-import {cilUser, cilLockLocked} from '@coreui/icons';
-import {connect} from "react-redux";
+import {cilLockLocked, cilUser} from '@coreui/icons';
+// import {connect} from "react-redux";
 import {login} from "../../actions/auth";
 import {Navigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 
-const Login = ({login, isAuthenticated}) => {
+const Login = () => {
+
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+
+  const dispatch = useDispatch();
 
   const [formData, setFromData] = useState({
     username: "",
@@ -21,7 +26,8 @@ const Login = ({login, isAuthenticated}) => {
 
   const onSubmit = async e => {
     e.preventDefault();
-    login(username, password);
+    dispatch(login(username, password));
+    // login(username, password);
   };
 
   // Redirect if logged in
@@ -100,12 +106,13 @@ const Login = ({login, isAuthenticated}) => {
     ;
 };
 
-Login.propTypes = {
-  login: PropTypes.func.isRequired
-};
+// Login.propTypes = {
+//   login: PropTypes.func.isRequired
+// };
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, {login})(Login);
+// export default connect(mapStateToProps, {login})(Login);
+export default Login;

@@ -1,9 +1,9 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sphy.hotelmanagementapplication.domain.Client;
 import com.sphy.hotelmanagementapplication.domain.Order;
 import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
 import com.sphy.hotelmanagementapplication.service.OrderService;
 import org.hamcrest.Matchers;
@@ -65,7 +65,7 @@ public class OrderControllerTest {
     void setUp() throws Exception {
 
         Room room = new Room(1L);
-        Client client = new Client(1L);
+        User client = new User(1L);
         order.setId(1L);
         order.setClient(client);
         order.setRoom(room);
@@ -76,7 +76,7 @@ public class OrderControllerTest {
         orders.add(order);
 
         Room room1 = new Room(2L);
-        Client client1 = new Client(2L);
+        User client1 = new User(2L);
         order1.setId(id2);
         order1.setRoom(room1);
         order1.setCanceled(false);

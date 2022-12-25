@@ -2,14 +2,15 @@ package com.sphy.hotelmanagementapplication.service;
 
 import com.sphy.hotelmanagementapplication.converter.HotelDTOToHotel;
 import com.sphy.hotelmanagementapplication.converter.HotelToHotelDTO;
-import com.sphy.hotelmanagementapplication.domain.Admin;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
+import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
-import com.sphy.hotelmanagementapplication.repositories.AdminRepository;
 import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
+import com.sphy.hotelmanagementapplication.repositories.UserRepository;
+
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,22 +29,22 @@ public class HotelService {
 
 	private final HotelRepository hotelRepository;
 
-	private final AdminRepository adminRepository;
+	private final UserRepository userRepository;
 
 	private final HotelDTOToHotel hotelDTOToHotel;
 
 	private final HotelToHotelDTO hotelToHotelDTO;
 
-	private final AdminService adminService;
+	private final UserService userService;
 
 	private final RoomService roomService;
 
-	public HotelService(HotelRepository hotelRepository, AdminRepository adminRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, AdminService adminService, RoomService roomService1) {
+	public HotelService(HotelRepository hotelRepository, UserRepository userRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserService userService, RoomService roomService1) {
 		this.hotelRepository = hotelRepository;
-		this.adminRepository = adminRepository;
+		this.userRepository = userRepository;
 		this.hotelDTOToHotel = hotelDTOToHotel;
 		this.hotelToHotelDTO = hotelToHotelDTO;
-		this.adminService = adminService;
+		this.userService = userService;
 		this.roomService = roomService;
 	}
 
@@ -63,13 +64,23 @@ public class HotelService {
 
 	}
 
+	public HotelDTO getHotelById(Long id, Long userId) throws ApiRequestException {
+		Optional<Hotel> hotel = hotelRepository.findHotelByIdAndOwner(id, userId);
+		if (hotel.isEmpty()){
+			throw new ApiRequestException("There is no hotel with id: " + id);
+		}else {
+			return hotelToHotelDTO.converter(hotelRepository.findById(id).get());
+		}
+
+	}
+
 	/***
-	 * counts all the hotels in the database
+	 * counts all the hotels in the database for a specific user id
 	 * @return the number of hotels that exists in the database
 	 */
-	public int countHotels(){
+	public int countHotels(Long userId){
 
-		return hotelRepository.countAll();
+		return hotelRepository.countAll(userId);
 	}
 
 
@@ -79,11 +90,11 @@ public class HotelService {
 	 * @throws ApiRequestException if There are no hotels
 	 */
 	@Transactional
-	public List<HotelDTO> getHotels(Integer pageNo, Integer pageSize, String sortBy) throws ApiRequestException {
+	public List<HotelDTO> getHotels(Integer pageNo, Integer pageSize, String sortBy, Long userId) throws ApiRequestException {
 
 		Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
-		Page<Hotel> pageResult = hotelRepository.findAll(paging);
+		Page<Hotel> pageResult = hotelRepository.findAllHotelsByOwner(userId, paging);
 		
 		List<HotelDTO> hotelDTOS = new ArrayList<>();
 
@@ -94,7 +105,6 @@ public class HotelService {
 		Page<HotelDTO> hotelDTOPage = new PageImpl<>(hotelDTOS, paging,hotelDTOS.size());
 
 		if (!hotelDTOPage.isEmpty()) {
-			System.out.println(hotelDTOPage.getContent());
 			return hotelDTOPage.getContent();
 
 		}else {
@@ -183,7 +193,7 @@ public class HotelService {
 			existingHotel.setName(hotelDTO.getName());
 			existingHotel.setStars(hotelDTO.getStars());
 			existingHotel.setAreaName(hotelDTO.getAreaName());
-			Optional<Admin>  admin = adminRepository.findById(hotelDTO.getId());
+			Optional<User>  admin = userRepository.findById(hotelDTO.getId());
 			admin.ifPresent(existingHotel::setOwner);
 
 			return hotelToHotelDTO.converter(hotelRepository.save(existingHotel));
@@ -197,8 +207,8 @@ public class HotelService {
 	 * @throws ApiRequestException if the hotel does not have an Owner or does not have rooms
 	 */
 	public HotelDTO saveHotelDTO(HotelDTO hotelDTO) throws ApiRequestException{
-		Optional<Admin> adminOpt =
-				adminRepository.findById(hotelDTO.getOwner());
+		Optional<User> adminOpt =
+				userRepository.findById(hotelDTO.getOwner());
 
 		Set<RoomDTO> roomOpt = hotelDTO.getRooms();
 
@@ -232,7 +242,7 @@ public class HotelService {
 		List<Hotel> hotels = new ArrayList<>();
 		for (HotelDTO hotelDTO : hotelsDTO){
 
-			if (hotelDTO.getOwner() == null || adminService.getAdminById(hotelDTO.getOwner()) == null) {
+			if (hotelDTO.getOwner() == null || userService.getUserById(hotelDTO.getOwner()) == null) {
 				throw new ApiRequestException("In hotel with name: " + hotelDTO.getName() + " There Owner does not exist or you have not add one");
 			}
 

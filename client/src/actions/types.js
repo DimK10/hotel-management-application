@@ -11,6 +11,11 @@ export const ACCOUNT_DELETED = 'ACCOUNT_DELETED';
 export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 
 
+// hotel
+export const GET_ALL_HOTELS = 'GET_ALL_HOTELS';
+export const GET_COUNT_OF_HOTELS = 'GET_COUNT_OF_HOTELS';
+export const HOTEL_ERROR = 'HOTEL_ERROR';
+
 // order
 export const GET_NEW_ORDER = 'GET_NEW_ORDER';
 export const NEW_ORDER_PRE_CHECKOUT = 'NEW_ORDER_PRE_CHECKOUT';

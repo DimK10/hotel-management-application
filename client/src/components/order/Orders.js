@@ -1,9 +1,8 @@
 import React, {Fragment} from 'react';
-import PropTypes from 'prop-types';
 import SidebarComp from "../layout/Sidebar";
 import HeaderNav from "../layout/HeaderNav";
 import CIcon from "@coreui/icons-react";
-import {cilPencil, cilPlus, cilTrash} from "@coreui/icons";
+import {cilPlus} from "@coreui/icons";
 import {Tooltip} from '@coreui/coreui/dist/js/coreui';
 import moment from "moment";
 import DateRangePicker from "react-bootstrap-daterangepicker";

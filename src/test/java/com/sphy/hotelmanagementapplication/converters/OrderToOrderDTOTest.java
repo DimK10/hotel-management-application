@@ -1,13 +1,13 @@
 package com.sphy.hotelmanagementapplication.converters;
 
 import com.sphy.hotelmanagementapplication.converter.OrderToOrderDTO;
-import com.sphy.hotelmanagementapplication.domain.Client;
 import com.sphy.hotelmanagementapplication.domain.Order;
 import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
-import com.sphy.hotelmanagementapplication.repositories.ClientRepository;
 import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
+import com.sphy.hotelmanagementapplication.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +34,7 @@ public class OrderToOrderDTOTest {
     RoomRepository roomRepository;
 
     @Mock
-    ClientRepository clientRepository;
+	UserRepository userRepository;
 
 
 
@@ -42,7 +42,7 @@ public class OrderToOrderDTOTest {
 
     OrderDTO orderDTO = new OrderDTO();
 
-    Client client = new Client(1L);
+    User client = new User(1L);
 
     Room room = new Room(1L);
 
@@ -65,7 +65,7 @@ public class OrderToOrderDTOTest {
         orderDTO.setClient(client.getId());
         orderDTO.setRoom(roomDTO.getId());
 
-        orderToOrderDTO = new OrderToOrderDTO(roomRepository, clientRepository);
+        orderToOrderDTO = new OrderToOrderDTO(roomRepository, userRepository);
     }
 
     @Test
@@ -74,7 +74,7 @@ public class OrderToOrderDTOTest {
         //given
 
         //when
-        when(clientRepository.findById(anyLong())).thenReturn(Optional.of(client));
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(client));
 
 
         //then
