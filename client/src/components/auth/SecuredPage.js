@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {useDispatch, useSelector} from "react-redux";
 import {loadUser} from "../../actions/auth";
 import {Navigate} from "react-router-dom";
+import {setAlertAction} from "../../actions/alert";
 
 const SecuredPage = ({ children }) => {
 
@@ -17,6 +18,12 @@ const SecuredPage = ({ children }) => {
   if (auth.jwt === null && auth.isAuthenticated === null) {
     return <Navigate to='/not-found' />
   }
+
+  if (auth.error === 'Token expired') {
+    dispatch(setAlertAction("You have been logged out! Please log in again!", 'danger'));
+    return <Navigate to='/sign-in' />
+  }
+
 
   return (
     <Fragment>

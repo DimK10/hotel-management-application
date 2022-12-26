@@ -27,7 +27,6 @@ const Login = () => {
   const onSubmit = async e => {
     e.preventDefault();
     dispatch(login(username, password));
-    // login(username, password);
   };
 
   // Redirect if logged in
@@ -106,13 +105,4 @@ const Login = () => {
     ;
 };
 
-// Login.propTypes = {
-//   login: PropTypes.func.isRequired
-// };
-
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
-});
-
-// export default connect(mapStateToProps, {login})(Login);
 export default Login;

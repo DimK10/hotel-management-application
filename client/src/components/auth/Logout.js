@@ -1,13 +1,15 @@
 import React, {Fragment, useEffect} from 'react';
 import {logout} from "../../actions/auth";
-import {connect} from "react-redux";
+import {useDispatch} from "react-redux";
 import {Navigate} from "react-router-dom";
 
 
-function Logout({ logout }) {
+function Logout() {
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    logout();
+    dispatch(logout());
   }, []);
 
   return (
@@ -17,8 +19,4 @@ function Logout({ logout }) {
   );
 }
 
-Logout.propTypes = {
-
-};
-
-export default connect(null, { logout })(Logout);
+export default Logout;

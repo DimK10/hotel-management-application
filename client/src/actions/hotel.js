@@ -36,7 +36,7 @@ export const getAllHotelsByPage = (pageNo, pageSize, sortBy, userId) => async (d
         // dispatch({
         //   type: HOTEL_ERROR,
         // });
-        dispatch(hotelError(err))
+        dispatch(hotelError(err.response.data.errorMessage))
     }
 }
 
@@ -57,7 +57,7 @@ export const getCountOfHotelsAction = (userId) => async (dispatch) => {
         // dispatch({
         //   type: HOTEL_ERROR,
         // });
-        dispatch(hotelError());
+        dispatch(hotelError(err.response.data.errorMessage));
     }
 }
 
@@ -91,7 +91,7 @@ export const getHotelByIdAction = (hotelId) => async dispatch => {
 
         dispatch(getHotelById(res.data));
     } catch (err) {
-        dispatch(hotelError());
+        dispatch(hotelError(err.response.data.errorMessage));
     }
 
 }

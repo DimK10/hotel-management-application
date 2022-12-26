@@ -8,8 +8,16 @@ const { setAlert, removeAlert } = alertSlice.actions;
 export const setAlertAction =
   (msg, alertType, timeout = 5000) =>
   (dispatch) => {
+
     const id = uuidv4();
-    dispatch(setAlert({ msg, alertType, id }));
+
+    const payload = {
+        msg,
+        alertType,
+        id
+    }
+
+    dispatch(setAlert(payload));
 
     setTimeout(() =>dispatch(removeAlert(id)), timeout);
   };

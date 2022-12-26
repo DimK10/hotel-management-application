@@ -28,7 +28,7 @@ export const loadUser = () => async (dispatch) => {
 
     dispatch(userLoaded(res.data));
   } catch (err) {
-    dispatch(authError());
+    dispatch(authError(err.response.data.errorMessage));
   }
 };
 
@@ -94,4 +94,5 @@ export const login = (username, password) => async (dispatch) => {
 // Logout / Clear Profile
 export const logout = () => (dispatch) => {
   dispatch(cleaProfile());
+  dispatch(setAlertAction("You have been logged out successfully!", "success"));
 };
