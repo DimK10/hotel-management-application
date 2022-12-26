@@ -1,7 +1,6 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 
-import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.HotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 /***
@@ -28,13 +26,10 @@ public class HotelController {
 
     private final HotelService service;
     private final UserService userService;
-    private final HotelService hotelService;
 
-
-    public HotelController(HotelService hotelService, UserService userService, HotelService hotelService1) {
+    public HotelController(HotelService hotelService, UserService userService) {
         this.service = hotelService;
         this.userService = userService;
-        this.hotelService = hotelService1;
     }
 
     /***
@@ -108,7 +103,7 @@ public class HotelController {
 
             List<HotelDTO> hotelDTOS = service.getHotels(pageNo, pageSize, sortBy, userId);
 
-            return new ResponseEntity<List<HotelDTO>>(hotelDTOS, new HttpHeaders(), HttpStatus.OK);
+            return new ResponseEntity<>(hotelDTOS, new HttpHeaders(), HttpStatus.OK);
         } else {
             throw new ApiRequestException("Unauthorized");
         }
@@ -171,7 +166,7 @@ public class HotelController {
     @PreAuthorize("hasAuthority('ADMIN')")
     ResponseEntity<String> enableHotel(@RequestHeader(name = "Authorization") String token, @PathVariable Long id) throws ApiRequestException {
 
-        HotelDTO hotelOptional = hotelService.getHotelById(id);
+        HotelDTO hotelOptional = service.getHotelById(id);
 
         if (Objects.equals(hotelOptional.getOwner(), userService.getUserFromToken(token).getId())) {
 
@@ -194,7 +189,7 @@ public class HotelController {
     @PreAuthorize("hasAuthority('ADMIN')")
     ResponseEntity<String> disableHotel(@RequestHeader(name = "Authorization") String token, @PathVariable Long id) throws ApiRequestException {
 
-        HotelDTO hotelOptional = hotelService.getHotelById(id);
+        HotelDTO hotelOptional = service.getHotelById(id);
 
         if (Objects.equals(hotelOptional.getOwner(), userService.getUserFromToken(token).getId())) {
 
@@ -218,7 +213,7 @@ public class HotelController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public Set<HotelAmenityDTO> findHotelAmenitiesByHotelId(@RequestHeader(name = "Authorization") String token, @PathVariable Long hotelId) throws ApiRequestException {
 
-        HotelDTO hotelOptional = hotelService.getHotelById(hotelId);
+        HotelDTO hotelOptional = service.getHotelById(hotelId);
 
         if (Objects.equals(hotelOptional.getOwner(), userService.getUserFromToken(token).getId())) {
 
