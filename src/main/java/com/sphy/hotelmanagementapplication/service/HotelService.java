@@ -56,7 +56,9 @@ public class HotelService {
      * @throws ApiRequestException if the hotel does not exist
      */
     public HotelDTO getHotelById(Long id) throws ApiRequestException {
+
         Optional<Hotel> hotel = hotelRepository.findById(id);
+
         if (hotel.isEmpty()) {
             throw new ApiRequestException("There is no hotel with id: " + id);
         } else {
@@ -111,7 +113,7 @@ public class HotelService {
             return hotelDTOPage.getContent();
 
         } else {
-            return new ArrayList<HotelDTO>() {
+            return new ArrayList<>() {
             };
         }
     }
@@ -141,19 +143,16 @@ public class HotelService {
      */
     public boolean enableHotel(Long id) throws ApiExceptionFront {
 
-        boolean hotelExist = hotelRepository.existsById(id);
         Optional<Hotel> hotelOptional = hotelRepository.findById(id);
 
-        if (!hotelExist) {
+        if (hotelOptional.isEmpty()) {
             throw new ApiExceptionFront("There is no hotel with id: " + id);
-        } else if (hotelOptional.isPresent() && !hotelOptional.get().isDisabled()) {
+        } else if (!hotelOptional.get().isDisabled()) {
             throw new ApiExceptionFront("The hotel with id: " + id + " is already activated");
         } else {
-            if (hotelOptional.isPresent()) {
-                Hotel hotel = hotelOptional.get();
-                hotel.setDisabled(false);
-                hotelRepository.save(hotel);
-            }
+            Hotel hotel = hotelOptional.get();
+            hotel.setDisabled(false);
+            hotelRepository.save(hotel);
             return true;
         }
 
@@ -167,27 +166,18 @@ public class HotelService {
      */
     public boolean disableHotel(Long id) throws ApiExceptionFront {
 
-        boolean hotelExists = hotelRepository.existsById(id);
         Optional<Hotel> hotelOptional = hotelRepository.findById(id);
 
-        if (!hotelExists) {
+        if (hotelOptional.isEmpty()) {
             throw new ApiExceptionFront("There is no hotel with id: " + id);
-        } else if (hotelOptional.isPresent() && hotelOptional.get().isDisabled()) {
+        } else if (hotelOptional.get().isDisabled()) {
             throw new ApiExceptionFront("The hotel with id: " + id + " is already deactivated");
         } else {
-            if (hotelOptional.isPresent()) {
-                Hotel hotel = hotelOptional.get();
-                hotel.setDisabled(true);
-                hotelRepository.save(hotel);
-            }
+            Hotel hotel = hotelOptional.get();
+            hotel.setDisabled(true);
+            hotelRepository.save(hotel);
             return true;
         }
-    }
-
-
-    public String deleteHotel(Long id) {
-        hotelRepository.deleteById(id);
-        return "Hotel with id" + id + "has be successfully removed";
     }
 
     /***
@@ -227,9 +217,7 @@ public class HotelService {
         Optional<User> adminOpt =
                 userRepository.findById(hotelDTO.getOwner());
 
-		List<RoomDTO> roomDTOS = new ArrayList<>();
-
-		roomDTOS.addAll(hotelDTO.getRooms());
+        List<RoomDTO> roomDTOS = new ArrayList<>(hotelDTO.getRooms());
 
         if (adminOpt.isEmpty()) {
             throw new ApiRequestException("There is no Owner registered with that id, or the id is null!");
@@ -261,8 +249,7 @@ public class HotelService {
 
         for (HotelDTO hotelDTO : hotelsDTO) {
 
-			List<RoomDTO> roomDTOS = new ArrayList<>();
-			roomDTOS.addAll(hotelDTO.getRooms());
+            List<RoomDTO> roomDTOS = new ArrayList<>(hotelDTO.getRooms());
 
             if (hotelDTO.getOwner() == null || userService.getUserById(hotelDTO.getOwner()) == null) {
                 throw new ApiRequestException("In hotel with name: " + hotelDTO.getName() + " There Owner does not exist or you have not add one");
@@ -301,9 +288,7 @@ public class HotelService {
         Set<HotelAmenityDTO> amenitiesHotelDTO = new HashSet<>();
         Optional<Hotel> hotelOptional = hotelRepository.findById(id);
         hotelOptional.ifPresent(hotel -> hotel.getHotelAmenity()
-                .forEach(hotelAmenity -> {
-                    amenitiesHotelDTO.add(hotelAmenityToHotelAmenityDTO.converter(hotelAmenity));
-                }));
+                .forEach(hotelAmenity -> amenitiesHotelDTO.add(hotelAmenityToHotelAmenityDTO.converter(hotelAmenity))));
 
         return amenitiesHotelDTO;
     }
