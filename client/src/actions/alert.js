@@ -4,7 +4,6 @@ import alertSlice from '../reducers/alert'
 
 const { setAlert, removeAlert } = alertSlice.actions;
 
-// This is the return from mapDispatchToProps in the documentation
 export const setAlertAction =
   (msg, alertType, timeout = 7000) =>
   (dispatch) => {

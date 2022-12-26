@@ -92,7 +92,7 @@ export const login = (username, password) => async (dispatch) => {
 };
 
 // Logout / Clear Profile
-export const logout = () => (dispatch) => {
-  dispatch(cleaProfile());
+export const logoutAction = () => (dispatch) => {
+  dispatch(logOut());
   dispatch(setAlertAction("You have been logged out successfully!", "success"));
 };

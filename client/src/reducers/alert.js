@@ -9,8 +9,6 @@ const alertSlice = createSlice({
     setAlert: (state, action )=> {
       const { payload } = action;
 
-      let alerts = []
-      alerts.push(payload);
 
       state.alerts = [payload];
     },
