@@ -60,7 +60,7 @@ public class UserService implements UserDetailsService {
      */
     public User getUserFromToken(String token) {
 
-        if	(token.contains("Bearer ")) {
+        if	(token.contains("Bearer")) {
             token = token.substring(7);
         }
 

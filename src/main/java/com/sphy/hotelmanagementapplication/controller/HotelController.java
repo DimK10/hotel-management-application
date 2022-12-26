@@ -1,6 +1,7 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 
+import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.HotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
@@ -15,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 /***
@@ -25,11 +28,13 @@ public class HotelController {
 
     private final HotelService service;
     private final UserService userService;
+    private final HotelService hotelService;
 
 
-    public HotelController(HotelService hotelService, UserService userService) {
+    public HotelController(HotelService hotelService, UserService userService, HotelService hotelService1) {
         this.service = hotelService;
         this.userService = userService;
+        this.hotelService = hotelService1;
     }
 
     /***
@@ -38,8 +43,15 @@ public class HotelController {
      * @return the saved hotel for confirmation
      */
     @PostMapping("/api/hotel/create")
-    public HotelDTO addHotel(@RequestBody HotelDTO hotelDTO) throws ApiRequestException {
-        return service.saveHotelDTO(hotelDTO);
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public HotelDTO addHotel(@RequestHeader(name = "Authorization") String token, @RequestBody HotelDTO hotelDTO) throws ApiRequestException {
+
+        if (Objects.equals(userService.getUserFromToken(token).getId(), hotelDTO.getOwner())) {
+
+            return service.saveHotelDTO(hotelDTO);
+        } else {
+            throw new RuntimeException("Unauthorized");
+        }
     }
 
     /***
@@ -48,10 +60,15 @@ public class HotelController {
      * @return the list of hotels that where saved
      */
     @PostMapping("/api/hotels/create")
-    public List<HotelDTO> addHotels(@RequestBody List<HotelDTO> hotelsDTO) {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<HotelDTO> addHotels(@RequestHeader(name = "Authorization") String token, @RequestBody List<HotelDTO> hotelsDTO) {
 
-        return service.saveHotels(hotelsDTO);
+        if (Objects.equals(hotelsDTO.get(0).getOwner(), userService.getUserFromToken(token).getId())) {
 
+            return service.saveHotels(hotelsDTO);
+        } else {
+            throw new RuntimeException("Unauthorized");
+        }
     }
 
     /***
@@ -59,9 +76,16 @@ public class HotelController {
      * @return the number of hotels that exists in the database
      */
     @GetMapping("/api/hotels/quantity/{userId}")
-    public int countHotels(@PathVariable Long userId) {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public int countHotels(@RequestHeader(name = "Authorization") String token, @PathVariable Long userId) {
 
-        return service.countHotels(userId);
+        if (Objects.equals(userId, userService.getUserFromToken(token).getId())) {
+
+            return service.countHotels(userId);
+        } else {
+
+            throw new RuntimeException("Unauthorized");
+        }
     }
 
     /***
@@ -70,17 +94,24 @@ public class HotelController {
      * @throws ApiRequestException if There are no hotels
      */
     @GetMapping("/api/hotels/{pageNo}/{pageSize}/{sortBy}/{userId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public ResponseEntity<List<HotelDTO>> findAllRooms(
+            @RequestHeader(name = "Authorization") String token,
             @PathVariable Integer pageNo,
             @PathVariable Integer pageSize,
             @PathVariable String sortBy,
             @PathVariable Long userId)
             throws ApiRequestException {
 
-        List<HotelDTO> hotelDTOS = service.getHotels(pageNo, pageSize, sortBy, userId);
+        if (Objects.equals(userId, userService.getUserFromToken(token).getId())) {
 
-        return new ResponseEntity<List<HotelDTO>>(hotelDTOS, new HttpHeaders(), HttpStatus.OK);
+            List<HotelDTO> hotelDTOS = service.getHotels(pageNo, pageSize, sortBy, userId);
+
+            return new ResponseEntity<List<HotelDTO>>(hotelDTOS, new HttpHeaders(), HttpStatus.OK);
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
     }
 
     /***
@@ -91,7 +122,7 @@ public class HotelController {
      */
     @GetMapping("/api/hotelId/{id}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public HotelDTO findHotelById(@RequestHeader(name="Authorization") String token, @PathVariable Long id) throws ApiRequestException {
+    public HotelDTO findHotelById(@RequestHeader(name = "Authorization") String token, @PathVariable Long id) throws ApiRequestException {
 
         User user = userService.getUserFromToken(token);
         return service.getHotelById(id, user.getId());
@@ -117,9 +148,15 @@ public class HotelController {
      * @throws ApiRequestException if the hotel does not exist
      */
     @PutMapping("/api/hotel/update")
-    public HotelDTO updateHotel(@RequestBody HotelDTO hotelDTO) throws ApiRequestException {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public HotelDTO updateHotel(@RequestHeader(name = "Authorization") String token, @RequestBody HotelDTO hotelDTO) throws ApiRequestException {
 
-        return service.updateHotel(hotelDTO);
+        if (Objects.equals(hotelDTO.getOwner(), userService.getUserFromToken(token).getId())) {
+
+            return service.updateHotel(hotelDTO);
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
 
     }
 
@@ -131,12 +168,19 @@ public class HotelController {
      * @throws ApiRequestException if the hotel does not exist or is already activated
      */
     @PostMapping("/api/hotel/enable/{id}")
-    ResponseEntity<String> enableHotel(@PathVariable Long id) throws ApiRequestException {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    ResponseEntity<String> enableHotel(@RequestHeader(name = "Authorization") String token, @PathVariable Long id) throws ApiRequestException {
 
-        service.enableHotel(id);
-        return ResponseEntity.status(HttpStatus.OK)
-                .body("Hotel with id " + id + " was successfully activated");
+        HotelDTO hotelOptional = hotelService.getHotelById(id);
 
+        if (Objects.equals(hotelOptional.getOwner(), userService.getUserFromToken(token).getId())) {
+
+            service.enableHotel(id);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body("Hotel with id " + id + " was successfully activated");
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
     }
 
 
@@ -147,12 +191,20 @@ public class HotelController {
      * @throws ApiRequestException if the hotel does not exist or is already deactivated
      */
     @PostMapping("/api/hotel/disable/{id}")
-    ResponseEntity<String> disableHotel(@PathVariable Long id) throws ApiRequestException {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    ResponseEntity<String> disableHotel(@RequestHeader(name = "Authorization") String token, @PathVariable Long id) throws ApiRequestException {
 
-        service.disableHotel(id);
-        return ResponseEntity.status(HttpStatus.OK)
-                .body("Hotel with id " + id + " was successfully deactivated");
+        HotelDTO hotelOptional = hotelService.getHotelById(id);
 
+        if (Objects.equals(hotelOptional.getOwner(), userService.getUserFromToken(token).getId())) {
+
+            service.disableHotel(id);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body("Hotel with id " + id + " was successfully deactivated");
+
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
     }
 
     /***
@@ -163,9 +215,18 @@ public class HotelController {
      */
 
     @GetMapping("/api/hotel/amenities/{hotelId}")
-    public Set<HotelAmenityDTO> findHotelAmenitiesByHotelId(@PathVariable Long hotelId)throws ApiRequestException{
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Set<HotelAmenityDTO> findHotelAmenitiesByHotelId(@RequestHeader(name = "Authorization") String token, @PathVariable Long hotelId) throws ApiRequestException {
 
-        return service.getHotelAmenitiesByHotelId(hotelId);
+        HotelDTO hotelOptional = hotelService.getHotelById(hotelId);
+
+        if (Objects.equals(hotelOptional.getOwner(), userService.getUserFromToken(token).getId())) {
+
+            return service.getHotelAmenitiesByHotelId(hotelId);
+
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
     }
 
 
