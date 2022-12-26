@@ -172,7 +172,6 @@ public class OrderServiceTest {
         Optional<Order> orderOptional = Optional.of(order2);
 
         // when
-        when(orderRepository.existsById(anyLong())).thenReturn(true);
         when(orderRepository.findById(anyLong())).thenReturn(orderOptional);
 
         //then
@@ -192,7 +191,6 @@ public class OrderServiceTest {
         Optional<Order> orderOptional = Optional.of(order2);
 
         // when
-        when(orderRepository.existsById(anyLong())).thenReturn(true);
         when(orderRepository.findById(anyLong())).thenReturn(orderOptional);
 
 

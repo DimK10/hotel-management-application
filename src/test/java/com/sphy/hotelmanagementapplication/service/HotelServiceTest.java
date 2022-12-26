@@ -306,7 +306,6 @@ public class HotelServiceTest {
 
 
         // when
-        when(hotelRepository.existsById(anyLong())).thenReturn(true);
         when(hotelRepository.findById(anyLong())).thenReturn(hotelOptional);
 
 
@@ -328,7 +327,6 @@ public class HotelServiceTest {
         Optional<Hotel> hotelOptional = Optional.of(hotel);
 
         // when
-        when(hotelRepository.existsById(anyLong())).thenReturn(true);
         when(hotelRepository.findById(anyLong())).thenReturn(hotelOptional);
 
 
