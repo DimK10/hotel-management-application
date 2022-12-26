@@ -168,10 +168,16 @@ public class OrderService {
             throw new ApiRequestException("The order with id: " + orderDTO.getId() + " does not exist");
         }
 
-        int conflict;
+        int conflict = 0;
 
-        conflict = orderRepository.OrderConflict(orderOptional.get().getCheckInDate(),
-                orderOptional.get().getCheckOutDate(), orderOptional.get().getRoom());
+        Optional<Room> room = roomRepository.findById(orderDTO.getRoom());
+
+        if (room.isEmpty()){
+            throw new RuntimeException("The room can't be empty");
+        }
+
+        conflict = orderRepository.OrderConflict(orderDTO.getCheckInDate(),
+                orderDTO.getCheckOutDate(), room.get());
 
         if (conflict == 0) {
             orderOptional.get().setCheckOutDate(orderDTO.getCheckOutDate());

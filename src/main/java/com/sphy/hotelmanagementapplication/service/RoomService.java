@@ -214,9 +214,6 @@ public class RoomService {
             hotel.ifPresent(existingRoom::setHotel);
 			existingRoom.setDisabled(roomDTO.isDisabled());
 
-            hotel.get().getRooms().add(existingRoom);
-            hotelRepository.save(hotel.get());
-
             return roomToRoomDTO.converter(roomRepository.save(existingRoom));
         }else{
 
