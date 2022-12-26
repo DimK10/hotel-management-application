@@ -77,9 +77,9 @@ export const login = (username, password) => async (dispatch) => {
     const token = res.data.jwt;
     const username = jwt(token).sub;
 
-    dispatch(loginSuccess({jwt: token, user: username}));
+     await dispatch(loginSuccess({jwt: token, user: username}));
 
-    dispatch(loadUser());
+     await dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;
 
