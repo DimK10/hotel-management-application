@@ -2,9 +2,9 @@ package com.sphy.hotelmanagementapplication.service;
 
 import com.sphy.hotelmanagementapplication.converter.*;
 import com.sphy.hotelmanagementapplication.domain.User;
-import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
-import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
-import com.sphy.hotelmanagementapplication.repositories.UserRepository;
+import com.sphy.hotelmanagementapplication.repository.HotelRepository;
+import com.sphy.hotelmanagementapplication.repository.RoomRepository;
+import com.sphy.hotelmanagementapplication.repository.UserRepository;
 import com.sphy.hotelmanagementapplication.security.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,12 +12,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.initMocks;
 import static org.mockito.MockitoAnnotations.openMocks;
 
 class UserServiceTest {
@@ -47,10 +44,10 @@ class UserServiceTest {
         userService = new UserService(
                 userRepository,
                 new UserToUserDTO(
-                        new HotelToHotelDTO(new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository)),
+                        new HotelToHotelDTO(new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository, new RoomAmenityToRoomAmenityDTO()), new HotelAmenityToHotelAmenityDTO()),
                         new OrderToOrderDTO(roomRepository, userRepository)
                 ),
-                new UserDTOToUser(new HotelToHotelDTO(new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository)),
+                new UserDTOToUser(new HotelToHotelDTO(new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository, new RoomAmenityToRoomAmenityDTO()), new HotelAmenityToHotelAmenityDTO()),
                         new OrderToOrderDTO(roomRepository, userRepository)),
                 passwordEncoder,
                 jwtUtil

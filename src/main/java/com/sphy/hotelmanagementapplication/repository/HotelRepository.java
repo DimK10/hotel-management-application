@@ -1,7 +1,6 @@
-package com.sphy.hotelmanagementapplication.repositories;
+package com.sphy.hotelmanagementapplication.repository;
 
 import com.sphy.hotelmanagementapplication.domain.Hotel;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -15,7 +14,7 @@ import java.util.Optional;
 import java.util.Set;
 
 /***
- * created by gp
+ * created by gp, dk , AKd
  */
 @Repository
 public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long> {
@@ -31,6 +30,12 @@ public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long> 
 	Set<Hotel> findAllHotels();
 
 	boolean existsByName(String name);
+
+
+
+	//@Query("select h.hotelAmenity from Hotel h where h.id=id")
+	//Set<HotelAmenity> findByHotelID(long id);
+
 
 	@Query("SELECT count(h) from Hotel h where h.owner.id = :id")
 	int countAll(@Param("id") Long id);

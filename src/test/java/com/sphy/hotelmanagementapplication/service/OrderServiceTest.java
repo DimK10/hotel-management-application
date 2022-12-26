@@ -7,10 +7,9 @@ import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.domain.User.Role;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
-import com.sphy.hotelmanagementapplication.repositories.OrderRepository;
-import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
-import com.sphy.hotelmanagementapplication.repositories.UserRepository;
-import org.apache.commons.lang3.builder.EqualsBuilder;
+import com.sphy.hotelmanagementapplication.repository.OrderRepository;
+import com.sphy.hotelmanagementapplication.repository.RoomRepository;
+import com.sphy.hotelmanagementapplication.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 

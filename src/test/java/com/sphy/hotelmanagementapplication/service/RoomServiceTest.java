@@ -1,15 +1,12 @@
 package com.sphy.hotelmanagementapplication.service;
 
-import com.sphy.hotelmanagementapplication.converter.OrderDTOToOrder;
-import com.sphy.hotelmanagementapplication.converter.OrderToOrderDTO;
-import com.sphy.hotelmanagementapplication.converter.RoomDTOToRoom;
-import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
+import com.sphy.hotelmanagementapplication.converter.*;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
-import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
-import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
-import com.sphy.hotelmanagementapplication.repositories.UserRepository;
+import com.sphy.hotelmanagementapplication.repository.HotelRepository;
+import com.sphy.hotelmanagementapplication.repository.RoomRepository;
+import com.sphy.hotelmanagementapplication.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +18,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 /***
@@ -38,6 +36,12 @@ class RoomServiceTest {
 
 	@Mock
 	UserRepository userRepository;
+
+	@Mock
+    RoomAmenityDTOToRoomAmenity roomAmenityDTOToRoomAmenity;
+
+    @Mock
+    RoomAmenityToRoomAmenityDTO roomAmenityToRoomAmenityDTO;
 
 	RoomService roomService;
 
@@ -84,7 +88,7 @@ class RoomServiceTest {
 
 
 		roomService = new RoomService(roomRepository, hotelRepository, new RoomDTOToRoom(hotelRepository,
-				new OrderDTOToOrder(roomRepository, userRepository)), new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository));
+				new OrderDTOToOrder(roomRepository, userRepository), roomAmenityDTOToRoomAmenity), new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository, roomAmenityToRoomAmenityDTO), new RoomAmenityToRoomAmenityDTO());
 
 	}
 
@@ -97,6 +101,22 @@ class RoomServiceTest {
 	void saveRooms() {
 		// todo
 	}
+
+//	@Test
+//	void getRooms() throws Exception {
+//		// given
+//
+//
+//		// when
+//		when(roomRepository.findAll()).thenReturn(rooms);
+//
+//
+//		//then
+//		List<RoomDTO> roomDTOList = roomService.getRooms();
+//
+//		assertEquals(2, roomDTOList.size());
+//		assertArrayEquals(roomDTOS.toArray(), roomDTOList.toArray());
+//	}
 
 	@Test
 	void getRoomById() throws Exception {

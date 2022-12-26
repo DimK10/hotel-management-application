@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /***
- * created by gp
+ * created by gp, AKd
  */
 public class RoomDTO implements Serializable {
 
@@ -18,6 +18,8 @@ public class RoomDTO implements Serializable {
 	private Long hotel;
 
 	private Set<OrderDTO> orders =new HashSet<>();
+
+	private Set<RoomAmenityDTO> roomAmenityDTO = new HashSet<>();
 
 	private long price;
 
@@ -95,6 +97,14 @@ public class RoomDTO implements Serializable {
 		this.capacity = capacity;
 	}
 
+	public Set<RoomAmenityDTO> getRoomAmenityDTO() {
+		return roomAmenityDTO;
+	}
+
+	public void setRoomAmenityDTO(Set<RoomAmenityDTO> roomAmenityDTO) {
+		this.roomAmenityDTO = roomAmenityDTO;
+	}
+
 	@Override
 	public String toString() {
 		return "RoomDTO{" +
@@ -106,6 +116,6 @@ public class RoomDTO implements Serializable {
 				", price=" + price +
 				", disabled=" + disabled +
 				", capacity=" + capacity +
-				'}';
+				", roomAmenity=" + roomAmenityDTO + "}";
 	}
 }

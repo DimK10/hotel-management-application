@@ -1,9 +1,6 @@
 import React, {Fragment} from 'react';
-import PropTypes from 'prop-types';
 import NavBar from "../layout/NavBar";
-import moment from "moment/moment";
 import {useDispatch, useSelector} from "react-redux";
-import {getNewOrder} from "../../actions/order";
 
 
 const PlaceNewOrder = () => {

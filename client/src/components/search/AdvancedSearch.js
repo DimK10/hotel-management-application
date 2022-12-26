@@ -8,7 +8,6 @@ import 'bootstrap-daterangepicker/daterangepicker.css';
 import SearchItem from './SearchItem';
 
 import cities from '../../json/cities.json';
-import moment from "moment/moment";
 
 const AdvancedSearch = (props) => {
   const [formData, setFormData] = useState({

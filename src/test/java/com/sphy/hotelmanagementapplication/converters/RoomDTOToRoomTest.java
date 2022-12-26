@@ -1,18 +1,20 @@
 package com.sphy.hotelmanagementapplication.converters;
 
 import com.sphy.hotelmanagementapplication.converter.OrderDTOToOrder;
+import com.sphy.hotelmanagementapplication.converter.RoomAmenityDTOToRoomAmenity;
 import com.sphy.hotelmanagementapplication.converter.RoomDTOToRoom;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Order;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
-import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
+import com.sphy.hotelmanagementapplication.repository.HotelRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /***
@@ -29,6 +31,9 @@ public class RoomDTOToRoomTest {
 
     @Mock
     OrderDTOToOrder orderDTOToOrder;
+
+    @Mock
+    RoomAmenityDTOToRoomAmenity roomAmenityDTOToRoomAmenity;
 
 
 
@@ -61,7 +66,7 @@ public class RoomDTOToRoomTest {
         roomDTO.getOrders().add(orderDTO);
         roomDTO.setPrice(500L);
 
-        roomDTOToRoom = new RoomDTOToRoom(hotelRepository, orderDTOToOrder);
+        roomDTOToRoom = new RoomDTOToRoom(hotelRepository, orderDTOToOrder, roomAmenityDTOToRoomAmenity);
     }
 
     @Test

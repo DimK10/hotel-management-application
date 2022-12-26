@@ -1,5 +1,4 @@
 import React, {Fragment, useState} from 'react';
-import PropTypes from 'prop-types';
 import NavBar from '../layout/NavBar';
 import CIcon from '@coreui/icons-react';
 import {cilLockLocked, cilUser} from '@coreui/icons';

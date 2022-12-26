@@ -4,7 +4,7 @@ import '../../css/btnRaised.css'
 import {useNavigate} from "react-router-dom";
 import moment from "moment";
 import {createNewOrderPreCheckout} from "../../actions/order";
-import {connect, useDispatch} from "react-redux";
+import {useDispatch} from "react-redux";
 import PropTypes from "prop-types";
 
 const SearchItem = ({checkInDate, checkOutDate}) => {

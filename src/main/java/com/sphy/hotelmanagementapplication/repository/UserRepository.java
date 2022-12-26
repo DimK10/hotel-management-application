@@ -1,4 +1,4 @@
-package com.sphy.hotelmanagementapplication.repositories;
+package com.sphy.hotelmanagementapplication.repository;
 
 import com.sphy.hotelmanagementapplication.domain.User;
 import org.springframework.data.repository.CrudRepository;

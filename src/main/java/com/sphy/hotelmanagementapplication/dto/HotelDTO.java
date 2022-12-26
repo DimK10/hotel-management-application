@@ -1,14 +1,12 @@
 package com.sphy.hotelmanagementapplication.dto;
 
-import com.sphy.hotelmanagementapplication.domain.BaseEntity;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 
 /***
- * created by gp
+ * created by gp , AKd
  */
 public class HotelDTO implements Serializable{
 
@@ -27,6 +25,8 @@ public class HotelDTO implements Serializable{
     private boolean disabled;
 
     private Set<RoomDTO> rooms =new HashSet<>();
+    
+    private Set<HotelAmenityDTO> hotelAmenityDTO = new HashSet<>();// created by AKd
 
     public HotelDTO(long id) {
         this.id = id;
@@ -100,7 +100,15 @@ public class HotelDTO implements Serializable{
         this.address = address;
     }
 
-    @Override
+	public Set<HotelAmenityDTO> getHotelAmenityDTO() {
+		return hotelAmenityDTO;
+	}
+
+	public void setHotelAmenityDTO(Set<HotelAmenityDTO> hotelAmenityDTO) {
+		this.hotelAmenityDTO = hotelAmenityDTO;
+	}
+
+	@Override
     public String toString() {
         return "HotelDTO{" +
                 "id=" + id +
@@ -111,6 +119,6 @@ public class HotelDTO implements Serializable{
                 ", owner=" + owner +
                 ", disabled=" + disabled +
                 ", rooms=" + rooms +
-                '}';
+                ", hotelAmenity=" + hotelAmenityDTO + "}";
     }
 }

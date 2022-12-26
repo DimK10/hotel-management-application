@@ -1,22 +1,20 @@
 package com.sphy.hotelmanagementapplication.service;
 
+import com.sphy.hotelmanagementapplication.converter.RoomAmenityToRoomAmenityDTO;
 import com.sphy.hotelmanagementapplication.converter.RoomDTOToRoom;
 import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
-import com.sphy.hotelmanagementapplication.dto.HotelDTO;
+import com.sphy.hotelmanagementapplication.dto.RoomAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
-import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
-import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
+import com.sphy.hotelmanagementapplication.repository.HotelRepository;
+import com.sphy.hotelmanagementapplication.repository.RoomRepository;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.*;
 
 /***
  * created by gp
@@ -33,12 +31,15 @@ public class RoomService {
 
     private final RoomToRoomDTO roomToRoomDTO;
 
+    private final RoomAmenityToRoomAmenityDTO roomAmenityToRoomAmenityDTO;
 
-	public RoomService(RoomRepository repository, HotelRepository hotelRepository, RoomDTOToRoom roomDTOToRoom, RoomToRoomDTO roomToRoomDTO) {
+
+	public RoomService(RoomRepository repository, HotelRepository hotelRepository, RoomDTOToRoom roomDTOToRoom, RoomToRoomDTO roomToRoomDTO, RoomAmenityToRoomAmenityDTO roomAmenityToRoomAmenityDTO) {
 		this.roomRepository = repository;
 		this.hotelRepository = hotelRepository;
         this.roomDTOToRoom = roomDTOToRoom;
         this.roomToRoomDTO = roomToRoomDTO;
+        this.roomAmenityToRoomAmenityDTO = roomAmenityToRoomAmenityDTO;
     }
 
     /***
@@ -224,8 +225,20 @@ public class RoomService {
     }
 
 
+    /***
+     * Retrieves a set of RoomAmenity for the room with the given ID
+     * @param id The ID of the room for which to retrieve amenities
+     * @return A set of RoomAmenity representing the amenities of the room with the given ID
+     */
+    public Set<RoomAmenityDTO> getRoomAmenitiesByRoomId(Long id) {
 
+        Set<RoomAmenityDTO> amenitiesRoomDTO = new HashSet<>();
+        Optional<Room> roomOptional = roomRepository.findById(id);
+        roomOptional.ifPresent(room ->  room.getRoomAmenity()
+                                .forEach(roomAmenity -> {
+                                    amenitiesRoomDTO.add(roomAmenityToRoomAmenityDTO.converter(roomAmenity));
+                                }));
 
-
-
+        return amenitiesRoomDTO;
+    }
 }

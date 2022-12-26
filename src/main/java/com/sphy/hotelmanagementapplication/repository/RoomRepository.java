@@ -1,4 +1,4 @@
-package com.sphy.hotelmanagementapplication.repositories;
+package com.sphy.hotelmanagementapplication.repository;
 
 import com.sphy.hotelmanagementapplication.domain.Room;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +16,7 @@ public interface RoomRepository extends PagingAndSortingRepository<Room,Long> {
 
     @Query("SELECT count(*) from rooms")
     int countAll();
+
+   // @Query("select r.roomAmenity from  rooms r where r.id = id")
+    //Set<RoomAmenity> findByRoomID(Long id);
 }

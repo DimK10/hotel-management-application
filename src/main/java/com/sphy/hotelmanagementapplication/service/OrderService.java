@@ -2,14 +2,15 @@ package com.sphy.hotelmanagementapplication.service;
 
 import com.sphy.hotelmanagementapplication.converter.OrderDTOToOrder;
 import com.sphy.hotelmanagementapplication.converter.OrderToOrderDTO;
-import com.sphy.hotelmanagementapplication.domain.*;
+import com.sphy.hotelmanagementapplication.domain.Order;
+import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
-import com.sphy.hotelmanagementapplication.repositories.OrderRepository;
-import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
-import com.sphy.hotelmanagementapplication.repositories.UserRepository;
-
+import com.sphy.hotelmanagementapplication.repository.OrderRepository;
+import com.sphy.hotelmanagementapplication.repository.RoomRepository;
+import com.sphy.hotelmanagementapplication.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
