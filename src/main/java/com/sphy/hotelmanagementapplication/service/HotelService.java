@@ -60,17 +60,19 @@ public class HotelService {
 		if (hotel.isEmpty()){
 			throw new ApiRequestException("There is no hotel with id: " + id);
 		}else {
-			return hotelToHotelDTO.converter(hotelRepository.findById(id).get());
+			return hotelToHotelDTO.converter(hotel.get());
 		}
 
 	}
 
 	public HotelDTO getHotelById(Long id, Long userId) throws ApiRequestException {
+
 		Optional<Hotel> hotel = hotelRepository.findHotelByIdAndOwner(id, userId);
+
 		if (hotel.isEmpty()){
 			throw new ApiRequestException("There is no hotel with id: " + id);
 		}else {
-			return hotelToHotelDTO.converter(hotelRepository.findById(id).get());
+			return hotelToHotelDTO.converter(hotel.get());
 		}
 
 	}
@@ -123,7 +125,7 @@ public class HotelService {
 	 */
 	public HotelDTO getHotelByName(String name) throws ApiRequestException {
 		Optional<Hotel> hotel = hotelRepository.findByName(name);
-		if (!hotel.isPresent()){
+		if (hotel.isEmpty()){
 			throw new ApiRequestException("There is no hotel with name: " + name);
 		}else {
 			Optional<Hotel> hotelOpt = hotelRepository.findByName(name);
@@ -213,7 +215,7 @@ public class HotelService {
 
 		Set<RoomDTO> roomOpt = hotelDTO.getRooms();
 
-		if (!adminOpt.isPresent()){
+		if (adminOpt.isEmpty()){
 			throw new ApiRequestException("There is no Owner registered with that id, or the id is null!");
 		}
 		if (roomOpt.isEmpty()){
