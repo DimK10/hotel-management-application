@@ -6,7 +6,7 @@ const { setAlert, removeAlert } = alertSlice.actions;
 
 // This is the return from mapDispatchToProps in the documentation
 export const setAlertAction =
-  (msg, alertType, timeout = 5000) =>
+  (msg, alertType, timeout = 7000) =>
   (dispatch) => {
 
     const id = uuidv4();

@@ -1,10 +1,10 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import {useSelector} from "react-redux";
 
 const Alert = () => {
 
-    const { alerts } = useSelector(state => state.alert)
+    const {alerts}  = useSelector(state => state.alert);
 
     return (
     alerts !== null &&

@@ -1,5 +1,4 @@
 import React, {Fragment, useState} from 'react';
-import PropTypes from 'prop-types';
 import NavBar from '../layout/NavBar';
 import CIcon from '@coreui/icons-react';
 import {cilLockLocked, cilUser} from '@coreui/icons';
@@ -7,6 +6,7 @@ import {cilLockLocked, cilUser} from '@coreui/icons';
 import {login} from "../../actions/auth";
 import {Navigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
+import Alert from "../layout/Alert";
 
 const Login = () => {
 
@@ -44,6 +44,7 @@ const Login = () => {
               <NavBar/>
               <div className='bg-light min-vh-100 d-flex flex-row align-items-center'>
                 <div className='container'>
+                  <Alert />
                   <div className='row justify-content-center'>
                     <div className='card-group d-block d-md-flex row'>
                       <div className='card col-md-7 p-4 mb-0'>

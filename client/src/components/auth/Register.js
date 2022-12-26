@@ -2,6 +2,7 @@ import React, {Fragment} from 'react';
 import NavBar from './../layout/NavBar';
 import CIcon from '@coreui/icons-react';
 import {cilEnvelopeOpen, cilLockLocked, cilUser} from '@coreui/icons';
+import Alert from "../layout/Alert";
 
 const Register = (props) => {
   return (
@@ -9,6 +10,7 @@ const Register = (props) => {
       <NavBar />
       <div className='bg-light min-vh-100 d-flex flex-row align-items-center'>
         <div className='container'>
+          <Alert />
           <div className='row justify-content-center'>
             <div className='col-md-6'>
               <div className='card mb-4 mx-4'>
