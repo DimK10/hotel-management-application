@@ -178,7 +178,6 @@ class RoomServiceTest {
 		Optional<Room> roomOptional = Optional.of(room);
 
 		// when
-		when(roomRepository.existsById(anyLong())).thenReturn(true);
 		when(roomRepository.findById(anyLong())).thenReturn(roomOptional);
 
 		//then
@@ -199,7 +198,6 @@ class RoomServiceTest {
 		Optional<Room> roomOptional = Optional.of(room);
 
 		// when
-		when(roomRepository.existsById(anyLong())).thenReturn(true);
 		when(roomRepository.findById(anyLong())).thenReturn(roomOptional);
 
 
@@ -220,10 +218,10 @@ class RoomServiceTest {
 		//given
 
 		//when
-		when(roomRepository.countAll()).thenReturn(1);
+		when(roomRepository.countAll(anyLong())).thenReturn(1);
 
 		//then
-		assertEquals(1, roomService.countRooms());
+		assertEquals(1, roomService.countRooms(anyLong()));
 
 	}
 }
