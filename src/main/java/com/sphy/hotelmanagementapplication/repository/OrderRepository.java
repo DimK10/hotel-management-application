@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Repository
 public interface OrderRepository extends CrudRepository<Order,Long> {
 
-    @Query("SELECT count(*) from orders o where o.room=?3 and" +
+    @Query("SELECT count(o) from orders o where o.room=?3 and" +
             "((o.checkInDate>?1 and o.checkOutDate>?2 and o.checkInDate<?2) or" +
             "(o.checkInDate<?1 and o.checkOutDate<?2 and o.checkOutDate>?1) or" +
             "(o.checkInDate<=?1 and o.checkOutDate>=?2))")

@@ -5,6 +5,7 @@ import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,7 +43,8 @@ public class OrderController {
      * @throws ApiRequestException if no orders is saved
      */
     @GetMapping("/api/orders")
-    public List<OrderDTO> findAllOrders() throws ApiRequestException {
+    public List<OrderDTO> findAllOrders(@RequestHeader(name = "Authorization") String token) throws ApiRequestException {
+
         return service.getOrders();
     }
 
