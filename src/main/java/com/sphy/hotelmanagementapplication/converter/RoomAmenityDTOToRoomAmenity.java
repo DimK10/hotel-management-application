@@ -1,10 +1,9 @@
 package com.sphy.hotelmanagementapplication.converter;
 
-import org.springframework.stereotype.Component;
-
 import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
 import com.sphy.hotelmanagementapplication.domain.RoomAmenity.AmenitiesRoom;
 import com.sphy.hotelmanagementapplication.dto.RoomAmenityDTO;
+import org.springframework.stereotype.Component;
 
 /***
  * created by AKd

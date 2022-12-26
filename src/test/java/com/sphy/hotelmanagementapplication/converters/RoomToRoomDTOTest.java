@@ -1,13 +1,14 @@
 package com.sphy.hotelmanagementapplication.converters;
 
 import com.sphy.hotelmanagementapplication.converter.OrderToOrderDTO;
+import com.sphy.hotelmanagementapplication.converter.RoomAmenityToRoomAmenityDTO;
 import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Order;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
-import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
+import com.sphy.hotelmanagementapplication.repository.HotelRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,7 +37,8 @@ public class RoomToRoomDTOTest {
     @Mock
     OrderToOrderDTO orderToOrderDTO;
 
-
+    @Mock
+    RoomAmenityToRoomAmenityDTO roomAmentityToRoomAmenityDTO;
 
     Room room = new Room();
 
@@ -47,6 +49,7 @@ public class RoomToRoomDTOTest {
     OrderDTO orderDTO = new OrderDTO(1L);
 
     Hotel hotel = new Hotel(1L);
+
 
     @BeforeEach
     void setUp() throws Exception{
@@ -69,7 +72,7 @@ public class RoomToRoomDTOTest {
         roomDTO.setPrice(500L);
         roomDTO.setCapacity(5);
 
-        roomToRoomDTO = new RoomToRoomDTO(orderToOrderDTO, hotelRepository);
+        roomToRoomDTO = new RoomToRoomDTO(orderToOrderDTO, hotelRepository, roomAmentityToRoomAmenityDTO);
     }
 
     @Test

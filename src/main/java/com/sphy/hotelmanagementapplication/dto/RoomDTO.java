@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
-
 /***
  * created by gp, AKd
  */

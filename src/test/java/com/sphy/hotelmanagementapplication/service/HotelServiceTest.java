@@ -60,6 +60,9 @@ public class HotelServiceTest {
     @Mock
     RoomAmenityToRoomAmenityDTO roomAmenityToRoomAmenityDTO;
 
+    @Mock
+    JwtUtil jwtUtil;
+
 
     HotelService hotelService;
 
@@ -184,11 +187,29 @@ public class HotelServiceTest {
         hotelService = new HotelService(
                 hotelRepository,
                 new HotelDTOToHotel(new RoomDTOToRoom(hotelRepository,
-                        new OrderDTOToOrder(roomRepository, userRepository)),
+                        new OrderDTOToOrder(roomRepository, userRepository), new RoomAmenityDTOToRoomAmenity()),
                         userRepository,
-                        new HotelAmenityDTOToHotelAmenity())
+                        new HotelAmenityDTOToHotelAmenity()),
+                new HotelToHotelDTO(new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository, new RoomAmenityToRoomAmenityDTO()), new HotelAmenityToHotelAmenityDTO()),
+                roomService,
+                new HotelAmenityToHotelAmenityDTO(),
+                userRepository,
+                new UserService(userRepository, new UserToUserDTO(new HotelToHotelDTO(new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository, new RoomAmenityToRoomAmenityDTO()), new HotelAmenityToHotelAmenityDTO()), new OrderToOrderDTO(roomRepository, userRepository)),
+                        new UserDTOToUser(new HotelToHotelDTO(new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository, new RoomAmenityToRoomAmenityDTO()), new HotelAmenityToHotelAmenityDTO()), new OrderToOrderDTO(roomRepository, userRepository)),
+                        new PasswordEncoder() {
+                            @Override
+                            public String encode(CharSequence rawPassword) {
+                                return null;
+                            }
 
-        );
+                            @Override
+                            public boolean matches(CharSequence rawPassword, String encodedPassword) {
+                                return false;
+                            }
+                        },
+                        jwtUtil
+
+                ));
     }
 
     @Test

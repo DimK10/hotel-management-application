@@ -1,10 +1,7 @@
 package com.sphy.hotelmanagementapplication.repository;
 
-import java.util.Optional;
-
-import org.springframework.data.repository.CrudRepository;
-
 import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
+import org.springframework.data.repository.CrudRepository;
 
 
 /***

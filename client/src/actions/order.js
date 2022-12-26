@@ -1,4 +1,3 @@
-import {GET_NEW_ORDER, NEW_ORDER_PRE_CHECKOUT, ORDER_ERROR} from "./types";
 import orderSlice from "../reducers/order";
 import moment from "moment";
 

@@ -1,17 +1,21 @@
 package com.sphy.hotelmanagementapplication.converters;
 
+import com.sphy.hotelmanagementapplication.converter.HotelAmenityDTOToHotelAmenity;
+import com.sphy.hotelmanagementapplication.converter.HotelAmenityToHotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.converter.HotelDTOToHotel;
 import com.sphy.hotelmanagementapplication.converter.RoomDTOToRoom;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
-import com.sphy.hotelmanagementapplication.repositories.UserRepository;
+import com.sphy.hotelmanagementapplication.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
@@ -29,7 +33,10 @@ public class HotelDTOToHotelTest {
     RoomDTOToRoom roomDTOToRoom;
 
     @Mock
-	UserRepository userRepository;
+    UserRepository userRepository;
+
+    @Mock
+    HotelAmenityDTOToHotelAmenity hotelAmenityDTOToHotelAmenity;
 
     Hotel hotel = new Hotel();
 

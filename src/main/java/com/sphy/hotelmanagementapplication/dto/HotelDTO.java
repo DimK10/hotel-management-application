@@ -1,8 +1,5 @@
 package com.sphy.hotelmanagementapplication.dto;
 
-import com.sphy.hotelmanagementapplication.domain.BaseEntity;
-import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;

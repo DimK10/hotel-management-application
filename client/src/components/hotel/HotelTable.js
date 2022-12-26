@@ -1,10 +1,9 @@
-import React, {Fragment, useEffect, useReducer, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import CIcon from "@coreui/icons-react";
 import {cilPencil, cilTrash} from "@coreui/icons";
 import {Tooltip} from '@coreui/coreui/dist/js/coreui';
 import Pagination from "../layout/Pagination";
-import PropTypes from "prop-types";
-import {connect, useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getAllHotelsByPage} from "../../actions/hotel";
 import {useNavigate} from "react-router-dom";
 

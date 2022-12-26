@@ -2,8 +2,6 @@ package com.sphy.hotelmanagementapplication.dto;
 
 import java.io.Serializable;
 
-import com.sphy.hotelmanagementapplication.domain.RoomAmenity.AmenitiesRoom;
-
 /***
  * created by AKd
  */

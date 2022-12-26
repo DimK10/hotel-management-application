@@ -1,6 +1,6 @@
 import axios from 'axios';
 import jwt from 'jwt-decode'
-import alertSlice, {setAlertAction} from './alert';
+import {setAlertAction} from './alert';
 
 import setAuthToken from '../utils/setAuthToken';
 import authSlice from "../reducers/auth";

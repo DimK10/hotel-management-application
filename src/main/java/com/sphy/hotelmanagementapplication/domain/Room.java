@@ -2,10 +2,7 @@ package com.sphy.hotelmanagementapplication.domain;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sphy.hotelmanagementapplication.domain.RoomAmenity.AmenitiesRoom;
 
 /***
  * created by gp

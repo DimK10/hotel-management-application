@@ -5,16 +5,15 @@ import com.sphy.hotelmanagementapplication.converter.RoomDTOToRoom;
 import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
-import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
 import com.sphy.hotelmanagementapplication.dto.RoomAmenityDTO;
-import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
-import org.springframework.data.domain.*;
 import com.sphy.hotelmanagementapplication.repository.HotelRepository;
 import com.sphy.hotelmanagementapplication.repository.RoomRepository;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+
 import java.util.*;
 
 /***
