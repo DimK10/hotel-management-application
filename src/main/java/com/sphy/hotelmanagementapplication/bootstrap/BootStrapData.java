@@ -61,9 +61,9 @@ public class BootStrapData implements CommandLineRunner {
             userRepository.save(admin);
         }
 
-        Hotel ksenia = new Hotel(null, "ksenia", 5,"athens", false);
-        Hotel ksenia2 = new Hotel(null, "ksenia2", 5,"athens", false);
-        Hotel ksenia3 = new Hotel(null, "ksenia3", 5,"athens", false);
+        Hotel ksenia = new Hotel(null, "ksenia", 5, "athens", false);
+        Hotel ksenia2 = new Hotel(null, "ksenia2", 5, "athens", false);
+        Hotel ksenia3 = new Hotel(null, "ksenia3", 5, "athens", false);
         hotelRepository.save(ksenia);
         hotelRepository.save(ksenia2);
         hotelRepository.save(ksenia3);
@@ -108,6 +108,8 @@ public class BootStrapData implements CommandLineRunner {
         amenityHotelRepository.saveAll(amenitySet);
 
         ksenia.getHotelAmenity().addAll(amenitySet);
+
+        hotelRepository.save(ksenia);
 
         Order order = new Order(null, LocalDate.of(2007, 12, 03), LocalDate.of(2007, 12, 07), false, client, ena);
         orderRepository.save(order);
