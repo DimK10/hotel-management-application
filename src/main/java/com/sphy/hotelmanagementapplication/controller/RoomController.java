@@ -3,13 +3,17 @@ package com.sphy.hotelmanagementapplication.controller;
 import com.sphy.hotelmanagementapplication.dto.RoomAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
+import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.RoomService;
+import com.sphy.hotelmanagementapplication.service.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /***
@@ -20,23 +24,37 @@ public class RoomController {
 
     private final RoomService service;
 
+    private final HotelService hotelService;
+
+    private final UserService userService;
 
 
-    public RoomController(RoomService service) {
+    public RoomController(RoomService service, HotelService hotelService, UserService userService) {
         this.service = service;
+        this.hotelService = hotelService;
 
+        this.userService = userService;
     }
 
     /***
      * creates a new room
      * @param roomDTO is the room we want to save
      * @return the saved room for confirmation
-     * @throws ApiRequestException if the room's hotel does not exist or if the hotel doesn't given
+     * @throws ApiRequestException if the room's hotel does not exist
      */
     @PostMapping("/api/room/create")
-    public RoomDTO addRoom(@RequestBody RoomDTO roomDTO) throws ApiRequestException {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public RoomDTO addRoom(@RequestHeader(name = "Authorization") String token, @RequestBody RoomDTO roomDTO) throws ApiRequestException {
 
-        return service.saveRoomDTO(roomDTO);
+        if (Objects.deepEquals(hotelService.getHotelById(roomDTO.getHotel()).getOwner()
+                , userService.getUserFromToken(token).getId())) {
+
+            return service.saveRoomDTO(roomDTO);
+
+        } else {
+
+            throw new RuntimeException("Unauthorized");
+        }
     }
 
     /***
@@ -45,9 +63,20 @@ public class RoomController {
      * @return the list with the saved rooms
      */
     @PostMapping("/api/rooms/create")
-    public List<RoomDTO> addRooms(@RequestBody List<RoomDTO> roomsDTO) throws ApiRequestException {
+    @PreAuthorize("hasAuthority('ADMIN')")
 
-		return service.saveRooms(roomsDTO);
+    public List<RoomDTO> addRooms(@RequestHeader(name = "Authorization") String token, @RequestBody List<RoomDTO> roomsDTO) throws ApiRequestException {
+
+        if (Objects.deepEquals(hotelService.getHotelById(roomsDTO.get(0).getHotel()).getOwner()
+                , userService.getUserFromToken(token).getId())) {
+
+            return service.saveRooms(roomsDTO);
+        } else {
+
+            throw new RuntimeException("Unauthorized");
+        }
+
+
     }
 
     /***
@@ -55,9 +84,11 @@ public class RoomController {
      * @return the number of rooms that exists in the database
      */
     @GetMapping("/api/rooms/quantity")
-    public int countRooms(){
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public int countRooms(@RequestHeader(name = "Authorization") String token) {
 
-        return service.countRooms();
+        return service.countRooms(userService.getUserFromToken(token).getId());
+
     }
 
     /***
@@ -66,15 +97,17 @@ public class RoomController {
      * @throws ApiRequestException if no room is saved
      */
     @GetMapping("/api/rooms/{pageNo}/{pageSize}/{sortBy}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<List<RoomDTO>> findAllRooms(
+            @RequestHeader(name = "Authorization") String token,
             @PathVariable Integer pageNo,
             @PathVariable Integer pageSize,
             @PathVariable String sortBy)
             throws ApiRequestException {
 
-        List<RoomDTO> rooms = service.getRooms(pageNo, pageSize, sortBy);
+        List<RoomDTO> rooms = service.getRooms(pageNo, pageSize, sortBy, userService.getUserFromToken(token).getId());
 
-        return new ResponseEntity<List<RoomDTO>>(rooms, new HttpHeaders(), HttpStatus.OK);
+        return new ResponseEntity<>(rooms, new HttpHeaders(), HttpStatus.OK);
     }
 
     /***
@@ -86,7 +119,7 @@ public class RoomController {
     @GetMapping("/api/roomId/{id}")
     public RoomDTO findRoomById(@PathVariable Long id) throws ApiRequestException {
 
-            return service.getRoomById(id);
+        return service.getRoomById(id);
     }
 
     /***
@@ -97,7 +130,7 @@ public class RoomController {
      */
     @GetMapping("/api/roomName/{name}")
     public RoomDTO findRoomByName(@PathVariable String name) throws ApiRequestException {
-            return service.getRoomByName(name);
+        return service.getRoomByName(name);
     }
 
     /***
@@ -107,9 +140,16 @@ public class RoomController {
      * @throws ApiRequestException if the room that is going to update is not exists
      */
     @PutMapping("/api/room/update")
-    public RoomDTO updateRoom(@RequestBody RoomDTO roomDTO)throws ApiRequestException {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public RoomDTO updateRoom(@RequestHeader(name = "Authorization") String token, @RequestBody RoomDTO roomDTO) throws ApiRequestException {
+
+        if (Objects.equals(userService.getUserFromToken(token).getId(), hotelService.getHotelById(roomDTO.getHotel()).getOwner())) {
 
             return service.updateRoom(roomDTO);
+        } else {
+
+            throw new RuntimeException("Unauthorized");
+        }
 
     }
 
@@ -119,14 +159,22 @@ public class RoomController {
      * @return a confirmation message or an error message
      * @throws ApiRequestException if the room does not exist or is already activated
      */
-	@PostMapping("/api/room/enable/{id}")
-	ResponseEntity<String> enableRoom(@PathVariable Long id) throws ApiRequestException {
+    @PostMapping("/api/room/enable/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    ResponseEntity<String> enableRoom(@RequestHeader(name = "Authorization") String token, @PathVariable Long id) throws ApiRequestException {
+
+        if (Objects.equals(userService.getUserFromToken(token).getId(), hotelService.getHotelById(service.getRoomById(id).getHotel()).getOwner())) {
 
             service.enableRoom(id);
-			return ResponseEntity.status(HttpStatus.OK)
-					.body("Room with id " + id + " was successfully activated");
 
-	}
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body("Room with id " + id + " was successfully activated");
+
+        } else {
+
+            throw new RuntimeException("Unauthorized");
+        }
+    }
 
 
     /***
@@ -136,12 +184,19 @@ public class RoomController {
      * @throws ApiRequestException if the room does not exist or is already deactivated
      */
     @PostMapping("/api/room/disable/{id}")
-    ResponseEntity<String> disableRoom(@PathVariable Long id) throws ApiRequestException {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    ResponseEntity<String> disableRoom(@RequestHeader(name = "Authorization") String token, @PathVariable Long id) throws ApiRequestException {
+
+        if (Objects.equals(userService.getUserFromToken(token).getId(), hotelService.getHotelById(service.getRoomById(id).getHotel()).getOwner())) {
 
             service.disableRoom(id);
             return ResponseEntity.status(HttpStatus.OK)
                     .body("Room with id " + id + " was successfully deactivated");
 
+        } else {
+
+            throw new RuntimeException("Unauthorized");
+        }
     }
 
     /***
@@ -152,9 +207,16 @@ public class RoomController {
      */
 
     @GetMapping("/api/room/amenities/{roomId}")
-    public Set<RoomAmenityDTO> findRoomAmenitiesByRoomId(@PathVariable Long roomId) throws ApiRequestException {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Set<RoomAmenityDTO> findRoomAmenitiesByRoomId(@RequestHeader(name = "Authorization") String token, @PathVariable Long roomId) throws ApiRequestException {
 
-        return service.getRoomAmenitiesByRoomId(roomId);
+        if (Objects.equals(userService.getUserFromToken(token).getId(), hotelService.getHotelById(service.getRoomById(roomId).getHotel()).getOwner())) {
+
+            return service.getRoomAmenitiesByRoomId(roomId);
+        } else {
+
+            throw new RuntimeException("Unauthorized");
+        }
     }
 
 }

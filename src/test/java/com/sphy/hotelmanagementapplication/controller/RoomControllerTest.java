@@ -1,9 +1,14 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.domain.User;
+import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
+import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.RoomService;
+import com.sphy.hotelmanagementapplication.service.UserService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -38,39 +44,65 @@ class RoomControllerTest {
 	@Mock
 	RoomService roomService;
 
+	@Mock
+	HotelService hotelService;
+
+	@Mock
+	UserService userService;
+
 	@InjectMocks
 	RoomController roomController;
+
 
 	List<RoomDTO> roomDTOS;
 	List<Room> rooms;
 
+	Hotel hotel;
+	User admin;
+	RoomDTO roomDTO1;
+
+	HotelDTO hotelDTO;
 	MockMvc mockMvc;
 
 	@BeforeEach
 	void setUp() {
+		admin = new User(1L);
+
+		hotelDTO = new HotelDTO(11L);
+		hotelDTO.setOwner(admin.getId());
+
+		hotel = new Hotel(10L);
+		hotel.setOwner(admin);
 
 		rooms = new ArrayList<>();
 
 		Room room1 = new Room();
 		room1.setId(1L);
 		room1.setName("room1");
+		room1.setHotel(hotel);
 
 		Room room2 = new Room();
 		room2.setId(2L);
+		room2.setHotel(hotel);
 		room2.setName("room2");
 
 		rooms.add(room1);
 		rooms.add(room2);
 
 		roomDTOS = new ArrayList<>();
-		RoomDTO roomDTO1 = new RoomDTO();
+		roomDTO1 = new RoomDTO();
 		roomDTO1.setId(1L);
 		roomDTO1.setName("roomDTO1");
+		roomDTO1.setHotel(hotelDTO.getId());
+		roomDTO1.setLuxurity(3);
+		roomDTO1.setPrice(300);
+		roomDTO1.setDisabled(false);
 		roomDTOS.add(roomDTO1);
 
 		RoomDTO roomDTO2 = new RoomDTO();
 		roomDTO2.setId(2L);
 		roomDTO2.setName("roomDTO2");
+		roomDTO2.setHotel(hotelDTO.getId());
 		roomDTOS.add(roomDTO2);
 
 		mockMvc = MockMvcBuilders
@@ -81,22 +113,18 @@ class RoomControllerTest {
 	@Test
 	void addRoom() throws Exception {
 		// Given
-		RoomDTO roomDTO = new RoomDTO();
-		roomDTO.setId(1L);
-		roomDTO.setName("roomDTO");
-		roomDTO.setLuxurity(3);
-		roomDTO.setHotel(1L);
-		roomDTO.setOrders(new HashSet<>());
-		roomDTO.setPrice(300);
-		roomDTO.setDisabled(false);
+
 
 		// When
-		when(roomService.saveRoomDTO(any())).thenReturn(roomDTO);
+		when(hotelService.getHotelById(anyLong())).thenReturn(hotelDTO);
+		when(userService.getUserFromToken(anyString())).thenReturn(admin);
+		when(roomService.saveRoomDTO(any())).thenReturn(roomDTO1);
 
 		// Return
 		mockMvc.perform(
 						post("/api/room/create")
-								.content(asJsonString(roomDTO))
+								.header(HttpHeaders.AUTHORIZATION, "Bearer token")
+								.content(asJsonString(roomDTO1))
 								.contentType(MediaType.APPLICATION_JSON)
 								.accept(MediaType.APPLICATION_JSON)
 				)
@@ -104,7 +132,7 @@ class RoomControllerTest {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.id")
 						.value("1"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.name")
-						.value("roomDTO"))
+						.value("roomDTO1"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.luxurity")
 						.value("3"))
 				.andExpect(MockMvcResultMatchers.jsonPath("$.orders")
@@ -129,11 +157,13 @@ class RoomControllerTest {
 
 		// When
 		when(roomService.saveRooms(any())).thenReturn(roomDTOS);
+		when(hotelService.getHotelById(anyLong())).thenReturn(hotelDTO);
+		when(userService.getUserFromToken(anyString())).thenReturn(admin);
 
 		// Return
 		mockMvc.perform(
 						post("/api/rooms/create")
-								.content(asJsonString(roomDTOS))
+								.header(HttpHeaders.AUTHORIZATION, "Bearer token")								.content(asJsonString(roomDTOS))
 								.contentType(MediaType.APPLICATION_JSON)
 								.accept(MediaType.APPLICATION_JSON)
 				)
@@ -157,11 +187,14 @@ class RoomControllerTest {
 		//given
 
 		//when
-		when(roomService.countRooms()).thenReturn(1);
+		when(roomService.countRooms(anyLong())).thenReturn(1);
+		when(userService.getUserFromToken(anyString())).thenReturn(admin);
 
 		//then
 		mockMvc.perform(
-						get("/api/rooms/quantity"))
+						get("/api/rooms/quantity")
+								.header(HttpHeaders.AUTHORIZATION, "Bearer token"))
+
 				.andExpect(status().isOk())
 				.andExpect(MockMvcResultMatchers.jsonPath("@")
 						.value(1));
@@ -172,10 +205,11 @@ class RoomControllerTest {
 		// Given
 
 		// When
-		when(roomService.getRooms(0,10,"id")).thenReturn(roomDTOS);
-
+		when(roomService.getRooms(0,10,"id",admin.getId())).thenReturn(roomDTOS);
+		when(userService.getUserFromToken(anyString())).thenReturn(admin);
 		// Return
-		mockMvc.perform(get("/api/rooms/0/10/id"))
+		mockMvc.perform(get("/api/rooms/0/10/id")
+						.header(HttpHeaders.AUTHORIZATION, "Bearer token"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$", Matchers.hasSize(2)))
 				.andExpect(jsonPath(
@@ -235,11 +269,14 @@ class RoomControllerTest {
 		roomDTO.setDisabled(false);
 
 		// When
+		when(userService.getUserFromToken(anyString())).thenReturn(admin);
 		when(roomService.updateRoom(any())).thenReturn(roomDTO);
+		when(hotelService.getHotelById(anyLong())).thenReturn(hotelDTO);
 
 		// Return
 		mockMvc.perform(
 					put("/api/room/update")
+							.header(HttpHeaders.AUTHORIZATION, "Bearer token")
 							.content(asJsonString(roomDTO))
 							.contentType(MediaType.APPLICATION_JSON)
 							.accept(MediaType.APPLICATION_JSON)
@@ -255,14 +292,21 @@ class RoomControllerTest {
 	@Test
 	void enableRoom() throws Exception {
 		// Given
+		RoomDTO roomDTO = new RoomDTO(1L);
+		roomDTO.setHotel(hotelDTO.getId());
+
 		String expected = "Room with id 1 was successfully activated";
 
 		// When
 		when(roomService.enableRoom(any())).thenReturn(true);
+		when(userService.getUserFromToken(anyString())).thenReturn(admin);
+		when(roomService.getRoomById(anyLong())).thenReturn(roomDTO);
+		when(hotelService.getHotelById(anyLong())).thenReturn(hotelDTO);
 
 		// Return
 		MvcResult result = mockMvc.perform(
-						post("/api/room/enable/{id}", 1))
+						post("/api/room/enable/{id}", 1)
+								.header(HttpHeaders.AUTHORIZATION, "Bearer token"))
 				.andExpect(status().isOk())
 				.andReturn();
 
@@ -277,14 +321,21 @@ class RoomControllerTest {
 	@Test
 	void disableRoom() throws Exception {
 		// Given
+		RoomDTO roomDTO = new RoomDTO(1L);
+		roomDTO.setHotel(hotelDTO.getId());
 		String expected = "Room with id 1 was successfully deactivated";
 
 		// When
 		when(roomService.disableRoom(any())).thenReturn(true);
+		when(userService.getUserFromToken(anyString())).thenReturn(admin);
+		when(roomService.getRoomById(anyLong())).thenReturn(roomDTO);
+		when(hotelService.getHotelById(anyLong())).thenReturn(hotelDTO);
+
 
 		// Return
 		MvcResult result = mockMvc.perform(
-						post("/api/room/disable/{id}", 1))
+						post("/api/room/disable/{id}", 1)
+								.header(HttpHeaders.AUTHORIZATION, "Bearer token"))
 				.andExpect(status().isOk())
 				.andReturn();
 
