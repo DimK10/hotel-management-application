@@ -128,18 +128,37 @@ public class OrderServiceTest {
     }
 
     @Test
-    void getOrders() throws Exception {
+    void getOrdersClient() throws Exception {
         // given
 
 
+
         // when
-        when(orderRepository.findAll()).thenReturn(orders);
+        when(orderRepository.findAllClient(anyLong())).thenReturn(orders);
         when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(admin));
         when(userRepository.findById(2L)).thenReturn(Optional.ofNullable(client));
 
 
         //then
-        List<OrderDTO> orderDTOList = orderService.getOrders();
+        List<OrderDTO> orderDTOList = orderService.getOrdersClient(id2);
+
+        assertEquals(2, orderDTOList.size());
+        assertArrayEquals(ordersDTO.toArray(), orderDTOList.toArray());
+    }
+
+    @Test
+    void getOrdersAdmin() throws Exception {
+        // given
+
+
+        // when
+        when(orderRepository.findAllAdmin(anyLong())).thenReturn(orders);
+        when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(admin));
+        when(userRepository.findById(2L)).thenReturn(Optional.ofNullable(client));
+
+
+        //then
+        List<OrderDTO> orderDTOList = orderService.getOrdersAdmin(id1);
 
         assertEquals(2, orderDTOList.size());
         assertArrayEquals(ordersDTO.toArray(), orderDTOList.toArray());

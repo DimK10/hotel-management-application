@@ -6,6 +6,7 @@ import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
 import com.sphy.hotelmanagementapplication.service.OrderService;
+import com.sphy.hotelmanagementapplication.service.UserService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -39,6 +41,9 @@ public class OrderControllerTest {
     @Mock
     OrderService orderService;
 
+    @Mock
+    UserService userService;
+
     @InjectMocks
     OrderController controller;
 
@@ -54,6 +59,10 @@ public class OrderControllerTest {
 
     OrderDTO orderDTO1 = new OrderDTO();
 
+    User admin;
+
+    User client;
+
     MockMvc mockMvc;
 
     Long id2 = 2L;
@@ -61,8 +70,11 @@ public class OrderControllerTest {
     @BeforeEach
     void setUp() throws Exception {
 
+        admin= new User(12L);
+        admin.setRole(User.Role.CLIENT);
+
         Room room = new Room(1L);
-        User client = new User(1L);
+        client = new User(1L);
         order.setId(1L);
         order.setClient(client);
         order.setRoom(room);
@@ -137,14 +149,16 @@ public class OrderControllerTest {
 
 
     @Test
-    void findAllOrders() throws Exception {
+    void findAllOrdersClient() throws Exception {
         // Given
 
         // When
-        when(orderService.getOrders()).thenReturn(ordersDTO);
+        when(userService.getUserFromToken(anyString())).thenReturn(client);
+        when(orderService.getOrdersClient(anyLong())).thenReturn(ordersDTO);
 
         // Return
-        mockMvc.perform(get("/api/orders"))
+        mockMvc.perform(get("/api/orders/client")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer token"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(jsonPath(
@@ -153,7 +167,29 @@ public class OrderControllerTest {
                 ));
 
         // verify that roomService was executed inside findAllRooms() only once
-        verify(orderService, times(1)).getOrders();
+        verify(orderService, times(1)).getOrdersClient(anyLong());
+    }
+
+    @Test
+    void findAllOrdersAdmin() throws Exception {
+        // Given
+
+        // When
+        when(userService.getUserFromToken(anyString())).thenReturn(admin);
+        when(orderService.getOrdersAdmin(anyLong())).thenReturn(ordersDTO);
+
+        // Return
+        mockMvc.perform(get("/api/orders/admin")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer token"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", Matchers.hasSize(2)))
+                .andExpect(jsonPath(
+                        "$[0].id",
+                        Matchers.equalTo(1)
+                ));
+
+        // verify that roomService was executed inside findAllRooms() only once
+        verify(orderService, times(1)).getOrdersAdmin(anyLong());
     }
 
     @Test
@@ -162,10 +198,13 @@ public class OrderControllerTest {
         Long id = 1L;
 
         // When
+        when(userService.getUserFromToken(anyString())).thenReturn(client);
+        when(userService.getUserById(anyLong())).thenReturn(client);
         when(orderService.getOrderById(anyLong())).thenReturn(orderDTO);
 
         // Return
-        mockMvc.perform(get("/api/orderId/{id}",id))
+        mockMvc.perform(get("/api/orderId/{id}",id)
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer token"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(1));
@@ -179,11 +218,14 @@ public class OrderControllerTest {
 
 
         // When
+        when(userService.getUserFromToken(anyString())).thenReturn(client);
+        when(userService.getUserById(anyLong())).thenReturn(client);
         when(orderService.updateOrder(any())).thenReturn(orderDTO);
 
         // Return
         mockMvc.perform(
                         put("/api/order/update")
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer token")
                                 .content(asJsonString(orderDTO))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -202,11 +244,15 @@ public class OrderControllerTest {
         String expected = "Order with id 1 was successfully activated";
 
         // When
+        when(userService.getUserFromToken(anyString())).thenReturn(client);
+        when(userService.getUserById(anyLong())).thenReturn(client);
+        when(orderService.getOrderById(anyLong())).thenReturn(orderDTO);
         when(orderService.enableOrder(any())).thenReturn(true);
 
         // Return
         MvcResult result = mockMvc.perform(
-                        post("/api/order/enable/{id}", 1))
+                        post("/api/order/enable/{id}", 1)
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer token"))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -224,11 +270,15 @@ public class OrderControllerTest {
         String expected = "Order with id 1 was successfully deactivated";
 
         // When
+        when(userService.getUserFromToken(anyString())).thenReturn(client);
+        when(userService.getUserById(anyLong())).thenReturn(client);
+        when(orderService.getOrderById(anyLong())).thenReturn(orderDTO);
         when(orderService.disableOrder(any())).thenReturn(true);
 
         // Return
         MvcResult result = mockMvc.perform(
-                        post("/api/order/disable/{id}", 1))
+                        post("/api/order/disable/{id}", 1)
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer token"))
                 .andExpect(status().isOk())
                 .andReturn();
 
