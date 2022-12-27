@@ -101,8 +101,10 @@ public class UserService implements UserDetailsService {
 
         if (userDTO.getUsername().isBlank() || userDTO.getPassword().isBlank()
                 || userDTO.getEmail().isBlank() || userDTO.getRole().isBlank()){
+
             throw new ApiRequestException("Informations are incomplete");
         }else {
+
             userDTO.setHashedPassword(passwordEncoder.encode(userDTO.getPassword()));
           return   userToUserDTO.converter(userRepository.save(userDTOToUser.converter(userDTO)));
         }
@@ -123,10 +125,7 @@ public class UserService implements UserDetailsService {
         userRepository.findAll().forEach(users::add);
 
         List<UserDTO> usersDTO = new ArrayList<>();
-
-        for (User user : users){
-            usersDTO.add(userToUserDTO.converter(user));
-        }
+        users.forEach(user -> usersDTO.add(userToUserDTO.converter(user)));
 
         return usersDTO;
     }
