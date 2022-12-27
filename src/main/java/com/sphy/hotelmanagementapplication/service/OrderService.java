@@ -73,23 +73,35 @@ public class OrderService {
     }
 
     /***
+     * get all Client's orders
+     * @return a list of all Client's orders
+     * @throws ApiRequestException if no orders are saved
+     */
+    public List<OrderDTO> getOrdersClient(Long id) throws ApiRequestException {
+
+        List<Order> orders = new ArrayList<>(orderRepository.findAllClient(id));
+
+        List<OrderDTO> ordersDTO = new ArrayList<>();
+
+        orders.forEach(order -> ordersDTO.add(orderToOrderDTO.converter(order)));
+
+        return ordersDTO;
+
+    }
+
+    /***
      * get all orders
      * @return a list of all orders
      * @throws ApiRequestException if no orders are saved
      */
-    public List<OrderDTO> getOrders() throws ApiRequestException {
+    public List<OrderDTO> getOrdersAdmin(Long id) throws ApiRequestException {
 
-
-        List<Order> orders = new ArrayList<>();
-
-        orderRepository.findAll().forEach(orders::add);
-
+        List<Order> orders = new ArrayList<>(orderRepository.findAllAdmin(id));
 
         List<OrderDTO> ordersDTO = new ArrayList<>();
 
-        for (Order order : orders) {
-            ordersDTO.add(orderToOrderDTO.converter(order));
-        }
+        orders.forEach(order -> ordersDTO.add(orderToOrderDTO.converter(order)));
+
         return ordersDTO;
 
     }
@@ -168,7 +180,7 @@ public class OrderService {
             throw new ApiRequestException("The order with id: " + orderDTO.getId() + " does not exist");
         }
 
-        int conflict = 0;
+        int conflict;
 
         Optional<Room> room = roomRepository.findById(orderDTO.getRoom());
 

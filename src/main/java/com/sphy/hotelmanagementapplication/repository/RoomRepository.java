@@ -1,6 +1,5 @@
 package com.sphy.hotelmanagementapplication.repository;
 
-import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
