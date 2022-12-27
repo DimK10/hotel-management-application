@@ -2,7 +2,9 @@ package com.sphy.hotelmanagementapplication.controller;
 
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
+import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.OrderService;
+import com.sphy.hotelmanagementapplication.service.RoomService;
 import com.sphy.hotelmanagementapplication.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +24,18 @@ public class OrderController {
 
     private final UserService userService;
 
+    private final RoomService roomService;
 
-    public OrderController(OrderService service, UserService userService) {
+    private final HotelService hotelService;
+
+
+    public OrderController(OrderService service, UserService userService, RoomService roomService, HotelService hotelService) {
         this.service = service;
 
         this.userService = userService;
+        this.roomService = roomService;
+
+        this.hotelService = hotelService;
     }
 
     /***
@@ -73,12 +82,12 @@ public class OrderController {
      * @throws ApiRequestException if there is no order with the given id
      */
     @GetMapping("/api/orderId/{id}")
-    @PreAuthorize("hasAuthority('CLIENT')")
     public OrderDTO findOrderById(@RequestHeader(name = "Authorization") String token, @PathVariable Long id) throws ApiRequestException {
 
         OrderDTO order = service.getOrderById(id);
 
-        if (Objects.equals(userService.getUserById(order.getClient()), userService.getUserFromToken(token))) {
+        if (Objects.equals(userService.getUserById(order.getClient()), userService.getUserFromToken(token))
+        || Objects.equals(id, hotelService.getHotelById(roomService.getRoomById(order.getRoom()).getHotel()).getOwner())) {
 
             return order;
         }else {

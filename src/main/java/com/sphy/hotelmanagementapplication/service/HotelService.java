@@ -229,9 +229,9 @@ public class HotelService {
         hotelDTO.getRooms().clear();
         Hotel hotel = hotelDTOToHotel.converter(hotelDTO);
         hotelRepository.save(hotel);
-        for (RoomDTO roomDTO : roomDTOS) {
-            roomDTO.setHotel(hotel.getId());
-        }
+
+        roomDTOS.forEach(roomDTO -> roomDTO.setHotel(hotel.getId()));
+
         roomService.saveRooms(roomDTOS);
 
         return hotelToHotelDTO.converter(hotelRepository.findById(hotel.getId()).get());
@@ -262,17 +262,17 @@ public class HotelService {
             hotelDTO.getRooms().clear();
             Hotel hotel = hotelDTOToHotel.converter(hotelDTO);
             hotelRepository.save(hotel);
-            for (RoomDTO roomDTO : roomDTOS) {
-                roomDTO.setHotel(hotel.getId());
-            }
+
+            roomDTOS.forEach(roomDTO -> roomDTO.setHotel(hotel.getId()));
+
             roomService.saveRooms(roomDTOS);
             hotels.add(hotelRepository.findById(hotel.getId()).get());
         }
 
         List<HotelDTO> hotelDTOS = new ArrayList<>();
-        for (Hotel hotel : hotels) {
-            hotelDTOS.add(hotelToHotelDTO.converter(hotel));
-        }
+
+        hotels.forEach(hotel -> hotelDTOS.add(hotelToHotelDTO.converter(hotel)));
+
         return hotelDTOS;
     }
 
