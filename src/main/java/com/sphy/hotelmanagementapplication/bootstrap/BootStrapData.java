@@ -102,16 +102,14 @@ public class BootStrapData implements CommandLineRunner {
         amenitySet.add(amenity1);
         amenitySet.add(amenity2);
         amenitySet.add(amenity3);
-        //ksenia.getHotelAmenity().add(amenity1);
-        //ksenia.getHotelAmenity().add(amenity2);
-        //ksenia.getHotelAmenity().add(amenity3);
+
         amenityHotelRepository.saveAll(amenitySet);
 
         ksenia.getHotelAmenity().addAll(amenitySet);
 
         hotelRepository.save(ksenia);
 
-        Order order = new Order(null, LocalDate.of(2007, 12, 03), LocalDate.of(2007, 12, 07), false, client, ena);
+        Order order = new Order(null, LocalDate.of(2007, 12, 3), LocalDate.of(2007, 12, 7), false, client, ena);
         orderRepository.save(order);
 
 
@@ -133,16 +131,10 @@ public class BootStrapData implements CommandLineRunner {
         amenityRset.add(amenityR3);
         amenityRoomRepository.saveAll(amenityRset);
         ena.getRoomAmenity().addAll(amenityRset);
-        //RoomAmenity roomAmenity = new RoomAmenity(RoomAmenity.AmenitiesRoom.BABYHIGHCHAIR);
-        //amenityRoomRepository.save(roomAmenity);
-        //RoomAmenity roomAmenity1 = new RoomAmenity(RoomAmenity.AmenitiesRoom.MINIBAR);
-        //amenityRoomRepository.save(roomAmenity1);
 
-        //ena.getRoomAmenity().add(roomAmenity);
-        //ena.getRoomAmenity().add(roomAmenity1);
         roomRepository.save(ena);
 
-        Order order1 = new Order(null, LocalDate.of(2007, 12, 03), LocalDate.of(2007, 12, 07), false, client, dio);
+        Order order1 = new Order(null, LocalDate.of(2007, 12, 3), LocalDate.of(2007, 12, 7), false, client, dio);
         orderRepository.save(order1);
         dio.getOrders().add(order1);
 
@@ -161,14 +153,6 @@ public class BootStrapData implements CommandLineRunner {
 
         dio.getRoomAmenity().addAll(amenityRset1);
         roomRepository.save(dio);
-        //        orderRepository.save(order);
-
-//        clientRepository.save(client);
-//        adminRepository.save(admin);
-//        roomRepository.save(ena);
-//        roomRepository.save(dio);
-//        hotelRepository.save(ksenia);
-//        orderRepository.save(order);
 
     }
 }

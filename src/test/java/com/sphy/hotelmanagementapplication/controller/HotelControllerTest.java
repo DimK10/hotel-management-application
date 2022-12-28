@@ -322,7 +322,17 @@ public class HotelControllerTest {
                 )
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name")
-                        .value("hotelDTO"));
+                        .value("hotelDTO"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id")
+                        .value(1L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.areaName")
+                        .value("athens"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.disabled")
+                        .value(false))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.stars")
+                        .value(5))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.owner")
+                        .value(1L));
 
 
         verify(hotelService, times(1)).updateHotel(any());
