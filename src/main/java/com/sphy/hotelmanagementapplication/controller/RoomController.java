@@ -1,5 +1,6 @@
 package com.sphy.hotelmanagementapplication.controller;
 
+import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.dto.RoomAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 /***
@@ -46,7 +48,7 @@ public class RoomController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public RoomDTO addRoom(@RequestHeader(name = "Authorization") String token, @RequestBody RoomDTO roomDTO) throws ApiRequestException {
 
-        if (Objects.deepEquals(hotelService.getHotelById(roomDTO.getHotel()).getOwner()
+        if (Objects.equals(hotelService.getHotelById(roomDTO.getHotel()).getOwner()
                 , userService.getUserFromToken(token).getId())) {
 
             return service.saveRoomDTO(roomDTO);

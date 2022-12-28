@@ -4,6 +4,7 @@ import com.sphy.hotelmanagementapplication.domain.Order;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -15,11 +16,12 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends CrudRepository<Order,Long> {
 
-    @Query("SELECT count(o) from orders o where o.room=?3 and" +
-            "((o.checkInDate>?1 and o.checkOutDate>?2 and o.checkInDate<?2) or" +
-            "(o.checkInDate<?1 and o.checkOutDate<?2 and o.checkOutDate>?1) or" +
-            "(o.checkInDate<=?1 and o.checkOutDate>=?2))")
-    int OrderConflict(LocalDate checkIn, LocalDate checkOut, Room room);
+    @Query("SELECT count(o) from orders o where o.room=:id " +
+            "and (o.checkInDate>:checkIn and o.checkOutDate>:checkOut and o.checkInDate<:checkOut) or " +
+            "(o.checkInDate<:checkIn and o.checkOutDate<:checkOut and o.checkOutDate>:checkIn) or" +
+            "(o.checkInDate<=:checkIn and o.checkOutDate>=:checkOut)")
+    int OrderConflict(@Param("checkIn") LocalDate checkIn, @Param("checkOut") LocalDate checkOut, @Param("id") Room room);
+
 
     @Query(value = "select o from orders o where o.client.id = :id")
     List<Order> findAllClient(Long id);

@@ -109,10 +109,15 @@ public class RoomService {
         return roomRepository.countAll(id);
     }
 
+
     /***
      * get all rooms
-     * @return a list of all rooms
-     * @throws ApiRequestException if no room is saved
+     * @param pageNo what page do you wont
+     * @param pageSize how much rooms per page
+     * @param sortBy the page sorted by id, name etc
+     * @param id the id of the hotel owner
+     * @return the rooms of the owner
+     * @throws ApiRequestException if anything wrong happens
      */
     public List<RoomDTO> getRooms(Integer pageNo, Integer pageSize, String sortBy, Long id) throws ApiRequestException {
 

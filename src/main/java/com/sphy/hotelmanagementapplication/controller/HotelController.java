@@ -58,10 +58,20 @@ public class HotelController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<HotelDTO> addHotels(@RequestHeader(name = "Authorization") String token, @RequestBody List<HotelDTO> hotelsDTO) {
 
-        if (Objects.equals(hotelsDTO.get(0).getOwner(), userService.getUserFromToken(token).getId())) {
+        boolean equal = false;
+
+        for (HotelDTO hotelDTO : hotelsDTO) {
+
+            if (!hotelDTO.getOwner().equals(userService.getUserFromToken(token).getId())) {
+                equal = true;
+            }
+        }
+
+        if (equal){
 
             return service.saveHotels(hotelsDTO);
         } else {
+
             throw new RuntimeException("Unauthorized");
         }
     }
@@ -95,9 +105,10 @@ public class HotelController {
             @RequestHeader(name = "Authorization") String token,
             @PathVariable Integer pageNo,
             @PathVariable Integer pageSize,
-            @PathVariable String sortBy,
-            @PathVariable Long userId)
+            @PathVariable String sortBy)
             throws ApiRequestException {
+
+        Long userId = userService.getUserFromToken(token).getId();
 
         if (Objects.equals(userId, userService.getUserFromToken(token).getId())) {
 

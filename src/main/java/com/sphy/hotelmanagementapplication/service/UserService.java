@@ -66,7 +66,13 @@ public class UserService implements UserDetailsService {
 
         String username = jwtUtil.extractUsername(token);
 
-        return userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username);
+
+        if (user == null) {
+            throw new RuntimeException("Something wrong happened");
+        } else {
+            return user;
+        }
     }
 
     /***
@@ -102,7 +108,7 @@ public class UserService implements UserDetailsService {
         if (userDTO.getUsername().isBlank() || userDTO.getPassword().isBlank()
                 || userDTO.getEmail().isBlank() || userDTO.getRole().isBlank()){
 
-            throw new ApiRequestException("Informations are incomplete");
+            throw new ApiRequestException("Information is incomplete");
         }else {
 
             userDTO.setHashedPassword(passwordEncoder.encode(userDTO.getPassword()));
