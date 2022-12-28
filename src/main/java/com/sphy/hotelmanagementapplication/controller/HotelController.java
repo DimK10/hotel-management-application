@@ -58,12 +58,12 @@ public class HotelController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public List<HotelDTO> addHotels(@RequestHeader(name = "Authorization") String token, @RequestBody List<HotelDTO> hotelsDTO) {
 
-        boolean equal = false;
+        boolean equal = true;
 
         for (HotelDTO hotelDTO : hotelsDTO) {
 
             if (!hotelDTO.getOwner().equals(userService.getUserFromToken(token).getId())) {
-                equal = true;
+                equal = false;
             }
         }
 
