@@ -99,7 +99,7 @@ public class HotelController {
      * @return all hotels for a specific user id
      * @throws ApiRequestException if There are no hotels
      */
-    @GetMapping("/api/hotels/{pageNo}/{pageSize}/{sortBy}/{userId}")
+    @GetMapping("/api/hotels/{pageNo}/{pageSize}/{sortBy}")
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
     public ResponseEntity<List<HotelDTO>> findAllRooms(
