@@ -19,7 +19,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /***
- * created by gp , AKd
+ * created by gp
  */
 @RestController
 public class HotelController {
