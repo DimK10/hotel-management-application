@@ -11,7 +11,7 @@ public class BasicSearchDTO {
 
     private LocalDate checkOutDate;
 
-    private String NameOrLocation;
+    private String nameOrLocation;
 
     public BasicSearchDTO() {
     }
@@ -33,11 +33,11 @@ public class BasicSearchDTO {
     }
 
     public String getNameOrLocation() {
-        return NameOrLocation;
+        return nameOrLocation;
     }
 
     public void setNameOrLocation(String nameOrLocation) {
-        NameOrLocation = nameOrLocation;
+        this.nameOrLocation = nameOrLocation;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class BasicSearchDTO {
         return "BasicSearchDTO{" +
                 "checkInDate=" + checkInDate +
                 ", checkOutDate=" + checkOutDate +
-                ", NameOrLocation='" + NameOrLocation + '\'' +
+                ", nameOrLocation='" + nameOrLocation + '\'' +
                 '}';
     }
 }

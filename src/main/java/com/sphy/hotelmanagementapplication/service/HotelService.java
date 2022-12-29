@@ -5,6 +5,7 @@ import com.sphy.hotelmanagementapplication.converter.HotelDTOToHotel;
 import com.sphy.hotelmanagementapplication.converter.HotelToHotelDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.User;
+import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
@@ -293,5 +294,33 @@ public class HotelService {
         return amenitiesHotelDTO;
     }
 
+    /***
+     * returns the hotels that are available in specific dates in a location
+     * or a hotel if it is available at that dates if the search made by the hotel name
+     * @param basicSearchDTO basic search fields (check in date, check out date, location name or hotel name)
+     * @return the hotels than mach with the search
+     */
+    public Set<HotelDTO> getHotelBasicSearch(BasicSearchDTO basicSearchDTO) {
 
+        Set<HotelDTO> hotelDTOS = new HashSet<>();
+
+        if (basicSearchDTO.getCheckInDate() != null && basicSearchDTO.getCheckOutDate() != null
+                && basicSearchDTO.getNameOrLocation() != null) {
+
+            hotelRepository.findByBasicSearch(
+                            basicSearchDTO.getCheckInDate(),
+                            basicSearchDTO.getCheckOutDate(),
+                            basicSearchDTO.getNameOrLocation())
+                    .forEach(hotel -> hotelDTOS
+                            .add(hotelToHotelDTO
+                                    .converter(hotel)));
+
+            return hotelDTOS;
+
+        } else {
+
+            throw new RuntimeException("Something went wrong");
+        }
+
+    }
 }

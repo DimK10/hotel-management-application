@@ -66,6 +66,7 @@ public class SecurityConfig {
 				.authorizeRequests()
 				.antMatchers(HttpMethod.POST, "/api/signup").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/login").permitAll()
+				.antMatchers("/h2-ui/**").permitAll()
 				.anyRequest().authenticated()
 				.and()
 				.exceptionHandling()

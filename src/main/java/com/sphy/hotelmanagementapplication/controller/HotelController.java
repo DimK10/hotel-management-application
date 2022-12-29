@@ -236,9 +236,17 @@ public class HotelController {
         }
     }
 
+    /***
+     * returns the hotels that are available in specific dates in a location
+     * or a hotel if it is available at that dates if the search made by the hotel name
+     * @param token users token
+     * @param basicSearchDTO basic search fields (check in date, check out date, location name or hotel name)
+     * @return the hotels than mach with the search
+     * @throws RuntimeException if this that made the search is not a role client
+     */
     @GetMapping("/api/hotel/basic/search")
     @PreAuthorize("hasAuthority('CLIENT')")
-    public Set<HotelDTO> findHotelBasicSearch(@RequestHeader(name = "Authorization") String token, @RequestBody BasicSearchDTO basicSearchDTO){
+    public Set<HotelDTO> findHotelBasicSearch(@RequestHeader(name = "Authorization") String token, @RequestBody BasicSearchDTO basicSearchDTO)throws RuntimeException{
 
         if (userService.getUserFromToken(token).getRole().equals(User.Role.CLIENT)){
 
