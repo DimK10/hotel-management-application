@@ -2,6 +2,7 @@ package com.sphy.hotelmanagementapplication.controller;
 
 
 import com.sphy.hotelmanagementapplication.domain.User;
+import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
@@ -233,6 +234,20 @@ public class HotelController {
         } else {
             throw new ApiRequestException("Unauthorized");
         }
+    }
+
+    @GetMapping("/api/hotel/basic/search")
+    @PreAuthorize("hasAuthority('CLIENT')")
+    public Set<HotelDTO> findHotelBasicSearch(@RequestHeader(name = "Authorization") String token, @RequestBody BasicSearchDTO basicSearchDTO){
+
+        if (userService.getUserFromToken(token).getRole().equals(User.Role.CLIENT)){
+
+            return service.getHotelBasicSearch(basicSearchDTO);
+        }else {
+
+            throw new RuntimeException("Unauthorized");
+        }
+
     }
 
 
