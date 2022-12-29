@@ -227,28 +227,6 @@ public class HotelControllerTest {
     }
 
     @Test
-    void findAllHotels() throws Exception {
-        // Given
-        User admin = new User(1L);
-        admin.setRole(User.Role.ADMIN);
-
-        // When
-        when(hotelService.getHotels(0,10,"id", 1L)).thenReturn(hotelDTOS1);
-        when(userService.getUserFromToken(anyString())).thenReturn(admin);
-
-        // Return
-        mockMvc.perform(get("/api/hotels/0/10/id/1")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer token"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", Matchers.hasSize(2)))
-                .andExpect(jsonPath(
-                        "$[0].name",
-                        Matchers.equalTo("hotelDTO")
-                ));
-
-    }
-
-    @Test
     @WithMockUser
     void findHotelById() throws Exception {
         // Given

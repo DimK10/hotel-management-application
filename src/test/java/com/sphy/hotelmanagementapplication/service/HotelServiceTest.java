@@ -242,16 +242,19 @@ public class HotelServiceTest {
 
         hotel.getRooms().add(room);
 
+        HotelDTO hotelDTO = new HotelDTO();
+
         Optional<Hotel> hotelOptional = Optional.of(hotel);
 
         // when
         when(hotelRepository.findById(anyLong())).thenReturn(hotelOptional);
+        when(hotelToHotelDTO.converter(any())).thenReturn(hotelDTO);
 
 
         //then
         HotelDTO hotelDTOActual = hotelService.getHotelById(anyLong());
 
-        assertEquals(hotel.getName(), hotelDTOActual.getName());
+        assertEquals(hotelDTO.getName(), hotelDTOActual.getName());
     }
 
     @Test
@@ -265,6 +268,8 @@ public class HotelServiceTest {
         hotel.setStars(4);
         hotel.setAreaName("Athens");
         hotel.setName("hotel");
+
+        HotelDTO hotelDTO = new HotelDTO();
 
 
         Room room1 = new Room();
@@ -285,12 +290,13 @@ public class HotelServiceTest {
 
         // when
         when(hotelRepository.findByName(anyString())).thenReturn(hotelOptional);
+        when(hotelToHotelDTO.converter(any())).thenReturn(hotelDTO);
 
 
         //then
         HotelDTO hotelDTOActual = hotelService.getHotelByName(anyString());
 
-        assertEquals(hotel.getName(), hotelDTOActual.getName());
+        assertEquals(hotelDTO.getName(), hotelDTOActual.getName());
     }
 
     @Test

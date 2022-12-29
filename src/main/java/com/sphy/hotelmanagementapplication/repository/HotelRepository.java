@@ -1,13 +1,18 @@
 package com.sphy.hotelmanagementapplication.repository;
 
 import com.sphy.hotelmanagementapplication.domain.Hotel;
+import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
+import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.EntityGraph.EntityGraphType;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
@@ -22,6 +27,13 @@ public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long> 
 	Optional<Hotel> findHotelByIdAndOwner(@Param("id") Long id, @Param("userId") Long userId);
 
     Optional<Hotel> findByName(String name);
+
+	// fixme produces LazyInitializationException if getRooms is called
+	@EntityGraph(value = "Hotel.rooms", type = EntityGraphType.FETCH)
+	@Query("from Hotel")
+	Set<Hotel> findAllHotels();
+
+	boolean existsByName(String name);
 
 
 	@Query("SELECT count(h) from Hotel h where h.owner.id = :id")
