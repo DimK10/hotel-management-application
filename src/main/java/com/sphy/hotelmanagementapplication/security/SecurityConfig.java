@@ -64,6 +64,8 @@ public class SecurityConfig {
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 				.authorizeRequests()
+				.antMatchers(HttpMethod.GET, "/**").permitAll()
+				.antMatchers(HttpMethod.POST, "/**").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/signup").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/login").permitAll()
 				.antMatchers("/h2-ui/**").permitAll()
