@@ -1,25 +1,33 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+
 import com.sphy.hotelmanagementapplication.domain.User;
+import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.UserService;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RestController;
 
 /***
- * created by gp , AKd
+ * created by gp
  */
 @RestController
 public class HotelController {
@@ -98,10 +106,10 @@ public class HotelController {
      * @return all hotels for a specific user id
      * @throws ApiRequestException if There are no hotels
      */
-    @GetMapping("/api/hotels/{pageNo}/{pageSize}/{sortBy}/{userId}")
+    @GetMapping("/api/hotels/{pageNo}/{pageSize}/{sortBy}")
     @PreAuthorize("hasAuthority('ADMIN')")
     @Transactional
-    public ResponseEntity<List<HotelDTO>> findAllRooms(
+    public ResponseEntity<List<HotelDTO>> findAllHotelsByPage(
             @RequestHeader(name = "Authorization") String token,
             @PathVariable Integer pageNo,
             @PathVariable Integer pageSize,
@@ -233,6 +241,28 @@ public class HotelController {
         } else {
             throw new ApiRequestException("Unauthorized");
         }
+    }
+
+    /***
+     * returns the hotels that are available in specific dates in a location
+     * or a hotel if it is available at that dates if the search made by the hotel name
+     * @param token users token
+     * @param basicSearchDTO basic search fields (check in date, check out date, location name or hotel name)
+     * @return the hotels than mach with the search
+     * @throws RuntimeException if this that made the search is not a role client
+     */
+    @GetMapping("/api/hotel/basic/search")
+    @PreAuthorize("hasAuthority('CLIENT')")
+    public Set<HotelDTO> findHotelBasicSearch(@RequestHeader(name = "Authorization") String token, @RequestBody BasicSearchDTO basicSearchDTO)throws RuntimeException{
+
+        if (userService.getUserFromToken(token).getRole().equals(User.Role.CLIENT)){
+
+            return service.getHotelBasicSearch(basicSearchDTO);
+        }else {
+
+            throw new RuntimeException("Unauthorized");
+        }
+
     }
 
 

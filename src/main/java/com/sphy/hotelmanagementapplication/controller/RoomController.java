@@ -1,6 +1,5 @@
 package com.sphy.hotelmanagementapplication.controller;
 
-import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.dto.RoomAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
@@ -14,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -202,6 +202,7 @@ public class RoomController {
     }
 
     /***
+     * created by AKd
      * Retrieves a set of RoomAmenity for the room with the given ID
      * @param roomId The ID of the room for which to retrieve amenities
      * @return A set of RoomAmenity representing the amenities of the room with the given ID

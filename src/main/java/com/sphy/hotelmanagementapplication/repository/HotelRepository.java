@@ -1,6 +1,8 @@
 package com.sphy.hotelmanagementapplication.repository;
 
 import com.sphy.hotelmanagementapplication.domain.Hotel;
+import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
+import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -10,6 +12,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import javax.xml.crypto.Data;
+import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
 
@@ -32,15 +36,19 @@ public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long> 
 	boolean existsByName(String name);
 
 
-
-	//@Query("select h.hotelAmenity from Hotel h where h.id=id")
-	//Set<HotelAmenity> findByHotelID(long id);
-
-
 	@Query("SELECT count(h) from Hotel h where h.owner.id = :id")
 	int countAll(@Param("id") Long id);
 
 	@Query(value = "select h from Hotel h where h.owner.id = :id",
 	countQuery = "select count (h) from  Hotel h where h.owner.id = :id")
 	Page<Hotel> findAllHotelsByOwner(@Param("id") Long id, Pageable pageable);
+
+
+	@Query(value = "select h from Hotel h inner join rooms r on h.id = r.hotel.id " +
+            "inner join orders o on r.id = o.room.id " +
+            "where (h.name = :NameOrLocation or h.areaName = :NameOrLocation) and " +
+            " :checkIn not between o.checkInDate and o.checkOutDate and" +
+            " :checkOut not between o.checkInDate and o.checkOutDate")
+	Set<Hotel> findByBasicSearch(@Param("checkIn")LocalDate checkIn, @Param("checkOut")LocalDate checkOut
+	, @Param("NameOrLocation") String NameOrLocation);
 }

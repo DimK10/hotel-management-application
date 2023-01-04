@@ -3,7 +3,10 @@ package com.sphy.hotelmanagementapplication.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sphy.hotelmanagementapplication.configuration.TestAppAdminConfiguration;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
+import com.sphy.hotelmanagementapplication.domain.Order;
+import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.domain.User;
+import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.service.HotelService;
@@ -24,9 +27,11 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -222,7 +227,7 @@ public class HotelControllerTest {
     }
 
     @Test
-    void findAllHotels() throws Exception {
+    void findAllHotelsByPage() throws Exception {
         // Given
         User admin = new User(1L);
         admin.setRole(User.Role.ADMIN);
@@ -232,7 +237,7 @@ public class HotelControllerTest {
         when(userService.getUserFromToken(anyString())).thenReturn(admin);
 
         // Return
-        mockMvc.perform(get("/api/hotels/0/10/id/1")
+        mockMvc.perform(get("/api/hotels/0/10/id")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer token"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(2)))
@@ -400,6 +405,72 @@ public class HotelControllerTest {
         assertEquals(expected, actual);
 
         verify(hotelService, times(1)).disableHotel(any());
+
+    }
+
+    @Test
+    void findHotelBasicSearch() throws Exception{
+
+        //given
+        User client = new User(10L);
+
+        client.setRole(User.Role.CLIENT);
+
+        Set<Hotel> hotels1 = new HashSet<>();
+
+        Hotel hotel = new Hotel(1L);
+
+        hotel.setName("ksenia");
+        hotel.setAreaName("athens");
+
+        Room room = new Room(2L);
+
+        Order order = new Order(3L, LocalDate.of(2017, 12, 12),
+                LocalDate.of(2017, 12, 20),
+                false, new User(5L), room);
+
+        room.getOrders().add(order);
+
+        hotel.getRooms().add(room);
+
+        hotels1.add(hotel);
+
+        Set<HotelDTO> hotel1DTOS = new HashSet<>();
+
+        HotelDTO hotelDTO = new HotelDTO(1L);
+
+        hotelDTO.setName("ksenia");
+        hotelDTO.setAreaName("athens");
+
+        hotel1DTOS.add(hotelDTO);
+
+        BasicSearchDTO basicSearchDTO1 = new BasicSearchDTO();
+
+//        basicSearchDTO1.setCheckInDate(LocalDate.of(2019, 12, 13));
+//        basicSearchDTO1.setCheckOutDate(LocalDate.of(2019, 12, 20));
+//        basicSearchDTO1.setNameOrLocation("athens");
+
+        BasicSearchDTO basicSearchDTO2 = new BasicSearchDTO();
+
+        basicSearchDTO2.setCheckInDate(LocalDate.of(2019, 12, 13));
+        basicSearchDTO2.setCheckOutDate(LocalDate.of(2019, 12, 20));
+        basicSearchDTO2.setNameOrLocation("ksenia");
+
+        //when
+        when(userService.getUserFromToken(anyString())).thenReturn(client);
+        when(hotelService.getHotelBasicSearch(any())).thenReturn(hotel1DTOS);
+
+        //then
+
+         mockMvc.perform(
+                        get("/api/hotel/basic/search")
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer token")
+                                .content(asJsonString(basicSearchDTO1))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                ;
+
 
     }
 
