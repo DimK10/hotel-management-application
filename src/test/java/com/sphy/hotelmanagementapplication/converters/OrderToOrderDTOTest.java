@@ -6,18 +6,18 @@ import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
-import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
-import com.sphy.hotelmanagementapplication.repositories.UserRepository;
+import com.sphy.hotelmanagementapplication.repository.RoomRepository;
+import com.sphy.hotelmanagementapplication.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
 import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -34,7 +34,7 @@ public class OrderToOrderDTOTest {
     RoomRepository roomRepository;
 
     @Mock
-	UserRepository userRepository;
+    UserRepository userRepository;
 
 
 

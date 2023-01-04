@@ -4,10 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sphy.hotelmanagementapplication.handler.RestError;
 import com.sphy.hotelmanagementapplication.security.JwtUtil;
 import com.sphy.hotelmanagementapplication.service.UserService;
-import io.jsonwebtoken.ExpiredJwtException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -81,19 +79,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             }
 
             filterChain.doFilter(request, response);
-        } catch (ExpiredJwtException ex) {
-
-            log.error("Expired Jwt exception: ", ex);
-
-            RestError re = new RestError(HttpStatus.UNAUTHORIZED.toString(), "Token expired");
-            response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            OutputStream responseStream = response.getOutputStream();
-            ObjectMapper mapper = new ObjectMapper();
-            mapper.writeValue(responseStream, re);
-            responseStream.flush();
-            exceptionResolver.resolveException(request, response, null, ex);
-
         } catch (Exception e) {
 
             log.error("Jwt Filter exception: ", e);

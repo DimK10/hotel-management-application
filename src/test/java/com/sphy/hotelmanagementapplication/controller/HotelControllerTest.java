@@ -3,7 +3,10 @@ package com.sphy.hotelmanagementapplication.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sphy.hotelmanagementapplication.configuration.TestAppAdminConfiguration;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
+import com.sphy.hotelmanagementapplication.domain.Order;
+import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.domain.User;
+import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.service.HotelService;
@@ -24,9 +27,11 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -86,7 +91,9 @@ public class HotelControllerTest {
 
         RoomDTO room1 = new RoomDTO();
         room1.setId(1L);
+
         HotelDTO hotelDTO1 = new HotelDTO();
+
         hotelDTO1.setId(1L);
         hotelDTO1.setName("hotelDTO1");
         hotelDTO1.setStars(3);
@@ -107,14 +114,22 @@ public class HotelControllerTest {
     void countHotels() throws Exception {
 
         //given
+        HotelDTO hotelDTO = new HotelDTO();
+        hotelDTO.setId(1L);
+
+        User admin = new User(1L);
+        admin.setRole(User.Role.ADMIN);
+
+        hotelDTO.setOwner(1L);
 
         //when
         when(hotelService.countHotels(anyLong())).thenReturn(1);
+        when(userService.getUserFromToken(anyString())).thenReturn(admin);
 
         //then
         mockMvc.perform(
-                        get("/api/hotels/quantity/{userId}",1L))
-
+                        get("/api/hotels/quantity/{userId}",1L)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer token"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("@")
                         .value(1));
@@ -123,13 +138,16 @@ public class HotelControllerTest {
     @Test
     void addHotel() throws Exception {
         // Given
+        User admin = new User(1L);
+        admin.setRole(User.Role.ADMIN);
+
         RoomDTO room = new RoomDTO();
         room.setId(1L);
         HotelDTO hotelDTO = new HotelDTO();
         hotelDTO.setId(1L);
         hotelDTO.setName("hotelDTO");
         hotelDTO.setStars(3);
-        hotelDTO.setOwner(1L);
+        hotelDTO.setOwner(admin.getId());
         hotelDTO.setRooms(new HashSet<>());
         hotelDTO.setAreaName("Athens");
         hotelDTO.setDisabled(false);
@@ -138,11 +156,13 @@ public class HotelControllerTest {
 
         // When
         when(hotelService.saveHotelDTO(any())).thenReturn(hotelDTO);
+        when(userService.getUserFromToken(anyString())).thenReturn(admin);
 
 
         // Return
         mockMvc.perform(
                         post("/api/hotel/create")
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer token")
                                 .content(asJsonString(hotelDTO))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -176,15 +196,18 @@ public class HotelControllerTest {
     @Test
     void addHotels() throws Exception {
         // Given
-
+        User admin = new User(1L);
+        admin.setRole(User.Role.ADMIN);
 
 
         // When
         when(hotelService.saveHotels(any())).thenReturn(hotelDTOS1);
+        when(userService.getUserFromToken(anyString())).thenReturn(admin);
 
         // Return
         mockMvc.perform(
                         post("/api/hotels/create")
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer token")
                                 .content(asJsonString(hotelDTOS1))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
@@ -204,14 +227,18 @@ public class HotelControllerTest {
     }
 
     @Test
-    void findAllHotels() throws Exception {
+    void findAllHotelsByPage() throws Exception {
         // Given
+        User admin = new User(1L);
+        admin.setRole(User.Role.ADMIN);
 
         // When
         when(hotelService.getHotels(0,10,"id", 1L)).thenReturn(hotelDTOS1);
+        when(userService.getUserFromToken(anyString())).thenReturn(admin);
 
         // Return
-        mockMvc.perform(get("/api/hotels/0/10/id/1"))
+        mockMvc.perform(get("/api/hotels/0/10/id")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer token"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(jsonPath(
@@ -270,11 +297,14 @@ public class HotelControllerTest {
     @Test
     void updateHotel() throws Exception {
         // Given
+        User admin = new User(1L);
+        admin.setRole(User.Role.ADMIN);
+
         HotelDTO hotelDTO = new HotelDTO();
         hotelDTO.setId(1L);
         hotelDTO.setName("hotelDTO");
         hotelDTO.setDisabled(false);
-        hotelDTO.setOwner(1L);
+        hotelDTO.setOwner(admin.getId());
         hotelDTO.setStars(5);
         hotelDTO.setAreaName("athens");
 
@@ -284,17 +314,30 @@ public class HotelControllerTest {
 
         // When
         when(hotelService.updateHotel(any())).thenReturn(hotelDTO);
+        when(userService.getUserFromToken(anyString())).thenReturn(admin);
+
 
         // Return
         mockMvc.perform(
                         put("/api/hotel/update")
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer token")
                                 .content(asJsonString(hotelDTO))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON)
                 )
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name")
-                        .value("hotelDTO"));
+                        .value("hotelDTO"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id")
+                        .value(1L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.areaName")
+                        .value("athens"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.disabled")
+                        .value(false))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.stars")
+                        .value(5))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.owner")
+                        .value(1L));
 
 
         verify(hotelService, times(1)).updateHotel(any());
@@ -303,14 +346,24 @@ public class HotelControllerTest {
     @Test
     void enableHotel() throws Exception {
         // Given
+        User admin = new User(1L);
+        admin.setRole(User.Role.ADMIN);
+
+        HotelDTO hotelDTO = new HotelDTO();
+        hotelDTO.setId(1L);
+        hotelDTO.setOwner(admin.getId());
+
         String expected = "Hotel with id 1 was successfully activated";
 
         // When
         when(hotelService.enableHotel(any())).thenReturn(true);
+        when(userService.getUserFromToken(anyString())).thenReturn(admin);
+        when(hotelService.getHotelById(any())).thenReturn(hotelDTO);
 
         // Return
         MvcResult result = mockMvc.perform(
-                        post("/api/hotel/enable/{id}", 1))
+                        post("/api/hotel/enable/{id}", 1)
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer token"))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -325,14 +378,25 @@ public class HotelControllerTest {
     @Test
     void disableHotel() throws Exception {
         // Given
+
+        User admin = new User(1L);
+        admin.setRole(User.Role.ADMIN);
+
+        HotelDTO hotelDTO = new HotelDTO();
+        hotelDTO.setId(1L);
+        hotelDTO.setOwner(admin.getId());
+
         String expected = "Hotel with id 1 was successfully deactivated";
 
         // When
         when(hotelService.disableHotel(any())).thenReturn(true);
+        when(userService.getUserFromToken(anyString())).thenReturn(admin);
+        when(hotelService.getHotelById(any())).thenReturn(hotelDTO);
 
         // Return
         MvcResult result = mockMvc.perform(
-                        post("/api/hotel/disable/{id}", 1))
+                        post("/api/hotel/disable/{id}", 1)
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer token"))
                 .andExpect(status().isOk())
                 .andReturn();
 
@@ -341,6 +405,72 @@ public class HotelControllerTest {
         assertEquals(expected, actual);
 
         verify(hotelService, times(1)).disableHotel(any());
+
+    }
+
+    @Test
+    void findHotelBasicSearch() throws Exception{
+
+        //given
+        User client = new User(10L);
+
+        client.setRole(User.Role.CLIENT);
+
+        Set<Hotel> hotels1 = new HashSet<>();
+
+        Hotel hotel = new Hotel(1L);
+
+        hotel.setName("ksenia");
+        hotel.setAreaName("athens");
+
+        Room room = new Room(2L);
+
+        Order order = new Order(3L, LocalDate.of(2017, 12, 12),
+                LocalDate.of(2017, 12, 20),
+                false, new User(5L), room);
+
+        room.getOrders().add(order);
+
+        hotel.getRooms().add(room);
+
+        hotels1.add(hotel);
+
+        Set<HotelDTO> hotel1DTOS = new HashSet<>();
+
+        HotelDTO hotelDTO = new HotelDTO(1L);
+
+        hotelDTO.setName("ksenia");
+        hotelDTO.setAreaName("athens");
+
+        hotel1DTOS.add(hotelDTO);
+
+        BasicSearchDTO basicSearchDTO1 = new BasicSearchDTO();
+
+//        basicSearchDTO1.setCheckInDate(LocalDate.of(2019, 12, 13));
+//        basicSearchDTO1.setCheckOutDate(LocalDate.of(2019, 12, 20));
+//        basicSearchDTO1.setNameOrLocation("athens");
+
+        BasicSearchDTO basicSearchDTO2 = new BasicSearchDTO();
+
+        basicSearchDTO2.setCheckInDate(LocalDate.of(2019, 12, 13));
+        basicSearchDTO2.setCheckOutDate(LocalDate.of(2019, 12, 20));
+        basicSearchDTO2.setNameOrLocation("ksenia");
+
+        //when
+        when(userService.getUserFromToken(anyString())).thenReturn(client);
+        when(hotelService.getHotelBasicSearch(any())).thenReturn(hotel1DTOS);
+
+        //then
+
+         mockMvc.perform(
+                        get("/api/hotel/basic/search")
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer token")
+                                .content(asJsonString(basicSearchDTO1))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                ;
+
 
     }
 

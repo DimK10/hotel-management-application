@@ -7,10 +7,9 @@ import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.domain.User.Role;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
-import com.sphy.hotelmanagementapplication.repositories.OrderRepository;
-import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
-import com.sphy.hotelmanagementapplication.repositories.UserRepository;
-import org.apache.commons.lang3.builder.EqualsBuilder;
+import com.sphy.hotelmanagementapplication.repository.OrderRepository;
+import com.sphy.hotelmanagementapplication.repository.RoomRepository;
+import com.sphy.hotelmanagementapplication.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -128,18 +128,37 @@ public class OrderServiceTest {
     }
 
     @Test
-    void getOrders() throws Exception {
+    void getOrdersClient() throws Exception {
         // given
 
 
+
         // when
-        when(orderRepository.findAll()).thenReturn(orders);
+        when(orderRepository.findAllClient(anyLong())).thenReturn(orders);
         when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(admin));
         when(userRepository.findById(2L)).thenReturn(Optional.ofNullable(client));
 
 
         //then
-        List<OrderDTO> orderDTOList = orderService.getOrders();
+        List<OrderDTO> orderDTOList = orderService.getOrdersClient(id2);
+
+        assertEquals(2, orderDTOList.size());
+        assertArrayEquals(ordersDTO.toArray(), orderDTOList.toArray());
+    }
+
+    @Test
+    void getOrdersAdmin() throws Exception {
+        // given
+
+
+        // when
+        when(orderRepository.findAllAdmin(anyLong())).thenReturn(orders);
+        when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(admin));
+        when(userRepository.findById(2L)).thenReturn(Optional.ofNullable(client));
+
+
+        //then
+        List<OrderDTO> orderDTOList = orderService.getOrdersAdmin(id1);
 
         assertEquals(2, orderDTOList.size());
         assertArrayEquals(ordersDTO.toArray(), orderDTOList.toArray());
@@ -172,7 +191,6 @@ public class OrderServiceTest {
         Optional<Order> orderOptional = Optional.of(order2);
 
         // when
-        when(orderRepository.existsById(anyLong())).thenReturn(true);
         when(orderRepository.findById(anyLong())).thenReturn(orderOptional);
 
         //then
@@ -192,7 +210,6 @@ public class OrderServiceTest {
         Optional<Order> orderOptional = Optional.of(order2);
 
         // when
-        when(orderRepository.existsById(anyLong())).thenReturn(true);
         when(orderRepository.findById(anyLong())).thenReturn(orderOptional);
 
 

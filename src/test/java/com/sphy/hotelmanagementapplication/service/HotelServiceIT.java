@@ -3,7 +3,7 @@ package com.sphy.hotelmanagementapplication.service;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
-import com.sphy.hotelmanagementapplication.repositories.HotelRepository;
+import com.sphy.hotelmanagementapplication.repository.HotelRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

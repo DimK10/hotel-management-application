@@ -2,14 +2,15 @@ package com.sphy.hotelmanagementapplication.service;
 
 import com.sphy.hotelmanagementapplication.converter.OrderDTOToOrder;
 import com.sphy.hotelmanagementapplication.converter.OrderToOrderDTO;
-import com.sphy.hotelmanagementapplication.domain.*;
+import com.sphy.hotelmanagementapplication.domain.Order;
+import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
-import com.sphy.hotelmanagementapplication.repositories.OrderRepository;
-import com.sphy.hotelmanagementapplication.repositories.RoomRepository;
-import com.sphy.hotelmanagementapplication.repositories.UserRepository;
-
+import com.sphy.hotelmanagementapplication.repository.OrderRepository;
+import com.sphy.hotelmanagementapplication.repository.RoomRepository;
+import com.sphy.hotelmanagementapplication.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -47,29 +48,45 @@ public class OrderService {
      * @throws ApiRequestException when there is no client or the client does not exist
      */
     public OrderDTO saveOrderDTO(OrderDTO orderDTO) throws ApiRequestException {
-        boolean doesNotExist = false;
 
         Optional<Room> room = roomRepository.findById(orderDTO.getRoom());
         Optional<User> client = userRepository.findById(orderDTO.getClient());
 
         Order order = orderDTOToOrder.converter(orderDTO);
 
-        if (client.isEmpty()){
+        if (client.isEmpty()) {
             throw new ApiRequestException("There is no client or the clint dies not exist in the order");
         }
-        if (!room.isPresent()){
+        if (room.isEmpty()) {
             throw new ApiRequestException("There is no room or the room does not exist in the order");
         }
 
-            int conflict = 0;
+        int conflict;
 
-            conflict = orderRepository.OrderConflict(order.getCheckInDate(),order.getCheckOutDate(),room.get());
+        conflict = orderRepository.OrderConflict(order.getCheckInDate(), order.getCheckOutDate(), room.get());
 
-            if (conflict == 0){
-                return orderToOrderDTO.converter(orderRepository.save(order));
-            }else {
-                throw new ApiExceptionFront("The room isn't available on the desirable dates");
-            }
+        if (conflict == 0) {
+            return orderToOrderDTO.converter(orderRepository.save(order));
+        } else {
+            throw new ApiExceptionFront("The room isn't available on the desirable dates");
+        }
+    }
+
+    /***
+     * get all Client's orders
+     * @return a list of all Client's orders
+     * @throws ApiRequestException if no orders are saved
+     */
+    public List<OrderDTO> getOrdersClient(Long id) throws ApiRequestException {
+
+        List<Order> orders = new ArrayList<>(orderRepository.findAllClient(id));
+
+        List<OrderDTO> ordersDTO = new ArrayList<>();
+
+        orders.forEach(order -> ordersDTO.add(orderToOrderDTO.converter(order)));
+
+        return ordersDTO;
+
     }
 
     /***
@@ -77,19 +94,14 @@ public class OrderService {
      * @return a list of all orders
      * @throws ApiRequestException if no orders are saved
      */
-    public List<OrderDTO> getOrders() throws ApiRequestException {
+    public List<OrderDTO> getOrdersAdmin(Long id) throws ApiRequestException {
 
-
-        List<Order> orders = new ArrayList<>();
-
-        orderRepository.findAll().forEach(orders::add);
-
+        List<Order> orders = new ArrayList<>(orderRepository.findAllAdmin(id));
 
         List<OrderDTO> ordersDTO = new ArrayList<>();
 
-        for (Order order : orders) {
-            ordersDTO.add(orderToOrderDTO.converter(order));
-        }
+        orders.forEach(order -> ordersDTO.add(orderToOrderDTO.converter(order)));
+
         return ordersDTO;
 
     }
@@ -102,13 +114,13 @@ public class OrderService {
      */
     public OrderDTO getOrderById(Long id) throws ApiRequestException {
         Optional<Order> order = orderRepository.findById(id);
-        if (order.isEmpty()){
+
+        if (order.isEmpty()) {
             throw new ApiRequestException("There is now order with id: " + id);
-        }else {
-            return orderToOrderDTO.converter(orderRepository.findById(id).get());
+        } else {
+            return orderToOrderDTO.converter(order.get());
         }
     }
-
 
 
     /***
@@ -118,14 +130,16 @@ public class OrderService {
      * @throws ApiExceptionFront if the order does not exist or is already activated
      */
     public boolean enableOrder(Long id) throws ApiExceptionFront {
-        if (!orderRepository.existsById(id)) {
-            throw  new ApiExceptionFront("The order with id: " + id + " does not exist");
-        }else if (!orderRepository.findById(id).get().isCanceled()){
+
+        Optional<Order> order = orderRepository.findById(id);
+
+        if (order.isEmpty()) {
+            throw new ApiExceptionFront("The order with id: " + id + " does not exist");
+        } else if (!order.get().isCanceled()) {
             throw new ApiExceptionFront("The order with id: " + id + " is already activated");
-        }else {
-            Order order = orderRepository.findById(id).get();
-            order.setCanceled(false);
-            orderRepository.save(order);
+        } else {
+            order.get().setCanceled(false);
+            orderRepository.save(order.get());
             return true;
         }
     }
@@ -138,14 +152,16 @@ public class OrderService {
      */
     public boolean disableOrder(Long id) throws ApiExceptionFront {
 
-        if (!orderRepository.existsById(id)) {
+        Optional<Order> order = orderRepository.findById(id);
+
+
+        if (order.isEmpty()) {
             throw new ApiExceptionFront("The order with id:" + id + " does not exist");
-        }else if (orderRepository.findById(id).get().isCanceled() ){
+        } else if (order.get().isCanceled()) {
             throw new ApiExceptionFront("The order with id: " + id + "is already canceled");
-        }else {
-            Order order = orderRepository.findById(id).get();
-            order.setCanceled(true);
-            orderRepository.save(order);
+        } else {
+            order.get().setCanceled(true);
+            orderRepository.save(order.get());
             return true;
         }
     }
@@ -157,39 +173,34 @@ public class OrderService {
      * @throws ApiRequestException if the order that is going to update is not exists
      */
     public OrderDTO updateOrder(OrderDTO orderDTO) throws ApiRequestException {
-        if (orderDTO.getId() == null){
-            throw new ApiRequestException("The order id can't be null");
-        }
-        Optional<Order> order = orderRepository.findById(orderDTO.getId());
 
-        if (order.isPresent()){
-            Order existingOrder = orderRepository.findById(orderDTO.getId()).orElse(null);
+        Optional<Order> orderOptional = orderRepository.findById(orderDTO.getId());
 
-            int conflict = 0;
-
-            conflict = orderRepository.OrderConflict(order.get().getCheckInDate(),order.get().getCheckOutDate(),order.get().getRoom());
-
-            if (conflict == 0){
-                existingOrder.setCheckOutDate(orderDTO.getCheckOutDate());
-                existingOrder.setCheckInDate(orderDTO.getCheckInDate());
-                existingOrder.setCanceled(orderDTO.isCanceled());
-                orderRepository.save(order.get());
-            }else {
-                throw new ApiExceptionFront("The room isn't available on the desirable dates");
-            }
-
-//            existingOrder.setClient(clientRepository.findById(orderDTO.getClient()).get());
-//            existingOrder.setRoom(roomRepository.findById(orderDTO.getRoom()).get());
-//            Optional<Room> room = roomRepository.findById(orderDTO.getRoom());
-//            if (room.isPresent()){
-//                room.get().getOrders().add(existingOrder);
-//            }
-
-            return orderToOrderDTO.converter(orderRepository.save(existingOrder));
-        }else{
-
+        if (orderOptional.isEmpty()) {
             throw new ApiRequestException("The order with id: " + orderDTO.getId() + " does not exist");
         }
+
+        int conflict;
+
+        Optional<Room> room = roomRepository.findById(orderDTO.getRoom());
+
+        if (room.isEmpty()){
+            throw new RuntimeException("The room can't be empty");
+        }
+
+        conflict = orderRepository.OrderConflict(orderDTO.getCheckInDate(),
+                orderDTO.getCheckOutDate(), room.get());
+
+        if (conflict == 0) {
+            orderOptional.get().setCheckOutDate(orderDTO.getCheckOutDate());
+            orderOptional.get().setCheckInDate(orderDTO.getCheckInDate());
+            orderOptional.get().setCanceled(orderDTO.isCanceled());
+        } else {
+            throw new ApiExceptionFront("The room isn't available on the desirable dates");
+        }
+
+        return orderToOrderDTO.converter(orderRepository.save(orderOptional.get()));
+
     }
 }
 

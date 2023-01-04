@@ -1,5 +1,6 @@
 package com.sphy.hotelmanagementapplication.converters;
 
+import com.sphy.hotelmanagementapplication.converter.HotelAmenityToHotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.converter.HotelToHotelDTO;
 import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
@@ -28,6 +29,9 @@ public class HotelToHotelDTOTest {
 
 	@Mock
 	RoomToRoomDTO roomToRoomDTO;
+
+	@Mock
+	HotelAmenityToHotelAmenityDTO hotelAmenityToHotelAmenityDTO;
 
 	Hotel hotel = new Hotel();
 
@@ -58,7 +62,7 @@ public class HotelToHotelDTOTest {
 		hotelDTO.getRooms().add(roomDTO);
 		hotelDTO.setAddress("address");
 
-		hotelToHotelDTO = new HotelToHotelDTO(roomToRoomDTO);
+		hotelToHotelDTO = new HotelToHotelDTO(roomToRoomDTO, hotelAmenityToHotelAmenityDTO);
 	}
 
 	@Test

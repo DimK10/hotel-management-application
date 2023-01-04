@@ -5,7 +5,7 @@ import com.sphy.hotelmanagementapplication.converter.UserToUserDTO;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.UserDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
-import com.sphy.hotelmanagementapplication.repositories.UserRepository;
+import com.sphy.hotelmanagementapplication.repository.UserRepository;
 import com.sphy.hotelmanagementapplication.security.JwtUtil;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -66,7 +66,13 @@ public class UserService implements UserDetailsService {
 
         String username = jwtUtil.extractUsername(token);
 
-        return userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username);
+
+        if (user == null) {
+            throw new RuntimeException("Something wrong happened");
+        } else {
+            return user;
+        }
     }
 
     /***
@@ -101,8 +107,10 @@ public class UserService implements UserDetailsService {
 
         if (userDTO.getUsername().isBlank() || userDTO.getPassword().isBlank()
                 || userDTO.getEmail().isBlank() || userDTO.getRole().isBlank()){
-            throw new ApiRequestException("Informations are incomplete");
+
+            throw new ApiRequestException("Information is incomplete");
         }else {
+
             userDTO.setHashedPassword(passwordEncoder.encode(userDTO.getPassword()));
           return   userToUserDTO.converter(userRepository.save(userDTOToUser.converter(userDTO)));
         }
@@ -123,10 +131,7 @@ public class UserService implements UserDetailsService {
         userRepository.findAll().forEach(users::add);
 
         List<UserDTO> usersDTO = new ArrayList<>();
-
-        for (User user : users){
-            usersDTO.add(userToUserDTO.converter(user));
-        }
+        users.forEach(user -> usersDTO.add(userToUserDTO.converter(user)));
 
         return usersDTO;
     }

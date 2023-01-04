@@ -7,7 +7,6 @@ const { setAlert, removeAlert } = alertSlice.actions;
 export const setAlertAction =
   (msg, alertType, timeout = 7000) =>
   (dispatch) => {
-
     const id = uuidv4();
 
     const payload = {

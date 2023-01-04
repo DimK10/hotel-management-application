@@ -1,10 +1,9 @@
 package com.sphy.hotelmanagementapplication.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class ReactAppController {

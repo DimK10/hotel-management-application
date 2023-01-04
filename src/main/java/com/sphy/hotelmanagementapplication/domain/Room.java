@@ -4,15 +4,12 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.transaction.annotation.Transactional;
-
 /***
  * created by gp
  */
-@Transactional
 @Entity(name = "rooms")
 @DiscriminatorValue("rooms")
+@AttributeOverride(name = "id", column = @Column(name = "room_id")) // created by AKd
 public class Room extends BaseEntity {
 
 
@@ -33,7 +30,14 @@ public class Room extends BaseEntity {
 
     private int capacity; // The capacity of people in the room
 
+	@ManyToMany(fetch = FetchType.EAGER)  // created by AKd
+	@JoinTable(  // created by AKd
+			name = "room_amenity",  // created by AKd
+			joinColumns = @JoinColumn(name = "room_id"),  // created by AKd
+			inverseJoinColumns = @JoinColumn(name = "RAmenity_id") // created by AKd,
 
+	)
+	private Set<RoomAmenity> roomAmenity = new HashSet<>();// created by AKd
 
     public Room() {
     }
@@ -118,7 +122,18 @@ public class Room extends BaseEntity {
         this.capacity = capacity;
     }
 
-    @Override
+	// created by AKd
+	public Set<RoomAmenity> getRoomAmenity(){
+		return roomAmenity;
+	}
+
+	// created by AKd
+	public void setRoomAmenity(Set<RoomAmenity> roomAmenity) {
+		this.roomAmenity = roomAmenity;
+	}
+
+
+	@Override
     public boolean equals(Object o) {
         return super.equals(o);
 
