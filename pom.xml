@@ -179,7 +179,7 @@
 						<artifactId>frontend-maven-plugin</artifactId>
 						<version>${frontend-maven-plugin.version}</version>
 						<configuration>
-							<workingDirectory>userB</workingDirectory>
+							<workingDirectory>client</workingDirectory>
 							<nodeVersion>${node.version}</nodeVersion>
 							<downloadRoot>${node.url}</downloadRoot>
 						</configuration>
