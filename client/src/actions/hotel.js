@@ -10,6 +10,7 @@ const {
     getHotelById,
     getCountOfHotels,
     createNewHotel,
+    updateHotel,
     hotelError,
 } = hotelSlice.actions;
 
@@ -24,7 +25,7 @@ export const getAllHotelsByPage = (pageNo, pageSize, sortBy, userId) => async (d
     }
 
     try {
-        const res = await axios.get(`/api/hotels/${pageNo}/${pageSize}/${sortBy}/${userId}`);
+        const res = await axios.get(`/api/hotels/${pageNo}/${pageSize}/${sortBy}/`);
 
         // dispatch({
         //   type: GET_ALL_HOTELS,
@@ -79,11 +80,28 @@ export const createNewHotelAction = (formData) => async (dispatch) => {
     dispatch(setAlert("Hotel Created", "success"));
 }
 
+export const updateExistingHotelAction = (formData) => async (dispatch) => {
+  if (localStorage.jwt) {
+    setAuthToken(localStorage.jwt);
+  }
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const res = await axios.put("/api/hotel/update", formData, config);
+
+  dispatch(updateHotel(res.data));
+  dispatch(setAlert("Hotel Updated Successfully", "success"));
+}
+
 export const getHotelByIdAction = (hotelId) => async dispatch => {
 
-    // if (localStorage.jwt) {
-    //     setAuthToken(localStorage.jwt);
-    // }
+    if (localStorage.jwt) {
+        setAuthToken(localStorage.jwt);
+    }
 
     try {
 

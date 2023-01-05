@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import SidebarComp from "../layout/Sidebar";
-import {useParams} from "react-router-dom";
+import {Navigate, useNavigate, useParams} from "react-router-dom";
 import HeaderNav from "../layout/HeaderNav";
 import NotFound from "../error/NotFound";
 import {useDispatch, useSelector} from "react-redux";
-import {getHotelByIdAction} from "../../actions/hotel";
+import {getHotelByIdAction, updateExistingHotelAction} from "../../actions/hotel";
 import CIcon from "@coreui/icons-react";
 import {cilPencil} from "@coreui/icons";
 import {Tooltip} from '@coreui/coreui/dist/js/coreui';
@@ -20,7 +20,9 @@ const ViewHotel = () => {
 
     const {hotel} = useSelector(state => state.hotel);
 
-    const {user} = useSelector(state => state.auth)
+    const {user} = useSelector(state => state.auth);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -31,7 +33,11 @@ const ViewHotel = () => {
         dispatch(getHotelByIdAction(hotelId));
     }, [hotelId])
 
-    return (
+  const onUpdateClick = () => {
+      navigate(`/hotels/update/${hotelId}`);
+  }
+
+  return (
         <>
             <SidebarComp/>
             <HeaderNav>
@@ -56,6 +62,7 @@ const ViewHotel = () => {
                                                             onMouseOver={(e) => {
                                                                 Tooltip.getOrCreateInstance(e.target).show()
                                                             }}
+                                                            onClick={onUpdateClick}
                                                     >
                                                         <CIcon className="btn-icon" icon={cilPencil}
                                                                style={{marginRight: '.2rem'}}/>

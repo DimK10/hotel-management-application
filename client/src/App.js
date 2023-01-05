@@ -29,6 +29,7 @@ import CreateHotel from "./components/hotel/CreateHotel";
 import CreateRoom from "./components/room/CreateRoom";
 import Logout from "./components/auth/Logout";
 import ViewHotel from "./components/hotel/ViewHotel";
+import EditHotel from "./components/hotel/EditHotel";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
@@ -74,6 +75,11 @@ const App = () => {
               <Route path='/hotels/new' element={
                 <SecuredPage>
                   <CreateHotel/>
+                </SecuredPage>}
+              />
+              <Route path='/hotels/update/:hotelId' element={
+                <SecuredPage>
+                  <EditHotel/>
                 </SecuredPage>}
               />
               <Route exact path="/hotels/:hotelId" element={

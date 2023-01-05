@@ -10,7 +10,7 @@ const alertSlice = createSlice({
       const { payload } = action;
 
 
-      state.alerts = [payload];
+      state.alerts = [...state.alerts, payload];
     },
     removeAlert: (state, action) => {
       const { payload } = action;

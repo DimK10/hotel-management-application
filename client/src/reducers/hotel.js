@@ -28,6 +28,11 @@ const hotelSlice = createSlice({
       state.hotels = [...state.hotels, payload];
       state.error = '';
     },
+    updateHotel: (state, action) => {
+      const { payload } = action;
+      state.loading = false;
+      state.hotel = payload;
+    },
     getHotelById: (state, action) => {
       const { payload } = action;
       state.loading = false;
