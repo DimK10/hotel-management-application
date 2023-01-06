@@ -3,6 +3,7 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import hotelSlice from "../reducers/hotel";
 import alertSlice from "../reducers/alert";
+import {setAlertAction} from "./alert";
 
 
 const {
@@ -94,7 +95,7 @@ export const updateExistingHotelAction = (formData) => async (dispatch) => {
   const res = await axios.put("/api/hotel/update", formData, config);
 
   dispatch(updateHotel(res.data));
-  dispatch(setAlert("Hotel Updated Successfully", "success"));
+  dispatch(setAlertAction( "Hotel Updated Successfully", "success" ));
 }
 
 export const getHotelByIdAction = (hotelId) => async dispatch => {

@@ -4,15 +4,20 @@ import {useSelector} from "react-redux";
 
 const Alert = () => {
 
-    const {alerts}  = useSelector(state => state.alert);
+  const {alerts} = useSelector(state => state.alert);
 
-    return (
-    alerts !== null &&
-    alerts?.length > 0 &&
-    alerts.map(alert => (
-        <div key={alert.id} className={`alert alert-${alert.alertType}`}>
+  return (
+    <div className="container">
+      {
+        alerts !== null &&
+        alerts?.length > 0 &&
+        alerts.map(alert => (
+          <div key={alert.id} className={`alert alert-${alert.alertType}`}>
             {alert.msg}
-        </div>
-    )));
+          </div>
+        ))
+      }
+    </div>
+  )
 }
 export default Alert;
