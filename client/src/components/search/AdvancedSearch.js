@@ -9,8 +9,10 @@ import SearchItem from './SearchItem';
 
 import cities from '../../json/cities.json';
 import moment from "moment/moment";
+import {useSelector} from "react-redux";
 
 const AdvancedSearch = (props) => {
+
   const [formData, setFormData] = useState({
     location: '',
     checkInDate: new Date(),
@@ -50,6 +52,8 @@ const AdvancedSearch = (props) => {
     hairDryer: false,
     babyHighChair: false
   });
+
+  const [hotelResults, setHotelResults] = useState([]);
 
   const [checkUncheck, setCheckUncheck] = useState(true);
 
@@ -149,8 +153,12 @@ const AdvancedSearch = (props) => {
     setCheckUncheck(!checkUncheck);
   }
 
+  const { hotels } = useSelector(state => state.search);
+
   useEffect(() => {
-  }, []);
+    // Get hotels from basic search
+    setHotelResults(hotels);
+  }, [hotels]);
 
   return (
     <Fragment>

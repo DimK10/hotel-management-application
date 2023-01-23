@@ -1,7 +1,9 @@
 import React, {Fragment, useState} from 'react';
 import NavBar from '../layout/NavBar';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import DateRangePicker from "react-bootstrap-daterangepicker";
+import {useDispatch} from "react-redux";
+import {basicSearchAction} from "../../actions/search";
 
 const FirstPage = (props) => {
 
@@ -9,6 +11,10 @@ const FirstPage = (props) => {
         checkInDate: new Date(),
         checkOutDate: new Date(new Date().setDate(new Date().getDate() + 7))
     });
+
+    const dispatch = useDispatch();
+
+    const navigate = useNavigate();
 
     const {
         checkInDate,
@@ -24,13 +30,17 @@ const FirstPage = (props) => {
         });
     }
 
-    const onSubmit = (e) => {
-        e.preventDefault();
-
+    const onChange = (e) => {
         setFormData({...formData,
             [e.target.name]: e.target.value
         });
+    }
 
+    const onSubmit = async (e) => {
+        e.preventDefault();
+
+        await dispatch(basicSearchAction(formData));
+        navigate("/search");
     }
 
     return (
@@ -67,10 +77,9 @@ const FirstPage = (props) => {
                                 aria-describedby='button-addon2'
                                 name='nameOrLocation'
                                 style={{width: '45%'}}
+                                onChange={((e) =>  onChange(e))}
                             />
-                            <Link className='btn btn-outline-primary' to='/search'>
-                                Search
-                            </Link>
+                            <button type="submit" className='btn btn-outline-primary'>Search</button>
                         </div>
                     </form>
                     <div className='mt-5'>

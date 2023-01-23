@@ -251,18 +251,19 @@ public class HotelController {
      * @return the hotels than mach with the search
      * @throws RuntimeException if this that made the search is not a role client
      */
-    @GetMapping("/api/hotel/basic/search")
-    @PreAuthorize("hasAuthority('CLIENT')")
-    public Set<HotelDTO> findHotelBasicSearch(@RequestHeader(name = "Authorization") String token, @RequestBody BasicSearchDTO basicSearchDTO)throws RuntimeException{
+    @PostMapping("/api/hotel/basic/search")
+//    @PreAuthorize("hasAuthority('CLIENT')")
+    public Set<HotelDTO> findHotelBasicSearch(@RequestBody BasicSearchDTO basicSearchDTO)throws RuntimeException{
 
-        if (userService.getUserFromToken(token).getRole().equals(User.Role.CLIENT)){
+//        if (userService.getUserFromToken(token).getRole().equals(User.Role.CLIENT)){
+//
+//            return service.getHotelBasicSearch(basicSearchDTO);
+//        }else {
+//
+//            throw new RuntimeException("Unauthorized");
+//        }
 
-            return service.getHotelBasicSearch(basicSearchDTO);
-        }else {
-
-            throw new RuntimeException("Unauthorized");
-        }
-
+        return service.getHotelBasicSearch(basicSearchDTO);
     }
 
 

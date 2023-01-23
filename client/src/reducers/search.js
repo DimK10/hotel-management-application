@@ -1,11 +1,12 @@
 import {createSlice} from "@reduxjs/toolkit";
+import moment from "moment/moment";
 
 const searchSlice = createSlice({
     name: 'search',
     initialState: {
         loading: true,
-        checkInDate: new Date(),
-        checkOutDate: new Date(new Date().setDate(new Date().getDate() + 7)),
+        checkInDate: moment(new Date()).format('DD/MM/YYYY'),
+        checkOutDate: moment(new Date(new Date().setDate(new Date().getDate() + 7))).format('DD/MM/YYYY'),
         nameOrLocation: '',
         hotels: [],
         error: {}
@@ -17,6 +18,11 @@ const searchSlice = createSlice({
             state.loading = false;
             state.hotels = payload;
             state.error = '';
+        },
+        searchError: (state, action) => {
+            const { payload } = action;
+            state.error = payload;
+            state.loading = false;
         }
     }
 })
