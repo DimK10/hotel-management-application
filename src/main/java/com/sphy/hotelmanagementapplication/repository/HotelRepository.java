@@ -51,4 +51,20 @@ public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long> 
             " :checkOut not between o.checkInDate and o.checkOutDate")
 	Set<Hotel> findByBasicSearch(@Param("checkIn")LocalDate checkIn, @Param("checkOut")LocalDate checkOut
 	, @Param("NameOrLocation") String NameOrLocation);
+
+	@Query(value = "")
+	Set<Hotel> findByAdvancedSearch(@Param("location")String location,@Param("checkInDate") LocalDate checkInDate,@Param("checkOutDate") LocalDate checkOutDate,
+									@Param("priceFrom")Long priceFrom,@Param("priceTo") Long priceTo,@Param("adultsRange") Integer adultsRange,
+									@Param("stars")Integer stars,@Param("parking") Boolean parking,@Param("restaurant") Boolean restaurant,
+									@Param("roomService") Boolean roomService,@Param("gym")Boolean gym,@Param("spa") Boolean spa,@Param("pool") Boolean pool,
+									@Param("freeWifi")Boolean freeWifi,@Param("chargingStation") Boolean chargingStation,@Param("viewToSeaMountain") Boolean viewToSeaMountain,
+									@Param("airConditioning")Boolean airConditioning,@Param("fireplace") Boolean fireplace,@Param("kitchen") Boolean kitchen,
+									@Param("refrigerator")Boolean refrigerator,@Param("miniBar") Boolean miniBar,@Param("washingMachine")Boolean washingMachine,
+									@Param("coffeeTeaMachine")Boolean coffeeTeaMachine,@Param("tv") Boolean tv,@Param("petsAllowed") Boolean petsAllowed,
+									@Param("airportTransport")Boolean airportTransport,@Param("toiletGrabRails")Boolean toiletGrabRails,
+									@Param("bathtubGrabRails")Boolean bathtubGrabRails,@Param("showerChair") Boolean showerChair,
+									@Param("raisedChair")Boolean raisedChair,@Param("wheelchairRamps") Boolean wheelchairRamps,
+									@Param("emergencyPhones")Boolean emergencyPhones,@Param("roomsAccessibleElevator") Boolean roomsAccessibleElevator,
+									@Param("safeDepositBox")Boolean safeDepositBox,@Param("bathRobe") Boolean bathRobe,@Param("hairDryer") Boolean hairDryer,
+									@Param("isBabyHighChair") Boolean isBabyHighChair);
 }
