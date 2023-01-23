@@ -3,6 +3,7 @@ package com.sphy.hotelmanagementapplication.service;
 import com.sphy.hotelmanagementapplication.converter.HotelAmenityToHotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.converter.HotelDTOToHotel;
 import com.sphy.hotelmanagementapplication.converter.HotelToHotelDTO;
+import com.sphy.hotelmanagementapplication.domain.AdvancedSearch;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
@@ -37,6 +38,7 @@ public class HotelService {
     private final UserService userService;
 
     private final RoomService roomService;
+
 
     private final HotelAmenityToHotelAmenityDTO hotelAmenityToHotelAmenityDTO;
 
@@ -311,6 +313,56 @@ public class HotelService {
                             basicSearchDTO.getCheckInDate(),
                             basicSearchDTO.getCheckOutDate(),
                             basicSearchDTO.getNameOrLocation())
+                    .forEach(hotel -> hotelDTOS
+                            .add(hotelToHotelDTO
+                                    .converter(hotel)));
+
+            return hotelDTOS;
+
+        } else {
+
+            throw new RuntimeException("Something went wrong");
+        }
+
+    }
+
+
+    public Set<HotelDTO> getHotelAdvancedSearch(AdvancedSearch advancedSearch){
+
+        Set<HotelDTO> hotelDTOS = new HashSet<>();
+
+        if (advancedSearch.getLocation() != null && advancedSearch.getCheckInDate() != null
+                && advancedSearch.getCheckOutDate() != null && advancedSearch.getPriceFrom() != null
+                && advancedSearch.getPriceTo() != null && advancedSearch.getAdultsRange() != null
+                && advancedSearch.getStars() != null && advancedSearch.isParking() != null
+                && advancedSearch.isRestaurant() != null && advancedSearch.isRoomService() != null
+                && advancedSearch.isGym() != null && advancedSearch.isSpa() != null
+                && advancedSearch.isPool() != null && advancedSearch.isFreeWifi() != null
+                && advancedSearch.isChargingStation() != null && advancedSearch.isViewToSeaMountain() != null
+                && advancedSearch.isAirConditioning() != null && advancedSearch.isFireplace() != null
+                && advancedSearch.isKitchen() != null && advancedSearch.isRefrigerator() != null
+                && advancedSearch.isMiniBar() != null && advancedSearch.isWashingMachine() != null
+                && advancedSearch.isCoffeeTeaMachine() != null && advancedSearch.isTv() != null
+                && advancedSearch.isPetsAllowed() != null && advancedSearch.isAirportTransport() != null
+                && advancedSearch.isToiletGrabRails() != null && advancedSearch.isBathtubGrabRails() != null
+                && advancedSearch.isShowerChair() != null && advancedSearch.isRaisedChair() != null
+                && advancedSearch.isWheelchairRamps() != null && advancedSearch.isEmergencyPhones() != null
+                && advancedSearch.isRoomsAccessibleElevator() != null && advancedSearch.isSafeDepositBox() != null
+                && advancedSearch.isBathRobe() != null && advancedSearch.isHairDryer() != null
+                && advancedSearch.isBabyHighChair() != null
+               ) {
+
+            hotelRepository.findByAdvancedSearch( advancedSearch.getLocation(), advancedSearch.getCheckInDate(), advancedSearch.getCheckOutDate(),
+                            advancedSearch.getPriceFrom(), advancedSearch.getPriceTo(), advancedSearch.getAdultsRange(), advancedSearch.getStars(),
+                            advancedSearch.isParking(), advancedSearch.isRestaurant(), advancedSearch.isRoomService(),
+                            advancedSearch.isGym(), advancedSearch.isSpa(), advancedSearch.isPool(), advancedSearch.isFreeWifi(),
+                            advancedSearch.isChargingStation(), advancedSearch.isViewToSeaMountain(), advancedSearch.isAirConditioning(),
+                            advancedSearch.isFireplace(), advancedSearch.isKitchen(), advancedSearch.isRefrigerator(), advancedSearch.isMiniBar(),
+                            advancedSearch.isWashingMachine(), advancedSearch.isCoffeeTeaMachine(), advancedSearch.isTv(), advancedSearch.isPetsAllowed(),
+                            advancedSearch.isAirportTransport(), advancedSearch.isToiletGrabRails(), advancedSearch.isBathtubGrabRails(), advancedSearch.isShowerChair() ,
+                            advancedSearch.isRaisedChair(), advancedSearch.isWheelchairRamps(), advancedSearch.isEmergencyPhones(), advancedSearch.isRoomsAccessibleElevator(),
+                            advancedSearch.isSafeDepositBox(), advancedSearch.isBathRobe(), advancedSearch.isHairDryer(), advancedSearch.isBabyHighChair()
+                            )
                     .forEach(hotel -> hotelDTOS
                             .add(hotelToHotelDTO
                                     .converter(hotel)));

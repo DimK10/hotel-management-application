@@ -10,73 +10,73 @@ public class AdvancedSearch {
 
     private LocalDate checkOutDate;
 
-    private long priceFrom;
+    private Long priceFrom;
 
-    private long priceTo;
+    private Long priceTo;
 
-    private int adultsRange;
+    private Integer adultsRange;
 
-    private int stars;
+    private Integer stars;
 
-    private boolean parking;
+    private Boolean parking;
 
-    private boolean restaurant;
+    private Boolean restaurant;
 
-    private boolean roomService;
+    private Boolean roomService;
 
-    private boolean gym;
+    private Boolean gym;
 
-    private boolean spa;
+    private Boolean spa;
 
-    private boolean pool;
+    private Boolean pool;
 
-    private boolean freeWifi;
+    private Boolean freeWifi;
 
-    private boolean chargingStation;
+    private Boolean chargingStation;
 
-    private boolean viewToSeaMountain;
+    private Boolean viewToSeaMountain;
 
-    private boolean airConditioning;
+    private Boolean airConditioning;
 
-    private boolean fireplace;
+    private Boolean fireplace;
 
-    private boolean kitchen;
+    private Boolean kitchen;
 
-    private boolean refrigerator;
+    private Boolean refrigerator;
 
-    private boolean miniBar;
+    private Boolean miniBar;
 
-    private boolean washingMachine;
+    private Boolean washingMachine;
 
-    private boolean coffeeTeaMachine;
+    private Boolean coffeeTeaMachine;
 
-    private boolean tv;
+    private Boolean tv;
 
-    private boolean petsAllowed;
+    private Boolean petsAllowed;
 
-    private boolean airportTransport;
+    private Boolean airportTransport;
 
-    private boolean toiletGrabRails;
+    private Boolean toiletGrabRails;
 
-    private boolean bathtubGrabRails;
+    private Boolean bathtubGrabRails;
 
-    private boolean showerChair;
+    private Boolean showerChair;
 
-    private boolean raisedChair;
+    private Boolean raisedChair;
 
-    private boolean wheelchairRamps;
+    private Boolean wheelchairRamps;
 
-    private boolean emergencyPhones;
+    private Boolean emergencyPhones;
 
-    private boolean roomsAccessibleElevator;
+    private Boolean roomsAccessibleElevator;
 
-    private boolean safeDepositBox;
+    private Boolean safeDepositBox;
 
-    private boolean bathRobe;
+    private Boolean bathRobe;
 
-    private boolean hairDryer;
+    private Boolean hairDryer;
 
-    private boolean babyHighChair;
+    private Boolean babyHighChair;
 
     public AdvancedSearch(String location, LocalDate checkInDate, LocalDate checkOutDate, long priceFrom,
                           long priceTo, int adultsRange, int stars, boolean parking, boolean restaurant,
@@ -152,275 +152,275 @@ public class AdvancedSearch {
         this.checkOutDate = checkOutDate;
     }
 
-    public long getPriceFrom() {
+    public Long getPriceFrom() {
         return priceFrom;
     }
 
-    public void setPriceFrom(long priceFrom) {
+    public void setPriceFrom(Long priceFrom) {
         this.priceFrom = priceFrom;
     }
 
-    public long getPriceTo() {
+    public Long getPriceTo() {
         return priceTo;
     }
 
-    public void setPriceTo(long priceTo) {
+    public void setPriceTo(Long priceTo) {
         this.priceTo = priceTo;
     }
 
-    public int getAdultsRange() {
+    public Integer getAdultsRange() {
         return adultsRange;
     }
 
-    public void setAdultsRange(int adultsRange) {
+    public void setAdultsRange(Integer adultsRange) {
         this.adultsRange = adultsRange;
     }
 
-    public int getStars() {
+    public Integer getStars() {
         return stars;
     }
 
-    public void setStars(int stars) {
+    public void setStars(Integer stars) {
         this.stars = stars;
     }
 
-    public boolean isParking() {
+    public Boolean isParking() {
         return parking;
     }
 
-    public void setParking(boolean parking) {
+    public void setParking(Boolean parking) {
         this.parking = parking;
     }
 
-    public boolean isRestaurant() {
+    public Boolean isRestaurant() {
         return restaurant;
     }
 
-    public void setRestaurant(boolean restaurant) {
+    public void setRestaurant(Boolean restaurant) {
         this.restaurant = restaurant;
     }
 
-    public boolean isRoomService() {
+    public Boolean isRoomService() {
         return roomService;
     }
 
-    public void setRoomService(boolean roomService) {
+    public void setRoomService(Boolean roomService) {
         this.roomService = roomService;
     }
 
-    public boolean isGym() {
+    public Boolean isGym() {
         return gym;
     }
 
-    public void setGym(boolean gym) {
+    public void setGym(Boolean gym) {
         this.gym = gym;
     }
 
-    public boolean isSpa() {
+    public Boolean isSpa() {
         return spa;
     }
 
-    public void setSpa(boolean spa) {
+    public void setSpa(Boolean spa) {
         this.spa = spa;
     }
 
-    public boolean isPool() {
+    public Boolean isPool() {
         return pool;
     }
 
-    public void setPool(boolean pool) {
+    public void setPool(Boolean pool) {
         this.pool = pool;
     }
 
-    public boolean isFreeWifi() {
+    public Boolean isFreeWifi() {
         return freeWifi;
     }
 
-    public void setFreeWifi(boolean freeWifi) {
+    public void setFreeWifi(Boolean freeWifi) {
         this.freeWifi = freeWifi;
     }
 
-    public boolean isChargingStation() {
+    public Boolean isChargingStation() {
         return chargingStation;
     }
 
-    public void setChargingStation(boolean chargingStation) {
+    public void setChargingStation(Boolean chargingStation) {
         this.chargingStation = chargingStation;
     }
 
-    public boolean isViewToSeaMountain() {
+    public Boolean isViewToSeaMountain() {
         return viewToSeaMountain;
     }
 
-    public void setViewToSeaMountain(boolean viewToSeaMountain) {
+    public void setViewToSeaMountain(Boolean viewToSeaMountain) {
         this.viewToSeaMountain = viewToSeaMountain;
     }
 
-    public boolean isAirConditioning() {
+    public Boolean isAirConditioning() {
         return airConditioning;
     }
 
-    public void setAirConditioning(boolean airConditioning) {
+    public void setAirConditioning(Boolean airConditioning) {
         this.airConditioning = airConditioning;
     }
 
-    public boolean isFireplace() {
+    public Boolean isFireplace() {
         return fireplace;
     }
 
-    public void setFireplace(boolean fireplace) {
+    public void setFireplace(Boolean fireplace) {
         this.fireplace = fireplace;
     }
 
-    public boolean isKitchen() {
+    public Boolean isKitchen() {
         return kitchen;
     }
 
-    public void setKitchen(boolean kitchen) {
+    public void setKitchen(Boolean kitchen) {
         this.kitchen = kitchen;
     }
 
-    public boolean isRefrigerator() {
+    public Boolean isRefrigerator() {
         return refrigerator;
     }
 
-    public void setRefrigerator(boolean refrigerator) {
+    public void setRefrigerator(Boolean refrigerator) {
         this.refrigerator = refrigerator;
     }
 
-    public boolean isMiniBar() {
+    public Boolean isMiniBar() {
         return miniBar;
     }
 
-    public void setMiniBar(boolean miniBar) {
+    public void setMiniBar(Boolean miniBar) {
         this.miniBar = miniBar;
     }
 
-    public boolean isWashingMachine() {
+    public Boolean isWashingMachine() {
         return washingMachine;
     }
 
-    public void setWashingMachine(boolean washingMachine) {
+    public void setWashingMachine(Boolean washingMachine) {
         this.washingMachine = washingMachine;
     }
 
-    public boolean isCoffeeTeaMachine() {
+    public Boolean isCoffeeTeaMachine() {
         return coffeeTeaMachine;
     }
 
-    public void setCoffeeTeaMachine(boolean coffeeTeaMachine) {
+    public void setCoffeeTeaMachine(Boolean coffeeTeaMachine) {
         this.coffeeTeaMachine = coffeeTeaMachine;
     }
 
-    public boolean isTv() {
+    public Boolean isTv() {
         return tv;
     }
 
-    public void setTv(boolean tv) {
+    public void setTv(Boolean tv) {
         this.tv = tv;
     }
 
-    public boolean isPetsAllowed() {
+    public Boolean isPetsAllowed() {
         return petsAllowed;
     }
 
-    public void setPetsAllowed(boolean petsAllowed) {
+    public void setPetsAllowed(Boolean petsAllowed) {
         this.petsAllowed = petsAllowed;
     }
 
-    public boolean isAirportTransport() {
+    public Boolean isAirportTransport() {
         return airportTransport;
     }
 
-    public void setAirportTransport(boolean airportTransport) {
+    public void setAirportTransport(Boolean airportTransport) {
         this.airportTransport = airportTransport;
     }
 
-    public boolean isToiletGrabRails() {
+    public Boolean isToiletGrabRails() {
         return toiletGrabRails;
     }
 
-    public void setToiletGrabRails(boolean toiletGrabRails) {
+    public void setToiletGrabRails(Boolean toiletGrabRails) {
         this.toiletGrabRails = toiletGrabRails;
     }
 
-    public boolean isBathtubGrabRails() {
+    public Boolean isBathtubGrabRails() {
         return bathtubGrabRails;
     }
 
-    public void setBathtubGrabRails(boolean bathtubGrabRails) {
+    public void setBathtubGrabRails(Boolean bathtubGrabRails) {
         this.bathtubGrabRails = bathtubGrabRails;
     }
 
-    public boolean isShowerChair() {
+    public Boolean isShowerChair() {
         return showerChair;
     }
 
-    public void setShowerChair(boolean showerChair) {
+    public void setShowerChair(Boolean showerChair) {
         this.showerChair = showerChair;
     }
 
-    public boolean isRaisedChair() {
+    public Boolean isRaisedChair() {
         return raisedChair;
     }
 
-    public void setRaisedChair(boolean raisedChair) {
+    public void setRaisedChair(Boolean raisedChair) {
         this.raisedChair = raisedChair;
     }
 
-    public boolean isWheelchairRamps() {
+    public Boolean isWheelchairRamps() {
         return wheelchairRamps;
     }
 
-    public void setWheelchairRamps(boolean wheelchairRamps) {
+    public void setWheelchairRamps(Boolean wheelchairRamps) {
         this.wheelchairRamps = wheelchairRamps;
     }
 
-    public boolean isEmergencyPhones() {
+    public Boolean isEmergencyPhones() {
         return emergencyPhones;
     }
 
-    public void setEmergencyPhones(boolean emergencyPhones) {
+    public void setEmergencyPhones(Boolean emergencyPhones) {
         this.emergencyPhones = emergencyPhones;
     }
 
-    public boolean isRoomsAccessibleElevator() {
+    public Boolean isRoomsAccessibleElevator() {
         return roomsAccessibleElevator;
     }
 
-    public void setRoomsAccessibleElevator(boolean roomsAccessibleElevator) {
+    public void setRoomsAccessibleElevator(Boolean roomsAccessibleElevator) {
         this.roomsAccessibleElevator = roomsAccessibleElevator;
     }
 
-    public boolean isSafeDepositBox() {
+    public Boolean isSafeDepositBox() {
         return safeDepositBox;
     }
 
-    public void setSafeDepositBox(boolean safeDepositBox) {
+    public void setSafeDepositBox(Boolean safeDepositBox) {
         this.safeDepositBox = safeDepositBox;
     }
 
-    public boolean isBathRobe() {
+    public Boolean isBathRobe() {
         return bathRobe;
     }
 
-    public void setBathRobe(boolean bathRobe) {
+    public void setBathRobe(Boolean bathRobe) {
         this.bathRobe = bathRobe;
     }
 
-    public boolean isHairDryer() {
+    public Boolean isHairDryer() {
         return hairDryer;
     }
 
-    public void setHairDryer(boolean hairDryer) {
+    public void setHairDryer(Boolean hairDryer) {
         this.hairDryer = hairDryer;
     }
 
-    public boolean isBabyHighChair() {
+    public Boolean isBabyHighChair() {
         return babyHighChair;
     }
 
-    public void setBabyHighChair(boolean babyHighChair) {
+    public void setBabyHighChair(Boolean babyHighChair) {
         this.babyHighChair = babyHighChair;
     }
 

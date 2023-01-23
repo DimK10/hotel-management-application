@@ -249,7 +249,7 @@ public class HotelController {
      * or a hotel if it is available at that dates if the search made by the hotel name
      * @param token users token
      * @param basicSearchDTO basic search fields (check in date, check out date, location name or hotel name)
-     * @return the hotels than mach with the search
+     * @return the hotels that mach with the search
      * @throws RuntimeException if this that made the search is not a role client
      */
     @GetMapping("/api/hotel/basic/search")
@@ -266,13 +266,21 @@ public class HotelController {
 
     }
 
+
+    /***
+     * returns the hotels that are available in Advanced search specific fields
+     * @param token user token
+     * @param advancedSearch Advanced search specific fields
+     * @return the hotels that mach with the search
+     * @throws RuntimeException if this that made the search is not a role client
+     */
     @GetMapping("/api/hotel/advanced/search")
     @PreAuthorize("hasAuthority('Client')")
-    public Set<HotelDTO> advancedSearch(@RequestHeader(name = "Authorization") String token, @RequestBody AdvancedSearch advancedSearch){
+    public Set<HotelDTO> advancedSearch(@RequestHeader(name = "Authorization") String token, @RequestBody AdvancedSearch advancedSearch) throws RuntimeException{
 
         if (userService.getUserFromToken(token).getRole().equals(User.Role.CLIENT)){
 
-            return service.getHotelAdvancedSearch(AdvancedSearch);
+            return service.getHotelAdvancedSearch(advancedSearch);
         }else {
 
             throw new RuntimeException("Unauthorized");
