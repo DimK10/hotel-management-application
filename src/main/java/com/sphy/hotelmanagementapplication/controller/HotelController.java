@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import com.sphy.hotelmanagementapplication.domain.AdvancedSearch;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelAmenityDTO;
@@ -258,6 +259,20 @@ public class HotelController {
         if (userService.getUserFromToken(token).getRole().equals(User.Role.CLIENT)){
 
             return service.getHotelBasicSearch(basicSearchDTO);
+        }else {
+
+            throw new RuntimeException("Unauthorized");
+        }
+
+    }
+
+    @GetMapping("/api/hotel/advanced/search")
+    @PreAuthorize("hasAuthority('Client')")
+    public Set<HotelDTO> advancedSearch(@RequestHeader(name = "Authorization") String token, @RequestBody AdvancedSearch advancedSearch){
+
+        if (userService.getUserFromToken(token).getRole().equals(User.Role.CLIENT)){
+
+            return service.getHotelAdvancedSearch(AdvancedSearch);
         }else {
 
             throw new RuntimeException("Unauthorized");
