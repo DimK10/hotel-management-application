@@ -349,7 +349,7 @@ public class HotelService {
                 && advancedSearch.isWheelchairRamps() != null && advancedSearch.isEmergencyPhones() != null
                 && advancedSearch.isRoomsAccessibleElevator() != null && advancedSearch.isSafeDepositBox() != null
                 && advancedSearch.isBathRobe() != null && advancedSearch.isHairDryer() != null
-                && advancedSearch.isBabyHighChair() != null
+                && advancedSearch.isBabyHighChair() != null && advancedSearch.getNameOrLocation() != null
                ) {
 
             hotelRepository.findByAdvancedSearch( advancedSearch.getLocation(), advancedSearch.getCheckInDate(), advancedSearch.getCheckOutDate(),
@@ -361,7 +361,7 @@ public class HotelService {
                             advancedSearch.isWashingMachine(), advancedSearch.isCoffeeTeaMachine(), advancedSearch.isTv(), advancedSearch.isPetsAllowed(),
                             advancedSearch.isAirportTransport(), advancedSearch.isToiletGrabRails(), advancedSearch.isBathtubGrabRails(), advancedSearch.isShowerChair() ,
                             advancedSearch.isRaisedChair(), advancedSearch.isWheelchairRamps(), advancedSearch.isEmergencyPhones(), advancedSearch.isRoomsAccessibleElevator(),
-                            advancedSearch.isSafeDepositBox(), advancedSearch.isBathRobe(), advancedSearch.isHairDryer(), advancedSearch.isBabyHighChair()
+                            advancedSearch.isSafeDepositBox(), advancedSearch.isBathRobe(), advancedSearch.isHairDryer(), advancedSearch.isBabyHighChair(), advancedSearch.getNameOrLocation()
                             )
                     .forEach(hotel -> hotelDTOS
                             .add(hotelToHotelDTO

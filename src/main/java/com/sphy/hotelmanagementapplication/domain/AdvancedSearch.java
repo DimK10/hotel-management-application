@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 public class AdvancedSearch {
 
+    private String nameOrLocation;
+
     private String location;
 
     private LocalDate checkInDate;
@@ -78,7 +80,7 @@ public class AdvancedSearch {
 
     private Boolean babyHighChair;
 
-    public AdvancedSearch(String location, LocalDate checkInDate, LocalDate checkOutDate, long priceFrom,
+    public AdvancedSearch(String nameOrLocation, String location, LocalDate checkInDate, LocalDate checkOutDate, long priceFrom,
                           long priceTo, int adultsRange, int stars, boolean parking, boolean restaurant,
                           boolean roomService, boolean gym, boolean spa, boolean pool, boolean freeWifi,
                           boolean chargingStation, boolean viewToSeaMountain, boolean airConditioning,
@@ -89,6 +91,7 @@ public class AdvancedSearch {
                           boolean roomsAccessibleElevator, boolean safeDepositBox, boolean bathRobe, boolean hairDryer,
                           boolean babyHighChair) {
 
+        this.nameOrLocation = nameOrLocation;
         this.location = location;
         this.checkInDate = checkInDate;
         this.checkOutDate = checkOutDate;
@@ -126,6 +129,14 @@ public class AdvancedSearch {
         this.bathRobe = bathRobe;
         this.hairDryer = hairDryer;
         this.babyHighChair = babyHighChair;
+    }
+
+    public String getNameOrLocation() {
+        return nameOrLocation;
+    }
+
+    public void setNameOrLocation(String nameOrLocation) {
+        this.nameOrLocation = nameOrLocation;
     }
 
     public String getLocation() {
@@ -437,7 +448,8 @@ public class AdvancedSearch {
     @Override
     public String toString() {
         return "AdvancedSearch{" +
-                "location='" + location + '\'' +
+                "nameOrLocation='" + nameOrLocation + '\'' +
+                ", location='" + location + '\'' +
                 ", checkInDate=" + checkInDate +
                 ", checkOutDate=" + checkOutDate +
                 ", priceFrom=" + priceFrom +
