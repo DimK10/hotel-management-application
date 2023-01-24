@@ -3,8 +3,13 @@ import NavBar from './../layout/NavBar';
 import CIcon from '@coreui/icons-react';
 import {cilEnvelopeOpen, cilLockLocked, cilUser} from '@coreui/icons';
 import Alert from "../layout/Alert";
+import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const Register = (props) => {
+
+  const{ hotel } = useSelector(state => state.order);
+
   return (
     <Fragment>
       <NavBar />
@@ -60,15 +65,16 @@ const Register = (props) => {
                   <div className='input-group mb-4'>
                     <select
                       className="form-select" id="role-select">
-                      <option value="" defaultValue={true}>What do you want to do?</option>
-                      <option value="customer">I am a customer and I want to order rooms</option>
+                      <option value="" defaultValue={hotel === null}>What do you want to do?</option>
+                      <option value="customer" defaultValue={hotel !== null}>I am a customer and I want to order rooms</option>
                       <option value="manager">I want to manage hotels and their rooms</option>
                     </select>
                   </div>
                   <button className='btn btn-block btn-success' type='button'>
-                    Create Account
+                    <span className="text-white">Create Account</span>
                   </button>
                 </div>
+                <Link className="btn btn-link px-0" to="/sign-in">Already a user? Log in</Link>
               </div>
             </div>
           </div>

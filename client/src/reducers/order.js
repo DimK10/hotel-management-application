@@ -10,6 +10,9 @@ const orderSlice = createSlice({
     client: null,
     hotel: null,
     room: null,
+    price: 0,
+    hotelAmenities: [],
+    roomAmenities: [],
     canceled: false,
     error: {}
   },

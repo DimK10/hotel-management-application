@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import NavBar from '../layout/NavBar';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
-
+import {v4 as uuidv4} from 'uuid';
 import 'react-calendar/dist/Calendar.css';
 
 import 'bootstrap-daterangepicker/daterangepicker.css';
@@ -163,7 +163,7 @@ const AdvancedSearch = (props) => {
   return (
     <Fragment>
       <NavBar/>
-      <div className='container' style={{marginTop: '10rem'}}>
+      <div className='container' style={{marginTop: '3rem'}}>
         <div className='row'>
           <div className='col-lg-3 col-md-12 col-sm-12'>
             <div className='row justify-content-center'>
@@ -599,7 +599,7 @@ const AdvancedSearch = (props) => {
                 loading !== true
                 &&
                 hotels.map(hotel => (
-                    <SearchItem key={hotel.id} checkInDate={checkInDate} checkOutDate={checkOutDate} hotel={hotel} />
+                    <SearchItem key={uuidv4()} checkInDate={checkInDate} checkOutDate={checkOutDate} hotel={hotel} />
                 ))
             }
 
