@@ -457,14 +457,12 @@ public class HotelControllerTest {
         basicSearchDTO2.setNameOrLocation("ksenia");
 
         //when
-        when(userService.getUserFromToken(anyString())).thenReturn(client);
         when(hotelService.getHotelBasicSearch(any())).thenReturn(hotel1DTOS);
 
         //then
 
          mockMvc.perform(
-                        get("/api/hotel/basic/search")
-                                .header(HttpHeaders.AUTHORIZATION, "Bearer token")
+                        post("/api/hotel/basic/search")
                                 .content(asJsonString(basicSearchDTO1))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON))
