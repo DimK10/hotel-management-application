@@ -13,14 +13,15 @@ const SearchItem = ({hotel, checkInDate, checkOutDate}) => {
 
   let navigate = useNavigate();
 
-  const onHotelCardClick = (e) => {
+  const onHotelCardClick = (hotel) => {
 
 
-    let formData = new FormData();
-    formData.append('checkInDate', checkInDate);
-    formData.append('checkOutDate', checkOutDate);
+    // let formData = new FormData();
+    // formData.append('checkInDate', checkInDate);
+    // formData.append('checkOutDate', checkOutDate);
+    // formData.append('hotelAmenities', hotel.hotelAmenities);
 
-    dispatch(createNewOrderPreCheckout(checkInDate, checkOutDate));
+    dispatch(createNewOrderPreCheckout(checkInDate, checkOutDate, hotel ));
     //todo move hotel info to stat
     navigate('/order')
   }
@@ -30,7 +31,7 @@ const SearchItem = ({hotel, checkInDate, checkOutDate}) => {
       <div className="row">
         <div className="col">
           <div className="card mb-3 btn btn-raised shadow text-start p-0"
-               onClick={() => onHotelCardClick()}>
+               onClick={() => onHotelCardClick(hotel)}>
             <div className="row g-0">
               <div className="col-md-3">
                 <img

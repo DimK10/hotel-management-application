@@ -8,6 +8,7 @@ const orderSlice = createSlice({
     checkOutDate: moment(new Date()).format('DD/MM/YYYY'),
     loading: true,
     client: null,
+    hotel: null,
     room: null,
     canceled: false,
     error: {}
@@ -20,6 +21,7 @@ const orderSlice = createSlice({
       state.client = payload?.client;
       state.room = payload?.room;
       state.canceled = payload.canceled;
+      state.hotel = payload.hotel;
     },
     orderError: (state, action) => {
       const { payload } = action;

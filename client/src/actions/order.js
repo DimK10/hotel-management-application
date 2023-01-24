@@ -19,12 +19,13 @@ export const getNewOrder = () => async (dispach) => {
 }
 
 // Create order pre checkout
-export const createNewOrderPreCheckout = (checkInDate, checkOutDate) => async (dispatch) => {
+export const createNewOrderPreCheckout = (checkInDate, checkOutDate, hotel) => async (dispatch) => {
   try {
 
     const payload = {
       checkInDate: moment(checkInDate).format('DD/MM/YYYY'),
-      checkOutDate: moment(checkOutDate).format('DD/MM/YYYY')
+      checkOutDate: moment(checkOutDate).format('DD/MM/YYYY'),
+      hotel
     };
 
     dispatch(newOrderPreCheckout(payload))
