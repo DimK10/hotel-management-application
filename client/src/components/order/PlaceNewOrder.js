@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import PropTypes from 'prop-types';
 import NavBar from "../layout/NavBar";
 import moment from "moment/moment";
@@ -17,6 +17,13 @@ const PlaceNewOrder = () => {
 
     const {checkInDate, checkOutDate} = useSelector(state => state.order);
 
+    const [roomSelected, setRoomSelected] = useState(null);
+
+
+    const onRoomSelect = (room) => {
+        setRoomSelected(room);
+    }
+
     return (
         <Fragment>
             <NavBar/>
@@ -27,10 +34,13 @@ const PlaceNewOrder = () => {
                         <p className="card-text mb-3">Here are you order details based on your
                             search:</p>
                         <div className="mb-3 row">
-                            <div className="col-md-4">
+                            <div className="col-md-4 text-center">
                                 <img
                                     src="https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg"
-                                    className="img-fluid rounded-start h-100" alt="..."/>
+                                    className="img-fluid rounded-start h-100" style={{
+                                    margin: '0 auto',
+                                    maxHeight: '20rem'
+                                }} alt="..."/>
                             </div>
                             <div className="col-md-8 container">
 
@@ -63,18 +73,14 @@ const PlaceNewOrder = () => {
                                 <hr/>
                                 <div className="row">
                                     <h6>Available Rooms:</h6>
-                                    {
-                                        hotel.rooms.map(room => (
-                                            <RoomTable room={room} roomIndex={hotel.rooms.indexOf(room) + 1}/>
-                                        ))
-                                    }
+                                    <RoomTable rooms={hotel.rooms} onRoomSelect={onRoomSelect}/>
                                 </div>
                                 <div className="row mb-md-4 mb-lg-5">
                                     <h6
                                         className="col-sm-2 col-form-label">Total:</h6>
                                     <div className="col-sm-10">
                                         <p id='staticText1'
-                                           className="form-control-plaintext fw-bold">180€</p>
+                                           className="form-control-plaintext fw-bold">{roomSelected !== null ? roomSelected.price : hotel.rooms[0].price}€</p>
                                     </div>
                                 </div>
                                 <div className="row mb-3">

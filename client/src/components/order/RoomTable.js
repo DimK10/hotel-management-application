@@ -1,9 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {useEffect, useState} from 'react';
+import PropTypes, {object} from 'prop-types';
 import CIcon from "@coreui/icons-react";
 import {cilPencil, cilTrash} from "@coreui/icons";
 
-const RoomTable = ({room, roomIndex}) => {
+const RoomTable = ({rooms, onRoomSelect}) => {
+
+
+    const onRadioChange = (room) => {
+        onRoomSelect(room);
+    }
+
     return (
         <>
             <div className="table-responsive">
@@ -16,28 +22,33 @@ const RoomTable = ({room, roomIndex}) => {
                         <th scope="col">Room Amenities</th>
                         <th scope="col">Price</th>
                         <th scope="col" className="d-none d-md-table-cell">Capacity</th>
-                        <th scope="col">Select/Deselect</th>
+                        <th scope="col">Select</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row">{roomIndex}</th>
-                        <td>{room.name}</td>
-                        <td>{room.luxurity}</td>
-                        <td>
-                            {
-                                room.roomAmenityDTO.map(amenity => (
-                                    amenity.roomAmenities.charAt(0) + amenity.roomAmenities.slice(1).toLowerCase() + ' '
-                                ))
-                            }
-                        </td>
-                        <td>{room.price} €</td>
-                        <td className="d-none d-md-table-cell">{room.capacity}</td>
-                        <td>
-                            <input className="form-check-input" type="checkbox" value="" id="flexCheckChecked"
-                                   defaultChecked={false}/>
-                        </td>
-                    </tr>
+                    {
+                        rooms.map(room => (
+                            <tr>
+                                <th scope="row">{rooms.indexOf(room) + 1}</th>
+                                <td>{room.name}</td>
+                                <td>{room.luxurity}</td>
+                                <td>
+                                    {
+                                        room.roomAmenityDTO.map(amenity => (
+                                            amenity.roomAmenities.charAt(0) + amenity.roomAmenities.slice(1).toLowerCase() + ' '
+                                        ))
+                                    }
+                                </td>
+                                <td>{room.price} €</td>
+                                <td className="d-none d-md-table-cell">{room.capacity}</td>
+                                <td>
+                                    <input className="form-check-input" type="radio" value=""
+                                           defaultChecked={rooms.indexOf(room) === 0} name="select-room"
+                                           onChange={(e) => onRadioChange(room)} />
+                                </td>
+                            </tr>
+                        ))
+                    }
                     </tbody>
                 </table>
             </div>
@@ -47,8 +58,8 @@ const RoomTable = ({room, roomIndex}) => {
 };
 
 RoomTable.propTypes = {
-    room: PropTypes.object.isRequired,
-    roomIndex: PropTypes.number.isRequired
+    rooms: PropTypes.arrayOf(object).isRequired,
+    onRoomSelect: PropTypes.func.isRequired,
 };
 
 export default RoomTable;
