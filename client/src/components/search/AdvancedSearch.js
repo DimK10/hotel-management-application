@@ -153,12 +153,12 @@ const AdvancedSearch = (props) => {
     setCheckUncheck(!checkUncheck);
   }
 
-  const { hotels } = useSelector(state => state.search);
-
-  useEffect(() => {
-    // Get hotels from basic search
-    setHotelResults(hotels);
-  }, [hotels]);
+  const { hotels, loading } = useSelector(state => state.search);
+  //
+  // useEffect(() => {
+  //   // Get hotels from basic search
+  //   setHotelResults(hotels);
+  // }, [hotels]);
 
   return (
     <Fragment>
@@ -591,12 +591,18 @@ const AdvancedSearch = (props) => {
                 Search
               </button>
             </div>
-            <SearchItem checkInDate={checkInDate} checkOutDate={checkOutDate}/>
-            <SearchItem checkInDate={checkInDate} checkOutDate={checkOutDate}/>
-            <SearchItem checkInDate={checkInDate} checkOutDate={checkOutDate}/>
-            <SearchItem checkInDate={checkInDate} checkOutDate={checkOutDate}/>
-            <SearchItem checkInDate={checkInDate} checkOutDate={checkOutDate}/>
-            <SearchItem checkInDate={checkInDate} checkOutDate={checkOutDate}/>
+            {
+              hotels !== null
+                &&
+                hotels.length > 0
+                &&
+                loading !== true
+                &&
+                hotels.map(hotel => (
+                    <SearchItem key={hotel.id} checkInDate={checkInDate} checkOutDate={checkOutDate} hotel={hotel} />
+                ))
+            }
+
           </div>
         </div>
       </div>
