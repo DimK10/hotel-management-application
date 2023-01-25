@@ -1,9 +1,10 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import NavBar from '../layout/NavBar';
 import {Link, useNavigate} from 'react-router-dom';
 import DateRangePicker from "react-bootstrap-daterangepicker";
 import {useDispatch} from "react-redux";
 import {basicSearchAction} from "../../actions/search";
+import Alert from "../layout/Alert";
 
 const FirstPage = (props) => {
 
@@ -43,10 +44,16 @@ const FirstPage = (props) => {
         navigate("/search");
     }
 
+    // scroll to top
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
     return (
         <Fragment>
             <NavBar/>
-            <div className='container'>
+            <div className='container mt-2'>
+                <Alert />
                 <div className='jumbotron' style={{marginTop: '7rem'}}>
                     <h1 className='display-4'>
                         Search The place You want To Stay For Your Next Location.

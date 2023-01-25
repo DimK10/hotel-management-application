@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import PropTypes, {object} from 'prop-types';
 import CIcon from "@coreui/icons-react";
 import {cilPencil, cilTrash} from "@coreui/icons";
+import {v4 as uuidv4} from "uuid";
 
 const RoomTable = ({rooms, onRoomSelect}) => {
 
@@ -28,7 +29,7 @@ const RoomTable = ({rooms, onRoomSelect}) => {
                     <tbody>
                     {
                         rooms.map(room => (
-                            <tr>
+                            <tr  key={uuidv4()} >
                                 <th scope="row">{rooms.indexOf(room) + 1}</th>
                                 <td>{room.name}</td>
                                 <td>{room.luxurity}</td>

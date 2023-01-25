@@ -26,6 +26,12 @@ const orderSlice = createSlice({
       state.canceled = payload.canceled;
       state.hotel = payload.hotel;
     },
+    addToOrder: (state, action) => {
+      const {payload} = action;
+
+      state.room = payload.room;
+      state.price = payload.price;
+    },
     orderError: (state, action) => {
       const { payload } = action;
       state.error = payload;

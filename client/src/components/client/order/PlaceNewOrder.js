@@ -4,9 +4,11 @@ import {v4 as uuidv4} from 'uuid';
 import NavBar from "../../layout/NavBar";
 import moment from "moment/moment";
 import {useDispatch, useSelector} from "react-redux";
-import {getNewOrder} from "../../../actions/order";
+import {addToOrderAction, getNewOrder} from "../../../actions/order";
 import RoomTable from "./RoomTable";
 import {useNavigate} from "react-router-dom";
+import {setAlertAction} from "../../../actions/alert";
+import rooms from "../../admin/room/Rooms";
 
 
 const PlaceNewOrder = () => {
@@ -23,7 +25,7 @@ const PlaceNewOrder = () => {
 
     const {checkInDate, checkOutDate} = useSelector(state => state.order);
 
-    const [roomSelected, setRoomSelected] = useState(null);
+    const [roomSelected, setRoomSelected] = useState(hotel.rooms[0]);
 
     useEffect(() =>{
         console.log(hotel)
@@ -40,7 +42,10 @@ const PlaceNewOrder = () => {
         if (user === null) {
             navigate("/sign-up")
         } else {
-            // TODO FINALIZE ORDER FOR USER
+            dispatch(addToOrderAction(roomSelected, roomSelected.price));
+
+            // TODO NEED TO SEND ORDER TO BACKEND AND CHECK IF EVERYTHING WAS OK
+            dispatch(setAlertAction("You order has been placed Successfully!!!", "success"));
             navigate("/");
         }
     }
