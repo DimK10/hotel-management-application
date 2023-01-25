@@ -1,6 +1,7 @@
 package com.sphy.hotelmanagementapplication.repository;
 
 import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -9,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
+import java.util.Set;
 
 /***
  * created by gp
@@ -23,4 +25,9 @@ public interface RoomRepository extends PagingAndSortingRepository<Room,Long> {
     @Query(value = "select r from rooms r where r.hotel.owner.id = :id",
             countQuery = "select count (r) from  rooms r where r.hotel.owner.id = :id")
     Page<Room> findAllRoomsByOwner(@Param("id") Long id, Pageable pageable);
+
+
+    @Query(value = "select ra.rAmenity from rooms r inner join IntermediateRoomAmenity i on r.id = i.room.id " +
+            "inner join RoomAmenity ra on i.roomAmenity.id = ra.id where r.id = :id")
+    Set<RoomAmenity> findAmenitiesByRoomId(@Param("id") Long id);
 }
