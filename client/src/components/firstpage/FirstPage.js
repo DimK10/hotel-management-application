@@ -5,6 +5,7 @@ import DateRangePicker from "react-bootstrap-daterangepicker";
 import {useDispatch} from "react-redux";
 import {basicSearchAction} from "../../actions/search";
 import Alert from "../layout/Alert";
+import {addHotelToOrderPreCheckoutAction, createNewOrderPreCheckout} from "../../actions/order";
 
 const FirstPage = (props) => {
 
@@ -40,6 +41,7 @@ const FirstPage = (props) => {
     const onSubmit = async (e) => {
         e.preventDefault();
 
+        await dispatch(createNewOrderPreCheckout(checkInDate, checkOutDate));
         await dispatch(basicSearchAction(formData));
         navigate("/search");
     }

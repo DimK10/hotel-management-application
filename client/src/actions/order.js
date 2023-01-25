@@ -4,6 +4,7 @@ import moment from "moment";
 
 const {
     newOrderPreCheckout,
+    addHotelToOrderPreCheckout,
     addToOrder,
     orderError
 } = orderSlice.actions;
@@ -20,13 +21,12 @@ export const getNewOrder = () => async (dispach) => {
 }
 
 // Create order pre checkout
-export const createNewOrderPreCheckout = (checkInDate, checkOutDate, hotel) => async (dispatch) => {
+export const createNewOrderPreCheckout = (checkInDate, checkOutDate) => async (dispatch) => {
     try {
 
         const payload = {
             checkInDate: moment(checkInDate).format('DD/MM/YYYY'),
             checkOutDate: moment(checkOutDate).format('DD/MM/YYYY'),
-            hotel
         };
 
         dispatch(newOrderPreCheckout(payload))
@@ -39,11 +39,31 @@ export const createNewOrderPreCheckout = (checkInDate, checkOutDate, hotel) => a
         dispatch(orderError(payload))
     }
 };
+export const addHotelToOrderPreCheckoutAction = (hotel) => async (dispatch) => {
+    try {
 
-export const addToOrderAction = (room, price) => (dispatch) => {
+        const payload = {
+            hotel
+        };
+
+        dispatch(addHotelToOrderPreCheckout(payload))
+    } catch (err) {
+
+        const payload = {
+            msg: err,
+            status: null
+        }
+        dispatch(orderError(payload))
+    }
+};
+
+export const addToOrderAction = (room, price, user, hotelAmenities, roomAmenities) => (dispatch) => {
     const payload = {
         room,
-        price
+        price,
+        user,
+        hotelAmenities,
+        roomAmenities
     }
     dispatch(addToOrder(payload));
 }

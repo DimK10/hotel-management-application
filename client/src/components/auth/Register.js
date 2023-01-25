@@ -8,7 +8,7 @@ import {useSelector} from "react-redux";
 
 const Register = (props) => {
 
-  const{ hotel } = useSelector(state => state.order);
+  const{ hotel } = useSelector(state => state.order.currentOrder);
 
   return (
     <Fragment>

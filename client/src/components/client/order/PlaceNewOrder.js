@@ -21,18 +21,16 @@ const PlaceNewOrder = () => {
 
     const navigate = useNavigate();
 
-    const {hotel} = useSelector(state => state.order);
-
-    const {checkInDate, checkOutDate} = useSelector(state => state.order);
+    const {hotel, checkInDate, checkOutDate} = useSelector(state => state.order.currentOrder);
 
     const [roomSelected, setRoomSelected] = useState(hotel.rooms[0]);
 
-    useEffect(() =>{
+    useEffect(() => {
         console.log(hotel)
-        if(hotel === null) {
+        if (hotel === null) {
             navigate("/");
         }
-    },[hotel]);
+    }, [hotel]);
 
     const onRoomSelect = (room) => {
         setRoomSelected(room);
@@ -42,7 +40,7 @@ const PlaceNewOrder = () => {
         if (user === null) {
             navigate("/sign-up")
         } else {
-            dispatch(addToOrderAction(roomSelected, roomSelected.price));
+            dispatch(addToOrderAction(roomSelected, roomSelected.price, user, hotel.hotelAmenityDTO, roomSelected.roomAmenityDTO));
 
             // TODO NEED TO SEND ORDER TO BACKEND AND CHECK IF EVERYTHING WAS OK
             dispatch(setAlertAction("You order has been placed Successfully!!!", "success"));
@@ -77,7 +75,8 @@ const PlaceNewOrder = () => {
                                         <label htmlFor="staticText1"
                                                className="col-sm-2 col-form-label">Name:</label>
                                         <div className="col-sm-10">
-                                            <p id='staticText1' className="form-control-plaintext fw-bold">{hotel.name}</p>
+                                            <p id='staticText1'
+                                               className="form-control-plaintext fw-bold">{hotel.name}</p>
                                         </div>
                                     </div>
                                     <div className="mb-3 row">

@@ -4,38 +4,47 @@ import moment from "moment/moment";
 const orderSlice = createSlice({
   name: 'order',
   initialState: {
-    checkInDate: moment(new Date()).format('DD/MM/YYYY'),
-    checkOutDate: moment(new Date()).format('DD/MM/YYYY'),
-    loading: true,
-    client: null,
-    hotel: null,
-    room: null,
-    price: 0,
-    hotelAmenities: [],
-    roomAmenities: [],
-    canceled: false,
+    currentOrder: {
+      checkInDate: moment(new Date()).format('DD/MM/YYYY'),
+      checkOutDate: moment(new Date()).format('DD/MM/YYYY'),
+      loading: true,
+      client: null,
+      hotel: null,
+      room: null,
+      price: 0,
+      hotelAmenities: [],
+      roomAmenities: [],
+      canceled: false,
+    },
+    orders: [],
     error: {}
   },
   reducers: {
     newOrderPreCheckout: (state, action) => {
       const { payload }  = action;
-      state.checkInDate = payload?.checkInDate;
-      state.checkOutDate = payload.checkOutDate;
-      state.client = payload?.client;
-      state.room = payload?.room;
-      state.canceled = payload.canceled;
-      state.hotel = payload.hotel;
+      
+      state.currentOrder.checkInDate = payload.checkInDate;
+      state.currentOrder.checkOutDate = payload.checkOutDate;
+
+    },
+    addHotelToOrderPreCheckout: (state, action) => {
+      const { payload }  = action;
+
+      state.currentOrder.hotel = payload.hotel;
     },
     addToOrder: (state, action) => {
       const {payload} = action;
 
-      state.room = payload.room;
-      state.price = payload.price;
+      state.currentOrder.room = payload.room;
+      state.currentOrder.price = payload.price;
+      state.currentOrder.user = payload.user;
+      state.currentOrder.hotelAmenities = payload.hotelAmenities;
+      state.currentOrder.roomAmenities = payload.roomAmenities;
     },
     orderError: (state, action) => {
       const { payload } = action;
-      state.error = payload;
-      state.loading = false;
+      state.currentOrder.error = payload;
+      state.currentOrder.loading = false;
     }
   }
 })

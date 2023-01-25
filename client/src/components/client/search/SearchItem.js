@@ -4,7 +4,7 @@ import '../../../css/btnRaised.css'
 import {useNavigate} from "react-router-dom";
 import {v4 as uuidv4} from 'uuid';
 import moment from "moment";
-import {createNewOrderPreCheckout} from "../../../actions/order";
+import {addHotelToOrderPreCheckoutAction, createNewOrderPreCheckout} from "../../../actions/order";
 import {connect, useDispatch} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -22,7 +22,7 @@ const SearchItem = ({hotel, checkInDate, checkOutDate}) => {
     // formData.append('checkOutDate', checkOutDate);
     // formData.append('hotelAmenities', hotel.hotelAmenities);
 
-    dispatch(createNewOrderPreCheckout(checkInDate, checkOutDate, hotel ));
+    dispatch(addHotelToOrderPreCheckoutAction(hotel));
     //todo move hotel info to stat
     navigate('/order')
   }
