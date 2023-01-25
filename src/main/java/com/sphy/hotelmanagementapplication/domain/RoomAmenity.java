@@ -1,7 +1,9 @@
 package com.sphy.hotelmanagementapplication.domain;
 
 import javax.persistence.*;
+import javax.servlet.SessionTrackingMode;
 import java.util.Objects;
+import java.util.Set;
 
 //import org.hibernate.mapping.Map;
 
@@ -15,6 +17,9 @@ import java.util.Objects;
 public class RoomAmenity extends BaseEntity {
 
 	private String rAmenity;
+
+	@OneToMany(mappedBy = "roomAmenity", fetch =  FetchType.EAGER, cascade = CascadeType.PERSIST)
+	private Set<IntermediateRoomAmenity> intermediateRoomAmenities;
 
 
 	public RoomAmenity() {

@@ -9,7 +9,6 @@ import java.util.Set;
  */
 @Entity(name = "rooms")
 @DiscriminatorValue("rooms")
-@AttributeOverride(name = "id", column = @Column(name = "room_id")) // created by AKd
 public class Room extends BaseEntity {
 
 
@@ -26,20 +25,14 @@ public class Room extends BaseEntity {
     @OneToMany(mappedBy = "room", fetch =  FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Order> orders =new HashSet<>();
 
+    @OneToMany(mappedBy = "room", fetch =  FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private Set<IntermediateRoomAmenity> intermediateRoomAmenities;
+
     private long price;
 
 	private boolean disabled;
 
     private int capacity; // The capacity of people in the room
-
-	@ManyToMany(fetch = FetchType.EAGER)  // created by AKd
-	@JoinTable(  // created by AKd
-			name = "room_amenity",  // created by AKd
-			joinColumns = @JoinColumn(name = "room_id"),  // created by AKd
-			inverseJoinColumns = @JoinColumn(name = "RAmenity_id") // created by AKd,
-
-	)
-	private Set<RoomAmenity> roomAmenity = new HashSet<>();// created by AKd
 
     public Room() {
     }
@@ -123,16 +116,6 @@ public class Room extends BaseEntity {
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
-
-	// created by AKd
-	public Set<RoomAmenity> getRoomAmenity(){
-		return roomAmenity;
-	}
-
-	// created by AKd
-	public void setRoomAmenity(Set<RoomAmenity> roomAmenity) {
-		this.roomAmenity = roomAmenity;
-	}
 
 
 	@Override

@@ -12,7 +12,6 @@ import java.util.Set;
 @NamedEntityGraph(name = "Hotel.rooms",
 		attributeNodes = @NamedAttributeNode("rooms")
 )
-@AttributeOverride(name = "id", column = @Column(name = "hotel_id")) // created by AKd
 public class Hotel extends BaseEntity {
 
 
