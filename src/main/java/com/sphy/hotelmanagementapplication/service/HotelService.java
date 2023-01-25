@@ -3,6 +3,7 @@ package com.sphy.hotelmanagementapplication.service;
 import com.sphy.hotelmanagementapplication.converter.HotelDTOToHotel;
 import com.sphy.hotelmanagementapplication.converter.HotelToHotelDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
+import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
@@ -279,16 +280,24 @@ public class HotelService {
      * @param id The ID of the hotel for which to retrieve amenities
      * @return A set of HotelAmenity representing the amenities of the hotel with the given ID
      */
+    public Set<HotelAmenity> getHotelAmenitiesByHotelId(Long id) {
 
-//    public Set<HotelAmenityDTO> getHotelAmenitiesByHotelId(Long id) {
-//
-//        Set<HotelAmenityDTO> amenitiesHotelDTO = new HashSet<>();
-//        Optional<Hotel> hotelOptional = hotelRepository.findById(id);
-//        hotelOptional.ifPresent(hotel -> hotel.getHotelAmenity()
-//                .forEach(hotelAmenity -> amenitiesHotelDTO.add(hotelAmenityToHotelAmenityDTO.converter(hotelAmenity))));
-//
-//        return amenitiesHotelDTO;
-//    }
+        if (hotelRepository.findById(id).isPresent()) {
+
+            Set<HotelAmenity> hotelAmenities = hotelRepository.findAmentityByHotelId(id);
+
+            if (!hotelAmenities.isEmpty()){
+
+                return hotelAmenities;
+            }else {
+
+                throw new ApiRequestException("The hotel has no Amenities whet");
+            }
+        }else {
+
+            throw new ApiRequestException("The hotel with id " + id + " does not exist.");
+        }
+    }
 
     /***
      * returns the hotels that are available in specific dates in a location

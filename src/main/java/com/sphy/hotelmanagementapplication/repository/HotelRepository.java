@@ -1,6 +1,7 @@
 package com.sphy.hotelmanagementapplication.repository;
 
 import com.sphy.hotelmanagementapplication.domain.Hotel;
+import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import org.springframework.data.domain.Page;
@@ -51,4 +52,8 @@ public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long> 
             " :checkOut not between o.checkInDate and o.checkOutDate")
 	Set<Hotel> findByBasicSearch(@Param("checkIn")LocalDate checkIn, @Param("checkOut")LocalDate checkOut
 	, @Param("NameOrLocation") String NameOrLocation);
+
+	@Query(value = "select ha.hAmenity from Hotel h inner join IntermediateHotelAmenity i on h.id = i.hotel.id " +
+			"inner join HotelAmenity ha on i.hotelAmenity.id = ha.id where h.id = :id")
+    Set<HotelAmenity> findAmentityByHotelId(@Param("id") Long id);
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
@@ -227,20 +228,20 @@ public class HotelController {
      * @throws ApiRequestException if the id does not exist
      */
 
-//    @GetMapping("/api/hotel/amenities/{hotelId}")
-//    @PreAuthorize("hasAuthority('ADMIN')")
-//    public Set<HotelAmenityDTO> findHotelAmenitiesByHotelId(@RequestHeader(name = "Authorization") String token, @PathVariable Long hotelId) throws ApiRequestException {
-//
-//        HotelDTO hotelOptional = service.getHotelById(hotelId);
-//
-//        if (Objects.equals(hotelOptional.getOwner(), userService.getUserFromToken(token).getId())) {
-//
-//            return service.getHotelAmenitiesByHotelId(hotelId);
-//
-//        } else {
-//            throw new ApiRequestException("Unauthorized");
-//        }
-//    }
+    @GetMapping("/api/hotel/amenities/{hotelId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Set<HotelAmenity> findHotelAmenitiesByHotelId(@RequestHeader(name = "Authorization") String token, @PathVariable Long hotelId) throws ApiRequestException {
+
+        HotelDTO hotelOptional = service.getHotelById(hotelId);
+
+        if (Objects.equals(hotelOptional.getOwner(), userService.getUserFromToken(token).getId())) {
+
+            return service.getHotelAmenitiesByHotelId(hotelId);
+
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
+    }
 
     /***
      * returns the hotels that are available in specific dates in a location
