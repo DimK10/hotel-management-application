@@ -44,10 +44,10 @@ class UserServiceTest {
         userService = new UserService(
                 userRepository,
                 new UserToUserDTO(
-                        new HotelToHotelDTO(new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository, new RoomAmenityToRoomAmenityDTO()), new HotelAmenityToHotelAmenityDTO()),
+                        new HotelToHotelDTO(new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository)),
                         new OrderToOrderDTO(roomRepository, userRepository)
                 ),
-                new UserDTOToUser(new HotelToHotelDTO(new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository, new RoomAmenityToRoomAmenityDTO()), new HotelAmenityToHotelAmenityDTO()),
+                new UserDTOToUser(new HotelToHotelDTO(new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository)),
                         new OrderToOrderDTO(roomRepository, userRepository)),
                 passwordEncoder,
                 jwtUtil

@@ -37,12 +37,6 @@ class RoomServiceTest {
 	@Mock
 	UserRepository userRepository;
 
-	@Mock
-    RoomAmenityDTOToRoomAmenity roomAmenityDTOToRoomAmenity;
-
-    @Mock
-    RoomAmenityToRoomAmenityDTO roomAmenityToRoomAmenityDTO;
-
 	RoomService roomService;
 
 	List<Room> rooms;
@@ -88,7 +82,7 @@ class RoomServiceTest {
 
 
 		roomService = new RoomService(roomRepository, hotelRepository, new RoomDTOToRoom(hotelRepository,
-				new OrderDTOToOrder(roomRepository, userRepository), roomAmenityDTOToRoomAmenity), new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository, roomAmenityToRoomAmenityDTO), new RoomAmenityToRoomAmenityDTO());
+				new OrderDTOToOrder(roomRepository, userRepository)), new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository));
 
 	}
 

@@ -31,10 +31,6 @@ public class RoomDTOToRoomTest {
     @Mock
     OrderDTOToOrder orderDTOToOrder;
 
-    @Mock
-    RoomAmenityDTOToRoomAmenity roomAmenityDTOToRoomAmenity;
-
-
 
     Room room = new Room();
 
@@ -65,7 +61,7 @@ public class RoomDTOToRoomTest {
         roomDTO.getOrders().add(orderDTO);
         roomDTO.setPrice(500L);
 
-        roomDTOToRoom = new RoomDTOToRoom(hotelRepository, orderDTOToOrder, roomAmenityDTOToRoomAmenity);
+        roomDTOToRoom = new RoomDTOToRoom(hotelRepository, orderDTOToOrder);
     }
 
     @Test

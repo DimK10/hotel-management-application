@@ -33,9 +33,6 @@ public class HotelDTOToHotelTest {
     @Mock
     UserRepository userRepository;
 
-    @Mock
-    HotelAmenityDTOToHotelAmenity hotelAmenityDTOToHotelAmenity;
-
     Hotel hotel = new Hotel();
 
     HotelDTO hotelDTO = new HotelDTO();
@@ -57,7 +54,7 @@ public class HotelDTOToHotelTest {
         hotelDTO.setName("grand Athens");
         hotelDTO.setStars(5);
 
-        hotelDTOToHotel = new HotelDTOToHotel(roomDTOToRoom, userRepository, hotelAmenityDTOToHotelAmenity);
+        hotelDTOToHotel = new HotelDTOToHotel(roomDTOToRoom, userRepository);
     }
 
     @Test

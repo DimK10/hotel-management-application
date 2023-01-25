@@ -29,9 +29,6 @@ public class HotelToHotelDTOTest {
 	@Mock
 	RoomToRoomDTO roomToRoomDTO;
 
-	@Mock
-	HotelAmenityToHotelAmenityDTO hotelAmenityToHotelAmenityDTO;
-
 	Hotel hotel = new Hotel();
 
 	HotelDTO hotelDTO = new HotelDTO();
@@ -61,7 +58,7 @@ public class HotelToHotelDTOTest {
 		hotelDTO.getRooms().add(roomDTO);
 		hotelDTO.setAddress("address");
 
-		hotelToHotelDTO = new HotelToHotelDTO(roomToRoomDTO, hotelAmenityToHotelAmenityDTO);
+		hotelToHotelDTO = new HotelToHotelDTO(roomToRoomDTO);
 	}
 
 	@Test
