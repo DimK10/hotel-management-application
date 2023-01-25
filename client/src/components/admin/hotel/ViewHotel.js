@@ -1,15 +1,15 @@
 import React, {useEffect} from 'react';
-import SidebarComp from "../layout/Sidebar";
+import SidebarComp from "../../layout/Sidebar";
 import {Navigate, useNavigate, useParams} from "react-router-dom";
-import HeaderNav from "../layout/HeaderNav";
-import NotFound from "../error/NotFound";
+import HeaderNav from "../../layout/HeaderNav";
+import NotFound from "../../error/NotFound";
 import {useDispatch, useSelector} from "react-redux";
-import {getHotelByIdAction, updateExistingHotelAction} from "../../actions/hotel";
+import {getHotelByIdAction, updateExistingHotelAction} from "../../../actions/hotel";
 import CIcon from "@coreui/icons-react";
 import {cilPencil} from "@coreui/icons";
 import {Tooltip} from '@coreui/coreui/dist/js/coreui';
-import {loadUser} from "../../actions/auth";
-import Loading from "../layout/Loading";
+import {loadUser} from "../../../actions/auth";
+import Loading from "../../layout/Loading";
 
 
 const ViewHotel = () => {

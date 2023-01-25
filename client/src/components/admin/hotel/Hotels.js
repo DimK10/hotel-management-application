@@ -1,10 +1,10 @@
 import React, {Fragment, useEffect} from 'react';
-import SidebarComp from "../layout/Sidebar";
-import HeaderNav from "../layout/HeaderNav";
+import SidebarComp from "../../layout/Sidebar";
+import HeaderNav from "../../layout/HeaderNav";
 import {useDispatch, useSelector} from "react-redux";
-import {getAllHotelsByPage, getCountOfHotelsAction} from "../../actions/hotel";
+import {getAllHotelsByPage, getCountOfHotelsAction} from "../../../actions/hotel";
 import HotelTable from "./HotelTable";
-import Loading from "../layout/Loading";
+import Loading from "../../layout/Loading";
 
 
 const Hotel = () => {

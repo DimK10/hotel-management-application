@@ -1,14 +1,14 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import SidebarComp from "../layout/Sidebar";
-import HeaderNav from "../layout/HeaderNav";
+import SidebarComp from "../../layout/Sidebar";
+import HeaderNav from "../../layout/HeaderNav";
 import {useDispatch, useSelector} from "react-redux";
-import cities from "../../json/cities.json";
+import cities from "../../../json/cities.json";
 import {
   createNewHotelAction,
   getHotelByIdAction,
   updateExistingHotelAction
-} from "../../actions/hotel";
-import {loadUser} from "../../actions/auth";
+} from "../../../actions/hotel";
+import {loadUser} from "../../../actions/auth";
 import {useNavigate, useParams} from "react-router-dom";
 
 const EdiHotel = () => {

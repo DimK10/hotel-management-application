@@ -1,10 +1,10 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {v4 as uuidv4} from 'uuid';
-import NavBar from "../layout/NavBar";
+import NavBar from "../../layout/NavBar";
 import moment from "moment/moment";
 import {useDispatch, useSelector} from "react-redux";
-import {getNewOrder} from "../../actions/order";
+import {getNewOrder} from "../../../actions/order";
 import RoomTable from "./RoomTable";
 import {useNavigate} from "react-router-dom";
 

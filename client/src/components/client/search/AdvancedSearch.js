@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import NavBar from '../layout/NavBar';
+import NavBar from '../../layout/NavBar';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import {v4 as uuidv4} from 'uuid';
 import 'react-calendar/dist/Calendar.css';
@@ -7,7 +7,7 @@ import 'react-calendar/dist/Calendar.css';
 import 'bootstrap-daterangepicker/daterangepicker.css';
 import SearchItem from './SearchItem';
 
-import cities from '../../json/cities.json';
+import cities from '../../../json/cities.json';
 import moment from "moment/moment";
 import {useSelector} from "react-redux";
 

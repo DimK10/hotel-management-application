@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 import FirstPage from './components/firstpage/FirstPage';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
-import AdvancedSearch from './components/search/AdvancedSearch';
+import AdvancedSearch from './components/client/search/AdvancedSearch';
 
 import setAuthToken from './utils/setAuthToken';
 import store from './store';
@@ -19,17 +19,17 @@ import '@coreui/coreui/dist/js/coreui.js';
 
 import NotFound from "./components/error/NotFound";
 import SecuredPage from "./components/auth/SecuredPage";
-import PlaceNewOrder from "./components/order/PlaceNewOrder";
-import Dashboard from "./components/dashboard/Dashboard";
-import Hotels from "./components/hotel/Hotels";
-import Rooms from "./components/room/Rooms";
-import Orders from "./components/order/Orders";
-import Calendar from './components/calendar/Calendar'
-import CreateHotel from "./components/hotel/CreateHotel";
-import CreateRoom from "./components/room/CreateRoom";
+import PlaceNewOrder from "./components/client/order/PlaceNewOrder";
+import Dashboard from "./components/admin/dashboard/Dashboard";
+import Hotels from "./components/admin/hotel/Hotels";
+import Rooms from "./components/admin/room/Rooms";
+import Orders from "./components/admin/order/Orders";
+import Calendar from './components/admin/calendar/Calendar'
+import CreateHotel from "./components/admin/hotel/CreateHotel";
+import CreateRoom from "./components/admin/room/CreateRoom";
 import Logout from "./components/auth/Logout";
-import ViewHotel from "./components/hotel/ViewHotel";
-import EditHotel from "./components/hotel/EditHotel";
+import ViewHotel from "./components/admin/hotel/ViewHotel";
+import EditHotel from "./components/admin/hotel/EditHotel";
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);

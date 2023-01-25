@@ -1,10 +1,10 @@
 import React, {Fragment, useState} from 'react';
-import SidebarComp from "../layout/Sidebar";
-import HeaderNav from "../layout/HeaderNav";
+import SidebarComp from "../../layout/Sidebar";
+import HeaderNav from "../../layout/HeaderNav";
 
-import cities from '../../json/cities.json';
+import cities from '../../../json/cities.json';
 import {useDispatch, useSelector} from "react-redux";
-import {createNewHotelAction} from "../../actions/hotel";
+import {createNewHotelAction} from "../../../actions/hotel";
 
 function CreateHotel() {
 
