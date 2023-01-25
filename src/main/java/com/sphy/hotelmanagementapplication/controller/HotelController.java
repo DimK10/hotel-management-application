@@ -230,7 +230,8 @@ public class HotelController {
 
     @GetMapping("/api/hotel/amenities/{hotelId}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public Set<HotelAmenity> findHotelAmenitiesByHotelId(@RequestHeader(name = "Authorization") String token, @PathVariable Long hotelId) throws ApiRequestException {
+    public Set<HotelAmenity> findHotelAmenitiesByHotelId(@RequestHeader(name = "Authorization") String token,
+                                                         @PathVariable Long hotelId) throws ApiRequestException {
 
         HotelDTO hotelOptional = service.getHotelById(hotelId);
 

@@ -4,6 +4,7 @@ import com.sphy.hotelmanagementapplication.converter.HotelDTOToHotel;
 import com.sphy.hotelmanagementapplication.converter.HotelToHotelDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
+import com.sphy.hotelmanagementapplication.domain.IntermediateHotelAmenity;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
@@ -65,6 +66,13 @@ public class HotelService {
 
     }
 
+    /***
+     * Get a hotel by id and owners id
+     * @param id of the hotel tobe found
+     * @param userId of the user
+     * @return the hotel with the current id
+     * @throws ApiRequestException
+     */
     public HotelDTO getHotelById(Long id, Long userId) throws ApiRequestException {
 
         Optional<Hotel> hotel = hotelRepository.findHotelByIdAndOwner(id, userId);
@@ -199,6 +207,9 @@ public class HotelService {
             Optional<User> admin = userRepository.findById(hotelDTO.getOwner());
             admin.ifPresent(existingHotel::setOwner);
 
+            hotelDTO.getAmenities().forEach(amenity ->
+                    existingHotel.getIntermediateHotelAmenities().add(new IntermediateHotelAmenity(existingHotel, amenity)));
+
             return hotelToHotelDTO.converter(hotelRepository.save(existingHotel));
         }
     }
@@ -280,11 +291,11 @@ public class HotelService {
      * @param id The ID of the hotel for which to retrieve amenities
      * @return A set of HotelAmenity representing the amenities of the hotel with the given ID
      */
-    public Set<HotelAmenity> getHotelAmenitiesByHotelId(Long id) {
+    public Set<HotelAmenity> getHotelAmenitiesByHotelId(Long id) throws ApiRequestException{
 
         if (hotelRepository.findById(id).isPresent()) {
 
-            Set<HotelAmenity> hotelAmenities = hotelRepository.findAmentityByHotelId(id);
+            Set<HotelAmenity> hotelAmenities = hotelRepository.findAmenitityByHotelId(id);
 
             if (!hotelAmenities.isEmpty()){
 
