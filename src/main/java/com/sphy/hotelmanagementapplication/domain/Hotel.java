@@ -35,7 +35,7 @@ public class Hotel extends BaseEntity {
 
 
     @OneToMany(mappedBy = "hotel", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private Set<IntermediateHotelAmenity> intermediateHotelAmenities;
+    private Set<IntermediateHotelAmenity> intermediateHotelAmenities = new HashSet<>();
 
 
     public Hotel(Long id) {

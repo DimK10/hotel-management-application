@@ -1,5 +1,6 @@
 package com.sphy.hotelmanagementapplication.repository;
 
+import com.sphy.hotelmanagementapplication.domain.IntermediateRoomAmenity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -7,5 +8,5 @@ import org.springframework.stereotype.Repository;
  * created by gp
  */
 @Repository
-public interface IntermediateHotelAmenity extends CrudRepository<IntermediateHotelAmenity, Long> {
+public interface IntermediateRoomAmenityRepository extends CrudRepository<IntermediateRoomAmenity,Long> {
 }

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.Set;
 
 
 @Component
@@ -19,15 +18,19 @@ public class BootStrapData implements CommandLineRunner {
     private final RoomRepository roomRepository;
     private final AmenityHotelRepository amenityHotelRepository;
     private final AmenityRoomRepository amenityRoomRepository;
+    private final IntermediateHotelAmenityRepository intermediateHotelAmenityRepository;
+    private final IntermediateRoomAmenityRepository intermediateRoomAmenityRepository;
 
 
-    public BootStrapData(UserRepository userRepository, HotelRepository hotelRepository, OrderRepository orderRepository, RoomRepository roomRepository, AmenityHotelRepository amenityHotelRepository, AmenityRoomRepository amenityRoomRepository) {
+    public BootStrapData(UserRepository userRepository, HotelRepository hotelRepository, OrderRepository orderRepository, RoomRepository roomRepository, AmenityHotelRepository amenityHotelRepository, AmenityRoomRepository amenityRoomRepository, IntermediateHotelAmenityRepository intermediateHotelAmenityRepository, IntermediateRoomAmenityRepository intermediateRoomAmenityRepository) {
         this.userRepository = userRepository;
         this.hotelRepository = hotelRepository;
         this.orderRepository = orderRepository;
         this.roomRepository = roomRepository;
         this.amenityHotelRepository = amenityHotelRepository;
         this.amenityRoomRepository = amenityRoomRepository;
+        this.intermediateHotelAmenityRepository = intermediateHotelAmenityRepository;
+        this.intermediateRoomAmenityRepository = intermediateRoomAmenityRepository;
     }
 
     @Override
@@ -83,7 +86,56 @@ public class BootStrapData implements CommandLineRunner {
         hotelRepository.save(ksenia);
         ksenia.getRooms().add(ena);
         ksenia.getRooms().add(dio);
+
         hotelRepository.save(ksenia);
+
+        HotelAmenity hotelAmenity1 = new HotelAmenity("Parking");
+        amenityHotelRepository.save(hotelAmenity1);
+
+        HotelAmenity hotelAmenity2 = new HotelAmenity("Restaurant");
+        amenityHotelRepository.save(hotelAmenity2);
+
+        HotelAmenity hotelAmenity3 = new HotelAmenity("Room Service");
+        amenityHotelRepository.save(hotelAmenity3);
+
+        HotelAmenity hotelAmenity4 = new HotelAmenity("Gym");
+        amenityHotelRepository.save(hotelAmenity4);
+
+        HotelAmenity hotelAmenity5 = new HotelAmenity("Spa");
+        amenityHotelRepository.save(hotelAmenity5);
+
+        HotelAmenity hotelAmenity6 = new HotelAmenity("Pool");
+        amenityHotelRepository.save(hotelAmenity6);
+
+        HotelAmenity hotelAmenity7 = new HotelAmenity("Charging Station");
+        amenityHotelRepository.save(hotelAmenity7);
+
+        HotelAmenity hotelAmenity8 = new HotelAmenity("Pets Allowed");
+        amenityHotelRepository.save(hotelAmenity8);
+
+        HotelAmenity hotelAmenity9 = new HotelAmenity("Airport Transport");
+        amenityHotelRepository.save(hotelAmenity9);
+
+        HotelAmenity hotelAmenity10 = new HotelAmenity("Wheelchair Ramps");
+        amenityHotelRepository.save(hotelAmenity10);
+
+        HotelAmenity hotelAmenity11 = new HotelAmenity("Rooms Accessible Elevator");
+        amenityHotelRepository.save(hotelAmenity11);
+
+
+        IntermediateHotelAmenity hamen1 = new IntermediateHotelAmenity(ksenia,hotelAmenity1);
+        intermediateHotelAmenityRepository.save(hamen1);
+
+
+        ksenia.getIntermediateHotelAmenities().add(hamen1);
+
+
+        IntermediateHotelAmenity hamen2 = new IntermediateHotelAmenity(ksenia,hotelAmenity2);
+
+        intermediateHotelAmenityRepository.save(hamen2);
+
+        ksenia.getIntermediateHotelAmenities().add(hamen2);
+
 
 //        Set<HotelAmenity> amenitySet = new HashSet<>();
 //
@@ -107,7 +159,6 @@ public class BootStrapData implements CommandLineRunner {
 //
 //        ksenia.getHotelAmenity().addAll(amenitySet);
 
-//        hotelRepository.save(ksenia);
 
         Order order = new Order(null, LocalDate.of(2007, 12, 3), LocalDate.of(2007, 12, 7), false, client, ena);
         orderRepository.save(order);
@@ -115,7 +166,74 @@ public class BootStrapData implements CommandLineRunner {
 
         ena.getOrders().add(order);
 
-        RoomAmenity roomAmenity1 = new RoomAmenity("FreeWiFi");
+        RoomAmenity roomAmenity1 = new RoomAmenity("Free WiFi");
+        amenityRoomRepository.save(roomAmenity1);
+
+        RoomAmenity roomAmenity2 = new RoomAmenity("View To See Mountain");
+        amenityRoomRepository.save(roomAmenity2);
+
+        RoomAmenity roomAmenity3 = new RoomAmenity("AirCondition");
+        amenityRoomRepository.save(roomAmenity3);
+
+        RoomAmenity roomAmenity4 = new RoomAmenity("Fireplace");
+        amenityRoomRepository.save(roomAmenity4);
+
+        RoomAmenity roomAmenity5 = new RoomAmenity("Kitchen");
+        amenityRoomRepository.save(roomAmenity5);
+
+        RoomAmenity roomAmenity6 = new RoomAmenity("Refrigerator");
+        amenityRoomRepository.save(roomAmenity6);
+
+        RoomAmenity roomAmenity7 = new RoomAmenity("MiniBar");
+        amenityRoomRepository.save(roomAmenity7);
+
+        RoomAmenity roomAmenity8 = new RoomAmenity("Washing machine");
+        amenityRoomRepository.save(roomAmenity8);
+
+        RoomAmenity roomAmenity9 = new RoomAmenity("Coffee - Tea machine");
+        amenityRoomRepository.save(roomAmenity9);
+
+        RoomAmenity roomAmenity10 = new RoomAmenity("TV");
+        amenityRoomRepository.save(roomAmenity10);
+
+        RoomAmenity roomAmenity11 = new RoomAmenity("Toilet Grab Rails");
+        amenityRoomRepository.save(roomAmenity11);
+
+        RoomAmenity roomAmenity12 = new RoomAmenity("Bathtub Grab Rails");
+        amenityRoomRepository.save(roomAmenity12);
+
+        RoomAmenity roomAmenity13 = new RoomAmenity("Shower Chair");
+        amenityRoomRepository.save(roomAmenity13);
+
+        RoomAmenity roomAmenity14 = new RoomAmenity("Raised Chair");
+        amenityRoomRepository.save(roomAmenity14);
+
+        RoomAmenity roomAmenity15 = new RoomAmenity("Emergency Phone");
+        amenityRoomRepository.save(roomAmenity15);
+
+        RoomAmenity roomAmenity16 = new RoomAmenity("Safe Deposit Box");
+        amenityRoomRepository.save(roomAmenity16);
+
+        RoomAmenity roomAmenity17 = new RoomAmenity("Bathrobe");
+        amenityRoomRepository.save(roomAmenity17);
+
+        RoomAmenity roomAmenity18 = new RoomAmenity("Hair Dryer");
+        amenityRoomRepository.save(roomAmenity18);
+
+        RoomAmenity roomAmenity19 = new RoomAmenity("Baby Highchair");
+        amenityRoomRepository.save(roomAmenity19);
+
+        IntermediateRoomAmenity roomAme1 = new IntermediateRoomAmenity(ena,roomAmenity1);
+        intermediateRoomAmenityRepository.save(roomAme1);
+
+        IntermediateRoomAmenity roomAme2 = new IntermediateRoomAmenity(ena, roomAmenity2);
+        intermediateRoomAmenityRepository.save(roomAme2);
+
+        roomRepository.save(ena);
+
+
+        ena.getIntermediateRoomAmenities().add(roomAme1);
+        ena.getIntermediateRoomAmenities().add(roomAme2);
 
 
 //        Set<RoomAmenity> amenityRset = new HashSet<>();
@@ -135,7 +253,6 @@ public class BootStrapData implements CommandLineRunner {
 //        amenityRoomRepository.saveAll(amenityRset);
 //        ena.getRoomAmenity().addAll(amenityRset);
 
-        roomRepository.save(ena);
 
         Order order1 = new Order(null, LocalDate.of(2007, 12, 3), LocalDate.of(2007, 12, 7), false, client, dio);
         orderRepository.save(order1);

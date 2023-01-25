@@ -22,8 +22,7 @@ public class IntermediateHotelAmenity extends BaseEntity{
 
     }
 
-    public IntermediateHotelAmenity(Long id, Hotel hotel, HotelAmenity hotelAmenity) {
-        super(id);
+    public IntermediateHotelAmenity(Hotel hotel, HotelAmenity hotelAmenity) {
         this.hotel = hotel;
         this.hotelAmenity = hotelAmenity;
     }

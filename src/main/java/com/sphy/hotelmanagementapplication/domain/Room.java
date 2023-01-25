@@ -26,7 +26,7 @@ public class Room extends BaseEntity {
     private Set<Order> orders =new HashSet<>();
 
     @OneToMany(mappedBy = "room", fetch =  FetchType.EAGER, cascade = CascadeType.PERSIST)
-    private Set<IntermediateRoomAmenity> intermediateRoomAmenities;
+    private Set<IntermediateRoomAmenity> intermediateRoomAmenities = new HashSet<>();
 
     private long price;
 
@@ -117,8 +117,15 @@ public class Room extends BaseEntity {
         this.capacity = capacity;
     }
 
+    public Set<IntermediateRoomAmenity> getIntermediateRoomAmenities() {
+        return intermediateRoomAmenities;
+    }
 
-	@Override
+    public void setIntermediateRoomAmenities(Set<IntermediateRoomAmenity> intermediateRoomAmenities) {
+        this.intermediateRoomAmenities = intermediateRoomAmenities;
+    }
+
+    @Override
     public boolean equals(Object o) {
         return super.equals(o);
 

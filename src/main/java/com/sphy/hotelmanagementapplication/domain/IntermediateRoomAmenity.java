@@ -21,8 +21,7 @@ public class IntermediateRoomAmenity extends BaseEntity{
     public IntermediateRoomAmenity() {
     }
 
-    public IntermediateRoomAmenity(Long id, Room room, RoomAmenity roomAmenity) {
-        super(id);
+    public IntermediateRoomAmenity(Room room, RoomAmenity roomAmenity) {
         this.room = room;
         this.roomAmenity = roomAmenity;
     }
