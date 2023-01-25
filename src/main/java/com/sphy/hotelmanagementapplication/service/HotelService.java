@@ -12,6 +12,7 @@ import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.repository.HotelRepository;
+import com.sphy.hotelmanagementapplication.repository.IntermediateHotelAmenityRepository;
 import com.sphy.hotelmanagementapplication.repository.UserRepository;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
@@ -38,14 +39,17 @@ public class HotelService {
 
     private final RoomService roomService;
 
+    private final IntermediateHotelAmenityRepository intermediateHotelAmenityRepository;
 
-    public HotelService(HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService) {
+
+    public HotelService(HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService, IntermediateHotelAmenityRepository intermediateHotelAmenityRepository) {
         this.hotelRepository = hotelRepository;
         this.hotelDTOToHotel = hotelDTOToHotel;
         this.hotelToHotelDTO = hotelToHotelDTO;
         this.roomService = roomService;
         this.userRepository = userRepository;
         this.userService = userService;
+        this.intermediateHotelAmenityRepository = intermediateHotelAmenityRepository;
     }
 
     /***
@@ -208,7 +212,9 @@ public class HotelService {
             admin.ifPresent(existingHotel::setOwner);
 
             hotelDTO.getAmenities().forEach(amenity ->
-                    existingHotel.getIntermediateHotelAmenities().add(new IntermediateHotelAmenity(existingHotel, amenity)));
+                    existingHotel.getIntermediateHotelAmenities()
+                                    .add(intermediateHotelAmenityRepository
+                                    .save(new IntermediateHotelAmenity(existingHotel, amenity))));
 
             return hotelToHotelDTO.converter(hotelRepository.save(existingHotel));
         }
@@ -235,6 +241,10 @@ public class HotelService {
             throw new ApiRequestException("If you wont to save hotels you mast add one or more rooms");
         }
 
+        if (hotelDTO.getAmenities().isEmpty()){
+            throw new ApiRequestException("In hotel with name: " + hotelDTO.getName() + " there are no Amenities");
+        }
+
         hotelDTO.getRooms().clear();
         Hotel hotel = hotelDTOToHotel.converter(hotelDTO);
         hotelRepository.save(hotel);
@@ -242,6 +252,11 @@ public class HotelService {
         roomDTOS.forEach(roomDTO -> roomDTO.setHotel(hotel.getId()));
 
         roomService.saveRooms(roomDTOS);
+
+        hotelDTO.getAmenities().forEach(amenity ->
+                hotel.getIntermediateHotelAmenities()
+                        .add(intermediateHotelAmenityRepository
+                                .save(new IntermediateHotelAmenity(hotel, amenity))));
 
         return hotelToHotelDTO.converter(hotelRepository.findById(hotel.getId()).get());
 
@@ -265,7 +280,11 @@ public class HotelService {
             }
 
             if (roomDTOS.isEmpty()) {
-                throw new ApiRequestException("In hotel with name: " + hotelDTO.getName() + " In hotel with name: " + hotelDTO.getName() + " there are no rooms");
+                throw new ApiRequestException("In hotel with name: " + hotelDTO.getName() + " there are no rooms");
+            }
+
+            if (hotelDTO.getAmenities().isEmpty()){
+                throw new ApiRequestException("In hotel with name: " + hotelDTO.getName() + " there are no Amenities");
             }
 
             hotelDTO.getRooms().clear();
@@ -276,6 +295,12 @@ public class HotelService {
 
             roomService.saveRooms(roomDTOS);
             hotels.add(hotelRepository.findById(hotel.getId()).get());
+
+            hotelDTO.getAmenities().forEach(amenity ->
+                    hotel.getIntermediateHotelAmenities()
+                            .add(intermediateHotelAmenityRepository
+                                    .save(new IntermediateHotelAmenity(hotel, amenity))));
+
         }
 
         List<HotelDTO> hotelDTOS = new ArrayList<>();

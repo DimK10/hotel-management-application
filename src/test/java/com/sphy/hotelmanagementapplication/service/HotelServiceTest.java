@@ -175,7 +175,7 @@ public class HotelServiceTest {
         roomDTOS1.add(roomDTO4);
         hotelDTO.getRooms().add(roomDTO2);
 
-        hotelService = new HotelService(
+        hotelService = new HotelService((
                 hotelRepository,
                 new HotelDTOToHotel(new RoomDTOToRoom(hotelRepository,
                         new OrderDTOToOrder(roomRepository, userRepository)),
@@ -196,7 +196,7 @@ public class HotelServiceTest {
                         },
                         jwtUtil
 
-                ));
+                )), intermediateHotelAmenityRepository);
     }
 
     @Test
