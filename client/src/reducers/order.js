@@ -8,7 +8,7 @@ const orderSlice = createSlice({
       checkInDate: moment(new Date()).format('DD/MM/YYYY'),
       checkOutDate: moment(new Date()).format('DD/MM/YYYY'),
       loading: true,
-      client: null,
+      user: null,
       hotel: null,
       room: null,
       price: 0,

@@ -17,8 +17,8 @@ const AdvancedSearch = (props) => {
 
     const [formData, setFormData] = useState({
         location: '',
-        checkInDate: new Date(currentOrder.checkInDate),
-        checkOutDate: new Date(currentOrder.checkOutDate),
+        checkInDate: moment(currentOrder.checkInDate, 'DD/MM/YYYY').toDate(),
+        checkOutDate: moment(currentOrder.checkOutDate, 'DD/MM/YYYY').toDate(),
         priceFrom: 0,
         priceTo: 0,
         adultsRange: 1,

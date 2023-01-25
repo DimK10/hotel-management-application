@@ -54,7 +54,7 @@ const PlaceNewOrder = () => {
             {
                 hotel !== null
                 &&
-                <div className="container mt-5">
+                <div key={uuidv4()} className="container mt-5">
                     <div className="card">
                         <div className="card-body">
                             <h3 className="card-title">Order Details</h3>
