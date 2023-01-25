@@ -11,6 +11,7 @@ import Alert from "../layout/Alert";
 const Login = () => {
 
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  let role = useSelector(state => state.auth.user?.role);
 
   const dispatch = useDispatch();
 
@@ -29,10 +30,18 @@ const Login = () => {
     dispatch(login(username, password));
   };
 
-  // Redirect if logged in
-  if (isAuthenticated) {
-    return <Navigate to='/dashboard'/>;
+  const redirectBasedOnRole = () => {
+      if (isAuthenticated && role !== 'undefined' && role === 'CLIENT') {
+          return <Navigate to='/'/>;
+      }
+
+      // Redirect if logged in
+      if (isAuthenticated && role !== 'undefined' && role === 'ADMIN') {
+          return <Navigate to='/dashboard'/>;
+      }
   }
+
+  redirectBasedOnRole();
 
   return (
     <Fragment>
@@ -99,7 +108,7 @@ const Login = () => {
               </div>
             </Fragment>)
           :
-          (<Navigate to='/dashboard'/>)
+          (redirectBasedOnRole())
       }
     </Fragment>
   )

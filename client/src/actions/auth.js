@@ -26,7 +26,7 @@ export const loadUser = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/auth');
 
-    dispatch(userLoaded(res.data));
+    await dispatch(userLoaded(res.data));
   } catch (err) {
     dispatch(authError(err.response.data.errorMessage));
   }
