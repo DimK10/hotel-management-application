@@ -26,8 +26,8 @@ public class RoomAmenity extends BaseEntity {
 
 	}
 
-	public RoomAmenity(Long id, String rAmenity) {
-		super(id);
+	public RoomAmenity(String rAmenity) {
+
 		this.rAmenity = rAmenity;
 	}
 

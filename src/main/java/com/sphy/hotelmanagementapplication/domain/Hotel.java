@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /***
- * created by gp , AKd
+ * created by gp
  */
 @Entity
 @Table(name = "hotels")

@@ -21,8 +21,8 @@ public class HotelAmenity extends BaseEntity {
 		
 	}
 
-	public HotelAmenity(Long id, String hAmenity) {
-		super(id);
+	public HotelAmenity(String hAmenity) {
+
 		this.hAmenity = hAmenity;
 	}
 

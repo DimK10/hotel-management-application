@@ -115,6 +115,9 @@ public class BootStrapData implements CommandLineRunner {
 
         ena.getOrders().add(order);
 
+        RoomAmenity roomAmenity1 = new RoomAmenity("FreeWiFi");
+
+
 //        Set<RoomAmenity> amenityRset = new HashSet<>();
 //
 //        RoomAmenity amenityR1 = new RoomAmenity();
