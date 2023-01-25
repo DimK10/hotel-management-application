@@ -52,19 +52,6 @@ public class HotelServiceTest {
     HotelToHotelDTO hotelToHotelDTO;
 
     @Mock
-    HotelAmenityToHotelAmenityDTO hotelAmenityToHotelAmenityDTO;
-
-    @Mock
-    HotelAmenityDTOToHotelAmenity hotelAmenityDTOToHotelAmenity;
-
-
-    @Mock
-    RoomAmenityDTOToRoomAmenity roomAmenityDTOToRoomAmenity;
-
-    @Mock
-    RoomAmenityToRoomAmenityDTO roomAmenityToRoomAmenityDTO;
-
-    @Mock
     JwtUtil jwtUtil;
 
 
@@ -191,11 +178,11 @@ public class HotelServiceTest {
         hotelService = new HotelService(
                 hotelRepository,
                 new HotelDTOToHotel(new RoomDTOToRoom(hotelRepository,
-                        new OrderDTOToOrder(roomRepository, userRepository), new RoomAmenityDTOToRoomAmenity()),
-                        userRepository, hotelAmenityDTOToHotelAmenity),
-                hotelToHotelDTO, roomService, hotelAmenityToHotelAmenityDTO, userRepository,
-                new UserService(userRepository, new UserToUserDTO(new HotelToHotelDTO(new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository, new RoomAmenityToRoomAmenityDTO()), new HotelAmenityToHotelAmenityDTO()), new OrderToOrderDTO(roomRepository, userRepository)),
-                        new UserDTOToUser(new HotelToHotelDTO(new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository, new RoomAmenityToRoomAmenityDTO()), new HotelAmenityToHotelAmenityDTO()), new OrderToOrderDTO(roomRepository, userRepository)),
+                        new OrderDTOToOrder(roomRepository, userRepository)),
+                        userRepository),
+                hotelToHotelDTO, roomService, userRepository,
+                new UserService(userRepository, new UserToUserDTO(new HotelToHotelDTO(new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository), new OrderToOrderDTO(roomRepository, userRepository)),
+                        new UserDTOToUser(new HotelToHotelDTO(new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository), new OrderToOrderDTO(roomRepository, userRepository)),
                         new PasswordEncoder() {
                             @Override
                             public String encode(CharSequence rawPassword) {

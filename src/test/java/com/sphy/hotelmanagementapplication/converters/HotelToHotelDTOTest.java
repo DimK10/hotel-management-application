@@ -1,6 +1,5 @@
 package com.sphy.hotelmanagementapplication.converters;
 
-import com.sphy.hotelmanagementapplication.converter.HotelAmenityToHotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.converter.HotelToHotelDTO;
 import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;

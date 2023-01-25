@@ -1,11 +1,9 @@
 package com.sphy.hotelmanagementapplication.service;
 
-import com.sphy.hotelmanagementapplication.converter.RoomAmenityToRoomAmenityDTO;
 import com.sphy.hotelmanagementapplication.converter.RoomDTOToRoom;
 import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
-import com.sphy.hotelmanagementapplication.dto.RoomAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
@@ -31,15 +29,12 @@ public class RoomService {
 
     private final RoomToRoomDTO roomToRoomDTO;
 
-    private final RoomAmenityToRoomAmenityDTO roomAmenityToRoomAmenityDTO;
 
-
-	public RoomService(RoomRepository repository, HotelRepository hotelRepository, RoomDTOToRoom roomDTOToRoom, RoomToRoomDTO roomToRoomDTO, RoomAmenityToRoomAmenityDTO roomAmenityToRoomAmenityDTO) {
+	public RoomService(RoomRepository repository, HotelRepository hotelRepository, RoomDTOToRoom roomDTOToRoom, RoomToRoomDTO roomToRoomDTO) {
 		this.roomRepository = repository;
 		this.hotelRepository = hotelRepository;
         this.roomDTOToRoom = roomDTOToRoom;
         this.roomToRoomDTO = roomToRoomDTO;
-        this.roomAmenityToRoomAmenityDTO = roomAmenityToRoomAmenityDTO;
     }
 
     /***
@@ -275,17 +270,17 @@ public class RoomService {
      * @param id The ID of the room for which to retrieve amenities
      * @return A set of RoomAmenity representing the amenities of the room with the given ID
      */
-    public Set<RoomAmenityDTO> getRoomAmenitiesByRoomId(Long id) {
-
-        Set<RoomAmenityDTO> amenitiesRoomDTO = new HashSet<>();
-
-        Optional<Room> roomOptional = roomRepository.findById(id);
-
-        roomOptional.ifPresent(room ->  room.getRoomAmenity()
-                                .forEach(roomAmenity -> amenitiesRoomDTO
-                                        .add(roomAmenityToRoomAmenityDTO
-                                                .converter(roomAmenity))));
-
-        return amenitiesRoomDTO;
-    }
+//    public Set<RoomAmenityDTO> getRoomAmenitiesByRoomId(Long id) {
+//
+//        Set<RoomAmenityDTO> amenitiesRoomDTO = new HashSet<>();
+//
+//        Optional<Room> roomOptional = roomRepository.findById(id);
+//
+//        roomOptional.ifPresent(room ->  room.getRoomAmenity()
+//                                .forEach(roomAmenity -> amenitiesRoomDTO
+//                                        .add(roomAmenityToRoomAmenityDTO
+//                                                .converter(roomAmenity))));
+//
+//        return amenitiesRoomDTO;
+//    }
 }

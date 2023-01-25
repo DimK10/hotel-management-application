@@ -19,8 +19,6 @@ public class RoomDTO implements Serializable {
 
 	private Set<OrderDTO> orders =new HashSet<>();
 
-	private Set<RoomAmenityDTO> roomAmenityDTO = new HashSet<>();
-
 	private long price;
 
 	private boolean disabled;
@@ -97,13 +95,6 @@ public class RoomDTO implements Serializable {
 		this.capacity = capacity;
 	}
 
-	public Set<RoomAmenityDTO> getRoomAmenityDTO() {
-		return roomAmenityDTO;
-	}
-
-	public void setRoomAmenityDTO(Set<RoomAmenityDTO> roomAmenityDTO) {
-		this.roomAmenityDTO = roomAmenityDTO;
-	}
 
 	@Override
 	public String toString() {
@@ -116,6 +107,6 @@ public class RoomDTO implements Serializable {
 				", price=" + price +
 				", disabled=" + disabled +
 				", capacity=" + capacity +
-				", roomAmenity=" + roomAmenityDTO + "}";
+				"}";
 	}
 }

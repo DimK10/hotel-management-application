@@ -15,8 +15,10 @@ public class Room extends BaseEntity {
 
     @Column(name = "name")
     private String name;
+
     @Column(name = "luxurity")
     private int luxurity;
+
     @ManyToOne
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;

@@ -1,12 +1,10 @@
 package com.sphy.hotelmanagementapplication.service;
 
-import com.sphy.hotelmanagementapplication.converter.HotelAmenityToHotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.converter.HotelDTOToHotel;
 import com.sphy.hotelmanagementapplication.converter.HotelToHotelDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
-import com.sphy.hotelmanagementapplication.dto.HotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
@@ -38,14 +36,12 @@ public class HotelService {
 
     private final RoomService roomService;
 
-    private final HotelAmenityToHotelAmenityDTO hotelAmenityToHotelAmenityDTO;
 
-    public HotelService(HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, HotelAmenityToHotelAmenityDTO hotelAmenityToHotelAmenityDTO, UserRepository userRepository, UserService userService) {
+    public HotelService(HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService) {
         this.hotelRepository = hotelRepository;
         this.hotelDTOToHotel = hotelDTOToHotel;
         this.hotelToHotelDTO = hotelToHotelDTO;
         this.roomService = roomService;
-        this.hotelAmenityToHotelAmenityDTO = hotelAmenityToHotelAmenityDTO;
         this.userRepository = userRepository;
         this.userService = userService;
     }
@@ -284,15 +280,15 @@ public class HotelService {
      * @return A set of HotelAmenity representing the amenities of the hotel with the given ID
      */
 
-    public Set<HotelAmenityDTO> getHotelAmenitiesByHotelId(Long id) {
-
-        Set<HotelAmenityDTO> amenitiesHotelDTO = new HashSet<>();
-        Optional<Hotel> hotelOptional = hotelRepository.findById(id);
-        hotelOptional.ifPresent(hotel -> hotel.getHotelAmenity()
-                .forEach(hotelAmenity -> amenitiesHotelDTO.add(hotelAmenityToHotelAmenityDTO.converter(hotelAmenity))));
-
-        return amenitiesHotelDTO;
-    }
+//    public Set<HotelAmenityDTO> getHotelAmenitiesByHotelId(Long id) {
+//
+//        Set<HotelAmenityDTO> amenitiesHotelDTO = new HashSet<>();
+//        Optional<Hotel> hotelOptional = hotelRepository.findById(id);
+//        hotelOptional.ifPresent(hotel -> hotel.getHotelAmenity()
+//                .forEach(hotelAmenity -> amenitiesHotelDTO.add(hotelAmenityToHotelAmenityDTO.converter(hotelAmenity))));
+//
+//        return amenitiesHotelDTO;
+//    }
 
     /***
      * returns the hotels that are available in specific dates in a location

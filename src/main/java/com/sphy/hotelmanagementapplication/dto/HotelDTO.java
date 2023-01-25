@@ -25,8 +25,6 @@ public class HotelDTO implements Serializable{
     private boolean disabled;
 
     private Set<RoomDTO> rooms =new HashSet<>();
-    
-    private Set<HotelAmenityDTO> hotelAmenityDTO = new HashSet<>();// created by AKd
 
     public HotelDTO(long id) {
         this.id = id;
@@ -100,14 +98,6 @@ public class HotelDTO implements Serializable{
         this.address = address;
     }
 
-	public Set<HotelAmenityDTO> getHotelAmenityDTO() {
-		return hotelAmenityDTO;
-	}
-
-	public void setHotelAmenityDTO(Set<HotelAmenityDTO> hotelAmenityDTO) {
-		this.hotelAmenityDTO = hotelAmenityDTO;
-	}
-
 	@Override
     public String toString() {
         return "HotelDTO{" +
@@ -119,6 +109,6 @@ public class HotelDTO implements Serializable{
                 ", owner=" + owner +
                 ", disabled=" + disabled +
                 ", rooms=" + rooms +
-                ", hotelAmenity=" + hotelAmenityDTO + "}";
+                "}";
     }
 }

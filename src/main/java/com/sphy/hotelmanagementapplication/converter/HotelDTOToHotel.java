@@ -1,7 +1,6 @@
 package com.sphy.hotelmanagementapplication.converter;
 
 import com.sphy.hotelmanagementapplication.domain.Hotel;
-import com.sphy.hotelmanagementapplication.dto.HotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.repository.UserRepository;
@@ -17,13 +16,11 @@ public class HotelDTOToHotel {
 
     private final UserRepository userRepository;
 
-    private final HotelAmenityDTOToHotelAmenity hotelAmenityDTOToHotelAmenity;
 
 
-    public HotelDTOToHotel(RoomDTOToRoom roomDTOToRoom, UserRepository userRepository, HotelAmenityDTOToHotelAmenity hotelAmenityDTOToHotelAmenity) {
+    public HotelDTOToHotel(RoomDTOToRoom roomDTOToRoom, UserRepository userRepository) {
         this.roomDTOToRoom = roomDTOToRoom;
         this.userRepository = userRepository;
-        this.hotelAmenityDTOToHotelAmenity = hotelAmenityDTOToHotelAmenity;
     }
 
     /***
@@ -48,14 +45,6 @@ public class HotelDTOToHotel {
         }
 
         hotelDTO.setDisabled(hotel.isDisabled());
-
-
-        if (!hotelDTO.getHotelAmenityDTO().isEmpty()) {
-
-            for (HotelAmenityDTO hotelAmenityDTO : hotelDTO.getHotelAmenityDTO()) {
-                hotel.getHotelAmenity().add(hotelAmenityDTOToHotelAmenity.converter(hotelAmenityDTO));
-            }
-        }
 
         return hotel;
 

@@ -35,13 +35,8 @@ public class Hotel extends BaseEntity {
     private Set<Room> rooms = new HashSet<>();
 
 
-    @ManyToMany(fetch = FetchType.EAGER)  // created by AKd
-	@JoinTable(  // created by AKd
-			name = "hotel_amenity",  // created by AKd
-			joinColumns = @JoinColumn(name = "hotel_id"),  // created by AKd
-			inverseJoinColumns = @JoinColumn(name = "HAmenity_id") // created by AKd
-	)
-	private Set<HotelAmenity> hotelAmenity = new HashSet<>();// created by AKd
+    @OneToMany(mappedBy = "hotel", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private Set<IntermediateHotelAmenity> intermediateHotelAmenities;
 
 
     public Hotel(Long id) {
@@ -115,17 +110,16 @@ public class Hotel extends BaseEntity {
         this.disabled = disabled;
     }
 
-	// created by AKd
-	public Set<HotelAmenity> getHotelAmenity(){
-		return hotelAmenity;
-	}
-
-	// created by AKd
-	public void setHotelAmenity(Set<HotelAmenity> hotelAmenity) {
-		this.hotelAmenity = hotelAmenity;
-	}
     public String getAddress() {
         return address;
+    }
+
+    public Set<IntermediateHotelAmenity> getIntermediateHotelAmenities() {
+        return intermediateHotelAmenities;
+    }
+
+    public void setIntermediateHotelAmenities(Set<IntermediateHotelAmenity> intermediateHotelAmenities) {
+        this.intermediateHotelAmenities = intermediateHotelAmenities;
     }
 
     public void setAddress(String address) {
@@ -142,16 +136,18 @@ public class Hotel extends BaseEntity {
 		return super.hashCode();
 	}
 
-	@Override
+    @Override
     public String toString() {
         return "Hotel{" +
                 "id=" + super.getId() +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", stars=" + stars +
                 ", areaName='" + areaName + '\'' +
                 ", address='" + address + '\'' +
+                ", disabled=" + disabled +
                 ", owner=" + owner +
 //                ", rooms=" + rooms +
+                ", intermediateHotelAmenities=" + intermediateHotelAmenities +
                 '}';
     }
 }

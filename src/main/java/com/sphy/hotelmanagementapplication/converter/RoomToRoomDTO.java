@@ -22,12 +22,10 @@ public class RoomToRoomDTO {
 
     private final HotelRepository hotelRepository;
 
-    private final RoomAmenityToRoomAmenityDTO roomAmenityToRoomAmenityDTO;
 
-    public RoomToRoomDTO(OrderToOrderDTO orderToOrderDTO, HotelRepository hotelRepository,RoomAmenityToRoomAmenityDTO roomAmenityToRoomAmenityDTO) {
+    public RoomToRoomDTO(OrderToOrderDTO orderToOrderDTO, HotelRepository hotelRepository) {
         this.orderToOrderDTO = orderToOrderDTO;
         this.hotelRepository = hotelRepository;
-        this.roomAmenityToRoomAmenityDTO = roomAmenityToRoomAmenityDTO;
     }
 
     /***
@@ -62,12 +60,6 @@ public class RoomToRoomDTO {
 
             for (Order order : room.getOrders()){
                 roomDTO.getOrders().add(orderToOrderDTO.converter(order));
-            }
-        }
-
-        if (!room.getRoomAmenity().isEmpty()) {
-            for (RoomAmenity roomAmenity : room.getRoomAmenity()) {
-                roomDTO.getRoomAmenityDTO().add(roomAmenityToRoomAmenityDTO.converter(roomAmenity));
             }
         }
 
