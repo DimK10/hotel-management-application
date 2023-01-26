@@ -104,15 +104,21 @@ public class RoomService {
 
                 throw new ApiRequestException("hotel with id: " + roomDto.getHotel() + " does not exist");
 
-            } else {
+            } else if (roomDto.getAmenities().isEmpty()) {
+
+                throw new ApiRequestException("The room does not have amenities");
+
+            }else {
                 Room room = roomDTOToRoom.converter(roomDto);
+
+                roomRepository.save(room);
 
                 roomDto.getAmenities().forEach(roomAmenity ->
                         room.getIntermediateRoomAmenities()
                                 .add(intermediateRoomAmenityRepository
                                         .save(new IntermediateRoomAmenity(room, roomAmenity))));
 
-                roomRepository.save(room);
+
 
                 rooms.add(room);
             }
