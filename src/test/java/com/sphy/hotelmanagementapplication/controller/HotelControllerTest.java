@@ -457,7 +457,6 @@ public class HotelControllerTest {
         basicSearchDTO2.setNameOrLocation("ksenia");
 
         //when
-        when(userService.getUserFromToken(anyString())).thenReturn(client);
         when(hotelService.getHotelBasicSearch(any())).thenReturn(hotel1DTOS);
 
         //then

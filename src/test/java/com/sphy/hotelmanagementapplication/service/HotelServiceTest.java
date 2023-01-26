@@ -10,6 +10,7 @@ import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.repository.HotelRepository;
+import com.sphy.hotelmanagementapplication.repository.IntermediateHotelAmenityRepository;
 import com.sphy.hotelmanagementapplication.repository.RoomRepository;
 import com.sphy.hotelmanagementapplication.repository.UserRepository;
 import com.sphy.hotelmanagementapplication.security.JwtUtil;
@@ -52,17 +53,7 @@ public class HotelServiceTest {
     HotelToHotelDTO hotelToHotelDTO;
 
     @Mock
-    HotelAmenityToHotelAmenityDTO hotelAmenityToHotelAmenityDTO;
-
-    @Mock
-    HotelAmenityDTOToHotelAmenity hotelAmenityDTOToHotelAmenity;
-
-
-    @Mock
-    RoomAmenityDTOToRoomAmenity roomAmenityDTOToRoomAmenity;
-
-    @Mock
-    RoomAmenityToRoomAmenityDTO roomAmenityToRoomAmenityDTO;
+    IntermediateHotelAmenityRepository intermediateHotelAmenityRepository;
 
     @Mock
     JwtUtil jwtUtil;
@@ -191,11 +182,11 @@ public class HotelServiceTest {
         hotelService = new HotelService(
                 hotelRepository,
                 new HotelDTOToHotel(new RoomDTOToRoom(hotelRepository,
-                        new OrderDTOToOrder(roomRepository, userRepository), new RoomAmenityDTOToRoomAmenity()),
-                        userRepository, hotelAmenityDTOToHotelAmenity),
-                hotelToHotelDTO, roomService, hotelAmenityToHotelAmenityDTO, userRepository,
-                new UserService(userRepository, new UserToUserDTO(new HotelToHotelDTO(new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository, new RoomAmenityToRoomAmenityDTO()), new HotelAmenityToHotelAmenityDTO()), new OrderToOrderDTO(roomRepository, userRepository)),
-                        new UserDTOToUser(new HotelToHotelDTO(new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository, new RoomAmenityToRoomAmenityDTO()), new HotelAmenityToHotelAmenityDTO()), new OrderToOrderDTO(roomRepository, userRepository)),
+                        new OrderDTOToOrder(roomRepository, userRepository)),
+                        userRepository),
+                hotelToHotelDTO, roomService, userRepository,
+                new UserService(userRepository, new UserToUserDTO(new HotelToHotelDTO(new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository)), new OrderToOrderDTO(roomRepository, userRepository)),
+                        new UserDTOToUser(new HotelToHotelDTO(new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository)), new OrderToOrderDTO(roomRepository, userRepository)),
                         new PasswordEncoder() {
                             @Override
                             public String encode(CharSequence rawPassword) {
@@ -209,7 +200,7 @@ public class HotelServiceTest {
                         },
                         jwtUtil
 
-                ));
+                ), intermediateHotelAmenityRepository);
     }
 
     @Test

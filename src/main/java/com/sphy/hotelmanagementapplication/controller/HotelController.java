@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
-import com.sphy.hotelmanagementapplication.dto.HotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.service.HotelService;
@@ -229,39 +229,23 @@ public class HotelController {
      */
 
     @GetMapping("/api/hotel/amenities/{hotelId}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public Set<HotelAmenityDTO> findHotelAmenitiesByHotelId(@RequestHeader(name = "Authorization") String token, @PathVariable Long hotelId) throws ApiRequestException {
-
-        HotelDTO hotelOptional = service.getHotelById(hotelId);
-
-        if (Objects.equals(hotelOptional.getOwner(), userService.getUserFromToken(token).getId())) {
+    public Set<HotelAmenity> findHotelAmenitiesByHotelId(@PathVariable Long hotelId) throws ApiRequestException {
 
             return service.getHotelAmenitiesByHotelId(hotelId);
 
-        } else {
-            throw new ApiRequestException("Unauthorized");
-        }
     }
 
     /***
      * returns the hotels that are available in specific dates in a location
      * or a hotel if it is available at that dates if the search made by the hotel name
-     * @param token users token
      * @param basicSearchDTO basic search fields (check in date, check out date, location name or hotel name)
      * @return the hotels than mach with the search
      * @throws RuntimeException if this that made the search is not a role client
      */
     @GetMapping("/api/hotel/basic/search")
-    @PreAuthorize("hasAuthority('CLIENT')")
-    public Set<HotelDTO> findHotelBasicSearch(@RequestHeader(name = "Authorization") String token, @RequestBody BasicSearchDTO basicSearchDTO)throws RuntimeException{
-
-        if (userService.getUserFromToken(token).getRole().equals(User.Role.CLIENT)){
+    public Set<HotelDTO> findHotelBasicSearch(@RequestBody BasicSearchDTO basicSearchDTO)throws RuntimeException{
 
             return service.getHotelBasicSearch(basicSearchDTO);
-        }else {
-
-            throw new RuntimeException("Unauthorized");
-        }
 
     }
 

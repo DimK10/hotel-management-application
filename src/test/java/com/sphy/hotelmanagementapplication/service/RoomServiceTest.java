@@ -5,6 +5,7 @@ import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.repository.HotelRepository;
+import com.sphy.hotelmanagementapplication.repository.IntermediateRoomAmenityRepository;
 import com.sphy.hotelmanagementapplication.repository.RoomRepository;
 import com.sphy.hotelmanagementapplication.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,10 +39,7 @@ class RoomServiceTest {
 	UserRepository userRepository;
 
 	@Mock
-    RoomAmenityDTOToRoomAmenity roomAmenityDTOToRoomAmenity;
-
-    @Mock
-    RoomAmenityToRoomAmenityDTO roomAmenityToRoomAmenityDTO;
+	IntermediateRoomAmenityRepository intermediateRoomAmenityRepository;
 
 	RoomService roomService;
 
@@ -88,7 +86,7 @@ class RoomServiceTest {
 
 
 		roomService = new RoomService(roomRepository, hotelRepository, new RoomDTOToRoom(hotelRepository,
-				new OrderDTOToOrder(roomRepository, userRepository), roomAmenityDTOToRoomAmenity), new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository, roomAmenityToRoomAmenityDTO), new RoomAmenityToRoomAmenityDTO());
+				new OrderDTOToOrder(roomRepository, userRepository)), new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository), intermediateRoomAmenityRepository);
 
 	}
 
