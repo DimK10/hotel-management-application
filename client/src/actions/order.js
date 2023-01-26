@@ -7,6 +7,7 @@ import setAuthToken from '../utils/setAuthToken';
 const {
     newOrderPreCheckout,
     getAllOrdersForClient,
+    getOrderById,
     addHotelToOrderPreCheckout,
     addToOrder,
     orderError
@@ -20,6 +21,29 @@ export const getNewOrder = () => async (dispach) => {
         // });
     } catch (err) {
 
+    }
+}
+
+export const getOrderByIdAction = (orderId) => async (dispatch) => {
+     
+    if (localStorage.jwt) {
+       setAuthToken(localStorage.jwt);
+    }
+
+    try {
+        
+        const res = await axios.get(`/api/orderId/${orderId}`);
+    
+        dispatch(getOrderById(res.data));
+
+    } catch (err) {
+
+        const payload = {
+          msg: err,
+          status: null,
+        };
+
+        dispatch(orderError(payload));
     }
 }
 

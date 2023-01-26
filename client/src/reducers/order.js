@@ -16,6 +16,7 @@ const orderSlice = createSlice({
       roomAmenities: [],
       canceled: false,
     },
+    orderToShow: null,
     orders: [],
     error: {}
   },
@@ -26,6 +27,12 @@ const orderSlice = createSlice({
       state.currentOrder.checkInDate = payload.checkInDate;
       state.currentOrder.checkOutDate = payload.checkOutDate;
 
+    },
+    getOrderById: (state, action) => {
+      const { payload } = action;
+
+      state.orderToShow = payload;
+      state.error = '';
     },
     getAllOrdersForClient: (state, action) => {
       const { payload } = action;

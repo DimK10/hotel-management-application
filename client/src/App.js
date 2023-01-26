@@ -32,6 +32,7 @@ import ViewHotel from "./components/admin/hotel/ViewHotel";
 import EditHotel from "./components/admin/hotel/EditHotel";
 import ClientOrders from "./components/client/order/ClientOrders";
 import SecuredRolePage from "./components/auth/SecuredRolePage";
+import ShowOrderInfo from './components/client/order/ShowOrderInfo';
 
 if (localStorage.token) {
     setAuthToken(localStorage.token);
@@ -49,101 +50,148 @@ const App = () => {
     }, []);
 
     return (
-        <React.StrictMode>
-            <Provider store={store}>
-                <Fragment>
-                    <Router>
-                        <Routes>
-                            <Route path='/' element={<FirstPage/>}/>
-                            <Route path='/sign-in' element={<Login/>}/>
-                            <Route path='/sign-up' element={<Register/>}/>
-                            <Route path='/logout' element={<Logout/>}/>
-                            <Route path='/search' element={<AdvancedSearch/>}/>
-                            <Route path='/not-found' element={<NotFound/>}/>
-                            <Route path='/order' element={<PlaceNewOrder/>}/>
-                            <Route path='/protected'
-                                   element={
-                                       <SecuredPage>
-                                           <AdvancedSearch/>
-                                       </SecuredPage>
-                                   }/>
+      <React.StrictMode>
+        <Provider store={store}>
+          <Fragment>
+            <Router>
+              <Routes>
+                <Route path='/' element={<FirstPage />} />
+                <Route path='/sign-in' element={<Login />} />
+                <Route path='/sign-up' element={<Register />} />
+                <Route path='/logout' element={<Logout />} />
+                <Route path='/search' element={<AdvancedSearch />} />
+                <Route path='/not-found' element={<NotFound />} />
+                <Route path='/order' element={<PlaceNewOrder />} />
+                <Route
+                  path='/protected'
+                  element={
+                    <SecuredPage>
+                      <AdvancedSearch />
+                    </SecuredPage>
+                  }
+                />
 
-                            {/* Client Routes */}
-                            <Route path='/my-orders' element={
-                                <SecuredPage>
-                                    <SecuredRolePage userRole={Role.CLIENT}>
-                                        <ClientOrders/>
-                                    </SecuredRolePage>
-                                </SecuredPage>
-                            }/>
+                {/* Client Routes */}
+                <Route
+                  path='/my-orders'
+                  element={
+                    <SecuredPage>
+                      <SecuredRolePage userRole={Role.CLIENT}>
+                        <ClientOrders />
+                      </SecuredRolePage>
+                    </SecuredPage>
+                  }
+                />
 
-                            {/* Admin routes */}
-                            {/*  TODO ADD SECURED ROUTE */}
-                            <Route path='/dashboard' element={
-                                <SecuredPage>
-                                    <SecuredRolePage userRole={Role.ADMIN}>
-                                        <Dashboard/>
-                                    </SecuredRolePage>
-                                </SecuredPage>}/>
-                            <Route path='/hotels' element={
-                                <SecuredPage>
-                                    <SecuredRolePage userRole={Role.ADMIN}>
-                                        <Hotels/>
-                                    </SecuredRolePage>
-                                </SecuredPage>
-                            }/>
-                            <Route path='/hotels/new' element={
-                                <SecuredPage>
-                                    <SecuredRolePage userRole={Role.ADMIN}>
-                                        <CreateHotel/>
-                                    </SecuredRolePage>
-                                </SecuredPage>}
-                            />
-                            <Route path='/hotels/update/:hotelId' element={
-                                <SecuredPage>
-                                    <SecuredRolePage userRole={Role.ADMIN}>
-                                        <EditHotel/>
-                                    </SecuredRolePage>
-                                </SecuredPage>}
-                            />
-                            <Route exact path="/hotels/:hotelId" element={
-                                <SecuredPage>
-                                    <SecuredRolePage userRole={Role.ADMIN}>
-                                        <ViewHotel/>
-                                    </SecuredRolePage>
-                                </SecuredPage>
-                            }/>
-                            <Route path='/rooms' element={
-                                <SecuredPage>
-                                    <SecuredRolePage userRole={Role.ADMIN}>
-                                        <Rooms/>
-                                    </SecuredRolePage>
-                                </SecuredPage>
-                            }/>
-                            <Route path='/rooms/new' element={
-                                <SecuredPage>
-                                    <SecuredRolePage userRole={Role.ADMIN}>
-                                        <CreateRoom/>
-                                    </SecuredRolePage>
-                                </SecuredPage>
-                            }/>
-                            <Route path='/orders' element={
-                                <SecuredPage>
-                                    <SecuredRolePage userRole={Role.ADMIN}>
-                                        <Orders/>
-                                    </SecuredRolePage>
-                                </SecuredPage>
-                            }/>
-                            <Route path='/calendar' element={<SecuredPage>
-                                <SecuredRolePage userRole={Role.ADMIN}>
-                                    <Calendar/>
-                                </SecuredRolePage>
-                            </SecuredPage>}/>
-                        </Routes>
-                    </Router>
-                </Fragment>
-            </Provider>
-        </React.StrictMode>
+                <Route
+                  path='/my-orders/:orderId'
+                  element={
+                    <SecuredPage>
+                      <SecuredRolePage userRole={Role.CLIENT}>
+                        <ShowOrderInfo />
+                      </SecuredRolePage>
+                    </SecuredPage>
+                  }
+                />
+
+                {/* Admin routes */}
+                {/*  TODO ADD SECURED ROUTE */}
+                <Route
+                  path='/dashboard'
+                  element={
+                    <SecuredPage>
+                      <SecuredRolePage userRole={Role.ADMIN}>
+                        <Dashboard />
+                      </SecuredRolePage>
+                    </SecuredPage>
+                  }
+                />
+                <Route
+                  path='/hotels'
+                  element={
+                    <SecuredPage>
+                      <SecuredRolePage userRole={Role.ADMIN}>
+                        <Hotels />
+                      </SecuredRolePage>
+                    </SecuredPage>
+                  }
+                />
+                <Route
+                  path='/hotels/new'
+                  element={
+                    <SecuredPage>
+                      <SecuredRolePage userRole={Role.ADMIN}>
+                        <CreateHotel />
+                      </SecuredRolePage>
+                    </SecuredPage>
+                  }
+                />
+                <Route
+                  path='/hotels/update/:hotelId'
+                  element={
+                    <SecuredPage>
+                      <SecuredRolePage userRole={Role.ADMIN}>
+                        <EditHotel />
+                      </SecuredRolePage>
+                    </SecuredPage>
+                  }
+                />
+                <Route
+                  exact
+                  path='/hotels/:hotelId'
+                  element={
+                    <SecuredPage>
+                      <SecuredRolePage userRole={Role.ADMIN}>
+                        <ViewHotel />
+                      </SecuredRolePage>
+                    </SecuredPage>
+                  }
+                />
+                <Route
+                  path='/rooms'
+                  element={
+                    <SecuredPage>
+                      <SecuredRolePage userRole={Role.ADMIN}>
+                        <Rooms />
+                      </SecuredRolePage>
+                    </SecuredPage>
+                  }
+                />
+                <Route
+                  path='/rooms/new'
+                  element={
+                    <SecuredPage>
+                      <SecuredRolePage userRole={Role.ADMIN}>
+                        <CreateRoom />
+                      </SecuredRolePage>
+                    </SecuredPage>
+                  }
+                />
+                <Route
+                  path='/orders'
+                  element={
+                    <SecuredPage>
+                      <SecuredRolePage userRole={Role.ADMIN}>
+                        <Orders />
+                      </SecuredRolePage>
+                    </SecuredPage>
+                  }
+                />
+                <Route
+                  path='/calendar'
+                  element={
+                    <SecuredPage>
+                      <SecuredRolePage userRole={Role.ADMIN}>
+                        <Calendar />
+                      </SecuredRolePage>
+                    </SecuredPage>
+                  }
+                />
+              </Routes>
+            </Router>
+          </Fragment>
+        </Provider>
+      </React.StrictMode>
     );
 };
 
