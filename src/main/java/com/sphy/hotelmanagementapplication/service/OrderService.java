@@ -195,6 +195,12 @@ public class OrderService {
             orderOptional.get().setCheckOutDate(orderDTO.getCheckOutDate());
             orderOptional.get().setCheckInDate(orderDTO.getCheckInDate());
             orderOptional.get().setCanceled(orderDTO.isCanceled());
+            orderOptional.get().setPrice(orderDTO.getPrice());
+            orderOptional.get().setHotelName(orderDTO.getHotelName());
+            orderOptional.get().setRoomName(orderDTO.getRoomName());
+            orderOptional.get().getRoomAmenities().forEach(amenity -> orderDTO.getRoomAmenities().add(amenity));
+            orderOptional.get().getHotelAmenities().forEach(amenity -> orderDTO.getRoomAmenities().add(amenity));
+
         } else {
             throw new ApiExceptionFront("The room isn't available on the desirable dates");
         }
