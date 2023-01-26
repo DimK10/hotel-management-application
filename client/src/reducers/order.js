@@ -27,6 +27,12 @@ const orderSlice = createSlice({
       state.currentOrder.checkOutDate = payload.checkOutDate;
 
     },
+    getAllOrdersForClient: (state, action) => {
+      const { payload } = action;
+
+      state.orders = [...payload];
+      state.error = false;
+    },
     addHotelToOrderPreCheckout: (state, action) => {
       const { payload }  = action;
 

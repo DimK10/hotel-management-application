@@ -1,9 +1,12 @@
 import {GET_NEW_ORDER, NEW_ORDER_PRE_CHECKOUT, ORDER_ERROR} from "./types";
 import orderSlice from "../reducers/order";
 import moment from "moment";
+import axios from 'axios';
+import setAuthToken from '../utils/setAuthToken';
 
 const {
     newOrderPreCheckout,
+    getAllOrdersForClient,
     addHotelToOrderPreCheckout,
     addToOrder,
     orderError
@@ -17,6 +20,29 @@ export const getNewOrder = () => async (dispach) => {
         // });
     } catch (err) {
 
+    }
+}
+
+export const getAllOrdersForClientAction = () => async (dispatch) => {
+    
+    if (localStorage.jwt) {
+      setAuthToken(localStorage.jwt);
+    }
+
+    try {
+        
+        const res = await axios.get('/api/orders/client');
+
+        await dispatch(getAllOrdersForClient(res.data));
+
+    } catch (err) {
+
+         const payload = {
+           msg: err,
+           status: null,
+         };
+        
+        dispatch(orderError(payload));
     }
 }
 
