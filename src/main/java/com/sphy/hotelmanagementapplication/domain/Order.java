@@ -2,6 +2,8 @@ package com.sphy.hotelmanagementapplication.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 /***
  * created by gp
@@ -28,18 +30,32 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "rooms_id")
     private Room room;
 
+    private Long price;
+
+    private String roomName;
+
+    private String hotelName;
+
+    @ElementCollection
+    private Set<String> hotelAmenities = new HashSet<>();
+
+    @ElementCollection
+    private Set<String> roomAmenities = new HashSet<>();
 
     public Order() {
     }
 
 
-    public Order(Long id, LocalDate checkInDate, LocalDate checkOutDate, boolean canceled, User client, Room room) {
+    public Order(Long id, LocalDate checkInDate, LocalDate checkOutDate, boolean canceled, User client, Room room, String roomName, String hotelName, Long price) {
 		super(id);
 		this.checkInDate = checkInDate;
         this.room = room;
         this.checkOutDate = checkOutDate;
         this.canceled = canceled;
         this.client = client;
+        this.roomName = roomName;
+        this.hotelName = hotelName;
+        this.price = price;
     }
 
     public Order(long l) {
@@ -94,6 +110,46 @@ public class Order extends BaseEntity {
         this.room = room;
     }
 
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
+    public String getHotelName() {
+        return hotelName;
+    }
+
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
+    }
+
+    public Set<String> getHotelAmenities() {
+        return hotelAmenities;
+    }
+
+    public void setHotelAmenities(Set<String> hotelAmenities) {
+        this.hotelAmenities = hotelAmenities;
+    }
+
+    public Set<String> getRoomAmenities() {
+        return roomAmenities;
+    }
+
+    public void setRoomAmenities(Set<String> roomAmenities) {
+        this.roomAmenities = roomAmenities;
+    }
+
     @Override
     public boolean equals(Object o) {
         return super.equals(o);
@@ -109,10 +165,16 @@ public class Order extends BaseEntity {
     public String toString() {
         return "Order{" +
                 "Id=" + this.getId() +
-                ", checkInDate=" + checkInDate +
+                "checkInDate=" + checkInDate +
                 ", checkOutDate=" + checkOutDate +
+                ", canceled=" + canceled +
                 ", client=" + client +
-//                ", rooms=" + rooms +
+//                ", room=" + room +
+                ", price=" + price +
+                ", roomName='" + roomName + '\'' +
+                ", hotelName='" + hotelName + '\'' +
+                ", hotelAmenities=" + hotelAmenities +
+                ", roomAmenities=" + roomAmenities +
                 '}';
     }
 }

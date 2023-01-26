@@ -40,6 +40,11 @@ public class OrderDTOToOrder {
         order.setCheckInDate(orderDTO.getCheckInDate());
         order.setCheckOutDate(orderDTO.getCheckOutDate());
         order.setCanceled(orderDTO.isCanceled());
+        order.setPrice(orderDTO.getPrice());
+        order.setHotelName(orderDTO.getHotelName());
+        order.setRoomName(orderDTO.getRoomName());
+        order.getRoomAmenities().forEach(amenity -> orderDTO.getRoomAmenities().add(amenity));
+        order.getHotelAmenities().forEach(amenity -> orderDTO.getRoomAmenities().add(amenity));
 
         if (orderDTO.getRoom() != null){
 
