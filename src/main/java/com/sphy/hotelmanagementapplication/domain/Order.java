@@ -165,10 +165,16 @@ public class Order extends BaseEntity {
     public String toString() {
         return "Order{" +
                 "Id=" + this.getId() +
-                ", checkInDate=" + checkInDate +
+                "checkInDate=" + checkInDate +
                 ", checkOutDate=" + checkOutDate +
+                ", canceled=" + canceled +
                 ", client=" + client +
-//                ", rooms=" + rooms +
+//                ", room=" + room +
+                ", price=" + price +
+                ", roomName='" + roomName + '\'' +
+                ", hotelName='" + hotelName + '\'' +
+                ", hotelAmenities=" + hotelAmenities +
+                ", roomAmenities=" + roomAmenities +
                 '}';
     }
 }
