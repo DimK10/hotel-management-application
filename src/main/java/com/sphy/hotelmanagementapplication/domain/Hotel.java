@@ -1,5 +1,7 @@
 package com.sphy.hotelmanagementapplication.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,6 +37,7 @@ public class Hotel extends BaseEntity {
 
 
     @OneToMany(mappedBy = "hotel", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JsonIgnore
     private Set<IntermediateHotelAmenity> intermediateHotelAmenities = new HashSet<>();
 
 

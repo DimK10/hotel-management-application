@@ -2,8 +2,6 @@ package com.sphy.hotelmanagementapplication.repository;
 
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
-import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
-import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -13,7 +11,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.crypto.Data;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
@@ -53,7 +50,7 @@ public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long> 
 	Set<Hotel> findByBasicSearch(@Param("checkIn")LocalDate checkIn, @Param("checkOut")LocalDate checkOut
 	, @Param("NameOrLocation") String NameOrLocation);
 
-	@Query(value = "select ha.hAmenity from Hotel h inner join IntermediateHotelAmenity i on h.id = i.hotel.id " +
-			"inner join HotelAmenity ha on i.hotelAmenity.id = ha.id where h.id = :id")
-    Set<HotelAmenity> findAmenitityByHotelId(@Param("id") Long id);
+	@Query(value = "select ha from HotelAmenity ha inner join IntermediateHotelAmenity i on i.hotelAmenity.id = ha.id" +
+			"  where i.hotel.id = :id order by i.hotel.id")
+	Set<HotelAmenity> findAmenityByHotelId(@Param("id") Long id);
 }

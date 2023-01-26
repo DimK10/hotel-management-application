@@ -1,7 +1,10 @@
 package com.sphy.hotelmanagementapplication.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.servlet.SessionTrackingMode;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -18,8 +21,9 @@ public class RoomAmenity extends BaseEntity {
 
 	private String rAmenity;
 
-	@OneToMany(mappedBy = "roomAmenity", fetch =  FetchType.EAGER, cascade = CascadeType.PERSIST)
-	private Set<IntermediateRoomAmenity> intermediateRoomAmenities;
+	@OneToMany(mappedBy = "roomAmenity",fetch=FetchType.EAGER)
+	@JsonIgnore
+	private Set<IntermediateRoomAmenity> intermediateRoomAmenities = new HashSet<>();
 
 
 	public RoomAmenity() {
@@ -47,6 +51,14 @@ public class RoomAmenity extends BaseEntity {
 		this.rAmenity = rAmenity;
 	}
 
+	public Set<IntermediateRoomAmenity> getIntermediateRoomAmenities() {
+		return intermediateRoomAmenities;
+	}
+
+	public void setIntermediateRoomAmenities(Set<IntermediateRoomAmenity> intermediateRoomAmenities) {
+		this.intermediateRoomAmenities = intermediateRoomAmenities;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		return super.equals(o);
@@ -62,6 +74,7 @@ public class RoomAmenity extends BaseEntity {
 		return "RoomAmenity{" +
 				"id=" + super.getId() +
 				"rAmenity='" + rAmenity + '\'' +
+				", intermediateRoomAmenities=" + intermediateRoomAmenities +
 				'}';
 	}
 }

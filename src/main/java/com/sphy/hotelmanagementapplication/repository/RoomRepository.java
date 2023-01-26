@@ -27,7 +27,6 @@ public interface RoomRepository extends PagingAndSortingRepository<Room,Long> {
     Page<Room> findAllRoomsByOwner(@Param("id") Long id, Pageable pageable);
 
 
-    @Query(value = "select ra.rAmenity from rooms r inner join IntermediateRoomAmenity i on r.id = i.room.id " +
-            "inner join RoomAmenity ra on i.roomAmenity.id = ra.id where r.id = :id")
+    @Query(value = "select ra from RoomAmenity ra inner join IntermediateRoomAmenity i on i.roomAmenity.id = ra.id where i.room.id = :id")
     Set<RoomAmenity> findAmenitiesByRoomId(@Param("id") Long id);
 }

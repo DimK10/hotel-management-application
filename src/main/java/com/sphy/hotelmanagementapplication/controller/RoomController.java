@@ -208,16 +208,9 @@ public class RoomController {
      */
 
     @GetMapping("/api/room/amenities/{roomId}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public Set<RoomAmenity> findRoomAmenitiesByRoomId(@RequestHeader(name = "Authorization") String token, @PathVariable Long roomId) throws ApiRequestException {
-
-        if (Objects.equals(userService.getUserFromToken(token).getId(), hotelService.getHotelById(service.getRoomById(roomId).getHotel()).getOwner())) {
+    public Set<RoomAmenity> findRoomAmenitiesByRoomId(@PathVariable Long roomId) throws ApiRequestException {
 
             return service.getRoomAmenitiesByRoomId(roomId);
-        } else {
-
-            throw new RuntimeException("Unauthorized");
-        }
     }
 
 }

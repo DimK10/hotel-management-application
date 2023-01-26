@@ -128,13 +128,18 @@ public class BootStrapData implements CommandLineRunner {
 
 
         ksenia.getIntermediateHotelAmenities().add(hamen1);
+        hotelAmenity1.getIntermediateHotelAmenities().add(hamen1);
 
 
         IntermediateHotelAmenity hamen2 = new IntermediateHotelAmenity(ksenia,hotelAmenity2);
 
         intermediateHotelAmenityRepository.save(hamen2);
+        hotelAmenity2.getIntermediateHotelAmenities().add(hamen2);
 
         ksenia.getIntermediateHotelAmenities().add(hamen2);
+        amenityHotelRepository.save(hotelAmenity1);
+        amenityHotelRepository.save(hotelAmenity2);
+
 
 
 //        Set<HotelAmenity> amenitySet = new HashSet<>();

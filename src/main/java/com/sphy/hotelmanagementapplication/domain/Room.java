@@ -136,16 +136,18 @@ public class Room extends BaseEntity {
         return super.hashCode();
     }
 
-	@Override
-	public String toString() {
-		return "Room{" +
-				"Id=" + super.getId() +
-				", name='" + name + '\'' +
-				", luxurity=" + luxurity +
-				", hotel=" + hotel +
-//				", order=" + orders +
-				", price=" + price +
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + super.getId() +
+                "name='" + name + '\'' +
+                ", luxurity=" + luxurity +
+                ", hotel=" + hotel +
+//                ", orders=" + orders +
+                ", intermediateRoomAmenities=" + intermediateRoomAmenities +
+                ", price=" + price +
+                ", disabled=" + disabled +
                 ", capacity=" + capacity +
-				'}';
-	}
+                '}';
+    }
 }

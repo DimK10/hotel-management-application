@@ -320,11 +320,12 @@ public class HotelService {
 
         if (hotelRepository.findById(id).isPresent()) {
 
-            Set<HotelAmenity> hotelAmenities = hotelRepository.findAmenitityByHotelId(id);
+            Set<HotelAmenity> hotelAmenities = new HashSet<>(hotelRepository.findAmenityByHotelId(id));
 
             if (!hotelAmenities.isEmpty()){
 
                 return hotelAmenities;
+
             }else {
 
                 throw new ApiRequestException("The hotel has no Amenities whet");
