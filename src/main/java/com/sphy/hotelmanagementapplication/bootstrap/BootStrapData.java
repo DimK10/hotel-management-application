@@ -165,7 +165,7 @@ public class BootStrapData implements CommandLineRunner {
 //        ksenia.getHotelAmenity().addAll(amenitySet);
 
 
-        Order order = new Order(null, LocalDate.of(2007, 12, 3), LocalDate.of(2007, 12, 7), false, client, ena);
+        Order order = new Order(null, LocalDate.of(2007, 12, 3), LocalDate.of(2007, 12, 7), false, client, ena, ena.getName(), ena.getHotel().getName(), ena.getPrice());
         orderRepository.save(order);
 
 
@@ -259,7 +259,7 @@ public class BootStrapData implements CommandLineRunner {
 //        ena.getRoomAmenity().addAll(amenityRset);
 
 
-        Order order1 = new Order(null, LocalDate.of(2007, 12, 3), LocalDate.of(2007, 12, 7), false, client, dio);
+        Order order1 = new Order(null, LocalDate.of(2007, 12, 3), LocalDate.of(2007, 12, 7), false, client, dio, dio.getName(), dio.getHotel().getName(), dio.getPrice());
         orderRepository.save(order1);
         dio.getOrders().add(order1);
 
