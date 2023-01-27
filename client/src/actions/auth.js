@@ -34,32 +34,42 @@ export const loadUser = () => async (dispatch) => {
 
 // Register user
 export const register =
-  ({name, email, password}) =>
-    async (dispatch) => {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-
-      const body = JSON.stringify({name, email, password});
-
-      try {
-        const res = await axios.post('/api/users', body, config);
-
-        dispatch(registerSuccess(res.data));
-
-        dispatch(loadUser());
-      } catch (err) {
-        const errors = err.response.data.errors;
-
-        if (errors) {
-          errors.forEach((error) => dispatch(setAlertAction(error.msg, 'danger')));
-        }
-
-        dispatch(registerFail())
-      }
+  ({ emailVerify, username, firstname, lastname, email, password, role }) =>
+  async (dispatch) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
     };
+
+    const body = JSON.stringify({
+      emailVerify,
+      username,
+      firstname,
+      lastname,
+      email,
+      password,
+      role,
+    });
+
+    try {
+      const res = await axios.post('/api/signup', body, config);
+
+      dispatch(registerSuccess(res.data));
+
+      dispatch(loadUser());
+    } catch (err) {
+      const errors = err.response.data.errors;
+
+      if (errors) {
+        errors.forEach((error) =>
+          dispatch(setAlertAction(error.msg, 'danger'))
+        );
+      }
+
+      dispatch(registerFail());
+    }
+  };
 
 // Login user
 export const login = (username, password) => async (dispatch) => {

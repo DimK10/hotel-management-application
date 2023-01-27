@@ -15,6 +15,7 @@ const orderSlice = createSlice({
       hotelAmenities: [],
       roomAmenities: [],
       canceled: false,
+      inProcess: false
     },
     orderToShow: null,
     orders: [],
@@ -26,6 +27,7 @@ const orderSlice = createSlice({
       
       state.currentOrder.checkInDate = payload.checkInDate;
       state.currentOrder.checkOutDate = payload.checkOutDate;
+      state.currentOrder.inProcess = payload.inProcess;
 
     },
     getOrderById: (state, action) => {

@@ -58,7 +58,7 @@ const FirstPage = (props) => {
                 <Alert />
                 <div className='jumbotron' style={{marginTop: '7rem'}}>
                     <h1 className='display-4'>
-                        Search The place You want To Stay For Your Next Location.
+                        Search The place You want To Stay For Your Next Trip.
                     </h1>
                     <p className='lead'>
                         You can do this by simply searching for a place below, or from

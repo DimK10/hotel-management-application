@@ -77,6 +77,7 @@ export const createNewOrderPreCheckout = (checkInDate, checkOutDate) => async (d
         const payload = {
             checkInDate: moment(checkInDate).format('DD/MM/YYYY'),
             checkOutDate: moment(checkOutDate).format('DD/MM/YYYY'),
+            inProcess: true
         };
 
         dispatch(newOrderPreCheckout(payload))
