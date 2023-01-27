@@ -1,6 +1,6 @@
 package com.sphy.hotelmanagementapplication.controller;
 
-import com.sphy.hotelmanagementapplication.dto.RoomAmenityDTO;
+import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.service.HotelService;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 /***
@@ -210,16 +208,9 @@ public class RoomController {
      */
 
     @GetMapping("/api/room/amenities/{roomId}")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public Set<RoomAmenityDTO> findRoomAmenitiesByRoomId(@RequestHeader(name = "Authorization") String token, @PathVariable Long roomId) throws ApiRequestException {
-
-        if (Objects.equals(userService.getUserFromToken(token).getId(), hotelService.getHotelById(service.getRoomById(roomId).getHotel()).getOwner())) {
+    public Set<RoomAmenity> findRoomAmenitiesByRoomId(@PathVariable Long roomId) throws ApiRequestException {
 
             return service.getRoomAmenitiesByRoomId(roomId);
-        } else {
-
-            throw new RuntimeException("Unauthorized");
-        }
     }
 
 }

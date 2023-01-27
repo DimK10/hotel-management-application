@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import com.sphy.hotelmanagementapplication.domain.AdvancedSearch;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelAmenityDTO;
@@ -249,7 +248,7 @@ public class HotelController {
      * or a hotel if it is available at that dates if the search made by the hotel name
      * @param token users token
      * @param basicSearchDTO basic search fields (check in date, check out date, location name or hotel name)
-     * @return the hotels that mach with the search
+     * @return the hotels than mach with the search
      * @throws RuntimeException if this that made the search is not a role client
      */
     @GetMapping("/api/hotel/basic/search")

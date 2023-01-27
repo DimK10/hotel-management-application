@@ -1,90 +1,80 @@
 package com.sphy.hotelmanagementapplication.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import javax.servlet.SessionTrackingMode;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 //import org.hibernate.mapping.Map;
 
 /***
- * created by AKd
+ * created by AKd.gp
  */
 
 @Entity
 @Table(name="RAmenity")
 @AttributeOverride(name = "id", column = @Column(name = "RAmenity_id"))
-public class RoomAmenity extends BaseEntity{
-	
-	@Enumerated(EnumType.STRING)
-	private AmenitiesRoom amenitiesR;
-	
-	public enum AmenitiesRoom {
-	    FREEWIFI,
-	    VIEWTOSEAMOUNTAIN,
-	    AIRCONDITIONING,
-	    FIREPLACE,
-	    KITCHEN, 
-	    REFRIGERATOR, 
-	    MINIBAR, 
-	    WASHINGMACHINE, 
-	    COFFEETEAMACHINE,
-	    TV, 
-	    TOILETGRABRAILS,
-	    BATHTUBGRABRAILS,
-	    SHOWERCHAIR,
-	    RAISEDCHAIR,
-	    EMERGENCYPHONES,
-	    SAFEDEPOSITBOX, 
-	    BATHROBE, 
-	    HAIRDRYER, 
-	    BABYHIGHCHAIR;
-	} // enum AmenitiesRoom
-	
-	
+public class RoomAmenity extends BaseEntity {
+
+	private String rAmenity;
+
+	@OneToMany(mappedBy = "roomAmenity",fetch=FetchType.EAGER)
+	@JsonIgnore
+	private Set<IntermediateRoomAmenity> intermediateRoomAmenities = new HashSet<>();
+
 
 	public RoomAmenity() {
-	
+
 	}
 
-	
-	public RoomAmenity(AmenitiesRoom amenitiesR) {
-		this.amenitiesR = amenitiesR;
-	}// Constructor with fields
-	
+	public RoomAmenity(String rAmenity) {
+
+		this.rAmenity = rAmenity;
+	}
+
 	public Long getId() {
 		return super.getId();
-	} // method getId()
+	}
 
 	public void setId(Long id) {
 		super.setId(id);
-	} // method setId()
+	}
 
-	public AmenitiesRoom getAmenitiesR() {
-		return amenitiesR;
-	} //method getAmenitiesR()
-	
-	public void setAmenitiesR(AmenitiesRoom amenitiesR) {
-		this.amenitiesR = amenitiesR;
-	} // method setAmenitiesR()
+	public String getrAmenity() {
+		return rAmenity;
+	}
+
+	public void setrAmenity(String rAmenity) {
+		this.rAmenity = rAmenity;
+	}
+
+	public Set<IntermediateRoomAmenity> getIntermediateRoomAmenities() {
+		return intermediateRoomAmenities;
+	}
+
+	public void setIntermediateRoomAmenities(Set<IntermediateRoomAmenity> intermediateRoomAmenities) {
+		this.intermediateRoomAmenities = intermediateRoomAmenities;
+	}
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		if (!super.equals(o)) return false;
-		RoomAmenity that = (RoomAmenity) o;
-		return amenitiesR == that.amenitiesR;
-
+		return super.equals(o);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(super.hashCode(), amenitiesR);
+		return super.hashCode();
 	}
-	
+
 	@Override
 	public String toString() {
-		return "RoomAmenity [id=" + super.getId() + ", amenitiesR=" + amenitiesR + "]";
+		return "RoomAmenity{" +
+				"id=" + super.getId() +
+				"rAmenity='" + rAmenity + '\'' +
+				", intermediateRoomAmenities=" + intermediateRoomAmenities +
+				'}';
 	}
-	
-	
-}// Class
+}

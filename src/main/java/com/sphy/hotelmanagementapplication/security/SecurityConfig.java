@@ -60,6 +60,10 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+		// Allow X-Frame-Options for same origin - bug in displaying the sections in h2 console
+		http
+				.headers().frameOptions().sameOrigin();
 		http.csrf().disable()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
@@ -68,7 +72,7 @@ public class SecurityConfig {
 				.antMatchers(HttpMethod.POST, "/**").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/signup").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/login").permitAll()
-				.antMatchers("/h2-ui/**").permitAll()
+				.antMatchers("**/h2-ui/**").permitAll()
 				.anyRequest().authenticated()
 				.and()
 				.exceptionHandling()

@@ -3,7 +3,6 @@ package com.sphy.hotelmanagementapplication.service;
 import com.sphy.hotelmanagementapplication.converter.HotelAmenityToHotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.converter.HotelDTOToHotel;
 import com.sphy.hotelmanagementapplication.converter.HotelToHotelDTO;
-import com.sphy.hotelmanagementapplication.domain.AdvancedSearch;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
@@ -39,17 +38,17 @@ public class HotelService {
 
     private final RoomService roomService;
 
+    private final IntermediateHotelAmenityRepository intermediateHotelAmenityRepository;
 
-    private final HotelAmenityToHotelAmenityDTO hotelAmenityToHotelAmenityDTO;
 
-    public HotelService(HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, HotelAmenityToHotelAmenityDTO hotelAmenityToHotelAmenityDTO, UserRepository userRepository, UserService userService) {
+    public HotelService(HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService, IntermediateHotelAmenityRepository intermediateHotelAmenityRepository) {
         this.hotelRepository = hotelRepository;
         this.hotelDTOToHotel = hotelDTOToHotel;
         this.hotelToHotelDTO = hotelToHotelDTO;
         this.roomService = roomService;
-        this.hotelAmenityToHotelAmenityDTO = hotelAmenityToHotelAmenityDTO;
         this.userRepository = userRepository;
         this.userService = userService;
+        this.intermediateHotelAmenityRepository = intermediateHotelAmenityRepository;
     }
 
     /***
@@ -70,6 +69,13 @@ public class HotelService {
 
     }
 
+    /***
+     * Get a hotel by id and owners id
+     * @param id of the hotel tobe found
+     * @param userId of the user
+     * @return the hotel with the current id
+     * @throws ApiRequestException
+     */
     public HotelDTO getHotelById(Long id, Long userId) throws ApiRequestException {
 
         Optional<Hotel> hotel = hotelRepository.findHotelByIdAndOwner(id, userId);
@@ -204,6 +210,11 @@ public class HotelService {
             Optional<User> admin = userRepository.findById(hotelDTO.getOwner());
             admin.ifPresent(existingHotel::setOwner);
 
+            hotelDTO.getAmenities().forEach(amenity ->
+                    existingHotel.getIntermediateHotelAmenities()
+                                    .add(intermediateHotelAmenityRepository
+                                    .save(new IntermediateHotelAmenity(existingHotel, amenity))));
+
             return hotelToHotelDTO.converter(hotelRepository.save(existingHotel));
         }
     }
@@ -229,6 +240,10 @@ public class HotelService {
             throw new ApiRequestException("If you wont to save hotels you mast add one or more rooms");
         }
 
+        if (hotelDTO.getAmenities().isEmpty()){
+            throw new ApiRequestException("In hotel with name: " + hotelDTO.getName() + " there are no Amenities");
+        }
+
         hotelDTO.getRooms().clear();
         Hotel hotel = hotelDTOToHotel.converter(hotelDTO);
         hotelRepository.save(hotel);
@@ -236,6 +251,11 @@ public class HotelService {
         roomDTOS.forEach(roomDTO -> roomDTO.setHotel(hotel.getId()));
 
         roomService.saveRooms(roomDTOS);
+
+        hotelDTO.getAmenities().forEach(amenity ->
+                hotel.getIntermediateHotelAmenities()
+                        .add(intermediateHotelAmenityRepository
+                                .save(new IntermediateHotelAmenity(hotel, amenity))));
 
         return hotelToHotelDTO.converter(hotelRepository.findById(hotel.getId()).get());
 
@@ -259,7 +279,11 @@ public class HotelService {
             }
 
             if (roomDTOS.isEmpty()) {
-                throw new ApiRequestException("In hotel with name: " + hotelDTO.getName() + " In hotel with name: " + hotelDTO.getName() + " there are no rooms");
+                throw new ApiRequestException("In hotel with name: " + hotelDTO.getName() + " there are no rooms");
+            }
+
+            if (hotelDTO.getAmenities().isEmpty()){
+                throw new ApiRequestException("In hotel with name: " + hotelDTO.getName() + " there are no Amenities");
             }
 
             hotelDTO.getRooms().clear();
@@ -270,6 +294,12 @@ public class HotelService {
 
             roomService.saveRooms(roomDTOS);
             hotels.add(hotelRepository.findById(hotel.getId()).get());
+
+            hotelDTO.getAmenities().forEach(amenity ->
+                    hotel.getIntermediateHotelAmenities()
+                            .add(intermediateHotelAmenityRepository
+                                    .save(new IntermediateHotelAmenity(hotel, amenity))));
+
         }
 
         List<HotelDTO> hotelDTOS = new ArrayList<>();
@@ -285,15 +315,24 @@ public class HotelService {
      * @param id The ID of the hotel for which to retrieve amenities
      * @return A set of HotelAmenity representing the amenities of the hotel with the given ID
      */
+    public Set<HotelAmenity> getHotelAmenitiesByHotelId(Long id) throws ApiRequestException{
 
-    public Set<HotelAmenityDTO> getHotelAmenitiesByHotelId(Long id) {
+        if (hotelRepository.findById(id).isPresent()) {
 
-        Set<HotelAmenityDTO> amenitiesHotelDTO = new HashSet<>();
-        Optional<Hotel> hotelOptional = hotelRepository.findById(id);
-        hotelOptional.ifPresent(hotel -> hotel.getHotelAmenity()
-                .forEach(hotelAmenity -> amenitiesHotelDTO.add(hotelAmenityToHotelAmenityDTO.converter(hotelAmenity))));
+            Set<HotelAmenity> hotelAmenities = new HashSet<>(hotelRepository.findAmenityByHotelId(id));
 
-        return amenitiesHotelDTO;
+            if (!hotelAmenities.isEmpty()){
+
+                return hotelAmenities;
+
+            }else {
+
+                throw new ApiRequestException("The hotel has no Amenities whet");
+            }
+        }else {
+
+            throw new ApiRequestException("The hotel with id " + id + " does not exist.");
+        }
     }
 
     /***

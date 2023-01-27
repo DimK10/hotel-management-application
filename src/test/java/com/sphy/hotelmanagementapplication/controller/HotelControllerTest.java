@@ -427,7 +427,7 @@ public class HotelControllerTest {
 
         Order order = new Order(3L, LocalDate.of(2017, 12, 12),
                 LocalDate.of(2017, 12, 20),
-                false, new User(5L), room);
+                false, new User(5L), room, "ena", "ksenia", 50L);
 
         room.getOrders().add(order);
 
@@ -457,7 +457,6 @@ public class HotelControllerTest {
         basicSearchDTO2.setNameOrLocation("ksenia");
 
         //when
-        when(userService.getUserFromToken(anyString())).thenReturn(client);
         when(hotelService.getHotelBasicSearch(any())).thenReturn(hotel1DTOS);
 
         //then
