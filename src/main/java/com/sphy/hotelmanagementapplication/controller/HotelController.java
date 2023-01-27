@@ -1,30 +1,23 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-
+import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
-import com.sphy.hotelmanagementapplication.dto.HotelAmenityDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.UserService;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 /***
  * created by gp
@@ -230,7 +223,7 @@ public class HotelController {
 
     @GetMapping("/api/hotel/amenities/{hotelId}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public Set<HotelAmenityDTO> findHotelAmenitiesByHotelId(@RequestHeader(name = "Authorization") String token, @PathVariable Long hotelId) throws ApiRequestException {
+    public Set<HotelAmenity> findHotelAmenitiesByHotelId(@RequestHeader(name = "Authorization") String token, @PathVariable Long hotelId) throws ApiRequestException {
 
         HotelDTO hotelOptional = service.getHotelById(hotelId);
 
@@ -252,40 +245,32 @@ public class HotelController {
      * @throws RuntimeException if this that made the search is not a role client
      */
     @GetMapping("/api/hotel/basic/search")
-    @PreAuthorize("hasAuthority('CLIENT')")
-    public Set<HotelDTO> findHotelBasicSearch(@RequestHeader(name = "Authorization") String token, @RequestBody BasicSearchDTO basicSearchDTO)throws RuntimeException{
-
-        if (userService.getUserFromToken(token).getRole().equals(User.Role.CLIENT)){
+    public Set<HotelDTO> findHotelBasicSearch(@RequestBody BasicSearchDTO basicSearchDTO)throws RuntimeException{
 
             return service.getHotelBasicSearch(basicSearchDTO);
-        }else {
-
-            throw new RuntimeException("Unauthorized");
-        }
-
     }
 
 
-    /***
-     * returns the hotels that are available in Advanced search specific fields
-     * @param token user token
-     * @param advancedSearch Advanced search specific fields
-     * @return the hotels that mach with the search
-     * @throws RuntimeException if this that made the search is not a role client
-     */
-    @GetMapping("/api/hotel/advanced/search")
-    @PreAuthorize("hasAuthority('Client')")
-    public Set<HotelDTO> advancedSearch(@RequestHeader(name = "Authorization") String token, @RequestBody AdvancedSearch advancedSearch) throws RuntimeException{
-
-        if (userService.getUserFromToken(token).getRole().equals(User.Role.CLIENT)){
-
-            return service.getHotelAdvancedSearch(advancedSearch);
-        }else {
-
-            throw new RuntimeException("Unauthorized");
-        }
-
-    }
+//    /***
+//     * returns the hotels that are available in Advanced search specific fields
+//     * @param token user token
+//     * @param advancedSearch Advanced search specific fields
+//     * @return the hotels that mach with the search
+//     * @throws RuntimeException if this that made the search is not a role client
+//     */
+//    @GetMapping("/api/hotel/advanced/search")
+//    @PreAuthorize("hasAuthority('Client')")
+//    public Set<HotelDTO> advancedSearch(@RequestHeader(name = "Authorization") String token, @RequestBody AdvancedSearch advancedSearch) throws RuntimeException{
+//
+//        if (userService.getUserFromToken(token).getRole().equals(User.Role.CLIENT)){
+//
+//            return service.getHotelAdvancedSearch(advancedSearch);
+//        }else {
+//
+//            throw new RuntimeException("Unauthorized");
+//        }
+//
+//    }
 
 
 }

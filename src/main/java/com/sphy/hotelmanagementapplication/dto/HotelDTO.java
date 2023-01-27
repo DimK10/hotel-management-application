@@ -22,6 +22,8 @@ public class HotelDTO implements Serializable {
 
     private String address;
 
+    private String description;
+
     private Long owner;
 
     private boolean disabled;
@@ -44,6 +46,14 @@ public class HotelDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getName() {
@@ -118,6 +128,7 @@ public class HotelDTO implements Serializable {
                 ", stars=" + stars +
                 ", areaName='" + areaName + '\'' +
                 ", address='" + address + '\'' +
+                ", description='" + description + '\'' +
                 ", owner=" + owner +
                 ", disabled=" + disabled +
                 ", rooms=" + rooms +

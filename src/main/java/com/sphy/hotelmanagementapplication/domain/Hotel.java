@@ -26,6 +26,8 @@ public class Hotel extends BaseEntity {
 
     private String address;
 
+    private String description;
+
     private boolean disabled;
 
     @ManyToOne
@@ -48,11 +50,12 @@ public class Hotel extends BaseEntity {
     public Hotel() {
     }
 
-    public Hotel(Long id, String name, int stars, String areaName, boolean disabled) {
+    public Hotel(Long id, String name, int stars, String areaName, String description, boolean disabled) {
 		super(id);
         this.name = name;
         this.stars = stars;
         this.areaName = areaName;
+        this.description = description;
         this.disabled = disabled;
     }
 
@@ -63,6 +66,14 @@ public class Hotel extends BaseEntity {
 	public void setId(Long id) {
 		super.setId(id);
 	}
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public User getOwner() {
         return owner;
@@ -146,6 +157,7 @@ public class Hotel extends BaseEntity {
                 ", stars=" + stars +
                 ", areaName='" + areaName + '\'' +
                 ", address='" + address + '\'' +
+                ", description='" + description + '\'' +
                 ", disabled=" + disabled +
                 ", owner=" + owner +
 //                ", rooms=" + rooms +
