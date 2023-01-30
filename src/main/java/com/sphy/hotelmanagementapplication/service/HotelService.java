@@ -2,10 +2,7 @@ package com.sphy.hotelmanagementapplication.service;
 
 import com.sphy.hotelmanagementapplication.converter.HotelDTOToHotel;
 import com.sphy.hotelmanagementapplication.converter.HotelToHotelDTO;
-import com.sphy.hotelmanagementapplication.domain.Hotel;
-import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
-import com.sphy.hotelmanagementapplication.domain.IntermediateHotelAmenity;
-import com.sphy.hotelmanagementapplication.domain.User;
+import com.sphy.hotelmanagementapplication.domain.*;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
@@ -18,6 +15,7 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.*;
 
 /***
@@ -214,7 +212,7 @@ public class HotelService {
 
             hotelDTO.getAmenities().forEach(amenity ->
                     existingHotel.getIntermediateHotelAmenities()
-                                    .add(intermediateHotelAmenityRepository
+                            .add(intermediateHotelAmenityRepository
                                     .save(new IntermediateHotelAmenity(existingHotel, amenity))));
 
             return hotelToHotelDTO.converter(hotelRepository.save(existingHotel));
@@ -242,7 +240,7 @@ public class HotelService {
             throw new ApiRequestException("If you wont to save hotels you mast add one or more rooms");
         }
 
-        if (hotelDTO.getAmenities().isEmpty()){
+        if (hotelDTO.getAmenities().isEmpty()) {
             throw new ApiRequestException("In hotel with name: " + hotelDTO.getName() + " there are no Amenities");
         }
 
@@ -284,7 +282,7 @@ public class HotelService {
                 throw new ApiRequestException("In hotel with name: " + hotelDTO.getName() + " there are no rooms");
             }
 
-            if (hotelDTO.getAmenities().isEmpty()){
+            if (hotelDTO.getAmenities().isEmpty()) {
                 throw new ApiRequestException("In hotel with name: " + hotelDTO.getName() + " there are no Amenities");
             }
 
@@ -317,21 +315,21 @@ public class HotelService {
      * @param id The ID of the hotel for which to retrieve amenities
      * @return A set of HotelAmenity representing the amenities of the hotel with the given ID
      */
-    public Set<HotelAmenity> getHotelAmenitiesByHotelId(Long id) throws ApiRequestException{
+    public Set<HotelAmenity> getHotelAmenitiesByHotelId(Long id) throws ApiRequestException {
 
         if (hotelRepository.findById(id).isPresent()) {
 
             Set<HotelAmenity> hotelAmenities = new HashSet<>(hotelRepository.findAmenityByHotelId(id));
 
-            if (!hotelAmenities.isEmpty()){
+            if (!hotelAmenities.isEmpty()) {
 
                 return hotelAmenities;
 
-            }else {
+            } else {
 
                 throw new ApiRequestException("The hotel has no Amenities whet");
             }
-        }else {
+        } else {
 
             throw new ApiRequestException("The hotel with id " + id + " does not exist.");
         }
@@ -368,52 +366,24 @@ public class HotelService {
     }
 
 
-//    public Set<HotelDTO> getHotelAdvancedSearch(AdvancedSearch advancedSearch){
-//
-//        Set<HotelDTO> hotelDTOS = new HashSet<>();
-//
-//        if (advancedSearch.getLocation() != null && advancedSearch.getCheckInDate() != null
-//                && advancedSearch.getCheckOutDate() != null && advancedSearch.getPriceFrom() != null
-//                && advancedSearch.getPriceTo() != null && advancedSearch.getAdultsRange() != null
-//                && advancedSearch.getStars() != null && advancedSearch.isParking() != null
-//                && advancedSearch.isRestaurant() != null && advancedSearch.isRoomService() != null
-//                && advancedSearch.isGym() != null && advancedSearch.isSpa() != null
-//                && advancedSearch.isPool() != null && advancedSearch.isFreeWifi() != null
-//                && advancedSearch.isChargingStation() != null && advancedSearch.isViewToSeaMountain() != null
-//                && advancedSearch.isAirConditioning() != null && advancedSearch.isFireplace() != null
-//                && advancedSearch.isKitchen() != null && advancedSearch.isRefrigerator() != null
-//                && advancedSearch.isMiniBar() != null && advancedSearch.isWashingMachine() != null
-//                && advancedSearch.isCoffeeTeaMachine() != null && advancedSearch.isTv() != null
-//                && advancedSearch.isPetsAllowed() != null && advancedSearch.isAirportTransport() != null
-//                && advancedSearch.isToiletGrabRails() != null && advancedSearch.isBathtubGrabRails() != null
-//                && advancedSearch.isShowerChair() != null && advancedSearch.isRaisedChair() != null
-//                && advancedSearch.isWheelchairRamps() != null && advancedSearch.isEmergencyPhones() != null
-//                && advancedSearch.isRoomsAccessibleElevator() != null && advancedSearch.isSafeDepositBox() != null
-//                && advancedSearch.isBathRobe() != null && advancedSearch.isHairDryer() != null
-//                && advancedSearch.isBabyHighChair() != null && advancedSearch.getNameOrLocation() != null
-//               ) {
-//
-//            hotelRepository.findByAdvancedSearch( advancedSearch.getLocation(), advancedSearch.getCheckInDate(), advancedSearch.getCheckOutDate(),
-//                            advancedSearch.getPriceFrom(), advancedSearch.getPriceTo(), advancedSearch.getAdultsRange(), advancedSearch.getStars(),
-//                            advancedSearch.isParking(), advancedSearch.isRestaurant(), advancedSearch.isRoomService(),
-//                            advancedSearch.isGym(), advancedSearch.isSpa(), advancedSearch.isPool(), advancedSearch.isFreeWifi(),
-//                            advancedSearch.isChargingStation(), advancedSearch.isViewToSeaMountain(), advancedSearch.isAirConditioning(),
-//                            advancedSearch.isFireplace(), advancedSearch.isKitchen(), advancedSearch.isRefrigerator(), advancedSearch.isMiniBar(),
-//                            advancedSearch.isWashingMachine(), advancedSearch.isCoffeeTeaMachine(), advancedSearch.isTv(), advancedSearch.isPetsAllowed(),
-//                            advancedSearch.isAirportTransport(), advancedSearch.isToiletGrabRails(), advancedSearch.isBathtubGrabRails(), advancedSearch.isShowerChair() ,
-//                            advancedSearch.isRaisedChair(), advancedSearch.isWheelchairRamps(), advancedSearch.isEmergencyPhones(), advancedSearch.isRoomsAccessibleElevator(),
-//                            advancedSearch.isSafeDepositBox(), advancedSearch.isBathRobe(), advancedSearch.isHairDryer(), advancedSearch.isBabyHighChair(), advancedSearch.getNameOrLocation()
-//                            )
-//                    .forEach(hotel -> hotelDTOS
-//                            .add(hotelToHotelDTO
-//                                    .converter(hotel)));
-//
-//            return hotelDTOS;
-//
-//        } else {
-//
-//            throw new RuntimeException("Something went wrong");
-//        }
+    public Set<HotelDTO> getHotelAdvancedSearch(List<HotelAmenity> hotelAmenities, List<RoomAmenity> roomAmenities, LocalDate checkInDate, LocalDate checkOutDate,
+                                                Long priceFrom, Long priceTo, Integer adultsRange, Integer stars, String nameOrLocation) {
 
-//    }
+        Set<HotelDTO> hotelDTOS = new HashSet<>();
+
+        hotelRepository.AdvanceSearchMethode(hotelAmenities, roomAmenities, checkInDate, checkOutDate, priceFrom, priceTo, adultsRange, stars, nameOrLocation)
+                .forEach(hotel -> hotelDTOS
+                        .add(hotelToHotelDTO
+                                .converter(hotel)));
+
+        if (!hotelDTOS.isEmpty()) {
+
+            return hotelDTOS;
+
+        } else {
+
+            throw new RuntimeException("Something went wrong");
+        }
+
+    }
 }
