@@ -41,7 +41,7 @@ public class UserController {
      * @return the saved user
      */
     @PostMapping("/api/signup")
-    public UserDTO saveUser(@RequestBody UserDTO userDTO){
+    public ResponseEntity<?> saveUser(@RequestBody UserDTO userDTO){
 
         return userService.saveUser(userDTO);
 
