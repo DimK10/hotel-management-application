@@ -1,26 +1,28 @@
 import {createSlice} from "@reduxjs/toolkit";
 import moment from "moment/moment";
 
+const initialState = {
+  currentOrder: {
+    checkInDate: moment(new Date()).format('DD/MM/YYYY'),
+    checkOutDate: moment(new Date()).format('DD/MM/YYYY'),
+    loading: true,
+    user: null,
+    hotel: null,
+    room: null,
+    price: 0,
+    hotelAmenities: [],
+    roomAmenities: [],
+    canceled: false,
+    inProcess: false,
+  },
+  orderToShow: null,
+  orders: [],
+  error: {},
+};
+
 const orderSlice = createSlice({
   name: 'order',
-  initialState: {
-    currentOrder: {
-      checkInDate: moment(new Date()).format('DD/MM/YYYY'),
-      checkOutDate: moment(new Date()).format('DD/MM/YYYY'),
-      loading: true,
-      user: null,
-      hotel: null,
-      room: null,
-      price: 0,
-      hotelAmenities: [],
-      roomAmenities: [],
-      canceled: false,
-      inProcess: false,
-    },
-    orderToShow: null,
-    orders: [],
-    error: {},
-  },
+  initialState, 
   reducers: {
     newOrderPreCheckout: (state, action) => {
       const { payload } = action;
@@ -61,6 +63,9 @@ const orderSlice = createSlice({
       state.currentOrder.loading = false;
       state.currentOrder.inProcess = false;
       state.error = '';
+    },
+    resetOrderState: (state) => {
+      state = initialState
     },
     orderError: (state, action) => {
       const { payload } = action;

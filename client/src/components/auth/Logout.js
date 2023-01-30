@@ -1,5 +1,6 @@
 import React, {Fragment, useEffect} from 'react';
-import {logoutAction} from "../../actions/auth";
+import { logoutAction } from "../../actions/auth";
+import { resetOrderAction } from '../../actions/order'
 import {useDispatch} from "react-redux";
 import {Navigate} from "react-router-dom";
 
@@ -10,6 +11,7 @@ function Logout() {
 
   useEffect(() => {
     dispatch(logoutAction());
+    dispatch(resetOrderAction());
   }, []);
 
   return (

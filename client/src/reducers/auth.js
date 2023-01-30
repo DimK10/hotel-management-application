@@ -51,7 +51,7 @@ const authSlice = createSlice({
       state.user = payload;
     },
 
-    registerSuccess: registerSuccess,
+    registerSuccess: registerOrLoginSuccess,
     loginSuccess: registerOrLoginSuccess,
     /* error reducers or auth reset reducers */
     authError: error,

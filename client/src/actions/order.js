@@ -1,4 +1,3 @@
-import {GET_NEW_ORDER, NEW_ORDER_PRE_CHECKOUT, ORDER_ERROR} from "./types";
 import orderSlice from "../reducers/order";
 import moment from "moment";
 import axios from 'axios';
@@ -12,7 +11,8 @@ const {
     addHotelToOrderPreCheckout,
     addToOrder,
     addUserToOrder,
-    orderError
+    orderError,
+    resetOrderState
 } = orderSlice.actions;
 
 const {
@@ -125,6 +125,10 @@ export const addToOrderAction = (room, price, user, hotelAmenities, roomAmenitie
     dispatch(addToOrder(payload));
 }
 
-export const addUserToOrderAction = (user) => dispach => {
-    dispach(addUserToOrder(user));
+export const addUserToOrderAction = (user) => dispatch => {
+    dispatch(addUserToOrder(user));
 }
+
+export const resetOrderAction = () => dispatch => {
+  dispatch(resetOrderState());
+};
