@@ -37,12 +37,31 @@ const PlaceNewOrder = () => {
     }
 
     const onProceedBtnClick = () => {
-        if (user === null) {
-            navigate("/sign-up")
-        } else {
-            dispatch(addToOrderAction(roomSelected, roomSelected.price, user, hotel.hotelAmenityDTO, roomSelected.roomAmenityDTO));
+                    
+        const payload = {
+            roomSelected,
+            price: roomSelected.price,
+            user,
+            hotelAmenityDTO: hotel.hotelAmenityDTO,
+            roomAmenityDTO: roomSelected.roomAmenityDTO
+        }
 
-            // TODO NEED TO SEND ORDER TO BACKEND AND CHECK IF EVERYTHING WAS OK
+        // set payload to redux
+
+        if (user === null) {
+            navigate("/sign-in")
+        } else {
+           
+            dispatch(
+            addToOrderAction(
+                roomSelected,
+                roomSelected.price,
+                user,
+                hotel.hotelAmenityDTO,
+                roomSelected.roomAmenityDTO
+            )
+            );
+            // TODO NEED TO SEND ORDER TO BACKEND AND CHECK IF EVERYTHING WAS OK - IN THAT DISPATCH, CHECK IF USER WAS LOGGED IN
             dispatch(setAlertAction("You order has been placed Successfully!!!", "success"));
             navigate("/");
         }

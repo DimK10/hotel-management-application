@@ -2,10 +2,12 @@ import React, {Fragment, useEffect, useState} from 'react';
 import NavBar from '../layout/NavBar';
 import {Link, useNavigate} from 'react-router-dom';
 import DateRangePicker from "react-bootstrap-daterangepicker";
-import {useDispatch} from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import {basicSearchAction} from "../../actions/search";
 import Alert from "../layout/Alert";
 import {addHotelToOrderPreCheckoutAction, createNewOrderPreCheckout} from "../../actions/order";
+import { setAlertAction } from '../../actions/alert';
+
 
 const FirstPage = (props) => {
 
@@ -17,6 +19,12 @@ const FirstPage = (props) => {
     const dispatch = useDispatch();
 
     const navigate = useNavigate();
+
+    const { inProcess, user } = useSelector((state) => state.order.currentOrder);
+
+    const {isAuthenticated, user: authUser} = useSelector(
+        (state) => state.auth
+    );
 
     const {
         checkInDate,
@@ -49,6 +57,21 @@ const FirstPage = (props) => {
     // scroll to top
     useEffect(() => {
         window.scrollTo(0, 0)
+        if (
+          isAuthenticated &&
+          authUser.role !== 'undefined' &&
+          authUser.role === 'CLIENT' &&
+          inProcess === true
+        ) {
+          // TODO NEED TO SEND ORDER TO BACKEND AND CHECK IF EVERYTHING WAS OK - IN THAT DISPATCH, CHECK IF USER WAS LOGGED IN
+          // TODO SET IN PROCESS TO FALSE AFTER SUCCESSFULL CREATION OF ORDER
+          dispatch(
+            setAlertAction(
+              'You order has been placed Successfully!!!',
+              'success'
+            )
+          );
+        }
     }, [])
 
     return (

@@ -111,11 +111,6 @@ const Register = (props) => {
                         className='form-control'
                         type='password'
                         placeholder='Password'
-                      />
-                      <input
-                        className='form-control'
-                        type='text'
-                        placeholder='Password'
                         name='password'
                         onChange={(e) => onChange(e)}
                         required
@@ -141,18 +136,18 @@ const Register = (props) => {
                           What do you want to do?
                         </option>
                         <option
-                          value='customer'
+                          value='CLIENT'
                           defaultValue={hotel !== null}
                           onChange={(e) => onchange(e)}
                         >
                           I am a customer and I want to order rooms
                         </option>
-                        <option value='manager'>
+                        <option value='ADMIN'>
                           I want to manage hotels and their rooms
                         </option>
                       </select>
                     </div>
-                    <button className='btn btn-block btn-success' type='button'>
+                    <button className='btn btn-block btn-success' type='submit'>
                       <span className='text-white'>Create Account</span>
                     </button>
                   </div>

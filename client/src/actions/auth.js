@@ -55,9 +55,17 @@ export const register =
     try {
       const res = await axios.post('/api/signup', body, config);
 
-      dispatch(registerSuccess(res.data));
+      const response = { ...res.data, password };
+      console.log(response);
 
-      dispatch(loadUser());
+      await dispatch(registerSuccess(response));
+
+      const {
+        username,
+        password
+      } = res.data;
+
+      dispatch(login(username, password));
     } catch (err) {
       const errors = err.response.data.errors;
 

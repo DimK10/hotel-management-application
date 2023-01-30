@@ -3,6 +3,7 @@ import orderSlice from "../reducers/order";
 import moment from "moment";
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
+import alertSlice from '../reducers/alert';
 
 const {
     newOrderPreCheckout,
@@ -12,6 +13,10 @@ const {
     addToOrder,
     orderError
 } = orderSlice.actions;
+
+const {
+    setAlert
+} = alertSlice.actions;
 
 // Get newly created order
 export const getNewOrder = () => async (dispach) => {

@@ -1,5 +1,13 @@
 import {createSlice} from "@reduxjs/toolkit";
 
+const registerSuccess = (state, action) => {
+  const { payload } = action;
+  state.isAuthenticated = false;
+  state.loading = false;
+  state.user = payload;
+  state.error = '';
+}
+
 const registerOrLoginSuccess = (state, action) => {
   const {payload, user} = action;
   localStorage.setItem('jwt', payload.jwt);
@@ -33,17 +41,17 @@ const authSlice = createSlice({
     isAuthenticated: null,
     loading: true,
     user: null,
-    error: ""
+    error: '',
   },
   reducers: {
     userLoaded: (state, action) => {
-      const {payload} = action;
+      const { payload } = action;
       state.isAuthenticated = true;
       state.loading = false;
       state.user = payload;
     },
 
-    registerSuccess: registerOrLoginSuccess,
+    registerSuccess: registerSuccess,
     loginSuccess: registerOrLoginSuccess,
     /* error reducers or auth reset reducers */
     authError: error,
@@ -51,8 +59,8 @@ const authSlice = createSlice({
     loginFail: error,
     registerFail: error,
     accountDeleted: resetState,
-    cleaProfile: resetState
-  }
-})
+    cleaProfile: resetState,
+  },
+});
 
 export default authSlice;
