@@ -1,6 +1,7 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 
+import com.sphy.hotelmanagementapplication.domain.AdvancedSearch;
 import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
@@ -251,26 +252,27 @@ public class HotelController {
     }
 
 
-//    /***
-//     * returns the hotels that are available in Advanced search specific fields
-//     * @param token user token
-//     * @param advancedSearch Advanced search specific fields
-//     * @return the hotels that mach with the search
-//     * @throws RuntimeException if this that made the search is not a role client
-//     */
-//    @GetMapping("/api/hotel/advanced/search")
-//    @PreAuthorize("hasAuthority('Client')")
-//    public Set<HotelDTO> advancedSearch(@RequestHeader(name = "Authorization") String token, @RequestBody AdvancedSearch advancedSearch) throws RuntimeException{
-//
-//        if (userService.getUserFromToken(token).getRole().equals(User.Role.CLIENT)){
-//
-//            return service.getHotelAdvancedSearch(advancedSearch);
-//        }else {
-//
-//            throw new RuntimeException("Unauthorized");
-//        }
-//
-//    }
+    /***
+     * returns the hotels that are available in Advanced search specific fields
+     * @param token user token
+     * @param advancedSearch Advanced search specific fields
+     * @return the hotels that mach with the search
+     * @throws RuntimeException if this that made the search is not a role client
+     */
+    @GetMapping("/api/hotel/advanced/search")
+    @PreAuthorize("hasAuthority('Client')")
+    public Set<HotelDTO> advancedSearch(@RequestHeader(name = "Authorization") String token, @RequestBody AdvancedSearch advancedSearch) throws RuntimeException{
+
+        if (userService.getUserFromToken(token).getRole().equals(User.Role.CLIENT)){
+
+            return service.getHotelAdvancedSearch(advancedSearch.getHotelAmenities(), advancedSearch.getRoomAmenities(), advancedSearch.getCheckInDate(), advancedSearch.getCheckOutDate(),
+                    advancedSearch.getPriceFrom(), advancedSearch.getPriceTo(), advancedSearch.getAdultsRange(), advancedSearch.getStars(), advancedSearch.getNameOrLocation());
+        }else {
+
+            throw new RuntimeException("Unauthorized");
+        }
+
+    }
 
 
 }
