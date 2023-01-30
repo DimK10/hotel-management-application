@@ -11,6 +11,7 @@ const {
     getOrderById,
     addHotelToOrderPreCheckout,
     addToOrder,
+    addUserToOrder,
     orderError
 } = orderSlice.actions;
 
@@ -122,4 +123,8 @@ export const addToOrderAction = (room, price, user, hotelAmenities, roomAmenitie
         roomAmenities
     }
     dispatch(addToOrder(payload));
+}
+
+export const addUserToOrderAction = (user) => dispach => {
+    dispach(addUserToOrder(user));
 }

@@ -5,7 +5,10 @@ import DateRangePicker from "react-bootstrap-daterangepicker";
 import { useDispatch, useSelector } from 'react-redux';
 import {basicSearchAction} from "../../actions/search";
 import Alert from "../layout/Alert";
-import {addHotelToOrderPreCheckoutAction, createNewOrderPreCheckout} from "../../actions/order";
+import {
+  addUserToOrderAction,
+  createNewOrderPreCheckout,
+} from '../../actions/order';
 import { setAlertAction } from '../../actions/alert';
 
 
@@ -65,6 +68,8 @@ const FirstPage = (props) => {
         ) {
           // TODO NEED TO SEND ORDER TO BACKEND AND CHECK IF EVERYTHING WAS OK - IN THAT DISPATCH, CHECK IF USER WAS LOGGED IN
           // TODO SET IN PROCESS TO FALSE AFTER SUCCESSFULL CREATION OF ORDER
+            console.log(authUser);
+          dispatch(addUserToOrderAction(authUser));
           dispatch(
             setAlertAction(
               'You order has been placed Successfully!!!',

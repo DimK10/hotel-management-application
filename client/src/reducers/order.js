@@ -15,20 +15,19 @@ const orderSlice = createSlice({
       hotelAmenities: [],
       roomAmenities: [],
       canceled: false,
-      inProcess: false
+      inProcess: false,
     },
     orderToShow: null,
     orders: [],
-    error: {}
+    error: {},
   },
   reducers: {
     newOrderPreCheckout: (state, action) => {
-      const { payload }  = action;
-      
+      const { payload } = action;
+
       state.currentOrder.checkInDate = payload.checkInDate;
       state.currentOrder.checkOutDate = payload.checkOutDate;
       state.currentOrder.inProcess = payload.inProcess;
-
     },
     getOrderById: (state, action) => {
       const { payload } = action;
@@ -43,12 +42,12 @@ const orderSlice = createSlice({
       state.error = false;
     },
     addHotelToOrderPreCheckout: (state, action) => {
-      const { payload }  = action;
+      const { payload } = action;
 
       state.currentOrder.hotel = payload.hotel;
     },
     addToOrder: (state, action) => {
-      const {payload} = action;
+      const { payload } = action;
 
       state.currentOrder.room = payload.room;
       state.currentOrder.price = payload.price;
@@ -56,12 +55,19 @@ const orderSlice = createSlice({
       state.currentOrder.hotelAmenities = payload.hotelAmenities;
       state.currentOrder.roomAmenities = payload.roomAmenities;
     },
+    addUserToOrder: (state, action) => {
+      const { payload } = action;
+      state.currentOrder.user = payload;
+      state.currentOrder.loading = false;
+      state.currentOrder.inProcess = false;
+      state.error = '';
+    },
     orderError: (state, action) => {
       const { payload } = action;
       state.currentOrder.error = payload;
       state.currentOrder.loading = false;
-    }
-  }
-})
+    },
+  },
+});
 
 export default orderSlice;

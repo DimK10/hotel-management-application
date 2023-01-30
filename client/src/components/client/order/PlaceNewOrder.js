@@ -47,20 +47,19 @@ const PlaceNewOrder = () => {
         }
 
         // set payload to redux
+        dispatch(
+          addToOrderAction(
+            roomSelected,
+            roomSelected.price,
+            user,
+            hotel.hotelAmenityDTO,
+            roomSelected.roomAmenityDTO
+          )
+        );
 
         if (user === null) {
             navigate("/sign-in")
         } else {
-           
-            dispatch(
-            addToOrderAction(
-                roomSelected,
-                roomSelected.price,
-                user,
-                hotel.hotelAmenityDTO,
-                roomSelected.roomAmenityDTO
-            )
-            );
             // TODO NEED TO SEND ORDER TO BACKEND AND CHECK IF EVERYTHING WAS OK - IN THAT DISPATCH, CHECK IF USER WAS LOGGED IN
             dispatch(setAlertAction("You order has been placed Successfully!!!", "success"));
             navigate("/");
