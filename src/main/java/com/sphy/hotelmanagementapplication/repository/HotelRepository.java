@@ -44,7 +44,7 @@ public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long>,
 
 	@Query(value = "select h from Hotel h inner join rooms r on h.id = r.hotel.id " +
             "inner join orders o on r.id = o.room.id " +
-            "where (h.name = :NameOrLocation or h.areaName = :NameOrLocation) and " +
+            "where (h.name like :NameOrLocation or h.areaName like :NameOrLocation) and " +
             " :checkIn not between o.checkInDate and o.checkOutDate and" +
             " :checkOut not between o.checkInDate and o.checkOutDate")
 	Set<Hotel> findByBasicSearch(@Param("checkIn")LocalDate checkIn, @Param("checkOut")LocalDate checkOut
@@ -55,7 +55,8 @@ public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long>,
 	Set<HotelAmenity> findAmenityByHotelId(@Param("id") Long id);
 
 	@Query(value = "select h from Hotel h inner join IntermediateHotelAmenity ih on h.id = ih.hotel.id inner join HotelAmenity ha on ih.hotelAmenity.id = ha.id " +
-			"inner join ")
+			"inner join rooms r on r.hotel.id = h.id inner join IntermediateRoomAmenity ir on r.id = ir.room.id inner join RoomAmenity ra on ra.id = ir.roomAmenity.id " +
+			"inner join orders o on o.room.id = r.id where ra.rAmenity")
 	Set<Hotel> findByAdvancedSearch(@Param("location")String location,@Param("checkInDate") LocalDate checkInDate,@Param("checkOutDate") LocalDate checkOutDate,
 									@Param("priceFrom")Long priceFrom,@Param("priceTo") Long priceTo,@Param("adultsRange") Integer adultsRange,
 									@Param("stars")Integer stars,@Param("parking") Boolean parking,@Param("restaurant") Boolean restaurant,
