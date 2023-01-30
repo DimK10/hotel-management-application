@@ -118,12 +118,13 @@ public class UserService implements UserDetailsService {
 
             AuthenticationRequest authenticationRequest = new AuthenticationRequest(userDTO.getUsername(),userDTO.getPassword(),userDTO.getRole());
 
-            final UserDetails userDetails = loadUserByUsername(authenticationRequest.getUsername());
+            userToUserDTO.converter(userRepository.save(userDTOToUser.converter(userDTO)));
+
+            final UserDetails userDetails = loadUserByUsername(userDTO.getUsername());
 
             final String jwt = jwtUtil.generateToken(userDetails);
 
             return ResponseEntity.ok(new AuthenticationResponse(jwt));
-
         }
     }
 
