@@ -1,4 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {revertAll} from "../actions/global";
 
 const registerSuccess = (state, action) => {
   const { payload } = action;
@@ -34,15 +35,18 @@ const error = (state, action) => {
   state.error = payload;
 }
 
+const initialState = {
+  jwt: localStorage.getItem('jwt'),
+  isAuthenticated: null,
+  loading: true,
+  user: null,
+  error: '',
+}
+
 const authSlice = createSlice({
   name: 'auth',
-  initialState: {
-    jwt: localStorage.getItem('jwt'),
-    isAuthenticated: null,
-    loading: true,
-    user: null,
-    error: '',
-  },
+  initialState,
+  extraReducers: (builder) => builder.addCase(revertAll, (state) => resetState(state)),
   reducers: {
     userLoaded: (state, action) => {
       const { payload } = action;

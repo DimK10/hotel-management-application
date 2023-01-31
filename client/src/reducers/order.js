@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import moment from "moment/moment";
+import {revertAll} from "../actions/global";
 
 const initialState = {
   currentOrder: {
@@ -22,7 +23,8 @@ const initialState = {
 
 const orderSlice = createSlice({
   name: 'order',
-  initialState, 
+  initialState,
+  extraReducers: (builder) => builder.addCase(revertAll, () => initialState),
   reducers: {
     newOrderPreCheckout: (state, action) => {
       const { payload } = action;
@@ -64,9 +66,7 @@ const orderSlice = createSlice({
       state.currentOrder.inProcess = false;
       state.error = '';
     },
-    resetOrderState: (state) => {
-      state = initialState
-    },
+    resetOrderState: (state) => initialState,
     orderError: (state, action) => {
       const { payload } = action;
       state.currentOrder.error = payload;

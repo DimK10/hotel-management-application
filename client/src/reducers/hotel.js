@@ -1,14 +1,18 @@
 import {createSlice} from "@reduxjs/toolkit";
+import {revertAll} from "../actions/global";
+
+const initialState = {
+  loading: true,
+  count: 0,
+  hotels: [],
+  hotel: {},
+  error: ''
+};
 
 const hotelSlice = createSlice({
   name: 'hotel',
-  initialState: {
-    loading: true,
-    count: 0,
-    hotels: [],
-    hotel: {},
-    error: ''
-  },
+  initialState,
+  extraReducers: (builder) => builder.addCase(revertAll, () => initialState),
   reducers: {
     getAllHotels: (state, action) => {
       const { payload } = action;
