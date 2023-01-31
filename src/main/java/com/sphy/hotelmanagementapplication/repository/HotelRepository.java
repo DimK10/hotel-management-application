@@ -19,7 +19,7 @@ import java.util.Set;
  * created by gp, dk , AKd
  */
 @Repository
-public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long>, AdvanceSearchImpl {
+public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long>{
 
 	@Query("from Hotel h where h.id = :id and h.owner.id = :userId ")
 	Optional<Hotel> findHotelByIdAndOwner(@Param("id") Long id, @Param("userId") Long userId);
@@ -53,24 +53,5 @@ public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long>,
 	@Query(value = "select ha from HotelAmenity ha inner join IntermediateHotelAmenity i on i.hotelAmenity.id = ha.id" +
 			"  where i.hotel.id = :id order by i.hotel.id")
 	Set<HotelAmenity> findAmenityByHotelId(@Param("id") Long id);
-
-//	@Query(value = "select h from Hotel h inner join IntermediateHotelAmenity ih on h.id = ih.hotel.id inner join HotelAmenity ha on ih.hotelAmenity.id = ha.id " +
-//			"inner join rooms r on r.hotel.id = h.id inner join IntermediateRoomAmenity ir on r.id = ir.room.id inner join RoomAmenity ra on ra.id = ir.roomAmenity.id " +
-//			"inner join orders o on o.room.id = r.id where ra.rAmenity")
-//	Set<Hotel> findByAdvancedSearch(@Param("location")String location,@Param("checkInDate") LocalDate checkInDate,@Param("checkOutDate") LocalDate checkOutDate,
-//									@Param("priceFrom")Long priceFrom,@Param("priceTo") Long priceTo,@Param("adultsRange") Integer adultsRange,
-//									@Param("stars")Integer stars,@Param("parking") Boolean parking,@Param("restaurant") Boolean restaurant,
-//									@Param("roomService") Boolean roomService,@Param("gym")Boolean gym,@Param("spa") Boolean spa,@Param("pool") Boolean pool,
-//									@Param("freeWifi")Boolean freeWifi,@Param("chargingStation") Boolean chargingStation,@Param("viewToSeaMountain") Boolean viewToSeaMountain,
-//									@Param("airConditioning")Boolean airConditioning,@Param("fireplace") Boolean fireplace,@Param("kitchen") Boolean kitchen,
-//									@Param("refrigerator")Boolean refrigerator,@Param("miniBar") Boolean miniBar,@Param("washingMachine")Boolean washingMachine,
-//									@Param("coffeeTeaMachine")Boolean coffeeTeaMachine,@Param("tv") Boolean tv,@Param("petsAllowed") Boolean petsAllowed,
-//									@Param("airportTransport")Boolean airportTransport,@Param("toiletGrabRails")Boolean toiletGrabRails,
-//									@Param("bathtubGrabRails")Boolean bathtubGrabRails,@Param("showerChair") Boolean showerChair,
-//									@Param("raisedChair")Boolean raisedChair,@Param("wheelchairRamps") Boolean wheelchairRamps,
-//									@Param("emergencyPhones")Boolean emergencyPhones,@Param("roomsAccessibleElevator") Boolean roomsAccessibleElevator,
-//									@Param("safeDepositBox")Boolean safeDepositBox,@Param("bathRobe") Boolean bathRobe,@Param("hairDryer") Boolean hairDryer,
-//									@Param("isBabyHighChair") Boolean isBabyHighChair,@Param("nameOrLocation") String nameOrLocation);
-
 
 }

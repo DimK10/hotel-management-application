@@ -47,6 +47,7 @@ public class BootStrapData implements CommandLineRunner {
         userRepository.save(admin);
 
         Room ena = new Room(null, "ena", 5, 54, false);
+        ena.setCapacity(3);
         roomRepository.save(ena);
 
 

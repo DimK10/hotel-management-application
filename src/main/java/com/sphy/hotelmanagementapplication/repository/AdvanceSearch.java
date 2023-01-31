@@ -3,6 +3,7 @@ package com.sphy.hotelmanagementapplication.repository;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
 import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
+import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -12,13 +13,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Configuration
 public class AdvanceSearch implements AdvanceSearchImpl{
 
     @PersistenceContext
-    EntityManager entityManager;
+     EntityManager entityManager;
+
 
     @Override
-    public List<Hotel> AdvanceSearchMethode(List<HotelAmenity> hotelAmenities, List<RoomAmenity> roomAmenities, LocalDate checkInDate, LocalDate checkOutDate,
+    public List<Hotel> advanceSearchMethode(List<HotelAmenity> hotelAmenities, List<RoomAmenity> roomAmenities, LocalDate checkInDate, LocalDate checkOutDate,
                                             Long priceFrom, Long priceTo, Integer adultsRange, Integer stars, String nameOrLocation) {
 
         Map<String, Object> parametrMap = new HashMap<>();
@@ -86,7 +89,8 @@ public class AdvanceSearch implements AdvanceSearchImpl{
             queryFinal.setParameter(key, parametrMap.get(key));
         }
 
-        return queryFinal.getResultList();
+        List<Hotel> hotels = queryFinal.getResultList();
+        return  hotels;
 
     }
 }

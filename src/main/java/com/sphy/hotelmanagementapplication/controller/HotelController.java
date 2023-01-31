@@ -265,7 +265,7 @@ public class HotelController {
 
         if (userService.getUserFromToken(token).getRole().equals(User.Role.CLIENT)){
 
-            return service.getHotelAdvancedSearch(advancedSearch.getHotelAmenities(), advancedSearch.getRoomAmenities(), advancedSearch.getCheckInDate(), advancedSearch.getCheckOutDate(),
+            return service.advanceSearchMethode(advancedSearch.getHotelAmenities(), advancedSearch.getRoomAmenities(), advancedSearch.getCheckInDate(), advancedSearch.getCheckOutDate(),
                     advancedSearch.getPriceFrom(), advancedSearch.getPriceTo(), advancedSearch.getAdultsRange(), advancedSearch.getStars(), advancedSearch.getNameOrLocation());
         }else {
 

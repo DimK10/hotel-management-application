@@ -15,6 +15,9 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -23,6 +26,9 @@ import java.util.*;
  */
 @Service
 public class HotelService {
+
+    @PersistenceContext
+    EntityManager entityManager;
 
 
     private final HotelRepository hotelRepository;
@@ -369,21 +375,104 @@ public class HotelService {
     public Set<HotelDTO> getHotelAdvancedSearch(List<HotelAmenity> hotelAmenities, List<RoomAmenity> roomAmenities, LocalDate checkInDate, LocalDate checkOutDate,
                                                 Long priceFrom, Long priceTo, Integer adultsRange, Integer stars, String nameOrLocation) {
 
+//        Set<HotelDTO> hotelDTOS = new HashSet<>();
+//
+//        hotelRepository.advanceSearchMethode(hotelAmenities, roomAmenities, checkInDate, checkOutDate, priceFrom, priceTo, adultsRange, stars, nameOrLocation)
+//                .forEach(hotel -> hotelDTOS
+//                        .add(hotelToHotelDTO
+//                                .converter((Hotel) hotel)));
+//
+//        if (!hotelDTOS.isEmpty()) {
+//
+//            return hotelDTOS;
+//
+//        } else {
+//
+//            throw new RuntimeException("Something went wrong");
+//        }
+
+       return null;
+
+
+    }
+
+
+    public Set<HotelDTO> advanceSearchMethode(List<HotelAmenity> hotelAmenities, List<RoomAmenity> roomAmenities, LocalDate checkInDate, LocalDate checkOutDate,
+                                              Long priceFrom, Long priceTo, Integer adultsRange, Integer stars, String nameOrLocation) {
+
+        Map<String, Object> parametrMap = new HashMap<>();
+
+        StringBuilder query = new StringBuilder("select h from Hotel h inner join IntermediateHotelAmenity ih on h.id = ih.hotel.id inner join HotelAmenity ha on ih.hotelAmenity.id = ha.id inner " +
+                "join rooms r on r.hotel.id = h.id inner join IntermediateRoomAmenity ir on r.id = ir.room.id inner join RoomAmenity ra on ra.id = ir.roomAmenity.id " +
+                "inner join orders o on o.room.id = r.id where ");
+
+        if (adultsRange != null) {
+
+            query.append("r.capacity = :adults");
+
+            parametrMap.put("adults", adultsRange);
+        }
+
+        if (priceFrom != null) {
+
+            query.append(" and r.price > :priceFrom");
+            parametrMap.put("priceFrom", priceFrom);
+        }
+
+        if (priceTo != null) {
+
+            query.append(" and r.price < :priceTo");
+            parametrMap.put("priceTo", priceTo);
+        }
+
+        if (stars != null) {
+
+            query.append(" and h.stars = :stars");
+            parametrMap.put("stars", stars);
+        }
+
+        if (nameOrLocation != null) {
+
+            query.append(" and (h.name like :NameOrLocation or h.areaName like :NameOrLocation)");
+            parametrMap.put("NameOrLocation", "%" + nameOrLocation.toLowerCase() + "%");
+        }
+
+        if (checkInDate != null && checkOutDate != null) {
+
+            query.append(" and :checkIn not between o.checkInDate and o.checkOutDate and :checkOut not between o.checkInDate and o.checkOutDate");
+            parametrMap.put("checkOut", checkOutDate);
+            parametrMap.put("checkIn", checkInDate);
+        }
+
+
+        for (int i = 0; i < hotelAmenities.size(); i++) {
+
+            query.append(" and ha.hAmenity = :hAmenity").append(i);
+            parametrMap.put("hAmenity" + i, hotelAmenities.get(i).gethAmenity());
+        }
+
+        for (int i = 0; i < roomAmenities.size(); i++) {
+
+            query.append(" and ra.rAmenity = :rAmenity").append(i);
+            parametrMap.put("rAmenity" + i, roomAmenities.get(i).getrAmenity());
+        }
+
+
+        Query queryFinal = entityManager.createQuery(String.valueOf(query));
+
+        for (String key : parametrMap.keySet()) {
+
+            queryFinal.setParameter(key, parametrMap.get(key));
+        }
+
+        List<Hotel> hotels = queryFinal.getResultList();
+
         Set<HotelDTO> hotelDTOS = new HashSet<>();
 
-        hotelRepository.AdvanceSearchMethode(hotelAmenities, roomAmenities, checkInDate, checkOutDate, priceFrom, priceTo, adultsRange, stars, nameOrLocation)
-                .forEach(hotel -> hotelDTOS
+        hotels.forEach(hotel -> hotelDTOS
                         .add(hotelToHotelDTO
                                 .converter(hotel)));
 
-        if (!hotelDTOS.isEmpty()) {
-
-            return hotelDTOS;
-
-        } else {
-
-            throw new RuntimeException("Something went wrong");
-        }
-
+        return hotelDTOS;
     }
 }
