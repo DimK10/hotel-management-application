@@ -8,6 +8,7 @@ import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
+import com.sphy.hotelmanagementapplication.repository.AmenityHotelRepository;
 import com.sphy.hotelmanagementapplication.repository.HotelRepository;
 import com.sphy.hotelmanagementapplication.repository.IntermediateHotelAmenityRepository;
 import com.sphy.hotelmanagementapplication.repository.UserRepository;
@@ -38,8 +39,10 @@ public class HotelService {
 
     private final IntermediateHotelAmenityRepository intermediateHotelAmenityRepository;
 
+    private final AmenityHotelRepository amenityHotelRepository;
 
-    public HotelService(HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService, IntermediateHotelAmenityRepository intermediateHotelAmenityRepository) {
+
+    public HotelService(HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService, IntermediateHotelAmenityRepository intermediateHotelAmenityRepository, AmenityHotelRepository amenityHotelRepository) {
         this.hotelRepository = hotelRepository;
         this.hotelDTOToHotel = hotelDTOToHotel;
         this.hotelToHotelDTO = hotelToHotelDTO;
@@ -47,6 +50,7 @@ public class HotelService {
         this.userRepository = userRepository;
         this.userService = userService;
         this.intermediateHotelAmenityRepository = intermediateHotelAmenityRepository;
+        this.amenityHotelRepository = amenityHotelRepository;
     }
 
     /***
@@ -396,5 +400,24 @@ public class HotelService {
             throw new RuntimeException("Something went wrong");
         }
 
+    }
+
+    /***
+     * returns all hotel amenities
+     * @return all hotel amenities
+     */
+    public Set<HotelAmenity> getHotelAmenities() throws ApiRequestException{
+
+        Set<HotelAmenity> amenities = new HashSet<>();
+
+        amenityHotelRepository.findAll().forEach(amenities::add);
+
+        if (amenities.isEmpty()){
+
+            throw new ApiRequestException("There are no hotel amenities whet.");
+
+        }else {
+            return amenities;
+        }
     }
 }
