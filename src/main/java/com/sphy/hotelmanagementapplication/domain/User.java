@@ -1,7 +1,5 @@
 package com.sphy.hotelmanagementapplication.domain;
 
-import org.springframework.data.annotation.Transient;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;

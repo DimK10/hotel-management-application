@@ -242,7 +242,7 @@ public class HotelController {
      * @return the hotels than mach with the search
      * @throws RuntimeException if this that made the search is not a role client
      */
-    @GetMapping("/api/hotel/basic/search")
+    @PostMapping("/api/hotel/basic/search")
     public Set<HotelDTO> findHotelBasicSearch(@RequestBody BasicSearchDTO basicSearchDTO)throws RuntimeException{
 
             return service.getHotelBasicSearch(basicSearchDTO);

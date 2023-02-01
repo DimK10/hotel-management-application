@@ -3,8 +3,10 @@ package com.sphy.hotelmanagementapplication.bootstrap;
 import com.sphy.hotelmanagementapplication.domain.*;
 import com.sphy.hotelmanagementapplication.domain.User.Role;
 import com.sphy.hotelmanagementapplication.repository.*;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -33,61 +35,59 @@ public class BootStrapData implements CommandLineRunner {
         this.intermediateRoomAmenityRepository = intermediateRoomAmenityRepository;
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        User client = new User(null, true, "pelatis", "mitsos", "allatsas", "pelatis@gmail.com", "asfgbafbf", Role.CLIENT, new HashSet<>(), new HashSet<>());
-        client.setHashedPassword("hfdgjakdhgakj");
-        client.setHashedPassword("avbasbvabcba");
-        userRepository.save(client);
+	@Override
+    @Transactional
+	public void run(String... args) throws Exception {
+		User client = new User(null, true, "pelatis", "mitsos", "allatsas", "pelatis@gmail.com", "asfgbafbf", Role.CLIENT, new HashSet<>(), new HashSet<>());
+		client.setHashedPassword("avbasbvabcba");
+		userRepository.save(client);
+
+		User client2 = new User(null, true, "dim_80", "dim", "Iwannou", "dimioannou@gmail.com", "soula_magapas", Role.CLIENT, new HashSet<>(), new HashSet<>());
+		client2.setHashedPassword("1229758f94f95fe3593ffe549ab6c5dd797660bfc823ab8dc4fea9dd656c0609b196b0e77491ebf0");
+		userRepository.save(client2);
 
 
-        User admin = new User(2L, true, "geo_46", "thanos", "poul", "geopapadopoulos@gmail.com", "soula_sagapo", Role.ADMIN, new HashSet<>(), new HashSet<>());
-        admin.setHashedPassword("5c54105254c53d8e67ce12cddc0dc00a85ebd4156c68b2c8ee955d6d9066396ed4780bea29e02ef5");
+		User admin = new User(null, true, "geo_46", "thanos", "poul", "geopapadopoulos@gmail.com", "soula_sagapo", Role.ADMIN, new HashSet<>(), new HashSet<>());
+		admin.setHashedPassword("5c54105254c53d8e67ce12cddc0dc00a85ebd4156c68b2c8ee955d6d9066396ed4780bea29e02ef5");
 
-        userRepository.save(admin);
+		userRepository.save(admin);
 
-        Room ena = new Room(null, "ena", 5, 54, false);
-        roomRepository.save(ena);
-
-
-        Room dio = new Room(null, "dio", 4, 30, false);
-        roomRepository.save(dio);
+		Room ena = new Room(null, "ena", 5, 54, false);
+		roomRepository.save(ena);
 
 
-        for (int i = 0; i < 100; i++) {
-            Hotel hotel = new Hotel(null, ("ksenia" + i), 5, "athens", false);
-
-            hotel.setOwner(admin);
-            admin.getHotels().add(hotel);
-
-            hotelRepository.save(hotel);
-            userRepository.save(admin);
-        }
-
-        Hotel ksenia = new Hotel(null, "ksenia", 5, "athens", false);
-        Hotel ksenia2 = new Hotel(null, "ksenia2", 5, "athens", false);
-        Hotel ksenia3 = new Hotel(null, "ksenia3", 5, "athens", false);
-        hotelRepository.save(ksenia);
-        hotelRepository.save(ksenia2);
-        hotelRepository.save(ksenia3);
-        ksenia.setOwner(admin);
-        hotelRepository.save(ksenia);
-        ena.setHotel(ksenia);
-        dio.setHotel(ksenia);
-        roomRepository.save(ena);
-        roomRepository.save(dio);
-        admin.getHotels().add(ksenia);
-        userRepository.save(admin);
+		Room dio = new Room(null, "dio", 4, 30, false);
+		roomRepository.save(dio);
 
 
-        ksenia.getRooms().add(ena);
-        hotelRepository.save(ksenia);
-        ksenia.getRooms().add(dio);
-        hotelRepository.save(ksenia);
-        ksenia.getRooms().add(ena);
-        ksenia.getRooms().add(dio);
+		for (int i = 0; i < 100; i++) {
+			Hotel hotel = new Hotel(null, ("ksenia" + i), 5, "athens", false);
 
-        hotelRepository.save(ksenia);
+			hotel.setOwner(admin);
+			admin.getHotels().add(hotel);
+
+			hotelRepository.save(hotel);
+			userRepository.save(admin);
+		}
+
+		Hotel ksenia = new Hotel(null, "ksenia", 5, "athens", false);
+		Hotel ksenia2 = new Hotel(null, "ksenia2", 5, "athens", false);
+		Hotel ksenia3 = new Hotel(null, "ksenia3", 5, "athens", false);
+
+		hotelRepository.save(ksenia2);
+		hotelRepository.save(ksenia3);
+		ksenia.setOwner(admin);
+
+		ena.setHotel(ksenia);
+		dio.setHotel(ksenia);
+		roomRepository.save(ena);
+		roomRepository.save(dio);
+		admin.getHotels().add(ksenia);
+		userRepository.save(admin);
+
+
+		ksenia.getRooms().add(ena);
+		ksenia.getRooms().add(dio);
 
         HotelAmenity hotelAmenity1 = new HotelAmenity("Parking");
         amenityHotelRepository.save(hotelAmenity1);
@@ -141,35 +141,13 @@ public class BootStrapData implements CommandLineRunner {
         amenityHotelRepository.save(hotelAmenity2);
 
 
-
-//        Set<HotelAmenity> amenitySet = new HashSet<>();
-//
-//        HotelAmenity amenity1 = new HotelAmenity();
-//
-//        amenity1.setAmenitiesH(HotelAmenity.AmenitiesHotel.AIRPORTTRANSPORT);
-//
-//        HotelAmenity amenity2 = new HotelAmenity();
-//
-//        amenity2.setAmenitiesH(HotelAmenity.AmenitiesHotel.GYM);
-//
-//        HotelAmenity amenity3 = new HotelAmenity();
-//
-//        amenity3.setAmenitiesH(HotelAmenity.AmenitiesHotel.PETSALLOWED);
-//
-//        amenitySet.add(amenity1);
-//        amenitySet.add(amenity2);
-//        amenitySet.add(amenity3);
-//
-//        amenityHotelRepository.saveAll(amenitySet);
-//
-//        ksenia.getHotelAmenity().addAll(amenitySet);
-
+		hotelRepository.save(ksenia);
 
         Order order = new Order(null, LocalDate.of(2007, 12, 3), LocalDate.of(2007, 12, 7), false, client, ena, ena.getName(), ena.getHotel().getName(), ena.getPrice());
         orderRepository.save(order);
 
 
-        ena.getOrders().add(order);
+		ena.getOrders().add(order);
 
         RoomAmenity roomAmenity1 = new RoomAmenity("Free WiFi");
         amenityRoomRepository.save(roomAmenity1);
@@ -234,7 +212,7 @@ public class BootStrapData implements CommandLineRunner {
         IntermediateRoomAmenity roomAme2 = new IntermediateRoomAmenity(ena, roomAmenity2);
         intermediateRoomAmenityRepository.save(roomAme2);
 
-        roomRepository.save(ena);
+		roomRepository.save(ena);
 
 
         ena.getIntermediateRoomAmenities().add(roomAme1);
@@ -279,5 +257,5 @@ public class BootStrapData implements CommandLineRunner {
 //        dio.getRoomAmenity().addAll(amenityRset1);
         roomRepository.save(dio);
 
-    }
+	}
 }

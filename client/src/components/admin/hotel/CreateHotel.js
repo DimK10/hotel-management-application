@@ -1,16 +1,16 @@
 import React, {Fragment, useState} from 'react';
-import SidebarComp from "../layout/Sidebar";
-import HeaderNav from "../layout/HeaderNav";
+import SidebarComp from "../../layout/Sidebar";
+import HeaderNav from "../../layout/HeaderNav";
 
-import cities from '../../json/cities.json';
+import cities from '../../../json/cities.json';
 import {useDispatch, useSelector} from "react-redux";
-import {createNewHotelAction} from "../../actions/hotel";
+import {createNewHotelAction} from "../../../actions/hotel";
 
 function CreateHotel() {
 
   const dispatch = useDispatch();
 
-  const auth = useSelector(state => state.auth);
+  const {user} = useSelector(state => state.auth);
 
     // TODO ADD ROOMS WITH CREATE HOTEL FORM
     const [formData, setFormData] = useState({
@@ -18,7 +18,7 @@ function CreateHotel() {
         stars: 1,
         areaName: '',
         disabled: false,
-        owner: auth.user,
+        owner: user?.id,
         rooms: []
     })
 
@@ -50,6 +50,7 @@ function CreateHotel() {
 
     const onSubmit = async e => {
         e.preventDefault();
+        setFormData({...formData, owner: user?.id});
         dispatch(createNewHotelAction(formData));
     };
 
@@ -66,7 +67,7 @@ function CreateHotel() {
                             <form onSubmit={e => onSubmit(e)}>
                                 <div className="mb-3">
                                     <label htmlFor="name" className="form-label">Hotel Name:</label>
-                                    <input type="text" className="form-control" id="name"
+                                    <input type="text" className="form-control" id="name" name='name'
                                            aria-describedby="name" placeholder="Hotel Name" onChange={(e) => {
                                         onChange(e);
                                     }} required={true}/>
@@ -114,7 +115,7 @@ function CreateHotel() {
 
                                 <div className="mb-3">
                                     <label htmlFor="address" className="form-label">Address:</label>
-                                    <input type="text" className="form-control" id="address"
+                                    <input type="text" className="form-control" id="address" name='address'
                                                aria-describedby="address" placeholder="Address" onChange={(e) => {
                                             onChange(e);
                                         }} required={true}

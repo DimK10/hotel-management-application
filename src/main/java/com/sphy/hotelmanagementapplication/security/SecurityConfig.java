@@ -25,38 +25,38 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
-		prePostEnabled = false, securedEnabled = false, jsr250Enabled = true
+        prePostEnabled = false, securedEnabled = false, jsr250Enabled = true
 )
 public class SecurityConfig {
 
-	private final UserService userService;
+    private final UserService userService;
 
-	private Pbkdf2PasswordEncoder pbkdf2PasswordEncoder;
+    private Pbkdf2PasswordEncoder pbkdf2PasswordEncoder;
 
-	private final JwtRequestFilter jwtRequestFilter;
-
-
-	private final AuthenticationEntryPoint authEntryPoint;
-
-	public SecurityConfig(UserService userService, JwtRequestFilter jwtRequestFilter,
-			@Qualifier("customAuthenticationEntryPoint") AuthenticationEntryPoint authEntryPoint) {
-		this.userService = userService;
-		this.jwtRequestFilter = jwtRequestFilter;
-		this.authEntryPoint = authEntryPoint;
-	}
+    private final JwtRequestFilter jwtRequestFilter;
 
 
-	@Bean
-	public DaoAuthenticationProvider daoAuthenticationProvider() {
+    private final AuthenticationEntryPoint authEntryPoint;
 
-		DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+    public SecurityConfig(UserService userService, JwtRequestFilter jwtRequestFilter,
+                          @Qualifier("customAuthenticationEntryPoint") AuthenticationEntryPoint authEntryPoint) {
+        this.userService = userService;
+        this.jwtRequestFilter = jwtRequestFilter;
+        this.authEntryPoint = authEntryPoint;
+    }
 
-		authenticationProvider.setUserDetailsService(userService);
-		pbkdf2PasswordEncoder = new Pbkdf2PasswordEncoder();
-		authenticationProvider.setPasswordEncoder(pbkdf2PasswordEncoder);
 
-		return authenticationProvider;
-	}
+    @Bean
+    public DaoAuthenticationProvider daoAuthenticationProvider() {
+
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+
+        authenticationProvider.setUserDetailsService(userService);
+        pbkdf2PasswordEncoder = new Pbkdf2PasswordEncoder();
+        authenticationProvider.setPasswordEncoder(pbkdf2PasswordEncoder);
+
+        return authenticationProvider;
+    }
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -64,6 +64,7 @@ public class SecurityConfig {
 		// Allow X-Frame-Options for same origin - bug in displaying the sections in h2 console
 		http
 				.headers().frameOptions().sameOrigin();
+
 		http.csrf().disable()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
@@ -72,6 +73,7 @@ public class SecurityConfig {
 				.antMatchers(HttpMethod.POST, "/**").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/signup").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/login").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/hotel/basic/search").permitAll()
 				.antMatchers("**/h2-ui/**").permitAll()
 				.anyRequest().authenticated()
 				.and()
@@ -79,15 +81,15 @@ public class SecurityConfig {
 				.authenticationEntryPoint(authEntryPoint);
 
 
-		http
-				.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        http
+                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
 
-		return http.build();
-	}
+        return http.build();
+    }
 
-	@Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
-		return authenticationConfiguration.getAuthenticationManager();
-	}
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 }
