@@ -8,6 +8,7 @@ import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
+import com.sphy.hotelmanagementapplication.repository.AmenityHotelRepository;
 import com.sphy.hotelmanagementapplication.repository.HotelRepository;
 import com.sphy.hotelmanagementapplication.repository.IntermediateHotelAmenityRepository;
 import com.sphy.hotelmanagementapplication.repository.UserRepository;
@@ -38,8 +39,10 @@ public class HotelService {
 
     private final IntermediateHotelAmenityRepository intermediateHotelAmenityRepository;
 
+    private final AmenityHotelRepository amenityHotelRepository;
 
-    public HotelService(HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService, IntermediateHotelAmenityRepository intermediateHotelAmenityRepository) {
+
+    public HotelService(HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService, IntermediateHotelAmenityRepository intermediateHotelAmenityRepository, AmenityHotelRepository amenityHotelRepository) {
         this.hotelRepository = hotelRepository;
         this.hotelDTOToHotel = hotelDTOToHotel;
         this.hotelToHotelDTO = hotelToHotelDTO;
@@ -47,6 +50,7 @@ public class HotelService {
         this.userRepository = userRepository;
         this.userService = userService;
         this.intermediateHotelAmenityRepository = intermediateHotelAmenityRepository;
+        this.amenityHotelRepository = amenityHotelRepository;
     }
 
     /***
@@ -362,4 +366,25 @@ public class HotelService {
         }
 
     }
+
+    /**
+     * Created by Akd
+     * saves a new Hotel Amenity
+     * @param hotelAmenity  to be saved
+     * @return the saved hotel amenity for confirmation
+     * @throws ApiRequestException if the hotel amenity is not created end does not be enabled
+     */
+    public HotelAmenity saveHotelAmenity (HotelAmenity hotelAmenity) throws ApiRequestException{
+
+        if (hotelAmenity.gethAmenity().isEmpty()){
+            throw new ApiRequestException("There is no Hotel Amenity");
+        }
+
+        if(!hotelAmenity.getEnabled()){
+            throw new ApiRequestException("There is no activated Hotel Amenity");
+        }
+
+        return amenityHotelRepository.save(hotelAmenity);
+    }
+
 }

@@ -183,11 +183,11 @@ public class HotelController {
      */
     @PutMapping("/api/hotel/addHotelAmenity")
     @PreAuthorize("hasAuthority('SUPERUSER')")
-    public HotelAmenity addHotelAmenity(@RequestHeader(name="Authorization")String token, @RequestBody HotelAmenity hotelAmenity) throws ApiRequestException{
+    public HotelAmenity saveHotelAmenity(@RequestHeader(name="Authorization")String token, @RequestBody HotelAmenity hotelAmenity) throws ApiRequestException{
 
         if (Objects.equals(User.Role.SUPERUSER, userService.getUserFromToken(token).getRole())) {
 
-            return service.addHotelAmenity(hotelAmenity);
+            return service.saveHotelAmenity(hotelAmenity);
         } else {
             throw new ApiRequestException("Unauthorized");
         }
