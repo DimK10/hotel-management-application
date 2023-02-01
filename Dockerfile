@@ -3,7 +3,7 @@ RUN mkdir -p workspace
 WORKDIR workspace
 COPY pom.xml /workspace
 COPY src /workspace/src
-COPY userB /workspace/userB
+COPY client /workspace/client
 RUN mvn -f pom.xml clean install -Pprod -DskipTests=true
 
 
