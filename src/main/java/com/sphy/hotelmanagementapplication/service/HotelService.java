@@ -354,6 +354,14 @@ public class HotelService {
                             .add(hotelToHotelDTO
                                     .converter(hotel)));
 
+            hotelDTOS.forEach(hotelDTO -> hotelDTO.getAmenities()
+                    .addAll(getHotelAmenitiesByHotelId(hotelDTO.getId())));
+
+            hotelDTOS.forEach(hotelDTO -> hotelDTO
+                    .getRooms()
+                    .forEach(roomDTO -> roomDTO.getAmenities()
+                            .addAll(roomService.getRoomAmenitiesByRoomId(roomDTO.getId()))));
+
             return hotelDTOS;
 
         } else {
