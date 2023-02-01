@@ -354,14 +354,40 @@ public class HotelService {
                             .add(hotelToHotelDTO
                                     .converter(hotel)));
 
-            hotelDTOS.forEach(hotelDTO -> hotelDTO.getAmenities()
-                    .addAll(getHotelAmenitiesByHotelId(hotelDTO.getId())));
+            if (!hotelDTOS.isEmpty()) {
 
-            hotelDTOS.forEach(hotelDTO -> hotelDTO
-                    .getRooms()
-                    .forEach(roomDTO -> roomDTO.getAmenities()
-                            .addAll(roomService.getRoomAmenitiesByRoomId(roomDTO.getId()))));
+                for (HotelDTO hotelDTO : hotelDTOS){
 
+                    Set<HotelAmenity> amenities = getHotelAmenitiesByHotelId(hotelDTO.getId());
+
+                    if( !amenities.isEmpty()) {
+
+                        hotelDTO.getAmenities().addAll(amenities);
+                    }
+
+                    Set<RoomDTO> roomsDto = hotelDTO.getRooms();
+
+                    if (!roomsDto.isEmpty()){
+
+
+                        for (RoomDTO roomDTO : roomsDto){
+
+                            Set<RoomAmenity> RAmenities = roomService.getRoomAmenitiesByRoomId(roomDTO.getId());
+
+                            if (!RAmenities.isEmpty()) {
+
+                                roomDTO.getAmenities().addAll(RAmenities);
+                            }
+                        }
+                    }
+                }
+
+
+                hotelDTOS.forEach(hotelDTO -> hotelDTO
+                        .getRooms()
+                        .forEach(roomDTO -> roomDTO.getAmenities()
+                                .addAll(roomService.getRoomAmenitiesByRoomId(roomDTO.getId()))));
+            }
             return hotelDTOS;
 
         } else {
