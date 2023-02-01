@@ -213,4 +213,16 @@ public class RoomController {
             return service.getRoomAmenitiesByRoomId(roomId);
     }
 
+    /***
+     * returns all room amenities
+     * @return room amenities
+     * @throws RuntimeException when not exist any hotel amenity
+     */
+    @PostMapping("/api/room/amenities")
+    public Set<RoomAmenity> findRoomAmenities()throws RuntimeException{
+
+        return service.getRoomAmenities();
+
+    }
+
 }
