@@ -250,4 +250,17 @@ public class HotelController {
     }
 
 
+    /***
+     * returns all hotel amenities
+     * @return hotel amenities
+     * @throws RuntimeException when not exist any hotel amenity
+     */
+    @PostMapping("/api/hotel/amenities")
+    public Set<HotelAmenity> findHotelAmenities()throws RuntimeException{
+
+        return service.getHotelAmenities();
+
+    }
+
+
 }
