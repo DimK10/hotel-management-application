@@ -186,4 +186,78 @@ public class HotelServiceIT {
         //then
         assertEquals(39, hotelDTOS.size());
     }
+
+    @Test
+    void advancedSearchAdultRange() throws Exception {
+
+        //given
+
+        List<HotelAmenity> hotelAmenities = new ArrayList<>();
+        List<RoomAmenity> roomAmenities = new ArrayList<>();
+        //when
+
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities,null, null, null, null, 2, null, null);
+
+        //then
+        assertEquals(97, hotelDTOS.size());
+    }
+
+    @Test
+    void advancedSearchPrice() throws Exception {
+
+        //given
+
+        List<HotelAmenity> hotelAmenities = new ArrayList<>();
+        List<RoomAmenity> roomAmenities = new ArrayList<>();
+        //when
+
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, null, null, 0L, 11L, 2, null, null);
+
+        //then
+        assertEquals(39, hotelDTOS.size());
+    }
+
+    @Test
+    void advancedSearchHAmenities() throws Exception {
+
+        //given
+
+        List<HotelAmenity> hotelAmenities = new ArrayList<>();
+
+        HotelAmenity hotelAmenity = new HotelAmenity("Airport Transport",true);
+        hotelAmenity.setId(9L);
+        hotelAmenities.add(hotelAmenity);
+        List<RoomAmenity> roomAmenities = new ArrayList<>();
+        //when
+
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, null, null, null, null, null, null, null);
+
+        //then
+        assertEquals(39, hotelDTOS.size());
+    }
+
+    @Test
+    void advancedSearchRAmenities() throws Exception {
+
+        //given
+
+        List<HotelAmenity> hotelAmenities = new ArrayList<>();
+
+        HotelAmenity hotelAmenity = new HotelAmenity("Airport Transport",true);
+
+        List<RoomAmenity> roomAmenities = new ArrayList<>();
+        RoomAmenity roomAmenity = new RoomAmenity("Free WiFi", true);
+        roomAmenity.setId(1L);
+        roomAmenities.add(roomAmenity);
+        //when
+
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, null, null, null, null, null, null, null);
+
+        //then
+        assertEquals(21, hotelDTOS.size());
+    }
+
+
+
+
 }
