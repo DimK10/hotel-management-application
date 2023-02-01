@@ -4,7 +4,6 @@ import HeaderNav from "../../layout/HeaderNav";
 import {useDispatch, useSelector} from "react-redux";
 import cities from "../../../json/cities.json";
 import {
-  createNewHotelAction,
   getHotelByIdAction,
   updateExistingHotelAction
 } from "../../../actions/hotel";
