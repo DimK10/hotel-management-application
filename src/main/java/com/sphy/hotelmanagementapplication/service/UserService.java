@@ -6,7 +6,10 @@ import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.UserDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.repository.UserRepository;
+import com.sphy.hotelmanagementapplication.security.AuthenticationRequest;
+import com.sphy.hotelmanagementapplication.security.AuthenticationResponse;
 import com.sphy.hotelmanagementapplication.security.JwtUtil;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -103,7 +106,7 @@ public class UserService implements UserDetailsService {
      * @return the saved user
      * @throws ApiRequestException if the necessary properties are not included in the request
      */
-    public UserDTO saveUser(UserDTO userDTO) throws ApiRequestException{
+    public ResponseEntity<?> saveUser(UserDTO userDTO) throws ApiRequestException{
 
         if (userDTO.getUsername().isBlank() || userDTO.getPassword().isBlank()
                 || userDTO.getEmail().isBlank() || userDTO.getRole().isBlank()){
@@ -112,7 +115,16 @@ public class UserService implements UserDetailsService {
         }else {
 
             userDTO.setHashedPassword(passwordEncoder.encode(userDTO.getPassword()));
-          return   userToUserDTO.converter(userRepository.save(userDTOToUser.converter(userDTO)));
+
+            AuthenticationRequest authenticationRequest = new AuthenticationRequest(userDTO.getUsername(),userDTO.getPassword(),userDTO.getRole());
+
+            userToUserDTO.converter(userRepository.save(userDTOToUser.converter(userDTO)));
+
+            final UserDetails userDetails = loadUserByUsername(userDTO.getUsername());
+
+            final String jwt = jwtUtil.generateToken(userDetails);
+
+            return ResponseEntity.ok(new AuthenticationResponse(jwt));
         }
     }
 

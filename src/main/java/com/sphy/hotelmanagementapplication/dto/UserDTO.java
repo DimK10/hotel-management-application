@@ -26,6 +26,8 @@ public class UserDTO implements Serializable{
     private String hashedPassword;
 
     private String role;
+    
+    private boolean enabled;
 
     @Transient
     private String password;
@@ -113,6 +115,13 @@ public class UserDTO implements Serializable{
     public void setRole(String role) {
         this.role = role;
     }
+    public boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
 	public Set<HotelDTO> getHotelDTOS() {
 		return hotelDTOS;
@@ -141,6 +150,7 @@ public class UserDTO implements Serializable{
 				", email='" + email + '\'' +
 				", hashedPassword='" + hashedPassword + '\'' +
 				", role='" + role + '\'' +
+                ", enabled='" + enabled + '\'' +
 				", password='" + password + '\'' +
 				", hotelDTOS=" + hotelDTOS +
 				", orderDTOS=" + orderDTOS +

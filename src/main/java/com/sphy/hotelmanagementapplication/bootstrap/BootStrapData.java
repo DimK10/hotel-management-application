@@ -35,13 +35,13 @@ public class BootStrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        User client = new User(null, true, "pelatis", "mitsos", "allatsas", "pelatis@gmail.com", "asfgbafbf", Role.CLIENT, new HashSet<>(), new HashSet<>());
+        User client = new User(null, true, "pelatis", "mitsos", "allatsas", "pelatis@gmail.com", "asfgbafbf",true, Role.CLIENT, new HashSet<>(), new HashSet<>());
         client.setHashedPassword("hfdgjakdhgakj");
         client.setHashedPassword("avbasbvabcba");
         userRepository.save(client);
 
 
-        User admin = new User(2L, true, "geo_46", "thanos", "poul", "geopapadopoulos@gmail.com", "soula_sagapo", Role.ADMIN, new HashSet<>(), new HashSet<>());
+        User admin = new User(2L, true, "geo_46", "thanos", "poul", "geopapadopoulos@gmail.com", "soula_sagapo",true, Role.ADMIN, new HashSet<>(), new HashSet<>());
         admin.setHashedPassword("5c54105254c53d8e67ce12cddc0dc00a85ebd4156c68b2c8ee955d6d9066396ed4780bea29e02ef5");
 
         userRepository.save(admin);

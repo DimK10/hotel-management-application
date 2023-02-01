@@ -168,6 +168,24 @@ public class HotelController {
 
     }
 
+    /***
+     * Created by Akd
+     * Add Hotel Amenity
+     * @param hotelAmenity new hotel Amenity parameters
+     * @return added the new Hotel Amenity
+     * @throws ApiRequestException if the user is not Authorised to add Hotel Amenity
+     */
+    @PutMapping("/api/hotel/addHotelAmenity")
+    @PreAuthorize("hasAuthority('SUPERUSER')")
+    public HotelAmenity addHotelAmenity(@RequestHeader(name="Authorization")String token, @RequestBody HotelAmenity hotelAmenity) throws ApiRequestException{
+
+        if (Objects.equals(User.Role.SUPERUSER, userService.getUserFromToken(token).getRole())) {
+
+            return service.addHotelAmenity(hotelAmenity);
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
+    }
 
     /***
      * enables a hotel by his id
