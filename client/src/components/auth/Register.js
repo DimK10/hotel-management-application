@@ -7,6 +7,7 @@ import Alert from "../layout/Alert";
 import {Link, Navigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import { register } from '../../actions/auth';
+import {v4 as uuidv4} from "uuid";
 
 const Register = (props) => {
 
@@ -24,7 +25,6 @@ const Register = (props) => {
     firstname: '',
     lastname: '',
     email: '',
-    password: '',
     role:'',
   });
 
@@ -150,19 +150,23 @@ const Register = (props) => {
                             id='role-select'
                             onChange={(e) => handleSelectChange(e)}
                           >
-                            <option value='' defaultValue={hotel === null}>
+                            <option value='' defaultValue={true}>
                               What do you want to do?
                             </option>
+
                             <option
                               value='CLIENT'
-                              defaultValue={inProcess === true}
                               onChange={(e) => onchange(e)}
                             >
                               I am a customer and I want to order rooms
                             </option>
-                            <option value='ADMIN'>
-                              I want to manage hotels and their rooms
-                            </option>
+                            {
+                                inProcess !== true
+                                &&
+                                <option key={uuidv4()} value='ADMIN'>
+                                  I want to manage hotels and their rooms
+                                </option>
+                            }
                           </select>
                         </div>
                         <button className='btn btn-block btn-success' type='submit'>
