@@ -197,24 +197,27 @@ public class HotelService {
 
         Optional<Hotel> hotelOptional = hotelRepository.findById(hotelDTO.getId());
 
-        if (hotelOptional.isEmpty()) {
-            throw new ApiRequestException("The hotel with id: " + hotelDTO.getId() + " does not exist to update it");
+        synchronized (this) {
+            if (hotelOptional.isEmpty()) {
+                throw new ApiRequestException("The hotel with id: " + hotelDTO.getId() + " does not exist to update it");
 
-        } else {
-            Hotel existingHotel = hotelOptional.get();
-            existingHotel.setName(hotelDTO.getName());
-            existingHotel.setStars(hotelDTO.getStars());
-            existingHotel.setAreaName(hotelDTO.getAreaName());
-			existingHotel.setAddress(hotelDTO.getAddress());
-            Optional<User> admin = userRepository.findById(hotelDTO.getOwner());
-            admin.ifPresent(existingHotel::setOwner);
+            } else {
 
-            hotelDTO.getAmenities().forEach(amenity ->
-                    existingHotel.getIntermediateHotelAmenities()
-                                    .add(intermediateHotelAmenityRepository
-                                    .save(new IntermediateHotelAmenity(existingHotel, amenity))));
+                Hotel existingHotel = hotelOptional.get();
+                existingHotel.setName(hotelDTO.getName());
+                existingHotel.setStars(hotelDTO.getStars());
+                existingHotel.setAreaName(hotelDTO.getAreaName());
+                existingHotel.setAddress(hotelDTO.getAddress());
+                Optional<User> admin = userRepository.findById(hotelDTO.getOwner());
+                admin.ifPresent(existingHotel::setOwner);
 
-            return hotelToHotelDTO.converter(hotelRepository.save(existingHotel));
+                hotelDTO.getAmenities().forEach(amenity ->
+                        existingHotel.getIntermediateHotelAmenities()
+                                .add(intermediateHotelAmenityRepository
+                                        .save(new IntermediateHotelAmenity(existingHotel, amenity))));
+
+                return hotelToHotelDTO.converter(hotelRepository.save(existingHotel));
+            }
         }
     }
 
@@ -239,25 +242,26 @@ public class HotelService {
             throw new ApiRequestException("If you wont to save hotels you mast add one or more rooms");
         }
 
-        if (hotelDTO.getAmenities().isEmpty()){
+        if (hotelDTO.getAmenities().isEmpty()) {
             throw new ApiRequestException("In hotel with name: " + hotelDTO.getName() + " there are no Amenities");
         }
 
-        hotelDTO.getRooms().clear();
-        Hotel hotel = hotelDTOToHotel.converter(hotelDTO);
-        hotelRepository.save(hotel);
+        synchronized (this) {
+            hotelDTO.getRooms().clear();
+            Hotel hotel = hotelDTOToHotel.converter(hotelDTO);
+            hotelRepository.save(hotel);
 
-        roomDTOS.forEach(roomDTO -> roomDTO.setHotel(hotel.getId()));
+            roomDTOS.forEach(roomDTO -> roomDTO.setHotel(hotel.getId()));
 
-        roomService.saveRooms(roomDTOS);
+            roomService.saveRooms(roomDTOS);
 
-        hotelDTO.getAmenities().forEach(amenity ->
-                hotel.getIntermediateHotelAmenities()
-                        .add(intermediateHotelAmenityRepository
-                                .save(new IntermediateHotelAmenity(hotel, amenity))));
+            hotelDTO.getAmenities().forEach(amenity ->
+                    hotel.getIntermediateHotelAmenities()
+                            .add(intermediateHotelAmenityRepository
+                                    .save(new IntermediateHotelAmenity(hotel, amenity))));
 
-        return hotelToHotelDTO.converter(hotelRepository.findById(hotel.getId()).get());
-
+            return hotelToHotelDTO.converter(hotelRepository.findById(hotel.getId()).get());
+        }
     }
 
     /***
@@ -281,24 +285,26 @@ public class HotelService {
                 throw new ApiRequestException("In hotel with name: " + hotelDTO.getName() + " there are no rooms");
             }
 
-            if (hotelDTO.getAmenities().isEmpty()){
+            if (hotelDTO.getAmenities().isEmpty()) {
                 throw new ApiRequestException("In hotel with name: " + hotelDTO.getName() + " there are no Amenities");
             }
 
-            hotelDTO.getRooms().clear();
-            Hotel hotel = hotelDTOToHotel.converter(hotelDTO);
-            hotelRepository.save(hotel);
+            synchronized (this) {
 
-            roomDTOS.forEach(roomDTO -> roomDTO.setHotel(hotel.getId()));
+                hotelDTO.getRooms().clear();
+                Hotel hotel = hotelDTOToHotel.converter(hotelDTO);
+                hotelRepository.save(hotel);
 
-            roomService.saveRooms(roomDTOS);
-            hotels.add(hotelRepository.findById(hotel.getId()).get());
+                roomDTOS.forEach(roomDTO -> roomDTO.setHotel(hotel.getId()));
 
-            hotelDTO.getAmenities().forEach(amenity ->
-                    hotel.getIntermediateHotelAmenities()
-                            .add(intermediateHotelAmenityRepository
-                                    .save(new IntermediateHotelAmenity(hotel, amenity))));
+                roomService.saveRooms(roomDTOS);
+                hotels.add(hotelRepository.findById(hotel.getId()).get());
 
+                hotelDTO.getAmenities().forEach(amenity ->
+                        hotel.getIntermediateHotelAmenities()
+                                .add(intermediateHotelAmenityRepository
+                                        .save(new IntermediateHotelAmenity(hotel, amenity))));
+            }
         }
 
         List<HotelDTO> hotelDTOS = new ArrayList<>();
@@ -314,21 +320,21 @@ public class HotelService {
      * @param id The ID of the hotel for which to retrieve amenities
      * @return A set of HotelAmenity representing the amenities of the hotel with the given ID
      */
-    public Set<HotelAmenity> getHotelAmenitiesByHotelId(Long id) throws ApiRequestException{
+    public Set<HotelAmenity> getHotelAmenitiesByHotelId(Long id) throws ApiRequestException {
 
         if (hotelRepository.findById(id).isPresent()) {
 
             Set<HotelAmenity> hotelAmenities = new HashSet<>(hotelRepository.findAmenityByHotelId(id));
 
-            if (!hotelAmenities.isEmpty()){
+            if (!hotelAmenities.isEmpty()) {
 
                 return hotelAmenities;
 
-            }else {
+            } else {
 
                 throw new ApiRequestException("The hotel has no Amenities whet");
             }
-        }else {
+        } else {
 
             throw new ApiRequestException("The hotel with id " + id + " does not exist.");
         }
@@ -357,21 +363,21 @@ public class HotelService {
 
             if (!hotelDTOS.isEmpty()) {
 
-                for (HotelDTO hotelDTO : hotelDTOS){
+                for (HotelDTO hotelDTO : hotelDTOS) {
 
                     Set<HotelAmenity> amenities = getHotelAmenitiesByHotelId(hotelDTO.getId());
 
-                    if( !amenities.isEmpty()) {
+                    if (!amenities.isEmpty()) {
 
                         hotelDTO.getAmenities().addAll(amenities);
                     }
 
                     Set<RoomDTO> roomsDto = hotelDTO.getRooms();
 
-                    if (!roomsDto.isEmpty()){
+                    if (!roomsDto.isEmpty()) {
 
 
-                        for (RoomDTO roomDTO : roomsDto){
+                        for (RoomDTO roomDTO : roomsDto) {
 
                             Set<RoomAmenity> RAmenities = roomService.getRoomAmenitiesByRoomId(roomDTO.getId());
 
@@ -382,7 +388,6 @@ public class HotelService {
                         }
                     }
                 }
-
 
                 hotelDTOS.forEach(hotelDTO -> hotelDTO
                         .getRooms()

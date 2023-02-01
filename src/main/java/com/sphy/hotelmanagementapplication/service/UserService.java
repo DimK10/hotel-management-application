@@ -17,9 +17,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.http.ResponseEntity;
-import com.sphy.hotelmanagementapplication.security.AuthenticationRequest;
-import com.sphy.hotelmanagementapplication.security.AuthenticationResponse;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -111,24 +108,26 @@ public class UserService implements UserDetailsService {
      */
     public ResponseEntity<?> saveUser(UserDTO userDTO) throws ApiRequestException{
 
-        if (userDTO.getUsername().isBlank() || userDTO.getPassword().isBlank()
-                || userDTO.getEmail().isBlank() || userDTO.getRole().isBlank()){
+        synchronized (this) {
+            if (userDTO.getUsername().isBlank() || userDTO.getPassword().isBlank()
+                    || userDTO.getEmail().isBlank() || userDTO.getRole().isBlank()) {
 
-            throw new ApiRequestException("Information is incomplete");
-        }else {
+                throw new ApiRequestException("Information is incomplete");
+            } else {
 
-            userDTO.setHashedPassword(passwordEncoder.encode(userDTO.getPassword()));
+                userDTO.setHashedPassword(passwordEncoder.encode(userDTO.getPassword()));
 
-            AuthenticationRequest authenticationRequest = new AuthenticationRequest(userDTO.getUsername(),userDTO.getPassword(),userDTO.getRole());
+                AuthenticationRequest authenticationRequest = new AuthenticationRequest(userDTO.getUsername(), userDTO.getPassword(), userDTO.getRole());
 
-            userToUserDTO.converter(userRepository.save(userDTOToUser.converter(userDTO)));
+                userToUserDTO.converter(userRepository.save(userDTOToUser.converter(userDTO)));
 
-            final UserDetails userDetails = loadUserByUsername(userDTO.getUsername());
+                final UserDetails userDetails = loadUserByUsername(userDTO.getUsername());
 
-            final String jwt = jwtUtil.generateToken(userDetails);
+                final String jwt = jwtUtil.generateToken(userDetails);
 
-            return ResponseEntity.ok(new AuthenticationResponse(jwt));
-        }
+                return ResponseEntity.ok(new AuthenticationResponse(jwt));
+            }
+        } .
     }
 
 	public UserDTO getUserByUsername(String username){

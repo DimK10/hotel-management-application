@@ -9,13 +9,11 @@ import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
-import com.sphy.hotelmanagementapplication.repository.AmenityRoomRepository;
 import com.sphy.hotelmanagementapplication.repository.HotelRepository;
 import com.sphy.hotelmanagementapplication.repository.IntermediateRoomAmenityRepository;
 import com.sphy.hotelmanagementapplication.repository.RoomRepository;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -35,7 +33,6 @@ public class RoomService {
     private final RoomToRoomDTO roomToRoomDTO;
 
     private final IntermediateRoomAmenityRepository intermediateRoomAmenityRepository;
-
 
 
     public RoomService(RoomRepository repository, HotelRepository hotelRepository, RoomDTOToRoom roomDTOToRoom, RoomToRoomDTO roomToRoomDTO, IntermediateRoomAmenityRepository intermediateRoomAmenityRepository) {
@@ -108,7 +105,7 @@ public class RoomService {
 
                 throw new ApiRequestException("The room does not have amenities");
 
-            }else {
+            } else {
                 Room room = roomDTOToRoom.converter(roomDto);
 
                 roomRepository.save(room);
@@ -117,7 +114,6 @@ public class RoomService {
                         room.getIntermediateRoomAmenities()
                                 .add(intermediateRoomAmenityRepository
                                         .save(new IntermediateRoomAmenity(room, roomAmenity))));
-
 
 
                 rooms.add(room);
@@ -284,25 +280,29 @@ public class RoomService {
 
         Optional<Room> room = roomRepository.findById(roomDTO.getId());
 
-        if (room.isPresent()) {
+        synchronized (this) {
 
-            Room existingRoom = room.get();
-            existingRoom.setName(roomDTO.getName());
-            Optional<Hotel> hotel = hotelRepository.findById(roomDTO.getHotel());
-            existingRoom.setLuxurity(roomDTO.getLuxurity());
-            existingRoom.setPrice(roomDTO.getPrice());
-            hotel.ifPresent(existingRoom::setHotel);
-            existingRoom.setDisabled(roomDTO.isDisabled());
 
-            roomDTO.getAmenities().forEach(roomAmenity ->
-                    existingRoom.getIntermediateRoomAmenities()
-                            .add(intermediateRoomAmenityRepository
-                                    .save(new IntermediateRoomAmenity(existingRoom, roomAmenity))));
+            if (room.isPresent()) {
 
-            return roomToRoomDTO.converter(roomRepository.save(existingRoom));
-        } else {
+                Room existingRoom = room.get();
+                existingRoom.setName(roomDTO.getName());
+                Optional<Hotel> hotel = hotelRepository.findById(roomDTO.getHotel());
+                existingRoom.setLuxurity(roomDTO.getLuxurity());
+                existingRoom.setPrice(roomDTO.getPrice());
+                hotel.ifPresent(existingRoom::setHotel);
+                existingRoom.setDisabled(roomDTO.isDisabled());
 
-            throw new ApiRequestException("The room with id: " + roomDTO.getId() + " does not exist");
+                roomDTO.getAmenities().forEach(roomAmenity ->
+                        existingRoom.getIntermediateRoomAmenities()
+                                .add(intermediateRoomAmenityRepository
+                                        .save(new IntermediateRoomAmenity(existingRoom, roomAmenity))));
+
+                return roomToRoomDTO.converter(roomRepository.save(existingRoom));
+            } else {
+
+                throw new ApiRequestException("The room with id: " + roomDTO.getId() + " does not exist");
+            }
         }
     }
 
@@ -321,7 +321,7 @@ public class RoomService {
         if (roomOptional.isPresent()) {
 
             amenitiesRoomDTO = new HashSet<>(roomRepository.findAmenitiesByRoomId(id));
-        }else {
+        } else {
 
             throw new ApiRequestException("The room does not have any amenities whet");
         }
