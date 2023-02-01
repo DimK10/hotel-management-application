@@ -171,4 +171,19 @@ public class HotelServiceIT {
         //then
         assertEquals(77, hotelDTOS.size());
     }
+
+    @Test
+    void advancedSearchStars() throws Exception {
+
+        //given
+
+        List<HotelAmenity> hotelAmenities = new ArrayList<>();
+        List<RoomAmenity> roomAmenities = new ArrayList<>();
+        //when
+
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 2), LocalDate.of(2007, 12, 9), null, null, null, 1, null);
+
+        //then
+        assertEquals(39, hotelDTOS.size());
+    }
 }
