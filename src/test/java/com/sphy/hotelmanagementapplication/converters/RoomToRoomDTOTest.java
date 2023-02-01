@@ -1,7 +1,6 @@
 package com.sphy.hotelmanagementapplication.converters;
 
 import com.sphy.hotelmanagementapplication.converter.OrderToOrderDTO;
-import com.sphy.hotelmanagementapplication.converter.RoomAmenityToRoomAmenityDTO;
 import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Order;
@@ -37,9 +36,6 @@ public class RoomToRoomDTOTest {
     @Mock
     OrderToOrderDTO orderToOrderDTO;
 
-    @Mock
-    RoomAmenityToRoomAmenityDTO roomAmentityToRoomAmenityDTO;
-
     Room room = new Room();
 
     RoomDTO roomDTO = new RoomDTO();
@@ -72,7 +68,7 @@ public class RoomToRoomDTOTest {
         roomDTO.setPrice(500L);
         roomDTO.setCapacity(5);
 
-        roomToRoomDTO = new RoomToRoomDTO(orderToOrderDTO, hotelRepository, roomAmentityToRoomAmenityDTO);
+        roomToRoomDTO = new RoomToRoomDTO(orderToOrderDTO, hotelRepository);
     }
 
     @Test

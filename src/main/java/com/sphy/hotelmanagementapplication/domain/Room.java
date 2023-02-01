@@ -9,14 +9,15 @@ import java.util.Set;
  */
 @Entity(name = "rooms")
 @DiscriminatorValue("rooms")
-@AttributeOverride(name = "id", column = @Column(name = "room_id")) // created by AKd
 public class Room extends BaseEntity {
 
 
     @Column(name = "name")
     private String name;
+
     @Column(name = "luxurity")
     private int luxurity;
+
     @ManyToOne
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
@@ -24,20 +25,14 @@ public class Room extends BaseEntity {
     @OneToMany(mappedBy = "room", fetch =  FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Order> orders =new HashSet<>();
 
+    @OneToMany(mappedBy = "room", fetch =  FetchType.EAGER, cascade = CascadeType.PERSIST)
+    private Set<IntermediateRoomAmenity> intermediateRoomAmenities = new HashSet<>();
+
     private long price;
 
 	private boolean disabled;
 
     private int capacity; // The capacity of people in the room
-
-	@ManyToMany(fetch = FetchType.EAGER)  // created by AKd
-	@JoinTable(  // created by AKd
-			name = "room_amenity",  // created by AKd
-			joinColumns = @JoinColumn(name = "room_id"),  // created by AKd
-			inverseJoinColumns = @JoinColumn(name = "RAmenity_id") // created by AKd,
-
-	)
-	private Set<RoomAmenity> roomAmenity = new HashSet<>();// created by AKd
 
     public Room() {
     }
@@ -122,18 +117,15 @@ public class Room extends BaseEntity {
         this.capacity = capacity;
     }
 
-	// created by AKd
-	public Set<RoomAmenity> getRoomAmenity(){
-		return roomAmenity;
-	}
+    public Set<IntermediateRoomAmenity> getIntermediateRoomAmenities() {
+        return intermediateRoomAmenities;
+    }
 
-	// created by AKd
-	public void setRoomAmenity(Set<RoomAmenity> roomAmenity) {
-		this.roomAmenity = roomAmenity;
-	}
+    public void setIntermediateRoomAmenities(Set<IntermediateRoomAmenity> intermediateRoomAmenities) {
+        this.intermediateRoomAmenities = intermediateRoomAmenities;
+    }
 
-
-	@Override
+    @Override
     public boolean equals(Object o) {
         return super.equals(o);
 
@@ -144,16 +136,18 @@ public class Room extends BaseEntity {
         return super.hashCode();
     }
 
-	@Override
-	public String toString() {
-		return "Room{" +
-				"Id=" + super.getId() +
-				", name='" + name + '\'' +
-				", luxurity=" + luxurity +
-				", hotel=" + hotel +
-//				", order=" + orders +
-				", price=" + price +
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + super.getId() +
+                "name='" + name + '\'' +
+                ", luxurity=" + luxurity +
+                ", hotel=" + hotel +
+//                ", orders=" + orders +
+                ", intermediateRoomAmenities=" + intermediateRoomAmenities +
+                ", price=" + price +
+                ", disabled=" + disabled +
                 ", capacity=" + capacity +
-				'}';
-	}
+                '}';
+    }
 }

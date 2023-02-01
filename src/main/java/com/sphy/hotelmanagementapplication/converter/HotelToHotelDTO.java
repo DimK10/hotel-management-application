@@ -15,12 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class HotelToHotelDTO {
 
     private final RoomToRoomDTO roomToRoomDTO;
-    private final HotelAmenityToHotelAmenityDTO hotelAmenityToHotelAmenityDTO;
 
 
-    public HotelToHotelDTO(RoomToRoomDTO roomToRoomDTO,HotelAmenityToHotelAmenityDTO hotelAmenityToHotelAmenityDTO) {
+    public HotelToHotelDTO(RoomToRoomDTO roomToRoomDTO) {
         this.roomToRoomDTO = roomToRoomDTO;
-        this.hotelAmenityToHotelAmenityDTO = hotelAmenityToHotelAmenityDTO;
     }
 
     /***
@@ -47,12 +45,6 @@ public class HotelToHotelDTO {
 
         for (Room room : hotel.getRooms()){
             hotelDTO.getRooms().add(roomToRoomDTO.converter(room));
-        }
-
-        if(!hotel.getHotelAmenity().isEmpty()) {
-            for (HotelAmenity hotelAmenity : hotel.getHotelAmenity()) {
-                hotelDTO.getHotelAmenityDTO().add(hotelAmenityToHotelAmenityDTO.converter(hotelAmenity));
-            }
         }
         
         hotelDTO.setDisabled(hotel.isDisabled());

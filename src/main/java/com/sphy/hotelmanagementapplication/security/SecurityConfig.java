@@ -58,27 +58,27 @@ public class SecurityConfig {
         return authenticationProvider;
     }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        // Allow X-Frame-Options for same origin - bug in displaying the sections in h2 console
-        http
-                .headers().frameOptions().sameOrigin();
+		// Allow X-Frame-Options for same origin - bug in displaying the sections in h2 console
+		http
+				.headers().frameOptions().sameOrigin();
 
-        http.csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/signup").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/hotel/basic/search").permitAll()
-                .antMatchers("/h2-ui/**").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .exceptionHandling()
-                .authenticationEntryPoint(authEntryPoint);
+		http.csrf().disable()
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
+				.authorizeRequests()
+				.antMatchers(HttpMethod.GET, "/**").permitAll()
+				.antMatchers(HttpMethod.POST, "/**").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/signup").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/login").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/hotel/basic/search").permitAll()
+				.antMatchers("**/h2-ui/**").permitAll()
+				.anyRequest().authenticated()
+				.and()
+				.exceptionHandling()
+				.authenticationEntryPoint(authEntryPoint);
 
 
         http

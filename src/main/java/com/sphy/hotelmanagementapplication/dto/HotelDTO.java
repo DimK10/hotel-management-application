@@ -1,14 +1,16 @@
 package com.sphy.hotelmanagementapplication.dto;
 
+import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 
 /***
- * created by gp , AKd
+ * created by gp
  */
-public class HotelDTO implements Serializable{
+public class HotelDTO implements Serializable {
 
     private Long id;
 
@@ -24,9 +26,9 @@ public class HotelDTO implements Serializable{
 
     private boolean disabled;
 
-    private Set<RoomDTO> rooms =new HashSet<>();
-    
-    private Set<HotelAmenityDTO> hotelAmenityDTO = new HashSet<>();// created by AKd
+    private Set<RoomDTO> rooms = new HashSet<>();
+
+    private Set<HotelAmenity> amenities = new HashSet<>();
 
     public HotelDTO(long id) {
         this.id = id;
@@ -76,15 +78,15 @@ public class HotelDTO implements Serializable{
         this.owner = owner;
     }
 
-	public Set<RoomDTO> getRooms() {
-		return rooms;
-	}
+    public Set<RoomDTO> getRooms() {
+        return rooms;
+    }
 
-	public void setRooms(Set<RoomDTO> rooms) {
-		this.rooms = rooms;
-	}
+    public void setRooms(Set<RoomDTO> rooms) {
+        this.rooms = rooms;
+    }
 
-	public boolean isDisabled() {
+    public boolean isDisabled() {
         return disabled;
     }
 
@@ -100,15 +102,15 @@ public class HotelDTO implements Serializable{
         this.address = address;
     }
 
-	public Set<HotelAmenityDTO> getHotelAmenityDTO() {
-		return hotelAmenityDTO;
-	}
+    public Set<HotelAmenity> getAmenities() {
+        return amenities;
+    }
 
-	public void setHotelAmenityDTO(Set<HotelAmenityDTO> hotelAmenityDTO) {
-		this.hotelAmenityDTO = hotelAmenityDTO;
-	}
+    public void setAmenities(Set<HotelAmenity> amenities) {
+        this.amenities = amenities;
+    }
 
-	@Override
+    @Override
     public String toString() {
         return "HotelDTO{" +
                 "id=" + id +
@@ -119,6 +121,7 @@ public class HotelDTO implements Serializable{
                 ", owner=" + owner +
                 ", disabled=" + disabled +
                 ", rooms=" + rooms +
-                ", hotelAmenity=" + hotelAmenityDTO + "}";
+                ", amenities=" + amenities +
+                '}';
     }
 }
