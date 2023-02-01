@@ -1,6 +1,9 @@
 package com.sphy.hotelmanagementapplication.service;
 
-import com.sphy.hotelmanagementapplication.domain.*;
+import com.sphy.hotelmanagementapplication.domain.Hotel;
+import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
+import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
+import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.repository.HotelRepository;
 import com.sphy.hotelmanagementapplication.repository.OrderRepository;
@@ -77,21 +80,6 @@ public class HotelServiceIT {
     }
 
     @Test
-    void advancedSearchOrder() throws Exception {
-
-        //given
-
-        List<HotelAmenity> hotelAmenities = new ArrayList<>();
-        List<RoomAmenity> roomAmenities = new ArrayList<>();
-        //when
-
-        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 4), LocalDate.of(2007, 12, 9), null, null, 2, null, null);
-
-        //then
-        assertEquals(0, hotelDTOS.size());
-    }
-
-    @Test
     @Transactional
     void advancedSearchLocation() throws Exception {
 
@@ -102,11 +90,85 @@ public class HotelServiceIT {
 
         //when
 
-        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, null, null, null, null, null, null, null);
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, null, null, null, null, null, null, "athe");
 
         System.out.println(hotelDTOS);
         //then
-        assertEquals(1, hotelDTOS.size());
+        assertEquals(21, hotelDTOS.size());
     }
 
+    @Test
+    void advancedSearchOrder1() throws Exception {
+
+        //given
+
+        List<HotelAmenity> hotelAmenities = new ArrayList<>();
+        List<RoomAmenity> roomAmenities = new ArrayList<>();
+        //when
+
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 4), LocalDate.of(2007, 12, 6), null, null, 2, null, null);
+
+        //then
+        assertEquals(77, hotelDTOS.size());
+    }
+
+    @Test
+    void advancedSearchOrder2() throws Exception {
+
+        //given
+
+        List<HotelAmenity> hotelAmenities = new ArrayList<>();
+        List<RoomAmenity> roomAmenities = new ArrayList<>();
+        //when
+
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 2), LocalDate.of(2007, 12, 6), null, null, 2, null, null);
+
+        //then
+        assertEquals(77, hotelDTOS.size());
+    }
+
+    @Test
+    void advancedSearchOrder3() throws Exception {
+
+        //given
+
+        List<HotelAmenity> hotelAmenities = new ArrayList<>();
+        List<RoomAmenity> roomAmenities = new ArrayList<>();
+        //when
+
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 4), LocalDate.of(2007, 12, 9), null, null, 2, null, null);
+
+        //then
+        assertEquals(77, hotelDTOS.size());
+    }
+
+    @Test
+    void advancedSearchOrder4() throws Exception {
+
+        //given
+
+        List<HotelAmenity> hotelAmenities = new ArrayList<>();
+        List<RoomAmenity> roomAmenities = new ArrayList<>();
+        //when
+
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 3), LocalDate.of(2007, 12, 7), null, null, 2, null, null);
+
+        //then
+        assertEquals(77, hotelDTOS.size());
+    }
+
+    @Test
+    void advancedSearchOrder5() throws Exception {
+
+        //given
+
+        List<HotelAmenity> hotelAmenities = new ArrayList<>();
+        List<RoomAmenity> roomAmenities = new ArrayList<>();
+        //when
+
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 2), LocalDate.of(2007, 12, 9), null, null, 2, null, null);
+
+        //then
+        assertEquals(77, hotelDTOS.size());
+    }
 }
