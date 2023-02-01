@@ -1,13 +1,11 @@
 package com.sphy.hotelmanagementapplication.service;
 
 import com.sphy.hotelmanagementapplication.converter.*;
-import com.sphy.hotelmanagementapplication.domain.Hotel;
-import com.sphy.hotelmanagementapplication.domain.Order;
-import com.sphy.hotelmanagementapplication.domain.Room;
-import com.sphy.hotelmanagementapplication.domain.User;
+import com.sphy.hotelmanagementapplication.domain.*;
 import com.sphy.hotelmanagementapplication.domain.User.Role;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
+import com.sphy.hotelmanagementapplication.dto.OrderDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.repository.HotelRepository;
 import com.sphy.hotelmanagementapplication.repository.IntermediateHotelAmenityRepository;
@@ -346,6 +344,7 @@ public class HotelServiceTest {
         //when
         when(hotelRepository.countAll(anyLong())).thenReturn(1);
 
+
         //then
         assertEquals(1, hotelService.countHotels(1L));
 
@@ -372,11 +371,31 @@ public class HotelServiceTest {
 
         hotel.getRooms().add(room);
 
+        HotelAmenity hotelAmenity1 = new HotelAmenity("Parking");
+
+        Set<HotelAmenity> hotelAmenities = new HashSet<>();
+
+        hotelAmenities.add(hotelAmenity1);
+
+        IntermediateHotelAmenity hamen1 = new IntermediateHotelAmenity(hotel,hotelAmenity1);
+
+        hotel.getIntermediateHotelAmenities().add(hamen1);
+
         hotels1.add(hotel);
+
 
         Set<HotelDTO> hotel1DTOS = new HashSet<>();
 
-        hotels1.forEach(hotel1 -> hotel1DTOS.add(hotelToHotelDTO.converter(hotel1)));
+        HotelDTO hotelDTO = new HotelDTO(1L);
+
+        hotelDTO.setName("ksenia");
+        hotelDTO.setAreaName("athens");
+
+        hotel1DTOS.add(hotelDTO);
+
+        RoomDTO roomDTO = new RoomDTO(2L);
+
+        OrderDTO orderDTO = new OrderDTO(3L);
 
         BasicSearchDTO basicSearchDTO1 = new BasicSearchDTO();
 
@@ -394,6 +413,9 @@ public class HotelServiceTest {
 
         when(hotelRepository.findByBasicSearch(basicSearchDTO1.getCheckInDate(), basicSearchDTO1.getCheckOutDate(),
                 basicSearchDTO1.getNameOrLocation())).thenReturn(hotels1);
+        when(hotelToHotelDTO.converter(hotel)).thenReturn(hotelDTO);
+        when(hotelRepository.findById(anyLong())).thenReturn(Optional.of(hotel));
+        when(hotelRepository.findAmenityByHotelId(id)).thenReturn(hotelAmenities);
 
         //then
 
