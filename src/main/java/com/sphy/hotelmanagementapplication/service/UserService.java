@@ -127,7 +127,7 @@ public class UserService implements UserDetailsService {
 
                 return ResponseEntity.ok(new AuthenticationResponse(jwt));
             }
-        } .
+        }
     }
 
 	public UserDTO getUserByUsername(String username){
