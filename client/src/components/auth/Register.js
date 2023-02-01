@@ -8,13 +8,18 @@ import {Link, Navigate} from "react-router-dom";
 import {useSelector} from "react-redux";
 import { register } from '../../actions/auth';
 import {v4 as uuidv4} from "uuid";
+import {addUserToOrderAction} from "../../actions/order";
 
 const Register = (props) => {
 
   const { hotel, inProcess } = useSelector(state => state.order.currentOrder);
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  let role = useSelector((state) => state.auth.user?.role);
+
+  const role = useSelector((state) => state.auth.user?.role);
+  const user = useSelector(state => state.auth.user);
+
+  const { user: userInOrder } = useSelector(state => state.order.currentOrder);
 
   const dispatch = useDispatch();
 
@@ -43,6 +48,8 @@ const Register = (props) => {
 
   const redirectBasedOnRole = () => {
     if (isAuthenticated && role !== 'undefined' && role === 'CLIENT') {
+      if (inProcess === true && userInOrder === null)
+        dispatch(addUserToOrderAction(user));
       return <Navigate to='/' />;
     }
 

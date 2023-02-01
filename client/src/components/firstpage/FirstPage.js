@@ -2,14 +2,14 @@ import React, {Fragment, useEffect, useState} from 'react';
 import NavBar from '../layout/NavBar';
 import {Link, useNavigate} from 'react-router-dom';
 import DateRangePicker from "react-bootstrap-daterangepicker";
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {basicSearchAction} from "../../actions/search";
 import Alert from "../layout/Alert";
 import {
-  addUserToOrderAction,
-  createNewOrderPreCheckout,
+    addUserToOrderAction,
+    createNewOrderPreCheckout, finalizeOrder,
 } from '../../actions/order';
-import { setAlertAction } from '../../actions/alert';
+import {setAlertAction} from '../../actions/alert';
 
 
 const FirstPage = (props) => {
@@ -23,7 +23,10 @@ const FirstPage = (props) => {
 
     const navigate = useNavigate();
 
-    const { inProcess, user } = useSelector((state) => state.order.currentOrder);
+    const {inProcess, user} = useSelector((state) => state.order.currentOrder);
+
+
+    const {currentOrder} = useSelector((state) => state.order);
 
     const {isAuthenticated, user: authUser} = useSelector(
         (state) => state.auth
@@ -37,14 +40,16 @@ const FirstPage = (props) => {
 
     const handleEvent = (event, picker) => {
 
-        setFormData({...formData,
+        setFormData({
+            ...formData,
             checkInDate: picker.startDate.toDate(),
             checkOutDate: picker.endDate.toDate()
         });
     }
 
     const onChange = (e) => {
-        setFormData({...formData,
+        setFormData({
+            ...formData,
             [e.target.name]: e.target.value
         });
     }
@@ -60,30 +65,24 @@ const FirstPage = (props) => {
     // scroll to top
     useEffect(() => {
         window.scrollTo(0, 0)
+    }, []);
+
+    useEffect(() => {
         if (
-          isAuthenticated &&
-          authUser.role !== 'undefined' &&
-          authUser.role === 'CLIENT' &&
-          inProcess === true
+            isAuthenticated &&
+            authUser.role !== 'undefined' &&
+            authUser.role === 'CLIENT' &&
+            inProcess === true
         ) {
-          // TODO NEED TO SEND ORDER TO BACKEND AND CHECK IF EVERYTHING WAS OK - IN THAT DISPATCH, CHECK IF USER WAS LOGGED IN
-          // TODO SET IN PROCESS TO FALSE AFTER SUCCESSFULL CREATION OF ORDER
-            console.log(authUser);
-          dispatch(addUserToOrderAction(authUser));
-          dispatch(
-            setAlertAction(
-              'You order has been placed Successfully!!!',
-              'success'
-            )
-          );
+            dispatch(finalizeOrder(currentOrder));
         }
-    }, [])
+    }, [currentOrder.user])
 
     return (
         <Fragment>
             <NavBar/>
             <div className='container mt-2'>
-                <Alert />
+                <Alert/>
                 <div className='jumbotron' style={{marginTop: '7rem'}}>
                     <h1 className='display-4'>
                         Search The place You want To Stay For Your Next Trip.
@@ -114,7 +113,7 @@ const FirstPage = (props) => {
                                 aria-describedby='button-addon2'
                                 name='nameOrLocation'
                                 style={{width: '45%'}}
-                                onChange={((e) =>  onChange(e))}
+                                onChange={((e) => onChange(e))}
                             />
                             <button type="submit" className='btn btn-outline-primary'>Search</button>
                         </div>

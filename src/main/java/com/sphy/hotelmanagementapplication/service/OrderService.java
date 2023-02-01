@@ -63,12 +63,14 @@ public class OrderService {
 
         int conflict;
 
-        conflict = orderRepository.OrderConflict(order.getCheckInDate(), order.getCheckOutDate(), room.get());
+        synchronized (this) {
+            conflict = orderRepository.OrderConflict(order.getCheckInDate(), order.getCheckOutDate(), room.get());
 
-        if (conflict == 0) {
-            return orderToOrderDTO.converter(orderRepository.save(order));
-        } else {
-            throw new ApiExceptionFront("The room isn't available on the desirable dates");
+            if (conflict == 0) {
+                return orderToOrderDTO.converter(orderRepository.save(order));
+            } else {
+                throw new ApiExceptionFront("The room isn't available on the desirable dates");
+            }
         }
     }
 

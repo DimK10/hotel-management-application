@@ -26,7 +26,6 @@ const PlaceNewOrder = () => {
     const [roomSelected, setRoomSelected] = useState(hotel.rooms[0]);
 
     useEffect(() => {
-        console.log(hotel)
         if (hotel === null) {
             navigate("/");
         }
@@ -60,8 +59,6 @@ const PlaceNewOrder = () => {
         if (user === null) {
             navigate("/sign-in")
         } else {
-            // TODO NEED TO SEND ORDER TO BACKEND AND CHECK IF EVERYTHING WAS OK - IN THAT DISPATCH, CHECK IF USER WAS LOGGED IN
-            dispatch(setAlertAction("You order has been placed Successfully!!!", "success"));
             navigate("/");
         }
     }
@@ -104,7 +101,7 @@ const PlaceNewOrder = () => {
                                     <hr/>
                                     <h6>Hotel Amenities</h6>
                                     {
-                                        hotel.hotelAmenityDTO.map(amenity => (
+                                        hotel.amenities.map(amenity => (
                                             <div className="mb-3 row">
                                                 <label htmlFor="staticText1"
                                                        className="col-sm-2 col-form-label">{amenity.hotelAmenities.charAt(0) + amenity.hotelAmenities.slice(1).toLowerCase()}:</label>

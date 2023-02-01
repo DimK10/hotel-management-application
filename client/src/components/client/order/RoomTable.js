@@ -35,7 +35,7 @@ const RoomTable = ({rooms, onRoomSelect}) => {
                                 <td>{room.luxurity}</td>
                                 <td>
                                     {
-                                        room.roomAmenityDTO.map(amenity => (
+                                        room.amenities.map(amenity => (
                                             amenity.roomAmenities.charAt(0) + amenity.roomAmenities.slice(1).toLowerCase() + ' '
                                         ))
                                     }

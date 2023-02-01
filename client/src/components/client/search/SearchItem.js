@@ -52,7 +52,7 @@ const SearchItem = ({hotel, checkInDate, checkOutDate}) => {
                   </p>
                   <div className="container-fluid">
                     {
-                      hotel.hotelAmenityDTO.map(amenity => (
+                      hotel.amenities.map(amenity => (
                           <span
                               key={uuidv4()} className="badge rounded-pill text-bg-primary m-1 btn">{amenity.hotelAmenities.charAt(0) + amenity.hotelAmenities.slice(1).toLowerCase()}</span>
                       ))
