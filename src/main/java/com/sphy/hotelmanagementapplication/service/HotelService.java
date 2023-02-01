@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.time.LocalDate;
 import java.util.*;
@@ -27,9 +26,7 @@ import java.util.*;
 @Service
 public class HotelService {
 
-    @PersistenceContext
-    EntityManager entityManager;
-
+    private final EntityManager entityManager;
 
     private final HotelRepository hotelRepository;
 
@@ -46,7 +43,8 @@ public class HotelService {
     private final IntermediateHotelAmenityRepository intermediateHotelAmenityRepository;
 
 
-    public HotelService(HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService, IntermediateHotelAmenityRepository intermediateHotelAmenityRepository) {
+    public HotelService(EntityManager entityManager, HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService, IntermediateHotelAmenityRepository intermediateHotelAmenityRepository) {
+        this.entityManager = entityManager;
         this.hotelRepository = hotelRepository;
         this.hotelDTOToHotel = hotelDTOToHotel;
         this.hotelToHotelDTO = hotelToHotelDTO;
@@ -372,43 +370,18 @@ public class HotelService {
     }
 
 
-    public Set<HotelDTO> getHotelAdvancedSearch(List<HotelAmenity> hotelAmenities, List<RoomAmenity> roomAmenities, LocalDate checkInDate, LocalDate checkOutDate,
-                                                Long priceFrom, Long priceTo, Integer adultsRange, Integer stars, String nameOrLocation) {
-
-//        Set<HotelDTO> hotelDTOS = new HashSet<>();
-//
-//        hotelRepository.advanceSearchMethode(hotelAmenities, roomAmenities, checkInDate, checkOutDate, priceFrom, priceTo, adultsRange, stars, nameOrLocation)
-//                .forEach(hotel -> hotelDTOS
-//                        .add(hotelToHotelDTO
-//                                .converter((Hotel) hotel)));
-//
-//        if (!hotelDTOS.isEmpty()) {
-//
-//            return hotelDTOS;
-//
-//        } else {
-//
-//            throw new RuntimeException("Something went wrong");
-//        }
-
-       return null;
-
-
-    }
-
-
     public Set<HotelDTO> advanceSearchMethode(List<HotelAmenity> hotelAmenities, List<RoomAmenity> roomAmenities, LocalDate checkInDate, LocalDate checkOutDate,
                                               Long priceFrom, Long priceTo, Integer adultsRange, Integer stars, String nameOrLocation) {
 
         Map<String, Object> parametrMap = new HashMap<>();
 
-        StringBuilder query = new StringBuilder("select h from Hotel h inner join IntermediateHotelAmenity ih on h.id = ih.hotel.id inner join HotelAmenity ha on ih.hotelAmenity.id = ha.id inner " +
+        StringBuilder query = new StringBuilder("select DISTINCT h from Hotel h inner join IntermediateHotelAmenity ih on h.id = ih.hotel.id inner join HotelAmenity ha on ih.hotelAmenity.id = ha.id inner " +
                 "join rooms r on r.hotel.id = h.id inner join IntermediateRoomAmenity ir on r.id = ir.room.id inner join RoomAmenity ra on ra.id = ir.roomAmenity.id " +
-                "inner join orders o on o.room.id = r.id where ");
+                "inner join orders o on o.room.id = r.id where h.disabled = false ");
 
         if (adultsRange != null) {
 
-            query.append("r.capacity = :adults");
+            query.append("and r.capacity = :adults");
 
             parametrMap.put("adults", adultsRange);
         }
@@ -439,7 +412,7 @@ public class HotelService {
 
         if (checkInDate != null && checkOutDate != null) {
 
-            query.append(" and :checkIn not between o.checkInDate and o.checkOutDate and :checkOut not between o.checkInDate and o.checkOutDate");
+            query.append(" and (((:checkIn < o.checkInDate) and (:checkOut < o.checkInDate)) or ((:checkIn > o.checkOutDate) and (:checkOut > o.checkOutDate))) ");
             parametrMap.put("checkOut", checkOutDate);
             parametrMap.put("checkIn", checkInDate);
         }
@@ -458,7 +431,7 @@ public class HotelService {
         }
 
 
-        Query queryFinal = entityManager.createQuery(String.valueOf(query));
+        Query queryFinal = entityManager.createQuery(String.valueOf(query), Hotel.class);
 
         for (String key : parametrMap.keySet()) {
 

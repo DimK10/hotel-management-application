@@ -44,7 +44,7 @@ public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long>{
 
 	@Query(value = "select h from Hotel h inner join rooms r on h.id = r.hotel.id " +
             "inner join orders o on r.id = o.room.id " +
-            "where (h.name like :NameOrLocation or h.areaName like :NameOrLocation) and " +
+            "where (h.name like :NameOrLocation or h.areaName like :NameOrLocation) and h.disabled = false and " +
             " :checkIn not between o.checkInDate and o.checkOutDate and" +
             " :checkOut not between o.checkInDate and o.checkOutDate")
 	Set<Hotel> findByBasicSearch(@Param("checkIn")LocalDate checkIn, @Param("checkOut")LocalDate checkOut

@@ -168,24 +168,24 @@ public class HotelController {
 
     }
 
-    /***
-     * Created by Akd
-     * Add Hotel Amenity
-     * @param hotelAmenity new hotel Amenity parameters
-     * @return added the new Hotel Amenity
-     * @throws ApiRequestException if the user is not Authorised to add Hotel Amenity
-     */
-    @PutMapping("/api/hotel/addHotelAmenity")
-    @PreAuthorize("hasAuthority('SUPERUSER')")
-    public HotelAmenity addHotelAmenity(@RequestHeader(name="Authorization")String token, @RequestBody HotelAmenity hotelAmenity) throws ApiRequestException{
-
-        if (Objects.equals(User.Role.SUPERUSER, userService.getUserFromToken(token).getRole())) {
-
-            return service.addHotelAmenity(hotelAmenity);
-        } else {
-            throw new ApiRequestException("Unauthorized");
-        }
-    }
+//    /***
+//     * Created by Akd
+//     * Add Hotel Amenity
+//     * @param hotelAmenity new hotel Amenity parameters
+//     * @return added the new Hotel Amenity
+//     * @throws ApiRequestException if the user is not Authorised to add Hotel Amenity
+//     */
+//    @PutMapping("/api/hotel/addHotelAmenity")
+//    @PreAuthorize("hasAuthority('SUPERUSER')")
+//    public HotelAmenity addHotelAmenity(@RequestHeader(name="Authorization")String token, @RequestBody HotelAmenity hotelAmenity) throws ApiRequestException{
+//
+//        if (Objects.equals(User.Role.SUPERUSER, userService.getUserFromToken(token).getRole())) {
+//
+//            return service.addHotelAmenity(hotelAmenity);
+//        } else {
+//            throw new ApiRequestException("Unauthorized");
+//        }
+//    }
 
     /***
      * enables a hotel by his id
@@ -258,7 +258,6 @@ public class HotelController {
     /***
      * returns the hotels that are available in specific dates in a location
      * or a hotel if it is available at that dates if the search made by the hotel name
-     * @param token users token
      * @param basicSearchDTO basic search fields (check in date, check out date, location name or hotel name)
      * @return the hotels than mach with the search
      * @throws RuntimeException if this that made the search is not a role client
