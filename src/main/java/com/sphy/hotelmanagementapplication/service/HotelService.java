@@ -372,7 +372,7 @@ public class HotelService {
      * saves a new Hotel Amenity
      * @param hotelAmenity  to be saved
      * @return the saved hotel amenity for confirmation
-     * @throws ApiRequestException if the hotel amenity is not created end does not be enabled
+     * @throws ApiRequestException if the hotel amenity is not created and does not be enabled
      */
     public HotelAmenity saveHotelAmenity (HotelAmenity hotelAmenity) throws ApiRequestException{
 

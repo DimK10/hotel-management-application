@@ -9,10 +9,7 @@ import com.sphy.hotelmanagementapplication.domain.User.Role;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
-import com.sphy.hotelmanagementapplication.repository.HotelRepository;
-import com.sphy.hotelmanagementapplication.repository.IntermediateHotelAmenityRepository;
-import com.sphy.hotelmanagementapplication.repository.RoomRepository;
-import com.sphy.hotelmanagementapplication.repository.UserRepository;
+import com.sphy.hotelmanagementapplication.repository.*;
 import com.sphy.hotelmanagementapplication.security.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -57,6 +54,9 @@ public class HotelServiceTest {
 
     @Mock
     JwtUtil jwtUtil;
+
+    @Mock
+    AmenityHotelRepository amenityHotelRepository;
 
 
     HotelService hotelService;
@@ -200,7 +200,7 @@ public class HotelServiceTest {
                         },
                         jwtUtil
 
-                ), intermediateHotelAmenityRepository);
+                ), intermediateHotelAmenityRepository,amenityHotelRepository);
     }
 
     @Test
