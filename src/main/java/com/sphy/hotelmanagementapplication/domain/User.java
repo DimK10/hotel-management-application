@@ -192,8 +192,8 @@ public class User extends BaseEntity {
 				", enabled='" + enabled + '\'' +
 				", password='" + password + '\'' +
 				", role=" + role +
-				", hotels=" + hotels +
-				", orders=" + orders +
+//				", hotels=" + hotels +
+//				", orders=" + orders +
 				'}';
 	}
 }
