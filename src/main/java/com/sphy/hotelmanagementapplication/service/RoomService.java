@@ -36,14 +36,17 @@ public class RoomService {
 
     private final IntermediateRoomAmenityRepository intermediateRoomAmenityRepository;
 
+    private final AmenityRoomRepository amenityRoomRepository;
 
 
-    public RoomService(RoomRepository repository, HotelRepository hotelRepository, RoomDTOToRoom roomDTOToRoom, RoomToRoomDTO roomToRoomDTO, IntermediateRoomAmenityRepository intermediateRoomAmenityRepository) {
+
+    public RoomService(RoomRepository repository, HotelRepository hotelRepository, RoomDTOToRoom roomDTOToRoom, RoomToRoomDTO roomToRoomDTO, IntermediateRoomAmenityRepository intermediateRoomAmenityRepository, AmenityRoomRepository amenityRoomRepository) {
         this.roomRepository = repository;
         this.hotelRepository = hotelRepository;
         this.roomDTOToRoom = roomDTOToRoom;
         this.roomToRoomDTO = roomToRoomDTO;
         this.intermediateRoomAmenityRepository = intermediateRoomAmenityRepository;
+        this.amenityRoomRepository = amenityRoomRepository;
     }
 
     /***
@@ -328,4 +331,25 @@ public class RoomService {
 
         return amenitiesRoomDTO;
     }
+
+     /**
+     * Created by BP
+     * saves a new Room Amenity
+     * @param roomAmenity  to be saved
+     * @return the saved room amenity for confirmation
+     * @throws ApiRequestException if the room amenity is not created and does not be enabled
+     */
+    public RoomAmenity saveRoomAmenity (RoomAmenity roomAmenity) throws ApiRequestException{
+
+        if (roomAmenity.getrAmenity().isEmpty()){
+            throw new ApiRequestException("There is no Room Amenity");
+        }
+
+        if(!roomAmenity.getEnabled()){
+            throw new ApiRequestException("There is no activated Room Amenity");
+        }
+
+        return amenityRoomRepository.save(roomAmenity);
+    }
+
 }

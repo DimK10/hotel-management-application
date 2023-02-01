@@ -213,4 +213,24 @@ public class RoomController {
             return service.getRoomAmenitiesByRoomId(roomId);
     }
 
+    /***
+     * Created by BP
+     * Add Room Amenity
+     * @param roomAmenity new room Amenity parameters
+     * @return added the new Room Amenity
+     * @throws ApiRequestException if the user is not Authorised to add Room Amenity
+     */
+    @PutMapping("/api/room/saveRoomAmenity")
+    @PreAuthorize("hasAuthority('SUPERUSER')")
+    public RoomAmenity saveRoomAmenity(@RequestHeader(name="Authorization")String token, @RequestBody RoomAmenity roomAmenity) throws ApiRequestException{
+
+        if (Objects.equals(User.Role.SUPERUSER, userService.getUserFromToken(token).getRole())) {
+
+            return service.saveRoomAmenity(roomAmenity);
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
+    }
+
+
 }
