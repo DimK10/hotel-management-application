@@ -409,7 +409,7 @@ public class HotelService {
 
         Set<HotelAmenity> amenities = new HashSet<>();
 
-        amenityHotelRepository.findAll().forEach(amenities::add);
+        amenityHotelRepository.findAllEnabled().forEach(amenities::add);
 
         if (amenities.isEmpty()){
 

@@ -1,6 +1,7 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
+import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.service.HotelService;

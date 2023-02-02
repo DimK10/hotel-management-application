@@ -357,7 +357,7 @@ public class RoomService {
 
         Set<RoomAmenity> amenities = new HashSet<>();
 
-        amenityRoomRepository.findAll().forEach(amenities::add);
+        amenityRoomRepository.findAllEnabled().forEach(amenities::add);
 
         if (amenities.isEmpty()){
 

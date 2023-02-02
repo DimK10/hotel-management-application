@@ -38,17 +38,17 @@ public class BootStrapData implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        User client = new User(null, true, "pelatis", "mitsos", "allatsas", "pelatis@gmail.com", "asfgbafbf", Role.CLIENT, new HashSet<>(), new HashSet<>());
+        User client = new User(null, true, "pelatis", "mitsos", "allatsas", "pelatis@gmail.com", "asfgbafbf",true, Role.CLIENT, new HashSet<>(), new HashSet<>());
         client.setHashedPassword("avbasbvabcba");
         userRepository.save(client);
 
-		User client2 = new User(null, true, "dim_80", "dim", "Iwannou", "dimioannou@gmail.com", "soula_magapas", Role.CLIENT, new HashSet<>(), new HashSet<>());
+		User client2 = new User(null, true, "dim_80", "dim", "Iwannou", "dimioannou@gmail.com", "soula_magapas",true ,Role.CLIENT, new HashSet<>(), new HashSet<>());
 		client2.setHashedPassword("1229758f94f95fe3593ffe549ab6c5dd797660bfc823ab8dc4fea9dd656c0609b196b0e77491ebf0");
 		userRepository.save(client2);
 
 
 
-		User admin = new User(null, true, "geo_46", "thanos", "poul", "geopapadopoulos@gmail.com", "soula_sagapo", Role.ADMIN, new HashSet<>(), new HashSet<>());
+		User admin = new User(null, true, "geo_46", "thanos", "poul", "geopapadopoulos@gmail.com", "soula_sagapo",true, Role.ADMIN, new HashSet<>(), new HashSet<>());
 		admin.setHashedPassword("5c54105254c53d8e67ce12cddc0dc00a85ebd4156c68b2c8ee955d6d9066396ed4780bea29e02ef5");
 
 		userRepository.save(admin);
@@ -92,37 +92,37 @@ public class BootStrapData implements CommandLineRunner {
 
 
 
-        HotelAmenity hotelAmenity1 = new HotelAmenity("Parking");
+        HotelAmenity hotelAmenity1 = new HotelAmenity("Parking",true);
         amenityHotelRepository.save(hotelAmenity1);
 
-        HotelAmenity hotelAmenity2 = new HotelAmenity("Restaurant");
+        HotelAmenity hotelAmenity2 = new HotelAmenity("Restaurant",true);
         amenityHotelRepository.save(hotelAmenity2);
 
-        HotelAmenity hotelAmenity3 = new HotelAmenity("Room Service");
+        HotelAmenity hotelAmenity3 = new HotelAmenity("Room Service",true);
         amenityHotelRepository.save(hotelAmenity3);
 
-        HotelAmenity hotelAmenity4 = new HotelAmenity("Gym");
+        HotelAmenity hotelAmenity4 = new HotelAmenity("Gym",true);
         amenityHotelRepository.save(hotelAmenity4);
 
-        HotelAmenity hotelAmenity5 = new HotelAmenity("Spa");
+        HotelAmenity hotelAmenity5 = new HotelAmenity("Spa",true);
         amenityHotelRepository.save(hotelAmenity5);
 
-        HotelAmenity hotelAmenity6 = new HotelAmenity("Pool");
+        HotelAmenity hotelAmenity6 = new HotelAmenity("Pool",true);
         amenityHotelRepository.save(hotelAmenity6);
 
-        HotelAmenity hotelAmenity7 = new HotelAmenity("Charging Station");
+        HotelAmenity hotelAmenity7 = new HotelAmenity("Charging Station",true);
         amenityHotelRepository.save(hotelAmenity7);
 
-        HotelAmenity hotelAmenity8 = new HotelAmenity("Pets Allowed");
+        HotelAmenity hotelAmenity8 = new HotelAmenity("Pets Allowed",true);
         amenityHotelRepository.save(hotelAmenity8);
 
-        HotelAmenity hotelAmenity9 = new HotelAmenity("Airport Transport");
+        HotelAmenity hotelAmenity9 = new HotelAmenity("Airport Transport",true);
         amenityHotelRepository.save(hotelAmenity9);
 
-        HotelAmenity hotelAmenity10 = new HotelAmenity("Wheelchair Ramps");
+        HotelAmenity hotelAmenity10 = new HotelAmenity("Wheelchair Ramps",true);
         amenityHotelRepository.save(hotelAmenity10);
 
-        HotelAmenity hotelAmenity11 = new HotelAmenity("Rooms Accessible Elevator");
+        HotelAmenity hotelAmenity11 = new HotelAmenity("Rooms Accessible Elevator",true);
         amenityHotelRepository.save(hotelAmenity11);
 
 
@@ -174,61 +174,61 @@ public class BootStrapData implements CommandLineRunner {
 
         ena.getOrders().add(order);
 
-        RoomAmenity roomAmenity1 = new RoomAmenity("Free WiFi");
+        RoomAmenity roomAmenity1 = new RoomAmenity("Free WiFi",true);
         amenityRoomRepository.save(roomAmenity1);
 
-        RoomAmenity roomAmenity2 = new RoomAmenity("View To See Mountain");
+        RoomAmenity roomAmenity2 = new RoomAmenity("View To See Mountain",true);
         amenityRoomRepository.save(roomAmenity2);
 
-        RoomAmenity roomAmenity3 = new RoomAmenity("AirCondition");
+        RoomAmenity roomAmenity3 = new RoomAmenity("AirCondition",true);
         amenityRoomRepository.save(roomAmenity3);
 
-        RoomAmenity roomAmenity4 = new RoomAmenity("Fireplace");
+        RoomAmenity roomAmenity4 = new RoomAmenity("Fireplace",true);
         amenityRoomRepository.save(roomAmenity4);
 
-        RoomAmenity roomAmenity5 = new RoomAmenity("Kitchen");
+        RoomAmenity roomAmenity5 = new RoomAmenity("Kitchen",true);
         amenityRoomRepository.save(roomAmenity5);
 
-        RoomAmenity roomAmenity6 = new RoomAmenity("Refrigerator");
+        RoomAmenity roomAmenity6 = new RoomAmenity("Refrigerator",true);
         amenityRoomRepository.save(roomAmenity6);
 
-        RoomAmenity roomAmenity7 = new RoomAmenity("MiniBar");
+        RoomAmenity roomAmenity7 = new RoomAmenity("MiniBar",true);
         amenityRoomRepository.save(roomAmenity7);
 
-        RoomAmenity roomAmenity8 = new RoomAmenity("Washing machine");
+        RoomAmenity roomAmenity8 = new RoomAmenity("Washing machine",true);
         amenityRoomRepository.save(roomAmenity8);
 
-        RoomAmenity roomAmenity9 = new RoomAmenity("Coffee - Tea machine");
+        RoomAmenity roomAmenity9 = new RoomAmenity("Coffee - Tea machine",true);
         amenityRoomRepository.save(roomAmenity9);
 
-        RoomAmenity roomAmenity10 = new RoomAmenity("TV");
+        RoomAmenity roomAmenity10 = new RoomAmenity("TV",true);
         amenityRoomRepository.save(roomAmenity10);
 
-        RoomAmenity roomAmenity11 = new RoomAmenity("Toilet Grab Rails");
+        RoomAmenity roomAmenity11 = new RoomAmenity("Toilet Grab Rails",true);
         amenityRoomRepository.save(roomAmenity11);
 
-        RoomAmenity roomAmenity12 = new RoomAmenity("Bathtub Grab Rails");
+        RoomAmenity roomAmenity12 = new RoomAmenity("Bathtub Grab Rails",true);
         amenityRoomRepository.save(roomAmenity12);
 
-        RoomAmenity roomAmenity13 = new RoomAmenity("Shower Chair");
+        RoomAmenity roomAmenity13 = new RoomAmenity("Shower Chair",true);
         amenityRoomRepository.save(roomAmenity13);
 
-        RoomAmenity roomAmenity14 = new RoomAmenity("Raised Chair");
+        RoomAmenity roomAmenity14 = new RoomAmenity("Raised Chair",true);
         amenityRoomRepository.save(roomAmenity14);
 
-        RoomAmenity roomAmenity15 = new RoomAmenity("Emergency Phone");
+        RoomAmenity roomAmenity15 = new RoomAmenity("Emergency Phone",true);
         amenityRoomRepository.save(roomAmenity15);
 
-        RoomAmenity roomAmenity16 = new RoomAmenity("Safe Deposit Box");
+        RoomAmenity roomAmenity16 = new RoomAmenity("Safe Deposit Box",true);
         amenityRoomRepository.save(roomAmenity16);
 
-        RoomAmenity roomAmenity17 = new RoomAmenity("Bathrobe");
+        RoomAmenity roomAmenity17 = new RoomAmenity("Bathrobe",true);
         amenityRoomRepository.save(roomAmenity17);
 
-        RoomAmenity roomAmenity18 = new RoomAmenity("Hair Dryer");
+        RoomAmenity roomAmenity18 = new RoomAmenity("Hair Dryer",true);
         amenityRoomRepository.save(roomAmenity18);
 
-        RoomAmenity roomAmenity19 = new RoomAmenity("Baby Highchair");
+        RoomAmenity roomAmenity19 = new RoomAmenity("Baby Highchair",true);
         amenityRoomRepository.save(roomAmenity19);
 
         IntermediateRoomAmenity roomAme1 = new IntermediateRoomAmenity(ena,roomAmenity1);
