@@ -7,10 +7,7 @@ import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
-import com.sphy.hotelmanagementapplication.repository.HotelRepository;
-import com.sphy.hotelmanagementapplication.repository.IntermediateHotelAmenityRepository;
-import com.sphy.hotelmanagementapplication.repository.RoomRepository;
-import com.sphy.hotelmanagementapplication.repository.UserRepository;
+import com.sphy.hotelmanagementapplication.repository.*;
 import com.sphy.hotelmanagementapplication.security.JwtUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,6 +49,9 @@ public class HotelServiceTest {
 
     @Mock
     IntermediateHotelAmenityRepository intermediateHotelAmenityRepository;
+
+    @Mock
+    AmenityHotelRepository amenityHotelRepository;
 
     @Mock
     JwtUtil jwtUtil;
@@ -198,7 +198,7 @@ public class HotelServiceTest {
                         },
                         jwtUtil
 
-                ), intermediateHotelAmenityRepository);
+                ), intermediateHotelAmenityRepository, amenityHotelRepository);
     }
 
     @Test
@@ -344,7 +344,6 @@ public class HotelServiceTest {
         //when
         when(hotelRepository.countAll(anyLong())).thenReturn(1);
 
-
         //then
         assertEquals(1, hotelService.countHotels(1L));
 
@@ -371,7 +370,7 @@ public class HotelServiceTest {
 
         hotel.getRooms().add(room);
 
-        HotelAmenity hotelAmenity1 = new HotelAmenity("Parking");
+        HotelAmenity hotelAmenity1 = new HotelAmenity("Parking",true);
 
         Set<HotelAmenity> hotelAmenities = new HashSet<>();
 

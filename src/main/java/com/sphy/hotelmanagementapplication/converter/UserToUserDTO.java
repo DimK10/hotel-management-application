@@ -48,6 +48,8 @@ public class UserToUserDTO {
 
 		userDTO.setPassword(null);
 
+		userDTO.setEnabled(user.getEnabled());
+
 		if (user.getHotels() != null && !user.getHotels().isEmpty()) {
 			user
 					.getHotels()
