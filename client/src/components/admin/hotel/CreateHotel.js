@@ -1,28 +1,29 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import SidebarComp from "../../layout/Sidebar";
 import HeaderNav from "../../layout/HeaderNav";
-
 import cities from '../../../json/cities.json';
 import {useDispatch, useSelector} from "react-redux";
 import {createNewHotelAction} from "../../../actions/hotel";
-import { MultiSelect } from "react-multi-select-component";
+import {MultiSelect} from "react-multi-select-component";
 import {fetchAllHotelAmenitiesAction, fetchAllRoomAmenitiesAction} from "../../../actions/amenity";
+import {v4 as uuidv4} from 'uuid';
+import AddRoomToNewHotel from "./AddRoomToNewHotel";
 
 function CreateHotel() {
 
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  const {user} = useSelector(state => state.auth);
+    const {user} = useSelector(state => state.auth);
 
-  const {hotelAmenities, hotelAmenitiesLoading} = useSelector(state => state.amenity);
+    const {hotelAmenities, hotelAmenitiesLoading} = useSelector(state => state.amenity);
 
-  const {roomAmenities, roomAmenitiesLoading} = useSelector(state => state.amenity);
+    const {roomAmenities, roomAmenitiesLoading} = useSelector(state => state.amenity);
 
-  const [hotelAmenitiesToSelect, setHotelAmenitiesToSelect] = useState([]);
+    const [hotelAmenitiesToSelect, setHotelAmenitiesToSelect] = useState([]);
 
-  const [roomAmenitiesToSelect, setRoomAmenitiesToSelect] = useState([]);
+    const [roomAmenitiesToSelect, setRoomAmenitiesToSelect] = useState([]);
 
-  const [hotelAmenitiesSelected, setHotelAmenitiesSelected] = useState([]);
+    const [hotelAmenitiesSelected, setHotelAmenitiesSelected] = useState([]);
 
     // TODO ADD ROOMS WITH CREATE HOTEL FORM
     const [formData, setFormData] = useState({
@@ -35,7 +36,20 @@ function CreateHotel() {
     })
 
     const [citiesArray, setCitiesArray] = useState(cities);
+
     const [citiesSuggestions, setCitiesSuggestions] = useState([]);
+
+    const newRoom = {
+        id: uuidv4(),
+        name: '',
+        hotel: null,
+        luxurity: 1,
+        price: 0,
+        capacity: 0,
+        amenities: []
+    };
+
+    const [rooms, setRooms] = useState([{...newRoom}])
 
 
     const {
@@ -66,6 +80,11 @@ function CreateHotel() {
         dispatch(createNewHotelAction(formData));
     };
 
+    const onRoomSubmit = (e, room) => {
+        e.preventDefault();
+        setRooms({...rooms, room});
+    }
+
     useEffect(() => {
 
         const fetchAllAmenities = async () => {
@@ -82,12 +101,12 @@ function CreateHotel() {
         hotelAmenities.forEach(el => data.push({label: el.hAmenity, value: el.id}));
         setHotelAmenitiesToSelect([...data]);
 
-    },[hotelAmenitiesLoading]);
+    }, [hotelAmenitiesLoading]);
 
     // test
     useEffect(() => {
-        console.log(hotelAmenitiesSelected);
-    }, [hotelAmenitiesSelected])
+        console.log(rooms);
+    }, [rooms])
 
     return (
         <Fragment>
@@ -151,9 +170,9 @@ function CreateHotel() {
                                 <div className="mb-3">
                                     <label htmlFor="address" className="form-label">Address:</label>
                                     <input type="text" className="form-control" id="address" name='address'
-                                               aria-describedby="address" placeholder="Address" onChange={(e) => {
-                                            onChange(e);
-                                        }} required={true}
+                                           aria-describedby="address" placeholder="Address" onChange={(e) => {
+                                        onChange(e);
+                                    }} required={true}
                                     />
                                 </div>
                                 <div className="mb-3">
@@ -162,6 +181,11 @@ function CreateHotel() {
                                         value={hotelAmenitiesSelected}
                                         onChange={setHotelAmenitiesSelected}
                                         labelledBy="Select"
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <AddRoomToNewHotel room={newRoom} onRoomSubmit={onRoomSubmit}
+                                                       roomAmenitiesToSelect={roomAmenitiesToSelect}
                                     />
                                 </div>
                                 <button type="submit" className="btn btn-primary">Add</button>
