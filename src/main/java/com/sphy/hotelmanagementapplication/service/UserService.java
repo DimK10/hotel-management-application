@@ -17,9 +17,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.http.ResponseEntity;
-import com.sphy.hotelmanagementapplication.security.AuthenticationRequest;
-import com.sphy.hotelmanagementapplication.security.AuthenticationResponse;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -50,23 +47,24 @@ public class UserService implements UserDetailsService {
     }
 
 
-	/***
-	 * get an admin by his id
-	 * @param id the id of the admin to be found
-	 * @return the admin with the current id
-	 */
-	public User getUserById(Long id){
-		return userRepository.findById(id).orElse(null);
-	}
+    /***
+     * get an admin by his id
+     * @param id the id of the admin to be found
+     * @return the admin with the current id
+     */
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
 
     /**
      * Get user object, from jwt token, using username subject
+     *
      * @param token The jwt token
      * @return The user object associated with the jwt token
      */
     public User getUserFromToken(String token) {
 
-        if	(token.contains("Bearer")) {
+        if (token.contains("Bearer")) {
             token = token.substring(7);
         }
 
@@ -89,18 +87,18 @@ public class UserService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username);
 
-       if (user == null){
-           throw new UsernameNotFoundException("The user does not exists");
-       }
+        if (user == null) {
+            throw new UsernameNotFoundException("The user does not exists");
+        }
 
-       Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
-       authorities.add( new SimpleGrantedAuthority(user.getRole().toString()));
+        authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
 
-       return new org.springframework.security.core.userdetails.User(
-               user.getUsername(),user.getHashedPassword(), authorities);
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(), user.getHashedPassword(), authorities);
     }
 
     /***
@@ -109,17 +107,24 @@ public class UserService implements UserDetailsService {
      * @return the saved user
      * @throws ApiRequestException if the necessary properties are not included in the request
      */
-    public ResponseEntity<?> saveUser(UserDTO userDTO) throws ApiRequestException{
+    public ResponseEntity<?> saveUser(UserDTO userDTO) throws ApiRequestException {
+
+        User emailExists = new User();
+
+        emailExists = userRepository.findByEmail(userDTO.getEmail());
 
         if (userDTO.getUsername().isBlank() || userDTO.getPassword().isBlank()
-                || userDTO.getEmail().isBlank() || userDTO.getRole().isBlank()){
+                || userDTO.getEmail().isBlank() || userDTO.getRole().isBlank()) {
 
             throw new ApiRequestException("Information is incomplete");
-        }else {
+        } else if (emailExists != null) {
+
+            throw new ApiRequestException("User with this email already exists");
+        }else{
 
             userDTO.setHashedPassword(passwordEncoder.encode(userDTO.getPassword()));
 
-            AuthenticationRequest authenticationRequest = new AuthenticationRequest(userDTO.getUsername(),userDTO.getPassword(),userDTO.getRole());
+            AuthenticationRequest authenticationRequest = new AuthenticationRequest(userDTO.getUsername(), userDTO.getPassword(), userDTO.getRole());
 
             userToUserDTO.converter(userRepository.save(userDTOToUser.converter(userDTO)));
 
@@ -131,15 +136,15 @@ public class UserService implements UserDetailsService {
         }
     }
 
-	public UserDTO getUserByUsername(String username){
-		return userToUserDTO.converter(userRepository.findByUsername(username));
-	}
+    public UserDTO getUserByUsername(String username) {
+        return userToUserDTO.converter(userRepository.findByUsername(username));
+    }
 
     /***
      * get all users
      * @return all users
      */
-    public List<UserDTO> getUsers(){
+    public List<UserDTO> getUsers() {
 
         List<User> users = new ArrayList<>();
 
@@ -151,7 +156,7 @@ public class UserService implements UserDetailsService {
         return usersDTO;
     }
 
-    public User findByUsername(String username){
+    public User findByUsername(String username) {
 
         return userRepository.findByUsername(username);
     }
