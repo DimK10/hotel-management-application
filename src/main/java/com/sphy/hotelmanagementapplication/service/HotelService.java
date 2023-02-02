@@ -370,8 +370,8 @@ public class HotelService {
     }
 
 
-    public Set<HotelDTO> advanceSearchMethode(List<HotelAmenity> hotelAmenities, List<RoomAmenity> roomAmenities, LocalDate checkInDate, LocalDate checkOutDate,
-                                              Long priceFrom, Long priceTo, Integer adultsRange, Integer stars, String nameOrLocation) {
+    public Set<HotelDTO> advanceSearchMethod(List<HotelAmenity> hotelAmenities, List<RoomAmenity> roomAmenities, LocalDate checkInDate, LocalDate checkOutDate,
+                                             Long priceFrom, Long priceTo, Integer adultsRange, Integer stars, String nameOrLocation) {
 
         Map<String, Object> parametrMap = new HashMap<>();
 
@@ -429,6 +429,8 @@ public class HotelService {
             query.append(" and ra.rAmenity = :rAmenity").append(i);
             parametrMap.put("rAmenity" + i, roomAmenities.get(i).getrAmenity());
         }
+
+        query.append(" order by r.price desc ");
 
 
         Query queryFinal = entityManager.createQuery(String.valueOf(query), Hotel.class);

@@ -80,7 +80,7 @@ public class RoomServiceIT {
             roomRepository.save(room6);
 
             //when
-            List<RoomDTO> roomDTOS = roomService.getRooms(0,10,"id", admin.getId());
+            List<RoomDTO> roomDTOS = roomService.getRooms(0,5,"id", admin.getId());
 
             //then
             assertEquals(expected, roomDTOS.size());

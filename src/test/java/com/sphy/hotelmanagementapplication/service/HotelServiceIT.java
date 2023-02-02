@@ -90,15 +90,16 @@ public class HotelServiceIT {
 
         //when
 
-        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, null, null, null, null, null, null, "athe");
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, null, null, null, null, null, null, "athe");
 
         System.out.println(hotelDTOS);
         //then
         assertEquals(21, hotelDTOS.size());
+        assertEquals(15, hotelDTOS.stream().findFirst().get().getId());
     }
 
     @Test
-    void advancedSearchOrder1() throws Exception {
+    void advancedSearchOrderInIn() throws Exception {
 
         //given
 
@@ -106,14 +107,16 @@ public class HotelServiceIT {
         List<RoomAmenity> roomAmenities = new ArrayList<>();
         //when
 
-        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 4), LocalDate.of(2007, 12, 6), null, null, 2, null, null);
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 4), LocalDate.of(2007, 12, 6), null, null, 2, null, null);
 
         //then
         assertEquals(77, hotelDTOS.size());
+        assertEquals(45, hotelDTOS.stream().findFirst().get().getId());
+
     }
 
     @Test
-    void advancedSearchOrder2() throws Exception {
+    void advancedSearchOrderLeftIn() throws Exception {
 
         //given
 
@@ -121,14 +124,16 @@ public class HotelServiceIT {
         List<RoomAmenity> roomAmenities = new ArrayList<>();
         //when
 
-        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 2), LocalDate.of(2007, 12, 6), null, null, 2, null, null);
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 2), LocalDate.of(2007, 12, 6), null, null, 2, null, null);
 
         //then
         assertEquals(77, hotelDTOS.size());
+        assertEquals(33, hotelDTOS.stream().findFirst().get().getId());
+
     }
 
     @Test
-    void advancedSearchOrder3() throws Exception {
+    void advancedSearchOrderInRight() throws Exception {
 
         //given
 
@@ -136,14 +141,16 @@ public class HotelServiceIT {
         List<RoomAmenity> roomAmenities = new ArrayList<>();
         //when
 
-        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 4), LocalDate.of(2007, 12, 9), null, null, 2, null, null);
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 4), LocalDate.of(2007, 12, 9), null, null, 2, null, null);
 
         //then
         assertEquals(77, hotelDTOS.size());
+        assertEquals(25, hotelDTOS.stream().findFirst().get().getId());
+
     }
 
     @Test
-    void advancedSearchOrder4() throws Exception {
+    void advancedSearchOrderExactTheSame() throws Exception {
 
         //given
 
@@ -151,25 +158,12 @@ public class HotelServiceIT {
         List<RoomAmenity> roomAmenities = new ArrayList<>();
         //when
 
-        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 3), LocalDate.of(2007, 12, 7), null, null, 2, null, null);
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 3), LocalDate.of(2007, 12, 7), null, null, 2, null, null);
 
         //then
         assertEquals(77, hotelDTOS.size());
-    }
+        assertEquals(36, hotelDTOS.stream().findFirst().get().getId());
 
-    @Test
-    void advancedSearchOrder5() throws Exception {
-
-        //given
-
-        List<HotelAmenity> hotelAmenities = new ArrayList<>();
-        List<RoomAmenity> roomAmenities = new ArrayList<>();
-        //when
-
-        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 2), LocalDate.of(2007, 12, 9), null, null, 2, null, null);
-
-        //then
-        assertEquals(77, hotelDTOS.size());
     }
 
     @Test
@@ -181,10 +175,12 @@ public class HotelServiceIT {
         List<RoomAmenity> roomAmenities = new ArrayList<>();
         //when
 
-        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 2), LocalDate.of(2007, 12, 9), null, null, null, 1, null);
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 2), LocalDate.of(2007, 12, 9), null, null, null, 1, null);
 
         //then
         assertEquals(39, hotelDTOS.size());
+        assertEquals(83, hotelDTOS.stream().findFirst().get().getId());
+
     }
 
     @Test
@@ -196,10 +192,12 @@ public class HotelServiceIT {
         List<RoomAmenity> roomAmenities = new ArrayList<>();
         //when
 
-        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities,null, null, null, null, 2, null, null);
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities,null, null, null, null, 2, null, null);
 
         //then
         assertEquals(97, hotelDTOS.size());
+        assertEquals(95, hotelDTOS.stream().findFirst().get().getId());
+
     }
 
     @Test
@@ -211,10 +209,12 @@ public class HotelServiceIT {
         List<RoomAmenity> roomAmenities = new ArrayList<>();
         //when
 
-        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, null, null, 0L, 11L, 2, null, null);
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, null, null, 0L, 11L, 2, null, null);
 
         //then
         assertEquals(39, hotelDTOS.size());
+        assertEquals(78, hotelDTOS.stream().findFirst().get().getId());
+
     }
 
     @Test
@@ -230,10 +230,12 @@ public class HotelServiceIT {
         List<RoomAmenity> roomAmenities = new ArrayList<>();
         //when
 
-        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, null, null, null, null, null, null, null);
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, null, null, null, null, null, null, null);
 
         //then
         assertEquals(39, hotelDTOS.size());
+        assertEquals(93, hotelDTOS.stream().findFirst().get().getId());
+
     }
 
     @Test
@@ -251,10 +253,12 @@ public class HotelServiceIT {
         roomAmenities.add(roomAmenity);
         //when
 
-        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethode(hotelAmenities, roomAmenities, null, null, null, null, null, null, null);
+        Set<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, null, null, null, null, null, null, null);
 
         //then
         assertEquals(21, hotelDTOS.size());
+        assertEquals(5, hotelDTOS.stream().findFirst().get().getId());
+
     }
 
 

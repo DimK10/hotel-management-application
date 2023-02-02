@@ -168,25 +168,6 @@ public class HotelController {
 
     }
 
-//    /***
-//     * Created by Akd
-//     * Add Hotel Amenity
-//     * @param hotelAmenity new hotel Amenity parameters
-//     * @return added the new Hotel Amenity
-//     * @throws ApiRequestException if the user is not Authorised to add Hotel Amenity
-//     */
-//    @PutMapping("/api/hotel/addHotelAmenity")
-//    @PreAuthorize("hasAuthority('SUPERUSER')")
-//    public HotelAmenity addHotelAmenity(@RequestHeader(name="Authorization")String token, @RequestBody HotelAmenity hotelAmenity) throws ApiRequestException{
-//
-//        if (Objects.equals(User.Role.SUPERUSER, userService.getUserFromToken(token).getRole())) {
-//
-//            return service.addHotelAmenity(hotelAmenity);
-//        } else {
-//            throw new ApiRequestException("Unauthorized");
-//        }
-//    }
-
     /***
      * enables a hotel by his id
      * @param id of the hotel we want to enable
@@ -271,25 +252,16 @@ public class HotelController {
 
     /***
      * returns the hotels that are available in Advanced search specific fields
-     * @param token user token
      * @param advancedSearch Advanced search specific fields
      * @return the hotels that mach with the search
      * @throws RuntimeException if this that made the search is not a role client
      */
     @GetMapping("/api/hotel/advanced/search")
-    @PreAuthorize("hasAuthority('Client')")
-    public Set<HotelDTO> advancedSearch(@RequestHeader(name = "Authorization") String token, @RequestBody AdvancedSearch advancedSearch) throws RuntimeException{
+    public Set<HotelDTO> advancedSearch(@RequestBody AdvancedSearch advancedSearch) throws RuntimeException{
 
-        if (userService.getUserFromToken(token).getRole().equals(User.Role.CLIENT)){
-
-            return service.advanceSearchMethode(advancedSearch.getHotelAmenities(), advancedSearch.getRoomAmenities(), advancedSearch.getCheckInDate(), advancedSearch.getCheckOutDate(),
+            return service.advanceSearchMethod(advancedSearch.getHotelAmenities(), advancedSearch.getRoomAmenities(), advancedSearch.getCheckInDate(), advancedSearch.getCheckOutDate(),
                     advancedSearch.getPriceFrom(), advancedSearch.getPriceTo(), advancedSearch.getAdultsRange(), advancedSearch.getStars(), advancedSearch.getNameOrLocation());
-        }else {
-
-            throw new RuntimeException("Unauthorized");
-        }
 
     }
-
 
 }
