@@ -203,25 +203,26 @@ public class HotelService {
 
 
         synchronized (this) {
-           
-        if (hotelOptional.isEmpty()) {
-            throw new ApiRequestException("The hotel with id: " + hotelDTO.getId() + " does not exist to update it");
 
-        } else {
-            Hotel existingHotel = hotelOptional.get();
-            existingHotel.setName(hotelDTO.getName());
-            existingHotel.setStars(hotelDTO.getStars());
-            existingHotel.setAreaName(hotelDTO.getAreaName());
-            Optional<User> admin = userRepository.findById(hotelDTO.getOwner());
-            admin.ifPresent(existingHotel::setOwner);
+            if (hotelOptional.isEmpty()) {
+                throw new ApiRequestException("The hotel with id: " + hotelDTO.getId() + " does not exist to update it");
 
-            hotelDTO.getAmenities().forEach(amenity ->
-                    existingHotel.getIntermediateHotelAmenities()
-                                    .add(intermediateHotelAmenityRepository
-                                    .save(new IntermediateHotelAmenity(existingHotel, amenity))));
+            } else {
+                Hotel existingHotel = hotelOptional.get();
+                existingHotel.setName(hotelDTO.getName());
+                existingHotel.setStars(hotelDTO.getStars());
+                existingHotel.setAreaName(hotelDTO.getAreaName());
+                Optional<User> admin = userRepository.findById(hotelDTO.getOwner());
+                admin.ifPresent(existingHotel::setOwner);
 
-            return hotelToHotelDTO.converter(hotelRepository.save(existingHotel));
+                hotelDTO.getAmenities().forEach(amenity ->
+                        existingHotel.getIntermediateHotelAmenities()
+                                .add(intermediateHotelAmenityRepository
+                                        .save(new IntermediateHotelAmenity(existingHotel, amenity))));
 
+                return hotelToHotelDTO.converter(hotelRepository.save(existingHotel));
+
+            }
         }
     }
 

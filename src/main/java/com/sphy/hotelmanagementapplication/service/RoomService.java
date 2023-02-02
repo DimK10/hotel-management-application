@@ -6,6 +6,7 @@ import com.sphy.hotelmanagementapplication.domain.*;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
+import com.sphy.hotelmanagementapplication.repository.AmenityRoomRepository;
 import com.sphy.hotelmanagementapplication.repository.HotelRepository;
 import com.sphy.hotelmanagementapplication.repository.IntermediateRoomAmenityRepository;
 import com.sphy.hotelmanagementapplication.repository.RoomRepository;
@@ -34,7 +35,7 @@ public class RoomService {
     private final AmenityRoomRepository amenityRoomRepository;
 
 
-    public RoomService(RoomRepository repository, HotelRepository hotelRepository, RoomDTOToRoom roomDTOToRoom, RoomToRoomDTO roomToRoomDTO, IntermediateRoomAmenityRepository intermediateRoomAmenityRepository) {
+    public RoomService(RoomRepository repository, HotelRepository hotelRepository, RoomDTOToRoom roomDTOToRoom, RoomToRoomDTO roomToRoomDTO, IntermediateRoomAmenityRepository intermediateRoomAmenityRepository, AmenityRoomRepository amenityRoomRepository) {
         this.roomRepository = repository;
         this.hotelRepository = hotelRepository;
         this.roomDTOToRoom = roomDTOToRoom;
