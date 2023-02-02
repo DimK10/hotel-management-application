@@ -370,7 +370,7 @@ public class HotelServiceTest {
 
         hotel.getRooms().add(room);
 
-        HotelAmenity hotelAmenity1 = new HotelAmenity("Parking");
+        HotelAmenity hotelAmenity1 = new HotelAmenity("Parking",true);
 
         Set<HotelAmenity> hotelAmenities = new HashSet<>();
 

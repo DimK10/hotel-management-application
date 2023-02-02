@@ -15,7 +15,7 @@ import java.util.Set;
 @Repository
 public interface AmenityRoomRepository extends CrudRepository <RoomAmenity,Long> {
 
-    @Query(value = "select ra from RoomAmenity re where re.enabled = true")
+    @Query(value = "select ra from RoomAmenity ra where ra.enabled = true")
     Set<RoomAmenity> findAllEnabled();
 
 }
