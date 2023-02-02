@@ -328,6 +328,27 @@ public class RoomService {
         return amenitiesRoomDTO;
     }
 
+     /**
+     * Created by BP
+     * saves a new Room Amenity
+     * @param roomAmenity  to be saved
+     * @return the saved room amenity for confirmation
+     * @throws ApiRequestException if the room amenity is not created and does not be enabled
+     */
+    public RoomAmenity saveRoomAmenity (RoomAmenity roomAmenity) throws ApiRequestException{
+
+        if (roomAmenity.getrAmenity().isEmpty()){
+            throw new ApiRequestException("There is no Room Amenity");
+        }
+
+        if(!roomAmenity.getEnabled()){
+            throw new ApiRequestException("There is no activated Room Amenity");
+        }
+
+        return amenityRoomRepository.save(roomAmenity);
+    }
+
+
     /***
      * returns all room amenities
      * @return all room amenities

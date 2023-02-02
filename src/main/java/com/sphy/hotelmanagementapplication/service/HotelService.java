@@ -209,7 +209,6 @@ public class HotelService {
             existingHotel.setName(hotelDTO.getName());
             existingHotel.setStars(hotelDTO.getStars());
             existingHotel.setAreaName(hotelDTO.getAreaName());
-			existingHotel.setAddress(hotelDTO.getAddress());
             Optional<User> admin = userRepository.findById(hotelDTO.getOwner());
             admin.ifPresent(existingHotel::setOwner);
 
@@ -420,4 +419,25 @@ public class HotelService {
             return amenities;
         }
     }
+
+    /**
+     * Created by Akd
+     * saves a new Hotel Amenity
+     * @param hotelAmenity  to be saved
+     * @return the saved hotel amenity for confirmation
+     * @throws ApiRequestException if the hotel amenity is not created and does not be enabled
+     */
+    public HotelAmenity saveHotelAmenity (HotelAmenity hotelAmenity) throws ApiRequestException{
+
+        if (hotelAmenity.gethAmenity().isEmpty()){
+            throw new ApiRequestException("There is no Hotel Amenity");
+        }
+
+        if(!hotelAmenity.getEnabled()){
+            throw new ApiRequestException("There is no activated Hotel Amenity");
+        }
+
+        return amenityHotelRepository.save(hotelAmenity);
+    }
+
 }

@@ -35,16 +35,17 @@ public class BootStrapData implements CommandLineRunner {
         this.intermediateRoomAmenityRepository = intermediateRoomAmenityRepository;
     }
 
-	@Override
+    @Override
     @Transactional
-	public void run(String... args) throws Exception {
-		User client = new User(null, true, "pelatis", "mitsos", "allatsas", "pelatis@gmail.com", "asfgbafbf", Role.CLIENT, new HashSet<>(), new HashSet<>());
-		client.setHashedPassword("avbasbvabcba");
-		userRepository.save(client);
+    public void run(String... args) throws Exception {
+        User client = new User(null, true, "pelatis", "mitsos", "allatsas", "pelatis@gmail.com", "asfgbafbf", Role.CLIENT, new HashSet<>(), new HashSet<>());
+        client.setHashedPassword("avbasbvabcba");
+        userRepository.save(client);
 
 		User client2 = new User(null, true, "dim_80", "dim", "Iwannou", "dimioannou@gmail.com", "soula_magapas", Role.CLIENT, new HashSet<>(), new HashSet<>());
 		client2.setHashedPassword("1229758f94f95fe3593ffe549ab6c5dd797660bfc823ab8dc4fea9dd656c0609b196b0e77491ebf0");
 		userRepository.save(client2);
+
 
 
 		User admin = new User(null, true, "geo_46", "thanos", "poul", "geopapadopoulos@gmail.com", "soula_sagapo", Role.ADMIN, new HashSet<>(), new HashSet<>());
@@ -88,6 +89,8 @@ public class BootStrapData implements CommandLineRunner {
 
 		ksenia.getRooms().add(ena);
 		ksenia.getRooms().add(dio);
+
+
 
         HotelAmenity hotelAmenity1 = new HotelAmenity("Parking");
         amenityHotelRepository.save(hotelAmenity1);
@@ -141,13 +144,35 @@ public class BootStrapData implements CommandLineRunner {
         amenityHotelRepository.save(hotelAmenity2);
 
 
-		hotelRepository.save(ksenia);
+
+//        Set<HotelAmenity> amenitySet = new HashSet<>();
+//
+//        HotelAmenity amenity1 = new HotelAmenity();
+//
+//        amenity1.setAmenitiesH(HotelAmenity.AmenitiesHotel.AIRPORTTRANSPORT);
+//
+//        HotelAmenity amenity2 = new HotelAmenity();
+//
+//        amenity2.setAmenitiesH(HotelAmenity.AmenitiesHotel.GYM);
+//
+//        HotelAmenity amenity3 = new HotelAmenity();
+//
+//        amenity3.setAmenitiesH(HotelAmenity.AmenitiesHotel.PETSALLOWED);
+//
+//        amenitySet.add(amenity1);
+//        amenitySet.add(amenity2);
+//        amenitySet.add(amenity3);
+//
+//        amenityHotelRepository.saveAll(amenitySet);
+//
+//        ksenia.getHotelAmenity().addAll(amenitySet);
+
 
         Order order = new Order(null, LocalDate.of(2007, 12, 3), LocalDate.of(2007, 12, 7), false, client, ena, ena.getName(), ena.getHotel().getName(), ena.getPrice());
         orderRepository.save(order);
 
 
-		ena.getOrders().add(order);
+        ena.getOrders().add(order);
 
         RoomAmenity roomAmenity1 = new RoomAmenity("Free WiFi");
         amenityRoomRepository.save(roomAmenity1);
@@ -212,7 +237,7 @@ public class BootStrapData implements CommandLineRunner {
         IntermediateRoomAmenity roomAme2 = new IntermediateRoomAmenity(ena, roomAmenity2);
         intermediateRoomAmenityRepository.save(roomAme2);
 
-		roomRepository.save(ena);
+        roomRepository.save(ena);
 
 
         ena.getIntermediateRoomAmenities().add(roomAme1);
@@ -257,5 +282,5 @@ public class BootStrapData implements CommandLineRunner {
 //        dio.getRoomAmenity().addAll(amenityRset1);
         roomRepository.save(dio);
 
-	}
+    }
 }
