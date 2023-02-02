@@ -8,6 +8,7 @@ import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
+import com.sphy.hotelmanagementapplication.repository.AmenityHotelRepository;
 import com.sphy.hotelmanagementapplication.repository.HotelRepository;
 import com.sphy.hotelmanagementapplication.repository.IntermediateHotelAmenityRepository;
 import com.sphy.hotelmanagementapplication.repository.UserRepository;
@@ -38,8 +39,10 @@ public class HotelService {
 
     private final IntermediateHotelAmenityRepository intermediateHotelAmenityRepository;
 
+    private final AmenityHotelRepository amenityHotelRepository;
 
-    public HotelService(HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService, IntermediateHotelAmenityRepository intermediateHotelAmenityRepository) {
+
+    public HotelService(HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService, IntermediateHotelAmenityRepository intermediateHotelAmenityRepository, AmenityHotelRepository amenityHotelRepository) {
         this.hotelRepository = hotelRepository;
         this.hotelDTOToHotel = hotelDTOToHotel;
         this.hotelToHotelDTO = hotelToHotelDTO;
@@ -47,6 +50,7 @@ public class HotelService {
         this.userRepository = userRepository;
         this.userService = userService;
         this.intermediateHotelAmenityRepository = intermediateHotelAmenityRepository;
+        this.amenityHotelRepository = amenityHotelRepository;
     }
 
     /***
@@ -197,27 +201,27 @@ public class HotelService {
 
         Optional<Hotel> hotelOptional = hotelRepository.findById(hotelDTO.getId());
 
+
         synchronized (this) {
-            if (hotelOptional.isEmpty()) {
-                throw new ApiRequestException("The hotel with id: " + hotelDTO.getId() + " does not exist to update it");
+           
+        if (hotelOptional.isEmpty()) {
+            throw new ApiRequestException("The hotel with id: " + hotelDTO.getId() + " does not exist to update it");
 
-            } else {
+        } else {
+            Hotel existingHotel = hotelOptional.get();
+            existingHotel.setName(hotelDTO.getName());
+            existingHotel.setStars(hotelDTO.getStars());
+            existingHotel.setAreaName(hotelDTO.getAreaName());
+            Optional<User> admin = userRepository.findById(hotelDTO.getOwner());
+            admin.ifPresent(existingHotel::setOwner);
 
-                Hotel existingHotel = hotelOptional.get();
-                existingHotel.setName(hotelDTO.getName());
-                existingHotel.setStars(hotelDTO.getStars());
-                existingHotel.setAreaName(hotelDTO.getAreaName());
-                existingHotel.setAddress(hotelDTO.getAddress());
-                Optional<User> admin = userRepository.findById(hotelDTO.getOwner());
-                admin.ifPresent(existingHotel::setOwner);
+            hotelDTO.getAmenities().forEach(amenity ->
+                    existingHotel.getIntermediateHotelAmenities()
+                                    .add(intermediateHotelAmenityRepository
+                                    .save(new IntermediateHotelAmenity(existingHotel, amenity))));
 
-                hotelDTO.getAmenities().forEach(amenity ->
-                        existingHotel.getIntermediateHotelAmenities()
-                                .add(intermediateHotelAmenityRepository
-                                        .save(new IntermediateHotelAmenity(existingHotel, amenity))));
+            return hotelToHotelDTO.converter(hotelRepository.save(existingHotel));
 
-                return hotelToHotelDTO.converter(hotelRepository.save(existingHotel));
-            }
         }
     }
 
@@ -402,4 +406,44 @@ public class HotelService {
         }
 
     }
+
+    /***
+     * returns all hotel amenities
+     * @return all hotel amenities
+     */
+    public Set<HotelAmenity> getHotelAmenities() throws ApiRequestException{
+
+        Set<HotelAmenity> amenities = new HashSet<>();
+
+        amenityHotelRepository.findAllEnabled().forEach(amenities::add);
+
+        if (amenities.isEmpty()){
+
+            throw new ApiRequestException("There are no hotel amenities whet.");
+
+        }else {
+            return amenities;
+        }
+    }
+
+    /**
+     * Created by Akd
+     * saves a new Hotel Amenity
+     * @param hotelAmenity  to be saved
+     * @return the saved hotel amenity for confirmation
+     * @throws ApiRequestException if the hotel amenity is not created and does not be enabled
+     */
+    public HotelAmenity saveHotelAmenity (HotelAmenity hotelAmenity) throws ApiRequestException{
+
+        if (hotelAmenity.gethAmenity().isEmpty()){
+            throw new ApiRequestException("There is no Hotel Amenity");
+        }
+
+        if(!hotelAmenity.getEnabled()){
+            throw new ApiRequestException("There is no activated Hotel Amenity");
+        }
+
+        return amenityHotelRepository.save(hotelAmenity);
+    }
+
 }

@@ -20,6 +20,7 @@ import java.util.Set;
 public class RoomAmenity extends BaseEntity {
 
 	private String rAmenity;
+	private boolean enabled;
 
 	@OneToMany(mappedBy = "roomAmenity",fetch=FetchType.EAGER)
 	@JsonIgnore
@@ -30,9 +31,10 @@ public class RoomAmenity extends BaseEntity {
 
 	}
 
-	public RoomAmenity(String rAmenity) {
+	public RoomAmenity(String rAmenity, boolean enabled) {
 
 		this.rAmenity = rAmenity;
+		this.enabled = enabled;
 	}
 
 	public Long getId() {
@@ -49,6 +51,12 @@ public class RoomAmenity extends BaseEntity {
 
 	public void setrAmenity(String rAmenity) {
 		this.rAmenity = rAmenity;
+	}
+	public boolean getEnabled() {
+		return enabled;
+	}
+	public void setEnabled(boolean enabled) {
+        this.enabled = enabled;   
 	}
 
 	public Set<IntermediateRoomAmenity> getIntermediateRoomAmenities() {
@@ -74,6 +82,7 @@ public class RoomAmenity extends BaseEntity {
 		return "RoomAmenity{" +
 				"id=" + super.getId() +
 				"rAmenity='" + rAmenity + '\'' +
+				"enabled='" + enabled + '\'' +
 				", intermediateRoomAmenities=" + intermediateRoomAmenities +
 				'}';
 	}

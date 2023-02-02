@@ -1,10 +1,6 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
-
 import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
@@ -12,19 +8,16 @@ import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.UserService;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 /***
  * created by gp
@@ -174,6 +167,24 @@ public class HotelController {
 
     }
 
+    /***
+     * Created by Akd
+     * Add Hotel Amenity
+     * @param hotelAmenity new hotel Amenity parameters
+     * @return added the new Hotel Amenity
+     * @throws ApiRequestException if the user is not Authorised to add Hotel Amenity
+     */
+    @PutMapping("/api/hotel/addHotelAmenity")
+    @PreAuthorize("hasAuthority('SUPERUSER')")
+    public HotelAmenity saveHotelAmenity(@RequestHeader(name="Authorization")String token, @RequestBody HotelAmenity hotelAmenity) throws ApiRequestException{
+
+        if (Objects.equals(User.Role.SUPERUSER, userService.getUserFromToken(token).getRole())) {
+
+            return service.saveHotelAmenity(hotelAmenity);
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
+    }
 
     /***
      * enables a hotel by his id
@@ -246,6 +257,19 @@ public class HotelController {
     public Set<HotelDTO> findHotelBasicSearch(@RequestBody BasicSearchDTO basicSearchDTO)throws RuntimeException{
 
             return service.getHotelBasicSearch(basicSearchDTO);
+
+    }
+
+
+    /***
+     * returns all hotel amenities
+     * @return hotel amenities
+     * @throws RuntimeException when not exist any hotel amenity
+     */
+    @GetMapping("/api/hotel/amenities")
+    public Set<HotelAmenity> findHotelAmenities()throws RuntimeException{
+
+        return service.getHotelAmenities();
 
     }
 
