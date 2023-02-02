@@ -8,6 +8,7 @@ import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
+import com.sphy.hotelmanagementapplication.repository.AmenityHotelRepository;
 import com.sphy.hotelmanagementapplication.repository.HotelRepository;
 import com.sphy.hotelmanagementapplication.repository.IntermediateHotelAmenityRepository;
 import com.sphy.hotelmanagementapplication.repository.UserRepository;
@@ -42,9 +43,12 @@ public class HotelService {
 
     private final IntermediateHotelAmenityRepository intermediateHotelAmenityRepository;
 
+    private final AmenityHotelRepository amenityHotelRepository;
 
     public HotelService(EntityManager entityManager, HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService, IntermediateHotelAmenityRepository intermediateHotelAmenityRepository) {
         this.entityManager = entityManager;
+
+    public HotelService(HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService, IntermediateHotelAmenityRepository intermediateHotelAmenityRepository, AmenityHotelRepository amenityHotelRepository) {
         this.hotelRepository = hotelRepository;
         this.hotelDTOToHotel = hotelDTOToHotel;
         this.hotelToHotelDTO = hotelToHotelDTO;
@@ -52,6 +56,7 @@ public class HotelService {
         this.userRepository = userRepository;
         this.userService = userService;
         this.intermediateHotelAmenityRepository = intermediateHotelAmenityRepository;
+        this.amenityHotelRepository = amenityHotelRepository;
     }
 
     /***
@@ -345,29 +350,63 @@ public class HotelService {
      * @param basicSearchDTO basic search fields (check in date, check out date, location name or hotel name)
      * @return the hotels than mach with the search
      */
-    public Set<HotelDTO> getHotelBasicSearch(BasicSearchDTO basicSearchDTO) {
+        public Set<HotelDTO> getHotelBasicSearch(BasicSearchDTO basicSearchDTO) {
 
-        Set<HotelDTO> hotelDTOS = new HashSet<>();
+            Set<HotelDTO> hotelDTOS = new HashSet<>();
 
-        if (basicSearchDTO.getCheckInDate() != null && basicSearchDTO.getCheckOutDate() != null
-                && basicSearchDTO.getNameOrLocation() != null) {
+            if (basicSearchDTO.getCheckInDate() != null && basicSearchDTO.getCheckOutDate() != null
+                    && basicSearchDTO.getNameOrLocation() != null) {
 
-            hotelRepository.findByBasicSearch(
-                            basicSearchDTO.getCheckInDate(),
-                            basicSearchDTO.getCheckOutDate(),
-                            basicSearchDTO.getNameOrLocation())
-                    .forEach(hotel -> hotelDTOS
-                            .add(hotelToHotelDTO
-                                    .converter(hotel)));
+                hotelRepository.findByBasicSearch(
+                                basicSearchDTO.getCheckInDate(),
+                                basicSearchDTO.getCheckOutDate(),
+                                basicSearchDTO.getNameOrLocation())
+                        .forEach(hotel -> hotelDTOS
+                                .add(hotelToHotelDTO
+                                        .converter(hotel)));
 
-            return hotelDTOS;
+                if (!hotelDTOS.isEmpty()) {
 
-        } else {
+                    for (HotelDTO hotelDTO : hotelDTOS){
 
-            throw new RuntimeException("Something went wrong");
+                        Set<HotelAmenity> amenities = getHotelAmenitiesByHotelId(hotelDTO.getId());
+
+                        if( !amenities.isEmpty()) {
+
+                            hotelDTO.getAmenities().addAll(amenities);
+                        }
+
+                        Set<RoomDTO> roomsDto = hotelDTO.getRooms();
+
+                        if (!roomsDto.isEmpty()){
+
+
+                            for (RoomDTO roomDTO : roomsDto){
+
+                                Set<RoomAmenity> RAmenities = roomService.getRoomAmenitiesByRoomId(roomDTO.getId());
+
+                                if (!RAmenities.isEmpty()) {
+
+                                    roomDTO.getAmenities().addAll(RAmenities);
+                                }
+                            }
+                        }
+                    }
+
+
+                    hotelDTOS.forEach(hotelDTO -> hotelDTO
+                            .getRooms()
+                            .forEach(roomDTO -> roomDTO.getAmenities()
+                                    .addAll(roomService.getRoomAmenitiesByRoomId(roomDTO.getId()))));
+                }
+                return hotelDTOS;
+
+            } else {
+
+                throw new RuntimeException("Something went wrong");
+            }
+
         }
-
-    }
 
 
     public Set<HotelDTO> advanceSearchMethod(List<HotelAmenity> hotelAmenities, List<RoomAmenity> roomAmenities, LocalDate checkInDate, LocalDate checkOutDate,
@@ -450,4 +489,44 @@ public class HotelService {
 
         return hotelDTOS;
     }
+
+    /***
+     * returns all hotel amenities
+     * @return all hotel amenities
+     */
+    public Set<HotelAmenity> getHotelAmenities() throws ApiRequestException{
+
+        Set<HotelAmenity> amenities = new HashSet<>();
+
+        amenityHotelRepository.findAllEnabled().forEach(amenities::add);
+
+        if (amenities.isEmpty()){
+
+            throw new ApiRequestException("There are no hotel amenities whet.");
+
+        }else {
+            return amenities;
+        }
+    }
+
+    /**
+     * Created by Akd
+     * saves a new Hotel Amenity
+     * @param hotelAmenity  to be saved
+     * @return the saved hotel amenity for confirmation
+     * @throws ApiRequestException if the hotel amenity is not created and does not be enabled
+     */
+    public HotelAmenity saveHotelAmenity (HotelAmenity hotelAmenity) throws ApiRequestException{
+
+        if (hotelAmenity.gethAmenity().isEmpty()){
+            throw new ApiRequestException("There is no Hotel Amenity");
+        }
+
+        if(!hotelAmenity.getEnabled()){
+            throw new ApiRequestException("There is no activated Hotel Amenity");
+        }
+
+        return amenityHotelRepository.save(hotelAmenity);
+    }
+
 }

@@ -4,114 +4,124 @@ import CIcon from '@coreui/icons-react';
 import {cilLockLocked, cilUser} from '@coreui/icons';
 // import {connect} from "react-redux";
 import {login} from "../../actions/auth";
-import {Navigate} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
+import Alert from "../layout/Alert";
+import {addUserToOrderAction} from "../../actions/order";
 
 const Login = () => {
 
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    const {inProcess} = useSelector(
+        (state) => state.order.currentOrder
+    );
 
-  const dispatch = useDispatch();
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    let role = useSelector(state => state.auth.user?.role);
+    let user = useSelector(state => state.auth.user);
 
-  const [formData, setFromData] = useState({
-    username: "",
-    password: ""
-  });
+    const { user: userInOrder } = useSelector(state => state.order.currentOrder);
 
-  const {username, password} = formData;
+    const dispatch = useDispatch();
 
-  const onChange = e =>
-    setFromData({...formData, [e.target.name]: e.target.value});
+    const [formData, setFromData] = useState({
+        username: "",
+        password: ""
+    });
 
-  const onSubmit = async e => {
-    e.preventDefault();
-    dispatch(login(username, password));
-    // login(username, password);
-  };
+    const {username, password} = formData;
 
-  // Redirect if logged in
-  if (isAuthenticated) {
-    return <Navigate to='/dashboard'/>;
-  }
+    const onChange = e =>
+        setFromData({...formData, [e.target.name]: e.target.value});
 
-  return (
-    <Fragment>
-      {
-        !isAuthenticated ?
+    const onSubmit = async e => {
+        e.preventDefault();
+        dispatch(login(username, password));
+    };
 
-          (
-            <Fragment>
-              <NavBar/>
-              <div className='bg-light min-vh-100 d-flex flex-row align-items-center'>
-                <div className='container'>
-                  <div className='row justify-content-center'>
-                    <div className='card-group d-block d-md-flex row'>
-                      <div className='card col-md-7 p-4 mb-0'>
-                        <form onSubmit={(e) => onSubmit(e)}>
-                          <div className='card-body'>
-                            <h1>Login</h1>
-                            <p className='text-medium-emphasis'>
-                              Sign In to your account
-                            </p>
-                            <div className='input-group mb-3'>
-                      <span className='input-group-text'>
-                        <CIcon icon={cilUser}/>
-                      </span>
-                              <input
-                                className='form-control'
-                                type='text'
-                                placeholder='Username'
-                                name="username"
-                                onChange={e => onChange(e)}
-                                required
-                              />
+    const redirectBasedOnRole = () => {
+        if (isAuthenticated && role !== 'undefined' && role === 'CLIENT') {
+            if (inProcess === true && userInOrder === null)
+                dispatch(addUserToOrderAction(user));
+            return <Navigate to='/'/>;
+        }
+
+        // Redirect if logged in
+        if (isAuthenticated && role !== 'undefined' && role === 'ADMIN') {
+            return <Navigate to='/dashboard'/>;
+        }
+    }
+
+    redirectBasedOnRole();
+
+    return (
+        <Fragment>
+            {!isAuthenticated ? (
+                <Fragment>
+                    <NavBar/>
+                    <div className='bg-light min-vh-100 d-flex flex-row align-items-center'>
+                        <div className='container'>
+                            <Alert/>
+                            <div className='row justify-content-center'>
+                                <div className='card-group d-block d-md-flex row'>
+                                    <div className='card col-md-7 p-4 mb-0'>
+                                        <form onSubmit={(e) => onSubmit(e)}>
+                                            <div className='card-body'>
+                                                <h1>Login</h1>
+                                                <p className='text-medium-emphasis'>
+                                                    Sign In to your account
+                                                </p>
+                                                <div className='input-group mb-3'>
+                          <span className='input-group-text'>
+                            <CIcon icon={cilUser}/>
+                          </span>
+                                                    <input
+                                                        className='form-control'
+                                                        type='text'
+                                                        placeholder='Username'
+                                                        name='username'
+                                                        onChange={(e) => onChange(e)}
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className='input-group mb-4'>
+                          <span className='input-group-text'>
+                            <CIcon icon={cilLockLocked}/>
+                          </span>
+                                                    <input
+                                                        className='form-control'
+                                                        type='password'
+                                                        placeholder='Password'
+                                                        name='password'
+                                                        onChange={(e) => onChange(e)}
+                                                    />
+                                                </div>
+                                                <div className='row'>
+                                                    <div className='col-6'>
+                                                        <input
+                                                            type='submit'
+                                                            className='btn btn-primary px-4'
+                                                            value='Login'
+                                                        />
+                                                    </div>
+                                                    <div className='col-6 text-end'>
+                                                        <Link className='btn btn-link px-0' to='/sign-up'>
+                                                            Not a User? Sign up here
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
-                            <div className='input-group mb-4'>
-                      <span className='input-group-text'>
-                        <CIcon icon={cilLockLocked}/>
-                      </span>
-                              <input
-                                className='form-control'
-                                type='password'
-                                placeholder='Password'
-                                name="password"
-                                onChange={e => onChange(e)}
-                              />
-                            </div>
-                            <div className='row'>
-                              <div className='col-6'>
-                                <input type='submit' className='btn btn-primary px-4'
-                                       value='Login'/>
-                              </div>
-                              <div className='col-6 text-end'>
-                                <button className='btn btn-link px-0' type='button'>
-                                  Forgot password?
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
+                        </div>
                     </div>
-                  </div>
-                </div>
-              </div>
-            </Fragment>)
-          :
-          (<Navigate to='/dashboard'/>)
-      }
-    </Fragment>
-  )
-    ;
+                </Fragment>
+            ) : (
+                redirectBasedOnRole()
+            )}
+        </Fragment>
+    );
 };
 
-// Login.propTypes = {
-//   login: PropTypes.func.isRequired
-// };
-
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
-});
-
-// export default connect(mapStateToProps, {login})(Login);
 export default Login;

@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from 'react';
-import SidebarComp from "../layout/Sidebar";
-import HeaderNav from "../layout/HeaderNav";
-import cities from "../../json/cities.json";
+import SidebarComp from "../../layout/Sidebar";
+import HeaderNav from "../../layout/HeaderNav";
+import cities from "../../../json/cities.json";
 
 CreateRoom.propTypes = {};
 

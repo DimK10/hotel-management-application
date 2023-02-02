@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
-import SidebarComp from "../layout/Sidebar";
-import HeaderNav from "../layout/HeaderNav";
+import SidebarComp from "../../layout/Sidebar";
+import HeaderNav from "../../layout/HeaderNav";
 import CIcon from "@coreui/icons-react";
 import {cilPlus} from "@coreui/icons";
 import {Tooltip} from '@coreui/coreui/dist/js/coreui';
@@ -165,12 +165,12 @@ const Orders = props => {
               <li className="page-item disabled">
                 <a className="page-link">&laquo;</a>
               </li>
-              <li className="page-item active"><a className="page-link" href="#">1</a>
+              <li className="page-item active"><a className="page-link" href="../../client/order#">1</a>
               </li>
-              <li className="page-item"><a className="page-link" href="#">2</a></li>
-              <li className="page-item"><a className="page-link" href="#">3</a></li>
+              <li className="page-item"><a className="page-link" href="../../client/order#">2</a></li>
+              <li className="page-item"><a className="page-link" href="../../client/order#">3</a></li>
               <li className="page-item">
-                <a className="page-link" href="#">&raquo;</a>
+                <a className="page-link" href="../../client/order#">&raquo;</a>
               </li>
             </ul>
           </nav>

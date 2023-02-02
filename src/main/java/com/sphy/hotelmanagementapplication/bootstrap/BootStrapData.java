@@ -3,8 +3,10 @@ package com.sphy.hotelmanagementapplication.bootstrap;
 import com.sphy.hotelmanagementapplication.domain.*;
 import com.sphy.hotelmanagementapplication.domain.User.Role;
 import com.sphy.hotelmanagementapplication.repository.*;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

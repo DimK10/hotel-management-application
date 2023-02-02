@@ -1,8 +1,8 @@
 import React, {Fragment} from 'react';
-import SidebarComp from "../layout/Sidebar";
+import SidebarComp from "../../layout/Sidebar";
 
-import '../../css/wrapperFix.css'
-import HeaderNav from "../layout/HeaderNav";
+import '../../../css/wrapperFix.css'
+import HeaderNav from "../../layout/HeaderNav";
 import MainChart from "./MainChart";
 import {Link, useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";

@@ -169,6 +169,25 @@ public class HotelController {
     }
 
     /***
+     * Created by Akd
+     * Add Hotel Amenity
+     * @param hotelAmenity new hotel Amenity parameters
+     * @return added the new Hotel Amenity
+     * @throws ApiRequestException if the user is not Authorised to add Hotel Amenity
+     */
+    @PutMapping("/api/hotel/addHotelAmenity")
+    @PreAuthorize("hasAuthority('SUPERUSER')")
+    public HotelAmenity saveHotelAmenity(@RequestHeader(name="Authorization")String token, @RequestBody HotelAmenity hotelAmenity) throws ApiRequestException{
+
+        if (Objects.equals(User.Role.SUPERUSER, userService.getUserFromToken(token).getRole())) {
+
+            return service.saveHotelAmenity(hotelAmenity);
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
+    }
+
+    /***
      * enables a hotel by his id
      * @param id of the hotel we want to enable
      * @return a message of confirmation of the action or not found
@@ -262,6 +281,16 @@ public class HotelController {
             return service.advanceSearchMethod(advancedSearch.getHotelAmenities(), advancedSearch.getRoomAmenities(), advancedSearch.getCheckInDate(), advancedSearch.getCheckOutDate(),
                     advancedSearch.getPriceFrom(), advancedSearch.getPriceTo(), advancedSearch.getAdultsRange(), advancedSearch.getStars(), advancedSearch.getNameOrLocation());
 
-    }
+/***
+ * returns all hotel amenities
+ * @return hotel amenities
+ * @throws RuntimeException when not exist any hotel amenity
+ */
+        @GetMapping("/api/hotel/amenities")
+        public Set<HotelAmenity> findHotelAmenities()throws RuntimeException{
+
+            return service.getHotelAmenities();
+
+        }
 
 }

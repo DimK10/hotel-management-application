@@ -17,6 +17,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.ResponseEntity;
+import com.sphy.hotelmanagementapplication.security.AuthenticationRequest;
+import com.sphy.hotelmanagementapplication.security.AuthenticationResponse;
 
 import java.util.ArrayList;
 import java.util.Collection;

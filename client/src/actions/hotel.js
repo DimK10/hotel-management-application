@@ -3,6 +3,7 @@ import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import hotelSlice from "../reducers/hotel";
 import alertSlice from "../reducers/alert";
+import {setAlertAction} from "./alert";
 
 
 const {
@@ -10,6 +11,7 @@ const {
     getHotelById,
     getCountOfHotels,
     createNewHotel,
+    updateHotel,
     hotelError,
 } = hotelSlice.actions;
 
@@ -24,7 +26,7 @@ export const getAllHotelsByPage = (pageNo, pageSize, sortBy, userId) => async (d
     }
 
     try {
-        const res = await axios.get(`/api/hotels/${pageNo}/${pageSize}/${sortBy}/${userId}`);
+        const res = await axios.get(`/api/hotels/${pageNo}/${pageSize}/${sortBy}/`);
 
         // dispatch({
         //   type: GET_ALL_HOTELS,
@@ -36,7 +38,7 @@ export const getAllHotelsByPage = (pageNo, pageSize, sortBy, userId) => async (d
         // dispatch({
         //   type: HOTEL_ERROR,
         // });
-        dispatch(hotelError(err))
+        dispatch(hotelError(err.response.data.errorMessage))
     }
 }
 
@@ -57,7 +59,7 @@ export const getCountOfHotelsAction = (userId) => async (dispatch) => {
         // dispatch({
         //   type: HOTEL_ERROR,
         // });
-        dispatch(hotelError());
+        dispatch(hotelError(err.response.data.errorMessage));
     }
 }
 
@@ -79,11 +81,28 @@ export const createNewHotelAction = (formData) => async (dispatch) => {
     dispatch(setAlert("Hotel Created", "success"));
 }
 
+export const updateExistingHotelAction = (formData) => async (dispatch) => {
+  if (localStorage.jwt) {
+    setAuthToken(localStorage.jwt);
+  }
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const res = await axios.put("/api/hotel/update", formData, config);
+
+  dispatch(updateHotel(res.data));
+  dispatch(setAlertAction( "Hotel Updated Successfully", "success" ));
+}
+
 export const getHotelByIdAction = (hotelId) => async dispatch => {
 
-    // if (localStorage.jwt) {
-    //     setAuthToken(localStorage.jwt);
-    // }
+    if (localStorage.jwt) {
+        setAuthToken(localStorage.jwt);
+    }
 
     try {
 
@@ -91,7 +110,7 @@ export const getHotelByIdAction = (hotelId) => async dispatch => {
 
         dispatch(getHotelById(res.data));
     } catch (err) {
-        dispatch(hotelError());
+        dispatch(hotelError(err.response.data.errorMessage));
     }
 
 }

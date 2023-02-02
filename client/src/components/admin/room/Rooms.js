@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
-import SidebarComp from "../layout/Sidebar";
-import HeaderNav from "../layout/HeaderNav";
+import SidebarComp from "../../layout/Sidebar";
+import HeaderNav from "../../layout/HeaderNav";
 import CIcon from "@coreui/icons-react";
 import {cilPencil, cilTrash} from "@coreui/icons";
 import {Tooltip} from '@coreui/coreui/dist/js/coreui';

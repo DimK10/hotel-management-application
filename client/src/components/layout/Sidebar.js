@@ -1,7 +1,14 @@
 import React, {Fragment} from 'react';
 import '@coreui/icons-react';
 import CIcon from "@coreui/icons-react";
-import {cilCalendar, cilHome, cilMoney, cilPlus, cilRoom, cilSpeedometer} from "@coreui/icons";
+import {
+  cilCalendar,
+  cilHome,
+  cilMoney,
+  cilPlus,
+  cilRoom,
+  cilSpeedometer
+} from "@coreui/icons";
 import 'simplebar/dist/simplebar.css';
 import 'simplebar/dist/simplebar'
 import {Link} from "react-router-dom";

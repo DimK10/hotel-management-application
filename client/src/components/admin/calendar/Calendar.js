@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
-import SidebarComp from "../layout/Sidebar";
-import HeaderNav from "../layout/HeaderNav";
+import SidebarComp from "../../layout/Sidebar";
+import HeaderNav from "../../layout/HeaderNav";
 import Kalend, {CalendarView} from 'kalend' // import component
 import 'kalend/dist/styles/index.css'; // import styles
 

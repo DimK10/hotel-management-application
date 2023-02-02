@@ -2,10 +2,7 @@ package com.sphy.hotelmanagementapplication.service;
 
 import com.sphy.hotelmanagementapplication.converter.RoomDTOToRoom;
 import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
-import com.sphy.hotelmanagementapplication.domain.Hotel;
-import com.sphy.hotelmanagementapplication.domain.IntermediateRoomAmenity;
-import com.sphy.hotelmanagementapplication.domain.Room;
-import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
+import com.sphy.hotelmanagementapplication.domain.*;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
@@ -15,7 +12,6 @@ import com.sphy.hotelmanagementapplication.repository.IntermediateRoomAmenityRep
 import com.sphy.hotelmanagementapplication.repository.RoomRepository;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -36,14 +32,17 @@ public class RoomService {
 
     private final IntermediateRoomAmenityRepository intermediateRoomAmenityRepository;
 
+    private final AmenityRoomRepository amenityRoomRepository;
 
 
-    public RoomService(RoomRepository repository, HotelRepository hotelRepository, RoomDTOToRoom roomDTOToRoom, RoomToRoomDTO roomToRoomDTO, IntermediateRoomAmenityRepository intermediateRoomAmenityRepository) {
+
+    public RoomService(RoomRepository repository, HotelRepository hotelRepository, RoomDTOToRoom roomDTOToRoom, RoomToRoomDTO roomToRoomDTO, IntermediateRoomAmenityRepository intermediateRoomAmenityRepository, AmenityRoomRepository amenityRoomRepository) {
         this.roomRepository = repository;
         this.hotelRepository = hotelRepository;
         this.roomDTOToRoom = roomDTOToRoom;
         this.roomToRoomDTO = roomToRoomDTO;
         this.intermediateRoomAmenityRepository = intermediateRoomAmenityRepository;
+        this.amenityRoomRepository = amenityRoomRepository;
     }
 
     /***
@@ -327,5 +326,45 @@ public class RoomService {
         }
 
         return amenitiesRoomDTO;
+    }
+
+     /**
+     * Created by BP
+     * saves a new Room Amenity
+     * @param roomAmenity  to be saved
+     * @return the saved room amenity for confirmation
+     * @throws ApiRequestException if the room amenity is not created and does not be enabled
+     */
+    public RoomAmenity saveRoomAmenity (RoomAmenity roomAmenity) throws ApiRequestException{
+
+        if (roomAmenity.getrAmenity().isEmpty()){
+            throw new ApiRequestException("There is no Room Amenity");
+        }
+
+        if(!roomAmenity.getEnabled()){
+            throw new ApiRequestException("There is no activated Room Amenity");
+        }
+
+        return amenityRoomRepository.save(roomAmenity);
+    }
+
+
+    /***
+     * returns all room amenities
+     * @return all room amenities
+     */
+    public Set<RoomAmenity> getRoomAmenities() throws ApiRequestException{
+
+        Set<RoomAmenity> amenities = new HashSet<>();
+
+        amenityRoomRepository.findAllEnabled().forEach(amenities::add);
+
+        if (amenities.isEmpty()){
+
+            throw new ApiRequestException("There are no room amenities whet.");
+
+        }else {
+            return amenities;
+        }
     }
 }
