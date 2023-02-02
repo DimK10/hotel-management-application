@@ -3,6 +3,7 @@ package com.sphy.hotelmanagementapplication.service;
 import com.sphy.hotelmanagementapplication.converter.*;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.repository.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,8 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 /***
@@ -208,6 +208,25 @@ class RoomServiceTest {
 	@Test
 	void updateRoom() {
 		// todo
+	}
+
+
+	/**
+	 * Created by Akd
+	 */
+	@Test
+	void saveRoomAmenity(){
+		// given
+		RoomAmenity roomAmenity = new RoomAmenity();
+		roomAmenity.setId(5L);
+		roomAmenity.setrAmenity("TOWELS");
+		roomAmenity.setEnabled(true);
+
+		// when
+		when(amenityRoomRepository.save(any())).thenReturn(roomAmenity);
+
+		//then
+		assertEquals(roomAmenity,roomService.saveRoomAmenity(roomAmenity));
 	}
 
 	@Test

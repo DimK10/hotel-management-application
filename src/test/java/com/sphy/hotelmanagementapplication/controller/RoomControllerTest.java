@@ -1,9 +1,7 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sphy.hotelmanagementapplication.domain.Hotel;
-import com.sphy.hotelmanagementapplication.domain.Room;
-import com.sphy.hotelmanagementapplication.domain.User;
+import com.sphy.hotelmanagementapplication.domain.*;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.service.HotelService;
@@ -345,6 +343,44 @@ class RoomControllerTest {
 
 		verify(roomService, times(1)).disableRoom(any());
 
+	}
+
+	/**
+	 * Created by AKd
+	 */
+
+	@Test
+	void saveRoomAmenity() throws Exception{
+
+		User superUser = new User(5L);
+		superUser.setRole(User.Role.SUPERUSER);
+
+		RoomAmenity roomAmenity = new RoomAmenity();
+		roomAmenity.setId(5L);
+		roomAmenity.setrAmenity("TOWELS");
+		roomAmenity.setEnabled(true);
+
+		// When
+		when(roomService.saveRoomAmenity(any())).thenReturn(roomAmenity);
+		when(userService.getUserFromToken(anyString())).thenReturn(superUser);
+
+		// Return
+		mockMvc.perform(
+						put("/api/room/saveRoomAmenity")
+								.header(HttpHeaders.AUTHORIZATION, "Bearer token")
+								.content(asJsonString(roomAmenity))
+								.contentType(MediaType.APPLICATION_JSON)
+								.accept(MediaType.APPLICATION_JSON)
+				)
+				.andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id")
+						.value(5L))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.rAmenity")
+						.value("TOWELS"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.enabled")
+						.value(true));
+
+		verify(roomService, times(1)).saveRoomAmenity(any());
 	}
 
 	public static String asJsonString(final Object obj) {

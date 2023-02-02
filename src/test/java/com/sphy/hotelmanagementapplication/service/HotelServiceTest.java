@@ -1,10 +1,7 @@
 package com.sphy.hotelmanagementapplication.service;
 
 import com.sphy.hotelmanagementapplication.converter.*;
-import com.sphy.hotelmanagementapplication.domain.Hotel;
-import com.sphy.hotelmanagementapplication.domain.Order;
-import com.sphy.hotelmanagementapplication.domain.Room;
-import com.sphy.hotelmanagementapplication.domain.User;
+import com.sphy.hotelmanagementapplication.domain.*;
 import com.sphy.hotelmanagementapplication.domain.User.Role;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
@@ -200,7 +197,7 @@ public class HotelServiceTest {
                         },
                         jwtUtil
 
-                ), intermediateHotelAmenityRepository,amenityHotelRepository);
+                ), intermediateHotelAmenityRepository, amenityHotelRepository);
     }
 
     @Test
@@ -398,6 +395,25 @@ public class HotelServiceTest {
         //then
 
         assertEquals(hotelService.getHotelBasicSearch(basicSearchDTO1), hotel1DTOS);
+    }
+
+
+    /**
+     * Created by Akd
+     */
+    @Test
+    void saveHotelAmenity() {
+        // given
+        HotelAmenity hotelAmenity = new HotelAmenity();
+        hotelAmenity.setId(4L);
+        hotelAmenity.sethAmenity("POOL");
+        hotelAmenity.setEnabled(true);
+
+        // when
+        when(amenityHotelRepository.save(any())).thenReturn(hotelAmenity);
+
+        //then
+        assertEquals(hotelAmenity, hotelService.saveHotelAmenity(hotelAmenity));
     }
 
 }
