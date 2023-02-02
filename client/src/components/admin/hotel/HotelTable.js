@@ -1,12 +1,12 @@
-import React, {Fragment, useEffect, useReducer, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import CIcon from "@coreui/icons-react";
 import {cilPencil, cilTrash} from "@coreui/icons";
 import {Tooltip} from '@coreui/coreui/dist/js/coreui';
 import Pagination from "../../layout/Pagination";
-import PropTypes from "prop-types";
-import {connect, useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getAllHotelsByPage} from "../../../actions/hotel";
 import {useNavigate} from "react-router-dom";
+import {v4 as uuidv4} from "uuid";
 
 
 function HotelTable() {
@@ -121,14 +121,14 @@ function HotelTable() {
             <th scope="col">Name</th>
             <th scope="col">Location</th>
             <th scope="col" className="d-none d-md-table-cell">Number of Rooms</th>
-            <th scope="col">Edit/Delete</th>
+            <th scope="col">Edit</th>
           </tr>
           </thead>
           <tbody>
           {
 
             hotels.map((hotel) => (
-              <Fragment>
+              <Fragment key={uuidv4()}>
                 <tr style={{ cursor: 'pointer' }} onClick={e => onRowClick(hotel)}>
                   <th
                     scope="row">{pageSize * (currentPage - 1) + hotels.indexOf(hotel) + 1}</th>
@@ -138,23 +138,24 @@ function HotelTable() {
                   <td className="flex-row">
                     <button type="button" className="btn btn-success"
                             style={{color: '#fff', marginRight: '0.3rem'}}
-                            data-coreui-toggle="tooltip" data-coreui-placement="top"
-                            title="Edit this hotel"
-                            onMouseOver={(e) => {
-                              Tooltip.getOrCreateInstance(e.target).show()
-                            }}
+                            // data-coreui-toggle="tooltip" data-coreui-placement="top"
+                            // title="Edit this hotel"
+                            // onMouseOver={(e) => {
+                            //   Tooltip.getOrCreateInstance(e.target).show()
+                            // }}
                     >
                       <CIcon className="btn-icon" icon={cilPencil}/>
                     </button>
-                    <button type="button" className="btn btn-danger"
-                            style={{color: '#fff'}}
-                            data-coreui-toggle="tooltip" data-coreui-placement="top"
-                            title="Delete this hotel"
-                            onMouseOver={(e) => {
-                              Tooltip.getOrCreateInstance(e.target).show()
-                            }}>
-                      <CIcon className="btn-icon" icon={cilTrash}/>
-                    </button>
+                    {/*<button type="button" className="btn btn-danger"*/}
+                    {/*        style={{color: '#fff'}}*/}
+                    {/*        // data-coreui-toggle="tooltip" data-coreui-placement="top"*/}
+                    {/*        // title="Delete this hotel"*/}
+                    {/*        // onMouseOver={(e) => {*/}
+                    {/*        //   Tooltip.getOrCreateInstance(e.target).show()*/}
+                    {/*        // }}*/}
+                    {/*>*/}
+                    {/*  <CIcon className="btn-icon" icon={cilTrash}/>*/}
+                    {/*</button>*/}
                   </td>
                 </tr>
               </Fragment>

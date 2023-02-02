@@ -1,16 +1,28 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import SidebarComp from "../../layout/Sidebar";
 import HeaderNav from "../../layout/HeaderNav";
 
 import cities from '../../../json/cities.json';
 import {useDispatch, useSelector} from "react-redux";
 import {createNewHotelAction} from "../../../actions/hotel";
+import { MultiSelect } from "react-multi-select-component";
+import {fetchAllHotelAmenitiesAction, fetchAllRoomAmenitiesAction} from "../../../actions/amenity";
 
 function CreateHotel() {
 
   const dispatch = useDispatch();
 
   const {user} = useSelector(state => state.auth);
+
+  const {hotelAmenities, hotelAmenitiesLoading} = useSelector(state => state.amenity);
+
+  const {roomAmenities, roomAmenitiesLoading} = useSelector(state => state.amenity);
+
+  const [hotelAmenitiesToSelect, setHotelAmenitiesToSelect] = useState([]);
+
+  const [roomAmenitiesToSelect, setRoomAmenitiesToSelect] = useState([]);
+
+  const [hotelAmenitiesSelected, setHotelAmenitiesSelected] = useState([]);
 
     // TODO ADD ROOMS WITH CREATE HOTEL FORM
     const [formData, setFormData] = useState({
@@ -53,6 +65,29 @@ function CreateHotel() {
         setFormData({...formData, owner: user?.id});
         dispatch(createNewHotelAction(formData));
     };
+
+    useEffect(() => {
+
+        const fetchAllAmenities = async () => {
+            await dispatch(fetchAllHotelAmenitiesAction());
+            await dispatch(fetchAllRoomAmenitiesAction());
+        }
+
+        fetchAllAmenities()
+            .catch(err => console.log(err));
+
+        // construct data for react-multi-select
+        let data = [];
+
+        hotelAmenities.forEach(el => data.push({label: el.hAmenity, value: el.id}));
+        setHotelAmenitiesToSelect([...data]);
+
+    },[hotelAmenitiesLoading]);
+
+    // test
+    useEffect(() => {
+        console.log(hotelAmenitiesSelected);
+    }, [hotelAmenitiesSelected])
 
     return (
         <Fragment>
@@ -121,21 +156,14 @@ function CreateHotel() {
                                         }} required={true}
                                     />
                                 </div>
-
-                                <div className="form-check mb-5">
-                                    <input className="form-check-input" type="checkbox" value={disabled} id="disabled"
-                                           name="disabled"
-                                           onChange={(e) => {
-                                               onCheckboxChange(e);
-
-                                           }}
+                                <div className="mb-3">
+                                    <MultiSelect
+                                        options={hotelAmenitiesToSelect}
+                                        value={hotelAmenitiesSelected}
+                                        onChange={setHotelAmenitiesSelected}
+                                        labelledBy="Select"
                                     />
-                                    <label className="form-check-label" htmlFor="disabled">
-                                        Disabled
-                                    </label>
                                 </div>
-
-
                                 <button type="submit" className="btn btn-primary">Add</button>
                             </form>
                         </div>

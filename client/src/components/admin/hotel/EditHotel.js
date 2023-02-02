@@ -146,22 +146,6 @@ const EdiHotel = () => {
                   }} required={true}
                   />
                 </div>
-
-                <div className="form-check mb-5">
-                  <input className="form-check-input" type="checkbox" value={disabled} id="disabled"
-                         name="disabled"
-                         value={disabled}
-                         onChange={(e) => {
-                           onCheckboxChange(e);
-
-                         }}
-                  />
-                  <label className="form-check-label" htmlFor="disabled">
-                    Disabled
-                  </label>
-                </div>
-
-
                 <button type="submit" className="btn btn-success text-white">Update</button>
               </form>
             </div>

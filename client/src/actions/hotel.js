@@ -15,9 +15,6 @@ const {
     hotelError,
 } = hotelSlice.actions;
 
-const {
-    setAlert
-} = alertSlice.actions;
 
 export const getAllHotelsByPage = (pageNo, pageSize, sortBy, userId) => async (dispatch) => {
 
@@ -78,7 +75,7 @@ export const createNewHotelAction = (formData) => async (dispatch) => {
     const res = await axios.post("/api/hotel/create", formData, config)
 
     dispatch(createNewHotel(res.data))
-    dispatch(setAlert("Hotel Created", "success"));
+    dispatch(setAlertAction("Hotel created successfully!", "success"));
 }
 
 export const updateExistingHotelAction = (formData) => async (dispatch) => {
