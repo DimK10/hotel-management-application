@@ -45,10 +45,9 @@ public class HotelService {
 
     private final AmenityHotelRepository amenityHotelRepository;
 
-    public HotelService(EntityManager entityManager, HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService, IntermediateHotelAmenityRepository intermediateHotelAmenityRepository) {
-        this.entityManager = entityManager;
 
-    public HotelService(HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService, IntermediateHotelAmenityRepository intermediateHotelAmenityRepository, AmenityHotelRepository amenityHotelRepository) {
+    public HotelService(EntityManager entityManager, HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService, IntermediateHotelAmenityRepository intermediateHotelAmenityRepository, AmenityHotelRepository amenityHotelRepository) {
+        this.entityManager = entityManager;
         this.hotelRepository = hotelRepository;
         this.hotelDTOToHotel = hotelDTOToHotel;
         this.hotelToHotelDTO = hotelToHotelDTO;
@@ -350,71 +349,77 @@ public class HotelService {
      * @param basicSearchDTO basic search fields (check in date, check out date, location name or hotel name)
      * @return the hotels than mach with the search
      */
-        public Set<HotelDTO> getHotelBasicSearch(BasicSearchDTO basicSearchDTO) {
+    public Set<HotelDTO> getHotelBasicSearch(BasicSearchDTO basicSearchDTO) {
 
-            Set<HotelDTO> hotelDTOS = new HashSet<>();
+        Set<HotelDTO> hotelDTOS = new HashSet<>();
 
-            if (basicSearchDTO.getCheckInDate() != null && basicSearchDTO.getCheckOutDate() != null
-                    && basicSearchDTO.getNameOrLocation() != null) {
+        if (basicSearchDTO.getCheckInDate() != null && basicSearchDTO.getCheckOutDate() != null
+                && basicSearchDTO.getNameOrLocation() != null) {
 
-                hotelRepository.findByBasicSearch(
-                                basicSearchDTO.getCheckInDate(),
-                                basicSearchDTO.getCheckOutDate(),
-                                basicSearchDTO.getNameOrLocation())
-                        .forEach(hotel -> hotelDTOS
-                                .add(hotelToHotelDTO
-                                        .converter(hotel)));
+            hotelRepository.findByBasicSearch(
+                            basicSearchDTO.getCheckInDate(),
+                            basicSearchDTO.getCheckOutDate(),
+                            basicSearchDTO.getNameOrLocation())
+                    .forEach(hotel -> hotelDTOS
+                            .add(hotelToHotelDTO
+                                    .converter(hotel)));
 
-                if (!hotelDTOS.isEmpty()) {
+            if (!hotelDTOS.isEmpty()) {
 
-                    for (HotelDTO hotelDTO : hotelDTOS){
+                for (HotelDTO hotelDTO : hotelDTOS) {
 
-                        Set<HotelAmenity> amenities = getHotelAmenitiesByHotelId(hotelDTO.getId());
+                    Set<HotelAmenity> amenities = getHotelAmenitiesByHotelId(hotelDTO.getId());
 
-                        if( !amenities.isEmpty()) {
+                    if (!amenities.isEmpty()) {
 
-                            hotelDTO.getAmenities().addAll(amenities);
-                        }
+                        hotelDTO.getAmenities().addAll(amenities);
+                    }
 
-                        Set<RoomDTO> roomsDto = hotelDTO.getRooms();
+                    Set<RoomDTO> roomsDto = hotelDTO.getRooms();
 
-                        if (!roomsDto.isEmpty()){
+                    if (!roomsDto.isEmpty()) {
 
 
-                            for (RoomDTO roomDTO : roomsDto){
+                        for (RoomDTO roomDTO : roomsDto) {
 
-                                Set<RoomAmenity> RAmenities = roomService.getRoomAmenitiesByRoomId(roomDTO.getId());
+                            Set<RoomAmenity> RAmenities = roomService.getRoomAmenitiesByRoomId(roomDTO.getId());
 
-                                if (!RAmenities.isEmpty()) {
+                            if (!RAmenities.isEmpty()) {
 
-                                    roomDTO.getAmenities().addAll(RAmenities);
-                                }
+                                roomDTO.getAmenities().addAll(RAmenities);
                             }
                         }
                     }
-
-
-                    hotelDTOS.forEach(hotelDTO -> hotelDTO
-                            .getRooms()
-                            .forEach(roomDTO -> roomDTO.getAmenities()
-                                    .addAll(roomService.getRoomAmenitiesByRoomId(roomDTO.getId()))));
                 }
-                return hotelDTOS;
 
-            } else {
 
-                throw new RuntimeException("Something went wrong");
+                hotelDTOS.forEach(hotelDTO -> hotelDTO
+                        .getRooms()
+                        .forEach(roomDTO -> roomDTO.getAmenities()
+                                .addAll(roomService.getRoomAmenitiesByRoomId(roomDTO.getId()))));
             }
+            return hotelDTOS;
 
+        } else {
+
+            throw new RuntimeException("Something went wrong");
         }
 
+    }
 
-    public Set<HotelDTO> advanceSearchMethod(List<HotelAmenity> hotelAmenities, List<RoomAmenity> roomAmenities, LocalDate checkInDate, LocalDate checkOutDate,
-                                             Long priceFrom, Long priceTo, Integer adultsRange, Integer stars, String nameOrLocation) {
+
+    public Page<HotelDTO> advanceSearchMethod(List<HotelAmenity> hotelAmenities, List<RoomAmenity> roomAmenities, LocalDate checkInDate, LocalDate checkOutDate,
+                                             Long priceFrom, Long priceTo, Integer adultsRange, Integer stars, String nameOrLocation, Integer pageNo, Integer pageSize, String sortBy) {
+
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
         Map<String, Object> parametrMap = new HashMap<>();
 
-        StringBuilder query = new StringBuilder("select DISTINCT h from Hotel h inner join IntermediateHotelAmenity ih on h.id = ih.hotel.id inner join HotelAmenity ha on ih.hotelAmenity.id = ha.id inner " +
+//        StringBuilder query = new StringBuilder("select DISTINCT h from Hotel h inner join IntermediateHotelAmenity ih on h.id = ih.hotel.id inner join HotelAmenity ha on ih.hotelAmenity.id = ha.id inner " +
+//                "join rooms r on r.hotel.id = h.id inner join IntermediateRoomAmenity ir on r.id = ir.room.id inner join RoomAmenity ra on ra.id = ir.roomAmenity.id " +
+//                "inner join orders o on o.room.id = r.id where h.disabled = false ");
+
+        StringBuilder query = new StringBuilder("select DISTINCT r.hotel from Hotel h inner join IntermediateHotelAmenity ih on h.id = ih.hotel.id inner join HotelAmenity ha on ih.hotelAmenity.id = ha.id inner " +
                 "join rooms r on r.hotel.id = h.id inner join IntermediateRoomAmenity ir on r.id = ir.room.id inner join RoomAmenity ra on ra.id = ir.roomAmenity.id " +
                 "inner join orders o on o.room.id = r.id where h.disabled = false ");
 
@@ -469,8 +474,6 @@ public class HotelService {
             parametrMap.put("rAmenity" + i, roomAmenities.get(i).getrAmenity());
         }
 
-        query.append(" order by r.price desc ");
-
 
         Query queryFinal = entityManager.createQuery(String.valueOf(query), Hotel.class);
 
@@ -484,27 +487,31 @@ public class HotelService {
         Set<HotelDTO> hotelDTOS = new HashSet<>();
 
         hotels.forEach(hotel -> hotelDTOS
-                        .add(hotelToHotelDTO
-                                .converter(hotel)));
+                .add(hotelToHotelDTO
+                        .converter(hotel)));
 
-        return hotelDTOS;
+        List<HotelDTO> hotelDTOSList = new ArrayList<>(hotelDTOS);
+
+        Page<HotelDTO> hotelDTOPage = new PageImpl<>(hotelDTOSList, paging, hotelDTOS.size());
+
+        return hotelDTOPage;
     }
 
     /***
      * returns all hotel amenities
      * @return all hotel amenities
      */
-    public Set<HotelAmenity> getHotelAmenities() throws ApiRequestException{
+    public Set<HotelAmenity> getHotelAmenities() throws ApiRequestException {
 
         Set<HotelAmenity> amenities = new HashSet<>();
 
         amenityHotelRepository.findAllEnabled().forEach(amenities::add);
 
-        if (amenities.isEmpty()){
+        if (amenities.isEmpty()) {
 
             throw new ApiRequestException("There are no hotel amenities whet.");
 
-        }else {
+        } else {
             return amenities;
         }
     }
@@ -512,17 +519,18 @@ public class HotelService {
     /**
      * Created by Akd
      * saves a new Hotel Amenity
-     * @param hotelAmenity  to be saved
+     *
+     * @param hotelAmenity to be saved
      * @return the saved hotel amenity for confirmation
      * @throws ApiRequestException if the hotel amenity is not created and does not be enabled
      */
-    public HotelAmenity saveHotelAmenity (HotelAmenity hotelAmenity) throws ApiRequestException{
+    public HotelAmenity saveHotelAmenity(HotelAmenity hotelAmenity) throws ApiRequestException {
 
-        if (hotelAmenity.gethAmenity().isEmpty()){
+        if (hotelAmenity.gethAmenity().isEmpty()) {
             throw new ApiRequestException("There is no Hotel Amenity");
         }
 
-        if(!hotelAmenity.getEnabled()){
+        if (!hotelAmenity.getEnabled()) {
             throw new ApiRequestException("There is no activated Hotel Amenity");
         }
 

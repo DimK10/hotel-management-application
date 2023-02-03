@@ -9,6 +9,7 @@ import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.UserService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -69,7 +70,7 @@ public class HotelController {
             }
         }
 
-        if (equal){
+        if (equal) {
 
             return service.saveHotels(hotelsDTO);
         } else {
@@ -177,7 +178,7 @@ public class HotelController {
      */
     @PutMapping("/api/hotel/addHotelAmenity")
     @PreAuthorize("hasAuthority('SUPERUSER')")
-    public HotelAmenity saveHotelAmenity(@RequestHeader(name="Authorization")String token, @RequestBody HotelAmenity hotelAmenity) throws ApiRequestException{
+    public HotelAmenity saveHotelAmenity(@RequestHeader(name = "Authorization") String token, @RequestBody HotelAmenity hotelAmenity) throws ApiRequestException {
 
         if (Objects.equals(User.Role.SUPERUSER, userService.getUserFromToken(token).getRole())) {
 
@@ -263,9 +264,9 @@ public class HotelController {
      * @throws RuntimeException if this that made the search is not a role client
      */
     @GetMapping("/api/hotel/basic/search")
-    public Set<HotelDTO> findHotelBasicSearch(@RequestBody BasicSearchDTO basicSearchDTO)throws RuntimeException{
+    public Set<HotelDTO> findHotelBasicSearch(@RequestBody BasicSearchDTO basicSearchDTO) throws RuntimeException {
 
-            return service.getHotelBasicSearch(basicSearchDTO);
+        return service.getHotelBasicSearch(basicSearchDTO);
     }
 
 
@@ -275,22 +276,26 @@ public class HotelController {
      * @return the hotels that mach with the search
      * @throws RuntimeException if this that made the search is not a role client
      */
-    @GetMapping("/api/hotel/advanced/search")
-    public Set<HotelDTO> advancedSearch(@RequestBody AdvancedSearch advancedSearch) throws RuntimeException{
+    @GetMapping("/api/hotel/advanced/search{pageNo}/{pageSize}/{sortBy}")
+    public Page<HotelDTO> advancedSearch(@RequestBody AdvancedSearch advancedSearch,
+                                         @PathVariable Integer pageNo,
+                                         @PathVariable Integer pageSize,
+                                         @PathVariable String sortBy) throws RuntimeException {
 
-            return service.advanceSearchMethod(advancedSearch.getHotelAmenities(), advancedSearch.getRoomAmenities(), advancedSearch.getCheckInDate(), advancedSearch.getCheckOutDate(),
-                    advancedSearch.getPriceFrom(), advancedSearch.getPriceTo(), advancedSearch.getAdultsRange(), advancedSearch.getStars(), advancedSearch.getNameOrLocation());
+        return service.advanceSearchMethod(advancedSearch.getHotelAmenities(), advancedSearch.getRoomAmenities(), advancedSearch.getCheckInDate(), advancedSearch.getCheckOutDate(),
+                advancedSearch.getPriceFrom(), advancedSearch.getPriceTo(), advancedSearch.getAdultsRange(), advancedSearch.getStars(), advancedSearch.getNameOrLocation(),pageNo, pageSize, sortBy);
+    }
 
-/***
- * returns all hotel amenities
- * @return hotel amenities
- * @throws RuntimeException when not exist any hotel amenity
- */
-        @GetMapping("/api/hotel/amenities")
-        public Set<HotelAmenity> findHotelAmenities()throws RuntimeException{
+    /***
+     * returns all hotel amenities
+     * @return hotel amenities
+     * @throws RuntimeException when not exist any hotel amenity
+     */
+    @GetMapping("/api/hotel/amenities")
+    public Set<HotelAmenity> findHotelAmenities() throws RuntimeException {
 
-            return service.getHotelAmenities();
+        return service.getHotelAmenities();
 
-        }
+    }
 
 }

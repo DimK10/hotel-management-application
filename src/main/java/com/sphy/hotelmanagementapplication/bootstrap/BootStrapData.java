@@ -3,10 +3,8 @@ package com.sphy.hotelmanagementapplication.bootstrap;
 import com.sphy.hotelmanagementapplication.domain.*;
 import com.sphy.hotelmanagementapplication.domain.User.Role;
 import com.sphy.hotelmanagementapplication.repository.*;
-
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -162,7 +160,7 @@ public class BootStrapData implements CommandLineRunner {
 
                 List<Room> rooms = new ArrayList<>();
 
-                Room room = new Room(null, String.valueOf(j), 3, 30, false);
+                Room room = new Room(null, String.valueOf(j), 3, 30 + i, false);
 
                 room.setCapacity(j);
 
@@ -222,7 +220,7 @@ public class BootStrapData implements CommandLineRunner {
 
                 List<Room> rooms = new ArrayList<>();
 
-                Room room = new Room(null, String.valueOf(j), 3, 50, false);
+                Room room = new Room(null, String.valueOf(j), 3, 50 + i, false);
 
                 room.setCapacity(j);
 
@@ -284,7 +282,7 @@ public class BootStrapData implements CommandLineRunner {
 
                 List<Room> rooms = new ArrayList<>();
 
-                Room room = new Room(null, String.valueOf(j), 5, 100, false);
+                Room room = new Room(null, String.valueOf(j), 5, 100 + i, false);
 
                 room.setCapacity(j);
 
@@ -354,7 +352,7 @@ public class BootStrapData implements CommandLineRunner {
 
                 List<Room> rooms = new ArrayList<>();
 
-                Room room = new Room(null, String.valueOf(j), 1, 10, false);
+                Room room = new Room(null, String.valueOf(j), 1, 10 + i, false);
 
                 room.setCapacity(j);
 

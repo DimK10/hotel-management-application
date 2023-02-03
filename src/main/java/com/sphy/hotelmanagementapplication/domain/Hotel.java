@@ -28,8 +28,6 @@ public class Hotel extends BaseEntity {
 
     private String address;
 
-    private String description;
-
     private boolean disabled;
 
     @ManyToOne
