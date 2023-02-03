@@ -103,6 +103,16 @@ function CreateHotel() {
 
     }, [hotelAmenitiesLoading]);
 
+    useEffect(() => {
+        let data = [];
+
+        console.log(roomAmenities);
+
+        if (roomAmenities.length > 0)
+            roomAmenities.forEach(el => data.push({label: el.rAmenity, value: el.id}))
+        setRoomAmenitiesToSelect([...data]);
+    }, [roomAmenitiesLoading])
+
     // test
     useEffect(() => {
         console.log(rooms);

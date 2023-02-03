@@ -24,6 +24,8 @@ function AddRoomToNewHotel({room, onRoomSubmit, roomAmenitiesToSelect}) {
         onRoomSubmit(e, newRoom);
     }
 
+    const onMultiSelectChange = () => {}
+
 
     return (
         <div className="card">
@@ -76,7 +78,7 @@ function AddRoomToNewHotel({room, onRoomSubmit, roomAmenitiesToSelect}) {
                     <MultiSelect
                         options={roomAmenitiesToSelect}
                         value={amenities}
-                        onChange={amenities}
+                        onChange={(e) => onMultiSelectChange(e)}
                         labelledBy="Select"
                     />
                 </div>
