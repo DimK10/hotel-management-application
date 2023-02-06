@@ -2,10 +2,7 @@ package com.sphy.hotelmanagementapplication.service;
 
 import com.sphy.hotelmanagementapplication.converter.RoomDTOToRoom;
 import com.sphy.hotelmanagementapplication.converter.RoomToRoomDTO;
-import com.sphy.hotelmanagementapplication.domain.Hotel;
-import com.sphy.hotelmanagementapplication.domain.IntermediateRoomAmenity;
-import com.sphy.hotelmanagementapplication.domain.Room;
-import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
+import com.sphy.hotelmanagementapplication.domain.*;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiExceptionFront;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
@@ -351,5 +348,56 @@ public class RoomService {
 
         return amenityRoomRepository.save(roomAmenity);
     }
+
+    /**
+     * Created by AKd
+     * enables Room Amenity by id
+     * @param id of the Room Amenity to be enabled
+     * @return a boolean if the action is done or not
+     * @throws ApiRequestException if the Room Amenity does not exist or is already enabled
+     */
+
+    public boolean enableRoomAmenity(Long id) throws ApiRequestException {
+
+        Optional<RoomAmenity> roomAmenityOptional = amenityRoomRepository.findById(id);
+
+        if (roomAmenityOptional.isEmpty()) {
+            throw new ApiRequestException("There is no Room Amenity with id: " + id);
+        } else if (roomAmenityOptional.get().getEnabled()) {
+            throw new ApiRequestException("The Room amenity with id: " + id + " is already enabled");
+        }else {
+            RoomAmenity roomAmenity = roomAmenityOptional.get();
+            roomAmenity.setEnabled(true);
+            amenityRoomRepository.save(roomAmenity);
+            return true;
+        }
+    }
+
+
+    /**
+     * Created by AKd
+     * disables Room Amenity by id
+     * @param id of the Room Amenity to be disabled
+     * @return a boolean if the action is done or not
+     * @throws ApiRequestException if the Room Amenity does not exist or is already disabled
+     */
+
+    public boolean disableRoomAmenity(Long id) throws ApiRequestException {
+
+        Optional<RoomAmenity> roomAmenityOptional = amenityRoomRepository.findById(id);
+
+        if (roomAmenityOptional.isEmpty()) {
+            throw new ApiRequestException("There is no Room Amenity with id: " + id);
+        } else if (!roomAmenityOptional.get().getEnabled()) {
+            throw new ApiRequestException("The Room amenity with id: " + id + " is already disabled");
+        }else {
+            RoomAmenity roomAmenity = roomAmenityOptional.get();
+            roomAmenity.setEnabled(false);
+            amenityRoomRepository.save(roomAmenity);
+            return true;
+        }
+    }
+
+
 
 }
