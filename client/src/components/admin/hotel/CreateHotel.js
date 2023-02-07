@@ -11,6 +11,7 @@ import AddRoomToNewHotel from "./AddRoomToNewHotel";
 import CIcon from '@coreui/icons-react';
 import {cilPlus} from '@coreui/icons';
 import ShowRoomToNewHotel from "./ShowRoomToNewHotel";
+import amenity from "../../../reducers/amenity";
 
 function CreateHotel() {
 
@@ -35,7 +36,8 @@ function CreateHotel() {
         areaName: '',
         disabled: false,
         owner: user?.id,
-        rooms: []
+        rooms: [],
+        amenities: []
     })
 
     const [citiesArray, setCitiesArray] = useState(cities);
@@ -81,21 +83,39 @@ function CreateHotel() {
 
     const onSubmit = async e => {
         e.preventDefault();
+        console.log(formData)
         setFormData({...formData, owner: user?.id});
+        // setFormData({...formData, id: null});
+        console.log(formData)
+        // setFormData({
+        //     ...formData,
+        //     rooms: [...formData.rooms.map(room => ({
+        //         ...room,
+        //         id: null,
+        //         amenities: [room.amenities.map(amenity => ({id: amenity.value, rAmenity: amenity.label}))]
+        //     }))]
+        // })
+        // console.log(formData)
+        // setFormData({
+        //     ...formData,
+        //     amenities: [...formData.amenities.map(amenity => ({id: amenity.value, hAmenity: amenity.label}))]
+        // })
+
+
         dispatch(createNewHotelAction(formData));
     };
 
-    const onRoomSubmit = (e, room) => {
+    const onRoomSubmit = async (e, room) => {
         console.log(room)
         e.preventDefault();
         // room.status = 'show';
-        setRoomsCreated([...roomsCreated.map(el => {
+
+        await setRoomsCreated([...roomsCreated.map(el => {
             if (el.id === room.id)
-                return {el, ...room}
+                return {...room}
             else
                 return el
         })]);
-        setFormData({...formData, rooms: [...roomsCreated]})
     }
 
     /* button click method to add new room for room form to show */
@@ -136,6 +156,26 @@ function CreateHotel() {
     useEffect(() => {
         console.log(rooms);
     }, [rooms])
+
+    /* update formData when state for  roomsCreated changes*/
+    useEffect(() => {
+        setFormData({
+            ...formData,
+            rooms: [...roomsCreated].map(room => ({
+                ...room,
+                id: null,
+                amenities: [...room.amenities.map(el => ({id: el.value, rAmenity: el.label, enabled: true}))]
+            }))
+        })
+    }, [roomsCreated])
+
+    /* update formData when state for hotelAmenitiesSelected changes */
+    useEffect(() => {
+        setFormData({
+            ...formData,
+            amenities: [...hotelAmenitiesSelected.map(el => ({id: el.value, hAmenity: el.label, enabled: true}))]
+        })
+    }, [hotelAmenitiesSelected]);
 
     return (
         <Fragment>
@@ -220,7 +260,7 @@ function CreateHotel() {
                                         &&
                                         <div key={uuidv4()} className="mb-3">
                                             <ShowRoomToNewHotel room={room}
-                                                               onRoomCloseButtonClick={onRoomCloseButtonClick}
+                                                                onRoomCloseButtonClick={onRoomCloseButtonClick}
                                             />
                                         </div>
                                     ))
@@ -243,7 +283,8 @@ function CreateHotel() {
                                     <button type="button"
                                             className="btn btn-primary"
                                             onClick={onAddNewRoomButtonClick}
-                                    ><CIcon icon={cilPlus} /> Add new Room</button>
+                                    ><CIcon icon={cilPlus}/> Add new Room
+                                    </button>
                                 </div>
 
                                 <button type="submit" className="btn btn-primary">Add</button>
