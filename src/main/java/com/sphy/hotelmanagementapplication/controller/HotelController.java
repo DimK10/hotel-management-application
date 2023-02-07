@@ -181,7 +181,7 @@ public class HotelController {
      * @return added the new Hotel Amenity
      * @throws ApiRequestException if the user is not Authorised to add Hotel Amenity
      */
-    @PutMapping("/api/hotel/addHotelAmenity")
+    @PostMapping("/api/hotel/addHotelAmenity")
     @PreAuthorize("hasAuthority('SUPERUSER')")
     public HotelAmenity saveHotelAmenity(@RequestHeader(name="Authorization")String token, @RequestBody HotelAmenity hotelAmenity) throws ApiRequestException{
 
@@ -274,7 +274,7 @@ public class HotelController {
      * @return a message of confirmation of the action hotel amenity activated
      * @throws ApiRequestException if the user is not authorized to activate the hotel Amenity
      */
-     @PutMapping("/api/hotel/hotelAmenity/enable/{id}")
+     @PostMapping("/api/hotel/hotelAmenity/enable/{id}")
      @PreAuthorize("hasAuthority('SUPERUSER')")
      ResponseEntity<String> enableHotelAmenity(@RequestHeader(name = "Authorization") String token, @PathVariable Long id) throws ApiRequestException {
 
@@ -296,7 +296,7 @@ public class HotelController {
      * @throws ApiRequestException if the user is not authorized to deactivate the hotel Amenity
      */
 
-    @PutMapping("/api/hotel/hotelAmenity/disable/{id}")
+    @PostMapping("/api/hotel/hotelAmenity/disable/{id}")
     @PreAuthorize("hasAuthority('SUPERUSER')")
     ResponseEntity<String> disableHotelAmenity(@RequestHeader(name = "Authorization") String token, @PathVariable Long id) throws ApiRequestException {
 

@@ -221,7 +221,7 @@ public class RoomController {
      * @return added the new Room Amenity
      * @throws ApiRequestException if the user is not Authorised to add Room Amenity
      */
-    @PutMapping("/api/room/saveRoomAmenity")
+    @PostMapping("/api/room/saveRoomAmenity")
     @PreAuthorize("hasAuthority('SUPERUSER')")
     public RoomAmenity saveRoomAmenity(@RequestHeader(name="Authorization")String token, @RequestBody RoomAmenity roomAmenity) throws ApiRequestException{
 
@@ -240,7 +240,7 @@ public class RoomController {
      * @return a message of confirmation of the action room amenity activated
      * @throws ApiRequestException if the user is not authorized to activate the room Amenity
      */
-    @PutMapping("/api/room/roomAmenity/enable/{id}")
+    @PostMapping("/api/room/roomAmenity/enable/{id}")
     @PreAuthorize("hasAuthority('SUPERUSER')")
     ResponseEntity<String> enableRoomAmenity(@RequestHeader(name = "Authorization") String token, @PathVariable Long id) throws ApiRequestException {
 
@@ -262,7 +262,7 @@ public class RoomController {
      * @return a message of confirmation of the action room amenity deactivated
      * @throws ApiRequestException if the user is not authorized to deactivate the room Amenity
      */
-    @PutMapping("/api/room/roomAmenity/disable/{id}")
+    @PostMapping("/api/room/roomAmenity/disable/{id}")
     @PreAuthorize("hasAuthority('SUPERUSER')")
     ResponseEntity<String> disableRoomAmenity(@RequestHeader(name = "Authorization") String token, @PathVariable Long id) throws ApiRequestException {
 
