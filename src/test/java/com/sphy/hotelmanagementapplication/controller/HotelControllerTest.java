@@ -491,7 +491,7 @@ public class HotelControllerTest {
 
         // Return
         mockMvc.perform(
-                put("/api/hotel/addHotelAmenity")
+                post("/api/hotel/addHotelAmenity")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer token")
                         .content(asJsonString(hotelAmenity))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -507,6 +507,52 @@ public class HotelControllerTest {
 
         verify(hotelService, times(1)).saveHotelAmenity(any());
     }
+
+    /**
+     * Created by Akd
+     */
+    @Test
+    void enableHotelAmenity() throws Exception{
+        User superUser = new User(4L);
+        superUser.setRole(User.Role.SUPERUSER);
+
+
+        when(userService.getUserFromToken(anyString())).thenReturn(superUser);
+        when(hotelService.enableHotelAmenity(anyLong())).thenReturn(true);
+
+        mockMvc.perform(
+                        post("/api/hotel/hotelAmenity/enable/{id}",4)
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer token")
+                )
+                .andExpect(status().isOk())
+
+        .andExpect(content().string("Hotel Amenity with id: 4 was successfully activated"));
+
+        verify(hotelService, times(1)).enableHotelAmenity(any());
+    }
+
+    /**
+     * Created by AKd
+     */
+
+    @Test
+    void disableHotelAmenity() throws Exception {
+
+        User superUser = new User(4L);
+        superUser.setRole(User.Role.SUPERUSER);
+
+        when(userService.getUserFromToken(anyString())).thenReturn(superUser);
+        when(hotelService.disableHotelAmenity(anyLong())).thenReturn(true);
+
+        mockMvc.perform(
+                post("/api/hotel/hotelAmenity/disable/{id}",4)
+                        .header(HttpHeaders.AUTHORIZATION,"Bearer token")
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().string("Hotel Amenity with id: 4 was successfully deactivated"));
+        verify(hotelService, times(1)).disableHotelAmenity(any());
+    }
+
 
     /**
 	 * This method converts an object to a string representation in JSON format.
