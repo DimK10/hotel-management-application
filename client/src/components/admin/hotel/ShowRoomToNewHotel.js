@@ -5,7 +5,7 @@ import {cilX} from "@coreui/icons";
 import {v4 as uuidv4} from 'uuid';
 
 
-function ShowRoomToNewHotel({ room, onRoomCloseButtonClick }) {
+function ShowRoomToNewHotel({room, onRoomCloseButtonClick}) {
 
     const {
         id,
@@ -32,38 +32,53 @@ function ShowRoomToNewHotel({ room, onRoomCloseButtonClick }) {
 
 
                 <div className='mb-3'>
-                    <label htmlFor="luxurity"
-                           className="col-form-label">Luxurity:</label>
-                    <div className="col-sm-10">
-                        <p id='luxurity'
-                           className="form-control-plaintext fw-bold">{luxurity}</p>
+                    <div className="row">
+                        <div className="col">
+                            <label htmlFor="luxurity"
+                                   className="col-form-label">Luxurity:</label>
+                            <div className="col-sm-10">
+                                <p id='luxurity'
+                                   className="form-control-plaintext fw-bold">{luxurity}</p>
+                            </div>
+                        </div>
+                        <div className="col">
+                            <label htmlFor="price"
+                                   className="col-form-label">Price:</label>
+                            <div className="col-sm-10">
+                                <p id='price'
+                                   className="form-control-plaintext fw-bold">{price}</p>
+                            </div>
+                        </div>
+                        <div className="col">
+                            <div className="mb-3">
+                                <label htmlFor="capacity"
+                                       className="col-form-label">Capacity:</label>
+                                <div className="col-sm-10">
+                                    <p id='capacity'
+                                       className="form-control-plaintext fw-bold">{capacity}</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
 
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="price"
-                           className="col-sm-2 col-form-label">Price:</label>
-                    <div className="col-sm-10">
-                        <p id='price'
-                           className="form-control-plaintext fw-bold">{price}</p>
-                    </div>
+
                 </div>
 
+                <label htmlFor="amenities"
+                       className="col-form-label">Amenities:</label>
                 <div className="mb-3">
-                    <label htmlFor="capacity"
-                           className="col-sm-2 col-form-label">Capacity:</label>
-                    <div className="col-sm-10">
-                        <p id='capacity'
-                           className="form-control-plaintext fw-bold">{capacity}</p>
-                    </div>
-                </div>
-                <div className="mb-3">
+
                     {
-                        amenities.map((amenity, index) => (
-                            <span key={uuidv4()}>{amenity.label}{index !== amenities.length - 1 ? ', ': ''}</span>
+                        amenities.map((amenity) => (
+                            <span key={uuidv4()}
+                                  id="amenities" className="badge rounded-pill text-bg-primary"
+                            >{amenity.label}</span>
                         ))
                     }
+
                 </div>
             </div>
         </div>
