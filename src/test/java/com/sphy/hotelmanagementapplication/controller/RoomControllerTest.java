@@ -366,7 +366,7 @@ class RoomControllerTest {
 
 		// Return
 		mockMvc.perform(
-						put("/api/room/saveRoomAmenity")
+						post("/api/room/saveRoomAmenity")
 								.header(HttpHeaders.AUTHORIZATION, "Bearer token")
 								.content(asJsonString(roomAmenity))
 								.contentType(MediaType.APPLICATION_JSON)
@@ -382,6 +382,55 @@ class RoomControllerTest {
 
 		verify(roomService, times(1)).saveRoomAmenity(any());
 	}
+
+	/**
+	* Created AKd
+	*/
+
+	@Test
+	void enableRoomAmenity() throws Exception {
+
+		User superUser = new User(4L);
+		superUser.setRole(User.Role.SUPERUSER);
+
+		when(roomService.enableRoomAmenity(anyLong())).thenReturn(true);
+		when(userService.getUserFromToken(anyString())).thenReturn(superUser);
+
+		mockMvc.perform(
+				post("/api/room/roomAmenity/enable/{id}",5)
+						.header(HttpHeaders.AUTHORIZATION,"Bearer token")
+		)
+				.andExpect(status().isOk())
+				.andExpect(content().string("Room Amenity with id: 5 was successfully activated"));
+
+		verify(roomService, times(1)).enableRoomAmenity(any());
+
+	}
+
+	/**
+	* Created by AKd
+	 */
+	@Test
+	void disableRoomAmenity() throws Exception {
+
+		User superUser = new User(4L);
+		superUser.setRole(User.Role.SUPERUSER);
+
+		when(roomService.disableRoomAmenity(anyLong())).thenReturn(true);
+		when(userService.getUserFromToken(anyString())).thenReturn(superUser);
+
+		mockMvc.perform(
+						post("/api/room/roomAmenity/disable/{id}",5)
+								.header(HttpHeaders.AUTHORIZATION,"Bearer token")
+				)
+				.andExpect(status().isOk())
+				.andExpect(content().string("Room Amenity with id: 5 was successfully deactivated"));
+
+		verify(roomService, times(1)).disableRoomAmenity(any());
+
+	}
+
+
 
 	public static String asJsonString(final Object obj) {
 		try {
