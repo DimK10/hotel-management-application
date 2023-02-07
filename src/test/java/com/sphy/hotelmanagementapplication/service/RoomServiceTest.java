@@ -2,6 +2,7 @@ package com.sphy.hotelmanagementapplication.service;
 
 import com.sphy.hotelmanagementapplication.converter.*;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
+import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
@@ -241,4 +242,41 @@ class RoomServiceTest {
 		assertEquals(1, roomService.countRooms(anyLong()));
 
 	}
+
+	/**
+	 * Created by AKd
+	 */
+	@Test
+	void enableRoomAmenity() {
+
+		RoomAmenity roomAmenity = new RoomAmenity();
+		roomAmenity.setId(4L);
+		roomAmenity.setrAmenity("TOWELS");
+		roomAmenity.setEnabled(false);
+
+		Optional<RoomAmenity> roomAmenityOptional = Optional.of(roomAmenity);
+
+		when(amenityRoomRepository.findById(anyLong())).thenReturn(roomAmenityOptional);
+
+		assertEquals(true, roomService.enableRoomAmenity(anyLong()));
+	}
+
+	/**
+	 * Created by AKd
+	 */
+	@Test
+	void disableRoomAmenity() {
+
+		RoomAmenity roomAmenity = new RoomAmenity();
+		roomAmenity.setId(4L);
+		roomAmenity.setrAmenity("TOWELS");
+		roomAmenity.setEnabled(true);
+
+		Optional<RoomAmenity> roomAmenityOptional = Optional.of(roomAmenity);
+
+		when(amenityRoomRepository.findById(anyLong())).thenReturn(roomAmenityOptional);
+
+		assertEquals(true,roomService.disableRoomAmenity(anyLong()));
+	}
+
 }
