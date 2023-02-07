@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {MultiSelect} from "react-multi-select-component";
+import CIcon from '@coreui/icons-react';
+import {cilX} from '@coreui/icons';
 
 
-
-function AddRoomToNewHotel({room, onRoomSubmit, roomAmenitiesToSelect}) {
+function AddRoomToNewHotel({room, roomAmenitiesToSelect, onRoomSubmit, onRoomCloseButtonClick}) {
 
     const [newRoom, setNewRoom] = useState({...room});
 
@@ -24,6 +25,7 @@ function AddRoomToNewHotel({room, onRoomSubmit, roomAmenitiesToSelect}) {
     const onSubmit = (e) => {
         e.preventDefault();
 
+        newRoom.status = "show";
         newRoom.amenities = [...roomAmenitiesSelected];
         onRoomSubmit(e, newRoom);
     }
@@ -31,8 +33,14 @@ function AddRoomToNewHotel({room, onRoomSubmit, roomAmenitiesToSelect}) {
     return (
         <div className="card">
             <div className="card-body">
-                <div className="card-title">
+                <div className="card-title d-flex flex-row justify-content-between">
                     <h4>Add a new Room</h4>
+                    <button type="button"
+                            className="btn btn-danger"
+                            onClick={() => onRoomCloseButtonClick(room.id)}
+                    >
+                        <CIcon icon={cilX} style={{color: "white"}}/>
+                    </button>
                 </div>
 
                 <div className="mb-3">
@@ -85,7 +93,8 @@ function AddRoomToNewHotel({room, onRoomSubmit, roomAmenitiesToSelect}) {
                     />
                 </div>
                 <div className="mb-3">
-                    <button type="button" className="btn btn-primary" onClick={(e) => onSubmit(e, newRoom)}>Add Room</button>
+                    <button type="button" className="btn btn-primary" onClick={(e) => onSubmit(e, newRoom)}>Add Room
+                    </button>
                 </div>
             </div>
         </div>
@@ -95,6 +104,7 @@ function AddRoomToNewHotel({room, onRoomSubmit, roomAmenitiesToSelect}) {
 AddRoomToNewHotel.propTypes = {
     room: PropTypes.object.isRequired,
     onRoomSubmit: PropTypes.func.isRequired,
+    onRoomCloseButtonClick: PropTypes.func.isRequired,
     roomAmenitiesToSelect: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 export default AddRoomToNewHotel;

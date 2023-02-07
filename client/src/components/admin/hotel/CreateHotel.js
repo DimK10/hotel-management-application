@@ -8,6 +8,9 @@ import {MultiSelect} from "react-multi-select-component";
 import {fetchAllHotelAmenitiesAction, fetchAllRoomAmenitiesAction} from "../../../actions/amenity";
 import {v4 as uuidv4} from 'uuid';
 import AddRoomToNewHotel from "./AddRoomToNewHotel";
+import CIcon from '@coreui/icons-react';
+import {cilPlus} from '@coreui/icons';
+import ShowRoomToNewHotel from "./ShowRoomToNewHotel";
 
 function CreateHotel() {
 
@@ -46,10 +49,11 @@ function CreateHotel() {
         luxurity: 1,
         price: 0,
         capacity: 0,
-        amenities: []
+        amenities: [],
+        status: 'create'
     };
 
-    const [rooms, setRooms] = useState([{...newRoom}])
+    const [roomsCreated, setRoomsCreated] = useState([]);
 
 
     const {
@@ -58,6 +62,7 @@ function CreateHotel() {
         areaName,
         address,
         disabled,
+        rooms,
     } = formData;
 
     const onChange = (e) =>
@@ -81,9 +86,26 @@ function CreateHotel() {
     };
 
     const onRoomSubmit = (e, room) => {
+        console.log(room)
         e.preventDefault();
-        setRooms([...rooms, room]);
+        // room.status = 'show';
+        setRoomsCreated([...roomsCreated.map(el => {
+            if (el.id === room.id)
+                return {el, ...room}
+            else
+                return el
+        })]);
+        setFormData({...formData, rooms: [...roomsCreated]})
     }
+
+    /* button click method to add new room for room form to show */
+    const onAddNewRoomButtonClick = () =>
+        setRoomsCreated([...roomsCreated, newRoom]);
+
+    /* button click method to close room form, by deleting the room object */
+    const onRoomCloseButtonClick = (roomId) =>
+        setRoomsCreated([...roomsCreated.filter(room => room.id !== roomId)])
+
 
     useEffect(() => {
 
@@ -190,11 +212,40 @@ function CreateHotel() {
                                         labelledBy="Select"
                                     />
                                 </div>
+                                {
+                                    roomsCreated.length > 0
+                                    &&
+                                    roomsCreated.map(room => (
+                                        room.status === 'show'
+                                        &&
+                                        <div key={uuidv4()} className="mb-3">
+                                            <ShowRoomToNewHotel room={room}
+                                                               onRoomCloseButtonClick={onRoomCloseButtonClick}
+                                            />
+                                        </div>
+                                    ))
+                                }
+                                {
+                                    roomsCreated.length > 0
+                                    &&
+                                    roomsCreated.map(room => (
+                                        room.status === 'create'
+                                        &&
+                                        <div key={uuidv4()} className="mb-3">
+                                            <AddRoomToNewHotel room={room} onRoomSubmit={onRoomSubmit}
+                                                               roomAmenitiesToSelect={roomAmenitiesToSelect}
+                                                               onRoomCloseButtonClick={onRoomCloseButtonClick}
+                                            />
+                                        </div>
+                                    ))
+                                }
                                 <div className="mb-3">
-                                    <AddRoomToNewHotel room={newRoom} onRoomSubmit={onRoomSubmit}
-                                                       roomAmenitiesToSelect={roomAmenitiesToSelect}
-                                    />
+                                    <button type="button"
+                                            className="btn btn-primary"
+                                            onClick={onAddNewRoomButtonClick}
+                                    ><CIcon icon={cilPlus} /> Add new Room</button>
                                 </div>
+
                                 <button type="submit" className="btn btn-primary">Add</button>
                             </form>
                         </div>
