@@ -82,7 +82,7 @@ function CreateHotel() {
 
     const onRoomSubmit = (e, room) => {
         e.preventDefault();
-        setRooms({...rooms, room});
+        setRooms([...rooms, room]);
     }
 
     useEffect(() => {
@@ -105,9 +105,6 @@ function CreateHotel() {
 
     useEffect(() => {
         let data = [];
-
-        console.log(roomAmenities);
-
         if (roomAmenities.length > 0)
             roomAmenities.forEach(el => data.push({label: el.rAmenity, value: el.id}))
         setRoomAmenitiesToSelect([...data]);

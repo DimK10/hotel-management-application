@@ -8,7 +8,9 @@ function AddRoomToNewHotel({room, onRoomSubmit, roomAmenitiesToSelect}) {
 
     const [newRoom, setNewRoom] = useState({...room});
 
-    const {
+    const [roomAmenitiesSelected, setRoomAmenitiesSelected] = useState([...room.amenities]);
+
+    let {
         name,
         luxurity,
         price,
@@ -21,11 +23,10 @@ function AddRoomToNewHotel({room, onRoomSubmit, roomAmenitiesToSelect}) {
 
     const onSubmit = (e) => {
         e.preventDefault();
+
+        newRoom.amenities = [...roomAmenitiesSelected];
         onRoomSubmit(e, newRoom);
     }
-
-    const onMultiSelectChange = () => {}
-
 
     return (
         <div className="card">
@@ -37,7 +38,8 @@ function AddRoomToNewHotel({room, onRoomSubmit, roomAmenitiesToSelect}) {
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label">Room Name:</label>
                     <input type="text" className="form-control" id="name"
-                           aria-describedby="name" placeholder="Room Name" onChange={(e) => {
+                           aria-describedby="name" placeholder="Room Name"
+                           name="name" onChange={(e) => {
                         onChange(e);
                     }} required={true}
                     />
@@ -62,7 +64,7 @@ function AddRoomToNewHotel({room, onRoomSubmit, roomAmenitiesToSelect}) {
                 <div className="mb-3 w-25">
                     <label htmlFor="price" className="form-label">Price:</label>
                     <input type="number" min="0" step=".01" className="form-control" id="price"
-                           aria-describedby="name" placeholder="Price" onChange={(e) => {
+                           aria-describedby="name" placeholder="Price" name="price" onChange={(e) => {
                         onChange(e);
                     }} required={true}/>
                 </div>
@@ -70,20 +72,20 @@ function AddRoomToNewHotel({room, onRoomSubmit, roomAmenitiesToSelect}) {
                 <div className="mb-3 w-25">
                     <label htmlFor="capacity" className="form-label">Capacity:</label>
                     <input type="number" min="0" className="form-control" id="capacity"
-                           aria-describedby="name" placeholder="Capacity" onChange={(e) => {
+                           aria-describedby="name" placeholder="Capacity" name="capacity" onChange={(e) => {
                         onChange(e);
                     }} required={true}/>
                 </div>
                 <div className="mb-3">
                     <MultiSelect
                         options={roomAmenitiesToSelect}
-                        value={amenities}
-                        onChange={(e) => onMultiSelectChange(e)}
-                        labelledBy="Select"
+                        value={roomAmenitiesSelected}
+                        onChange={setRoomAmenitiesSelected}
+                        labelledBy="Select Room Amenities"
                     />
                 </div>
                 <div className="mb-3">
-                    <button type="button" className="btn btn-primary" onClick={(e) => onRoomSubmit(e, newRoom)}>Add Room</button>
+                    <button type="button" className="btn btn-primary" onClick={(e) => onSubmit(e, newRoom)}>Add Room</button>
                 </div>
             </div>
         </div>
