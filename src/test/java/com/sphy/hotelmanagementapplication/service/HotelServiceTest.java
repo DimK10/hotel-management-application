@@ -416,4 +416,48 @@ public class HotelServiceTest {
         assertEquals(hotelAmenity, hotelService.saveHotelAmenity(hotelAmenity));
     }
 
+    /**
+     * Created by Akd
+     */
+    @Test
+    void enableHotelAmenity() {
+        // given
+        boolean expected = true;
+        HotelAmenity hotelAmenity = new HotelAmenity();
+        hotelAmenity.setId(4L);
+        hotelAmenity.sethAmenity("POOL");
+        hotelAmenity.setEnabled(false);
+
+        Optional<HotelAmenity> hotelAmenityOptional = Optional.of(hotelAmenity);
+
+        // when
+        when(amenityHotelRepository.findById(anyLong())).thenReturn(hotelAmenityOptional);
+
+        //then
+        boolean result = hotelService.enableHotelAmenity(anyLong());
+
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Created by Akd
+     */
+    @Test
+     void testDisableHotelAmenity(){
+        boolean expected = true;
+        HotelAmenity hotelAmenity = new HotelAmenity();
+        hotelAmenity.setId(4L);
+        hotelAmenity.sethAmenity("POOL");
+        hotelAmenity.setEnabled(true);
+
+        Optional<HotelAmenity> hotelAmenityOptional = Optional.of(hotelAmenity);
+
+        when(amenityHotelRepository.findById(anyLong())).thenReturn(hotelAmenityOptional);
+
+        boolean result = hotelService.disableHotelAmenity(anyLong());
+
+        assertEquals(expected,result);
+    }
+
+
 }
