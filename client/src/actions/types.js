@@ -34,6 +34,9 @@ export const ORDER_ERROR = 'There was a problem with your order. please try agai
 export const HOTEL_ERROR = 'There was an error fetching hotels. Please contact the app administrator.';
 
 
+// room
+export const ROOM_ERROR = 'There was an error when fetching the rooms you requested. Please contact the app administrator.';
+
 export const LOGGED_OUT_LOG_IN_AGAIN =  'You have been logged out! Please log in again!';
 export const LOGGED_OUT_SUCCESS = 'You have been logged out successfully!';
 export const SOMETHING_WRONG_HAPPENED = 'Something wrong happened. Please contact the app administrator.';

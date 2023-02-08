@@ -5,6 +5,7 @@ import hotelSlice from "./hotel";
 import orderSlice from "./order";
 import searchSlice from "./search";
 import amenitySlice from './amenity';
+import roomSlice from "./room";
 
 
 const alert = alertSlice.reducer;
@@ -13,6 +14,7 @@ const hotel = hotelSlice.reducer;
 const order = orderSlice.reducer;
 const search = searchSlice.reducer;
 const amenity = amenitySlice.reducer;
+const room = roomSlice.reducer;
 
 export default combineReducers({
   alert,
@@ -20,5 +22,6 @@ export default combineReducers({
   hotel,
   order,
   search,
-  amenity
+  amenity,
+  room
 });

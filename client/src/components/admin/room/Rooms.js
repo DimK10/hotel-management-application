@@ -9,6 +9,7 @@ import Alert from "../../layout/Alert";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllHotelsAction} from "../../../actions/hotel";
 import Select from "react-select";
+import {fetchAllRoomsFromSelectedHotel} from "../../../actions/room";
 
 
 const Rooms = props => {
@@ -32,6 +33,11 @@ const Rooms = props => {
 
         setHotelsToSelect(hotelsToSelect);
     }, [hotels]);
+
+    useEffect(() => {
+        if (hotelSelected !== null && hotelSelected !== 'undefined')
+            dispatch(fetchAllRoomsFromSelectedHotel(hotelSelected.value));
+    }, [hotelSelected]);
 
 
     return (
