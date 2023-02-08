@@ -31,7 +31,7 @@ export const getAllHotelsByPage = (pageNo, pageSize, sortBy, userId) => async (d
     }
 
     try {
-        const res = await axios.get(`/api/hotels/${pageNo}/${pageSize}/${sortBy}/`);
+        const res = await axios.get(`/api/hotels/${pageNo}/${pageSize}/${sortBy}`);
 
 
         dispatch(getAllHotels(res.data))

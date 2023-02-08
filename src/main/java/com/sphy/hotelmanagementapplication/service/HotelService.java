@@ -212,6 +212,7 @@ public class HotelService {
                 existingHotel.setName(hotelDTO.getName());
                 existingHotel.setStars(hotelDTO.getStars());
                 existingHotel.setAreaName(hotelDTO.getAreaName());
+                existingHotel.setAddress(hotelDTO.getAddress());
                 Optional<User> admin = userRepository.findById(hotelDTO.getOwner());
                 admin.ifPresent(existingHotel::setOwner);
 

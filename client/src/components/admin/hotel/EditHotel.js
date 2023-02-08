@@ -9,6 +9,7 @@ import {
 } from "../../../actions/hotel";
 import {loadUser} from "../../../actions/auth";
 import {useNavigate, useParams} from "react-router-dom";
+import Alert from "../../layout/Alert";
 
 const EdiHotel = () => {
 
@@ -39,7 +40,8 @@ const EdiHotel = () => {
     areaName: hotel.areaName,
     disabled: hotel.disabled,
     owner: user?.id,
-    rooms: hotel.rooms
+    rooms: hotel.rooms,
+    address: hotel.address,
   })
 
   const [citiesArray, setCitiesArray] = useState(cities);
@@ -80,6 +82,7 @@ const EdiHotel = () => {
     <Fragment>
       <SidebarComp/>
       <HeaderNav>
+        <Alert />
         <div className="row">
           <div className="card">
             <div className="card-body">
