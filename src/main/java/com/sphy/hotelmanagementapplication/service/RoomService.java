@@ -337,20 +337,21 @@ public class RoomService {
         return amenitiesRoomDTO;
     }
 
-     /**
+    /**
      * Created by BP
      * saves a new Room Amenity
-     * @param roomAmenity  to be saved
+     *
+     * @param roomAmenity to be saved
      * @return the saved room amenity for confirmation
      * @throws ApiRequestException if the room amenity is not created and does not be enabled
      */
-    public RoomAmenity saveRoomAmenity (RoomAmenity roomAmenity) throws ApiRequestException{
+    public RoomAmenity saveRoomAmenity(RoomAmenity roomAmenity) throws ApiRequestException {
 
-        if (roomAmenity.getrAmenity().isEmpty()){
+        if (roomAmenity.getrAmenity().isEmpty()) {
             throw new ApiRequestException("There is no Room Amenity");
         }
 
-        if(!roomAmenity.getEnabled()){
+        if (!roomAmenity.getEnabled()) {
             throw new ApiRequestException("There is no activated Room Amenity");
         }
 
@@ -362,18 +363,33 @@ public class RoomService {
      * returns all room amenities
      * @return all room amenities
      */
-    public Set<RoomAmenity> getRoomAmenities() throws ApiRequestException{
+    public Set<RoomAmenity> getRoomAmenities() throws ApiRequestException {
 
         Set<RoomAmenity> amenities = new HashSet<>();
 
         amenityRoomRepository.findAllEnabled().forEach(amenities::add);
 
-        if (amenities.isEmpty()){
+        if (amenities.isEmpty()) {
 
             throw new ApiRequestException("There are no room amenities whet.");
 
-        }else {
+        } else {
             return amenities;
         }
+    }
+
+    public List<RoomDTO> getRoomsByHotelId(Long hotelId) {
+
+        List<RoomDTO> roomDTOS = new ArrayList<>();
+
+        if (hotelId != null) {
+            roomRepository
+                    .findAllByHotelId(hotelId)
+                    .forEach(room ->
+                            roomDTOS.add(roomToRoomDTO.converter(room)
+                            )
+                    );
+        }
+        return roomDTOS;
     }
 }

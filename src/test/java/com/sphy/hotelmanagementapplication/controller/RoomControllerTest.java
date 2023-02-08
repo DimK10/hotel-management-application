@@ -354,4 +354,29 @@ class RoomControllerTest {
 			throw new RuntimeException(e);
 		}
 	}
+
+    @Test
+    void findAllRoomsByHotelId() throws Exception {
+
+		// Given
+		RoomDTO roomDTO = new RoomDTO();
+		HotelDTO hotelDTO1 = new HotelDTO(1L);
+		roomDTO.setId(1L);
+		roomDTO.setName("roomName");
+		roomDTO.setHotel(1L);
+		List<RoomDTO> roomDTOS1 = new ArrayList<>();
+		roomDTOS1.add(roomDTO);
+
+		// When
+		when(roomService.getRoomsByHotelId(1L)).thenReturn(roomDTOS1);
+
+		// Return
+		mockMvc.perform(get("/api/rooms/1"))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$", Matchers.hasSize(1)))
+				.andExpect(jsonPath("$[0].name").value("roomName"));
+
+		verify(roomService, times(1)).getRoomsByHotelId(anyLong());
+    }
 }

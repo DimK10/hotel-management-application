@@ -8,13 +8,13 @@ import {MultiSelect} from "react-multi-select-component";
 import Alert from "../../layout/Alert";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllHotelsAction} from "../../../actions/hotel";
-import { Select } from "react-select";
+import Select from "react-select";
 
 
 const Rooms = props => {
 
     const [hotelsToSelect, setHotelsToSelect] = useState([]);
-    const [hotelsSelected, setHotelsSelected] = useState([]);
+    const [hotelSelected, setHotelSelected] = useState(null);
 
     const dispatch = useDispatch();
 
@@ -26,7 +26,11 @@ const Rooms = props => {
     }, []);
 
     useEffect(() => {
-        setHotelsToSelect(hotels);
+        console.log(hotels);
+
+        let hotelsToSelect = [...hotels.map(hotel => ({ label: hotel.name, value: hotel.id }))]
+
+        setHotelsToSelect(hotelsToSelect);
     }, [hotels]);
 
 
@@ -35,22 +39,13 @@ const Rooms = props => {
             <SidebarComp/>
             <HeaderNav>
                 <Alert/>
-                {/* TODO ADD LOGIC FOR SEARCH BAR IF THERE IS TIME */}
                 {/* Search Hotel Bar */}
                 <Select
                     className="basic-single"
-                    classNamePrefix="select"
-
-                    hasSelectAll={false}
+                    classNamePrefix="select a hotel"
                     options={hotelsToSelect}
-                    value={hotelsSelected}
-                    onChange={() => {
-                        if (!hotelsSelected.length > 0)
-                            return setHotelsSelected;
-                        else
-                            return null;
-                        }
-                    }
+                    value={hotelSelected}
+                    onChange={setHotelSelected}
                     labelledBy="Select"
                 />
                 <div className="row">

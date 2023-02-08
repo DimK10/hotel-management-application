@@ -14,7 +14,7 @@ export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 // hotel
 export const GET_ALL_HOTELS = 'GET_ALL_HOTELS';
 export const GET_COUNT_OF_HOTELS = 'GET_COUNT_OF_HOTELS';
-export const HOTEL_ERROR = 'HOTEL_ERROR';
+
 
 // order
 export const GET_NEW_ORDER = 'GET_NEW_ORDER';
@@ -31,9 +31,12 @@ export const ORDER_SUCCESS = 'You order has been placed Successfully!!!';
 export const ORDER_ERROR = 'There was a problem with your order. please try again';
 
 
+export const HOTEL_ERROR = 'There was an error fetching hotels. Please contact the app administrator.';
+
+
 export const LOGGED_OUT_LOG_IN_AGAIN =  'You have been logged out! Please log in again!';
 export const LOGGED_OUT_SUCCESS = 'You have been logged out successfully!';
-export const SOMETHING_WRONG_HAPPENED = 'Something wrong happened. Please contact the app administrator';
+export const SOMETHING_WRONG_HAPPENED = 'Something wrong happened. Please contact the app administrator.';
 
 
 
