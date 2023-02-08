@@ -8,6 +8,7 @@ import {MultiSelect} from "react-multi-select-component";
 import Alert from "../../layout/Alert";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllHotelsAction} from "../../../actions/hotel";
+import { Select } from "react-select";
 
 
 const Rooms = props => {
@@ -36,7 +37,10 @@ const Rooms = props => {
                 <Alert/>
                 {/* TODO ADD LOGIC FOR SEARCH BAR IF THERE IS TIME */}
                 {/* Search Hotel Bar */}
-                <MultiSelect
+                <Select
+                    className="basic-single"
+                    classNamePrefix="select"
+
                     hasSelectAll={false}
                     options={hotelsToSelect}
                     value={hotelsSelected}

@@ -111,7 +111,7 @@ public class HotelService {
 
         Set<Hotel> hotels = hotelRepository.findAllHotelsByOwner(userId);
 
-        Set<HotelDTO> hotelDTOS = new HashSet<>();
+        Set<HotelDTO> hotelDTOS = new LinkedHashSet<>();
 
         hotels.forEach(hotel -> hotelDTOS.add(hotelToHotelDTO.converter(hotel)));
 

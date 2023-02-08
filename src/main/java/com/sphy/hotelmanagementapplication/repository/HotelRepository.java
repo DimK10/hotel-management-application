@@ -37,7 +37,7 @@ public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long> 
 	@Query("SELECT count(h) from Hotel h where h.owner.id = :id")
 	int countAll(@Param("id") Long id);
 
-	@Query("from Hotel h where h.owner.id = :id")
+	@Query("from Hotel h where h.owner.id = :id order by h.name")
 	Set<Hotel> findAllHotelsByOwner(@Param("id") Long id);
 
 	@Query(value = "select h from Hotel h where h.owner.id = :id",

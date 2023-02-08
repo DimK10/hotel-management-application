@@ -15,6 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -99,7 +100,7 @@ public class HotelController {
      * Finds all hotels without pagination
      *
      * @param token The jwt token
-     * @return A Hashset of hotels in DTo object
+     * @return A List of hotels in DTo object
      */
     @GetMapping("/api/hotels")
     @PreAuthorize("hasAuthority('ADMIN')")

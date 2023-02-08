@@ -28,10 +28,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -94,7 +91,7 @@ public class HotelControllerTest {
 
         HotelDTO hotelDTO1 = new HotelDTO();
 
-        hotelDTO1.setId(1L);
+        hotelDTO1.setId(2L);
         hotelDTO1.setName("hotelDTO1");
         hotelDTO1.setStars(3);
         hotelDTO1.setOwner(1L);
@@ -231,7 +228,8 @@ public class HotelControllerTest {
         // Given
         User admin = new User(1L);
         admin.setRole(User.Role.ADMIN);
-        Set<HotelDTO> hotelDTOsToTest = new HashSet<>(hotelDTOS1);
+        // Do we care about order?
+        Set<HotelDTO> hotelDTOsToTest = new LinkedHashSet<>(hotelDTOS1);
 
         // When
         when(hotelService.getHotels(1L)).thenReturn(hotelDTOsToTest);
