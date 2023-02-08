@@ -7,7 +7,7 @@ import {setAlertAction} from "./alert";
 import {
     ALERT_ERROR,
     ALERT_SUCCESS,
-    HOTEL_CREATED_SUCCESS,
+    HOTEL_CREATED_SUCCESS, HOTEL_ERROR,
     HOTEL_SUCCESS,
     HOTEL_UPDATED_SUCCESS,
     SOMETHING_WRONG_HAPPENED
@@ -23,8 +23,23 @@ const {
     hotelError,
 } = hotelSlice.actions;
 
+export const getAllHotelsAction = () => async dispatch => {
+    if (localStorage.jwt) {
+        setAuthToken(localStorage.jwt);
+    }
 
-export const getAllHotelsByPage = (pageNo, pageSize, sortBy, userId) => async (dispatch) => {
+    try {
+        const res = await axios.get('/api/hotels');
+
+
+        dispatch(getAllHotels(res.data))
+    } catch (err) {
+        dispatch(hotelError(err.response.data.errorMessage));
+        dispatch(setAlertAction(HOTEL_ERROR, ALERT_ERROR));
+    }
+}
+
+export const getAllHotelsByPage = (pageNo, pageSize, sortBy) => async (dispatch) => {
 
     if (localStorage.jwt) {
         setAuthToken(localStorage.jwt);
@@ -36,8 +51,8 @@ export const getAllHotelsByPage = (pageNo, pageSize, sortBy, userId) => async (d
 
         dispatch(getAllHotels(res.data))
     } catch (err) {
-
-        dispatch(hotelError(err.response.data.errorMessage))
+        dispatch(hotelError(err.response.data.errorMessage));
+        dispatch(setAlertAction(HOTEL_ERROR, ALERT_ERROR));
     }
 }
 

@@ -69,4 +69,39 @@ public class HotelServiceIT {
 
     }
 
+    @Test
+    void getHotelsNoPagination() throws Exception {
+
+        //given
+        int expected = 1;
+
+        User owner = new User(1L);
+
+        Hotel hotel1 = new Hotel(1L);
+        hotel1.setOwner(owner);
+        Set<Hotel> hotelSet = new HashSet<>();
+        hotelSet.add(hotel1);
+        owner.setHotels(hotelSet);
+        Hotel hotel2 = new Hotel(2L);
+        Hotel hotel3 = new Hotel(3L);
+        Hotel hotel4 = new Hotel(4L);
+        Hotel hotel5 = new Hotel(5L);
+
+        hotelRepository.save(hotel1);
+        hotelRepository.save(hotel2);
+        hotelRepository.save(hotel3);
+        hotelRepository.save(hotel4);
+        hotelRepository.save(hotel5);
+
+        //when
+
+        Set<HotelDTO> hotelDTOS = hotelService.getHotels(1L);
+
+        //then
+        assertEquals(expected, hotelDTOS.size());
+
+        assertEquals(hotelDTOS.iterator().next().getId(), 1);
+
+
+    }
 }

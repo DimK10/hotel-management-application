@@ -68,7 +68,7 @@ public class HotelController {
             }
         }
 
-        if (equal){
+        if (equal) {
 
             return service.saveHotels(hotelsDTO);
         } else {
@@ -93,6 +93,30 @@ public class HotelController {
             throw new RuntimeException("Unauthorized");
         }
     }
+
+
+    /**
+     * Finds all hotels without pagination
+     *
+     * @param token The jwt token
+     * @return A Hashset of hotels in DTo object
+     */
+    @GetMapping("/api/hotels")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Set<HotelDTO>> findAllHotels(@RequestHeader(name = "Authorization") String token) {
+
+        Long userId = userService.getUserFromToken(token).getId();
+
+        if (Objects.equals(userId, userService.getUserFromToken(token).getId())) {
+
+            Set<HotelDTO> hotelDTOS = service.getHotels(userId);
+
+            return new ResponseEntity<>(hotelDTOS, new HttpHeaders(), HttpStatus.OK);
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
+    }
+
 
     /***
      * Finds all hotels
@@ -176,7 +200,7 @@ public class HotelController {
      */
     @PutMapping("/api/hotel/addHotelAmenity")
     @PreAuthorize("hasAuthority('SUPERUSER')")
-    public HotelAmenity saveHotelAmenity(@RequestHeader(name="Authorization")String token, @RequestBody HotelAmenity hotelAmenity) throws ApiRequestException{
+    public HotelAmenity saveHotelAmenity(@RequestHeader(name = "Authorization") String token, @RequestBody HotelAmenity hotelAmenity) throws ApiRequestException {
 
         if (Objects.equals(User.Role.SUPERUSER, userService.getUserFromToken(token).getRole())) {
 
@@ -242,7 +266,7 @@ public class HotelController {
     @GetMapping("/api/hotel/amenities/{hotelId}")
     public Set<HotelAmenity> findHotelAmenitiesByHotelId(@PathVariable Long hotelId) throws ApiRequestException {
 
-            return service.getHotelAmenitiesByHotelId(hotelId);
+        return service.getHotelAmenitiesByHotelId(hotelId);
 
     }
 
@@ -254,9 +278,9 @@ public class HotelController {
      * @throws RuntimeException if this that made the search is not a role client
      */
     @PostMapping("/api/hotel/basic/search")
-    public Set<HotelDTO> findHotelBasicSearch(@RequestBody BasicSearchDTO basicSearchDTO)throws RuntimeException{
+    public Set<HotelDTO> findHotelBasicSearch(@RequestBody BasicSearchDTO basicSearchDTO) throws RuntimeException {
 
-            return service.getHotelBasicSearch(basicSearchDTO);
+        return service.getHotelBasicSearch(basicSearchDTO);
 
     }
 
@@ -267,7 +291,7 @@ public class HotelController {
      * @throws RuntimeException when not exist any hotel amenity
      */
     @GetMapping("/api/hotel/amenities")
-    public Set<HotelAmenity> findHotelAmenities()throws RuntimeException{
+    public Set<HotelAmenity> findHotelAmenities() throws RuntimeException {
 
         return service.getHotelAmenities();
 

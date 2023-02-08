@@ -227,6 +227,27 @@ public class HotelControllerTest {
     }
 
     @Test
+    void findAllHotels() throws Exception {
+        // Given
+        User admin = new User(1L);
+        admin.setRole(User.Role.ADMIN);
+        Set<HotelDTO> hotelDTOsToTest = new HashSet<>(hotelDTOS1);
+
+        // When
+        when(hotelService.getHotels(1L)).thenReturn(hotelDTOsToTest);
+        when(userService.getUserFromToken(anyString())).thenReturn(admin);
+
+        // Return
+        mockMvc.perform(get("/api/hotels")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer token"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", Matchers.hasSize(2)))
+                .andExpect(jsonPath(
+                        "$[0].name",
+                        Matchers.equalTo("hotelDTO")
+                ));
+    }
+    @Test
     void findAllHotelsByPage() throws Exception {
         // Given
         User admin = new User(1L);
@@ -485,5 +506,4 @@ public class HotelControllerTest {
             throw new RuntimeException(e);
         }
     }
-
 }
