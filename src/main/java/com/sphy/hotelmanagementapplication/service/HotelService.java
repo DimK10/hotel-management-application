@@ -106,7 +106,7 @@ public class HotelService {
      * @throws ApiRequestException if There are no hotels
      */
     @Transactional
-    public List<HotelDTO> getHotels(Integer pageNo, Integer pageSize, String sortBy, Long userId) throws ApiRequestException {
+    public List<HotelDTO>  getHotels(Integer pageNo, Integer pageSize, String sortBy, Long userId) throws ApiRequestException {
 
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 

@@ -71,8 +71,20 @@ function AddRoomToNewHotel({room, roomAmenitiesToSelect, onRoomSubmit, onRoomClo
                 </div>
                 <div className="mb-3 w-25">
                     <label htmlFor="price" className="form-label">Price:</label>
-                    <input type="number" min="0" step=".01" className="form-control" id="price"
-                           aria-describedby="name" placeholder="Price" name="price" onChange={(e) => {
+                    <input type="number"
+                           min="1"
+                           step="1"
+                           className="form-control"
+                           id="price"
+                           aria-describedby="name"
+                           placeholder="Price"
+                           name="price"
+                           onKeyPress={(e) => (e.charCode >= 48 && e.charCode <= 57)}
+                           onKeyDown={(e) => {
+                               if(e.key==='.')
+                                   e.preventDefault();
+                           }}  onInput={(e) => {e.target.value = e.target.value.replace(/[^0-9]*/g,'')}}
+                           onChange={(e) => {
                         onChange(e);
                     }} required={true}/>
                 </div>

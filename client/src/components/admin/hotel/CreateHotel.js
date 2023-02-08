@@ -12,10 +12,14 @@ import CIcon from '@coreui/icons-react';
 import {cilPlus} from '@coreui/icons';
 import ShowRoomToNewHotel from "./ShowRoomToNewHotel";
 import amenity from "../../../reducers/amenity";
+import Alert from "../../layout/Alert";
+import {useNavigate} from "react-router-dom";
 
 function CreateHotel() {
 
     const dispatch = useDispatch();
+
+    const navigate = useNavigate();
 
     const {user} = useSelector(state => state.auth);
 
@@ -85,24 +89,13 @@ function CreateHotel() {
         e.preventDefault();
         console.log(formData)
         setFormData({...formData, owner: user?.id});
-        // setFormData({...formData, id: null});
         console.log(formData)
-        // setFormData({
-        //     ...formData,
-        //     rooms: [...formData.rooms.map(room => ({
-        //         ...room,
-        //         id: null,
-        //         amenities: [room.amenities.map(amenity => ({id: amenity.value, rAmenity: amenity.label}))]
-        //     }))]
-        // })
-        // console.log(formData)
-        // setFormData({
-        //     ...formData,
-        //     amenities: [...formData.amenities.map(amenity => ({id: amenity.value, hAmenity: amenity.label}))]
-        // })
-
 
         dispatch(createNewHotelAction(formData));
+
+        // fixme this is not recommended if there is an error happening when saving a hotel
+        navigate('/dashboard');
+
     };
 
     const onRoomSubmit = async (e, room) => {
@@ -164,7 +157,7 @@ function CreateHotel() {
             rooms: [...roomsCreated].map(room => ({
                 ...room,
                 id: null,
-                amenities: [...room.amenities.map(el => ({id: el.value, rAmenity: el.label, enabled: true}))]
+                amenities: [...room.amenities.map(el => ({id: el.value, rAmenity: el.label}))]
             }))
         })
     }, [roomsCreated])
@@ -173,7 +166,7 @@ function CreateHotel() {
     useEffect(() => {
         setFormData({
             ...formData,
-            amenities: [...hotelAmenitiesSelected.map(el => ({id: el.value, hAmenity: el.label, enabled: true}))]
+            amenities: [...hotelAmenitiesSelected.map(el => ({id: el.value, hAmenity: el.label}))]
         })
     }, [hotelAmenitiesSelected]);
 
@@ -181,6 +174,7 @@ function CreateHotel() {
         <Fragment>
             <SidebarComp/>
             <HeaderNav>
+                <Alert />
                 <div className="row">
                     <div className="card">
                         <div className="card-body">

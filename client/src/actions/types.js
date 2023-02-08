@@ -19,4 +19,24 @@ export const HOTEL_ERROR = 'HOTEL_ERROR';
 // order
 export const GET_NEW_ORDER = 'GET_NEW_ORDER';
 export const NEW_ORDER_PRE_CHECKOUT = 'NEW_ORDER_PRE_CHECKOUT';
-export const ORDER_ERROR = 'ORDER_ERROR';
+
+
+
+
+// Alert messages
+
+export const HOTEL_CREATED_SUCCESS = 'Hotel created successfully!';
+export const HOTEL_UPDATED_SUCCESS = 'Hotel updated successfully!';
+export const ORDER_SUCCESS = 'You order has been placed Successfully!!!';
+export const ORDER_ERROR = 'There was a problem with your order. please try again';
+
+
+export const LOGGED_OUT_LOG_IN_AGAIN =  'You have been logged out! Please log in again!';
+export const LOGGED_OUT_SUCCESS = 'You have been logged out successfully!';
+export const SOMETHING_WRONG_HAPPENED = 'Something wrong happened. Please contact the app administrator';
+
+
+
+// Alert types
+export const ALERT_SUCCESS = 'success';
+export const ALERT_ERROR = 'danger';
