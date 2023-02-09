@@ -54,7 +54,7 @@ const SearchItem = ({hotel, checkInDate, checkOutDate}) => {
                     {
                       hotel.amenities.map(amenity => (
                           <span
-                              key={uuidv4()} className="badge rounded-pill text-bg-primary m-1 btn">{amenity.hotelAmenities.charAt(0) + amenity.hotelAmenities.slice(1).toLowerCase()}</span>
+                              key={uuidv4()} className="badge rounded-pill text-bg-primary m-1 btn">{amenity.hAmenity}</span>
                       ))
 
                     }

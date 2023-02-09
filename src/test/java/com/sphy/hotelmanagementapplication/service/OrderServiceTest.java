@@ -143,7 +143,7 @@ public class OrderServiceTest {
         List<OrderDTO> orderDTOList = orderService.getOrdersClient(id2);
 
         assertEquals(2, orderDTOList.size());
-        assertArrayEquals(ordersDTO.toArray(), orderDTOList.toArray());
+        assertEquals(ordersDTO, orderDTOList);
     }
 
     @Test
@@ -161,7 +161,7 @@ public class OrderServiceTest {
         List<OrderDTO> orderDTOList = orderService.getOrdersAdmin(id1);
 
         assertEquals(2, orderDTOList.size());
-        assertArrayEquals(ordersDTO.toArray(), orderDTOList.toArray());
+        assertEquals(ordersDTO, orderDTOList);
     }
 
     @Test

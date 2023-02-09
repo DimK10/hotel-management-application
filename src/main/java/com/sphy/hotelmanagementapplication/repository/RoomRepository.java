@@ -9,6 +9,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -29,4 +30,5 @@ public interface RoomRepository extends PagingAndSortingRepository<Room,Long> {
 
     @Query(value = "select ra from RoomAmenity ra inner join IntermediateRoomAmenity i on i.roomAmenity.id = ra.id where ra.enabled = true and i.room.id = :id")
     Set<RoomAmenity> findAmenitiesByRoomId(@Param("id") Long id);
+    List<Room> findAllByHotelId(Long hotelId);
 }

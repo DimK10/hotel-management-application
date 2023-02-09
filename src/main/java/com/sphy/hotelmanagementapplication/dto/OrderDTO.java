@@ -134,19 +134,6 @@ public class OrderDTO implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        OrderDTO orderDTO = (OrderDTO) o;
-        return canceled == orderDTO.canceled && Objects.equals(id, orderDTO.id) && Objects.equals(checkInDate, orderDTO.checkInDate) && Objects.equals(checkOutDate, orderDTO.checkOutDate) && Objects.equals(client, orderDTO.client) && Objects.equals(room, orderDTO.room);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, checkInDate, checkOutDate, client, room, canceled);
-    }
-
-    @Override
     public String toString() {
         return "OrderDTO{" +
                 "id=" + id +
@@ -161,5 +148,18 @@ public class OrderDTO implements Serializable {
                 ", roomAmenities=" + roomAmenities +
                 ", canceled=" + canceled +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderDTO orderDTO = (OrderDTO) o;
+        return canceled == orderDTO.canceled && Objects.equals(id, orderDTO.id) && Objects.equals(checkInDate, orderDTO.checkInDate) && Objects.equals(checkOutDate, orderDTO.checkOutDate) && Objects.equals(client, orderDTO.client) && Objects.equals(room, orderDTO.room) && Objects.equals(price, orderDTO.price) && Objects.equals(roomName, orderDTO.roomName) && Objects.equals(hotelName, orderDTO.hotelName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, checkInDate, checkOutDate, client, room, price, roomName, hotelName, canceled);
     }
 }

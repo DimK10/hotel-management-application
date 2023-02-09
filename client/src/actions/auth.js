@@ -4,6 +4,7 @@ import alertSlice, {setAlertAction} from './alert';
 
 import setAuthToken from '../utils/setAuthToken';
 import authSlice from "../reducers/auth";
+import {ALERT_ERROR, ALERT_SUCCESS, LOGGED_OUT_SUCCESS} from "./types";
 
 const {
   userLoaded,
@@ -68,7 +69,7 @@ export const register =
 
       if (errors) {
         errors.forEach((error) =>
-          dispatch(setAlertAction(error.msg, 'danger'))
+          dispatch(setAlertAction(error.msg, ALERT_ERROR))
         );
       }
 
@@ -99,7 +100,7 @@ export const login = (username, password) => async (dispatch) => {
     const errors = err.response.data.errors;
 
     if (errors) {
-      errors.forEach((error) => dispatch(setAlertAction(error.msg, 'danger')));
+      errors.forEach((error) => dispatch(setAlertAction(error.msg, ALERT_ERROR)));
     }
 
     dispatch(loginFail())
@@ -109,5 +110,5 @@ export const login = (username, password) => async (dispatch) => {
 // Logout / Clear Profile
 export const logoutAction = () => (dispatch) => {
   dispatch(logOut());
-  dispatch(setAlertAction("You have been logged out successfully!", "success"));
+  dispatch(setAlertAction(LOGGED_OUT_SUCCESS, ALERT_SUCCESS));
 };

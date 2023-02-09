@@ -100,8 +100,26 @@ public class HotelService {
     }
 
 
+    /**
+     * Get all hotels by user id
+     *
+     * @param userId The use to get the hotels
+     * @return A Hashset of hotels in DTO object
+     */
+    public Set<HotelDTO> getHotels(Long userId) {
+
+
+        Set<Hotel> hotels = hotelRepository.findAllHotelsByOwner(userId);
+
+        Set<HotelDTO> hotelDTOS = new LinkedHashSet<>();
+
+        hotels.forEach(hotel -> hotelDTOS.add(hotelToHotelDTO.converter(hotel)));
+
+        return hotelDTOS;
+    }
+
     /***
-     * get all hotels
+     * get all hotels by page
      * @return a list of all hotels
      * @throws ApiRequestException if There are no hotels
      */
@@ -212,6 +230,7 @@ public class HotelService {
                 existingHotel.setName(hotelDTO.getName());
                 existingHotel.setStars(hotelDTO.getStars());
                 existingHotel.setAreaName(hotelDTO.getAreaName());
+                existingHotel.setAddress(hotelDTO.getAddress());
                 Optional<User> admin = userRepository.findById(hotelDTO.getOwner());
                 admin.ifPresent(existingHotel::setOwner);
 
@@ -412,17 +431,17 @@ public class HotelService {
      * returns all hotel amenities
      * @return all hotel amenities
      */
-    public Set<HotelAmenity> getHotelAmenities() throws ApiRequestException{
+    public Set<HotelAmenity> getHotelAmenities() throws ApiRequestException {
 
         Set<HotelAmenity> amenities = new HashSet<>();
 
         amenityHotelRepository.findAllEnabled().forEach(amenities::add);
 
-        if (amenities.isEmpty()){
+        if (amenities.isEmpty()) {
 
             throw new ApiRequestException("There are no hotel amenities whet.");
 
-        }else {
+        } else {
             return amenities;
         }
     }
@@ -430,17 +449,18 @@ public class HotelService {
     /**
      * Created by Akd
      * saves a new Hotel Amenity
-     * @param hotelAmenity  to be saved
+     *
+     * @param hotelAmenity to be saved
      * @return the saved hotel amenity for confirmation
      * @throws ApiRequestException if the hotel amenity is not created and does not be enabled
      */
-    public HotelAmenity saveHotelAmenity (HotelAmenity hotelAmenity) throws ApiRequestException{
+    public HotelAmenity saveHotelAmenity(HotelAmenity hotelAmenity) throws ApiRequestException {
 
-        if (hotelAmenity.gethAmenity().isEmpty()){
+        if (hotelAmenity.gethAmenity().isEmpty()) {
             throw new ApiRequestException("There is no Hotel Amenity");
         }
 
-        if(!hotelAmenity.getEnabled()){
+        if (!hotelAmenity.getEnabled()) {
             throw new ApiRequestException("There is no activated Hotel Amenity");
         }
 

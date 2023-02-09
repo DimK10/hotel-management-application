@@ -4,6 +4,7 @@ import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import alertSlice from '../reducers/alert';
 import {setAlertAction} from "./alert";
+import {ALERT_ERROR, ALERT_SUCCESS, ORDER_ERROR, ORDER_SUCCESS} from "./types";
 
 const {
     newOrderPreCheckout,
@@ -53,8 +54,8 @@ export const getOrderByIdAction = (orderId) => async (dispatch) => {
         dispatch(orderError(payload));
 
         setAlertAction(
-            'There was a problem with your order. please try again',
-            'danger'
+            ORDER_ERROR,
+            ALERT_ERROR
         )
     }
 }
@@ -167,8 +168,8 @@ export const finalizeOrder = (currentOrder) =>
             // do nothing - the order object is not needed
 
             setAlertAction(
-                'You order has been placed Successfully!!!',
-                'success'
+                ORDER_SUCCESS,
+                ALERT_SUCCESS
             )
 
             dispatch(resetOrderState());
@@ -181,8 +182,8 @@ export const finalizeOrder = (currentOrder) =>
             }
             dispatch(orderError(payload));
             setAlertAction(
-                'There was a problem with your order. please try again',
-                'danger'
+                ORDER_ERROR,
+                ALERT_ERROR
             )
         }
     }
