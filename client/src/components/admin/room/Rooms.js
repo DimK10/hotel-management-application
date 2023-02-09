@@ -7,9 +7,9 @@ import {Tooltip} from '@coreui/coreui/dist/js/coreui';
 import {MultiSelect} from "react-multi-select-component";
 import Alert from "../../layout/Alert";
 import {useDispatch, useSelector} from "react-redux";
-import {getAllHotelsAction} from "../../../actions/hotel";
+import {getAllHotelsAction, getCountOfHotelsAction} from "../../../actions/hotel";
 import Select from "react-select";
-import {fetchAllRoomsFromSelectedHotel} from "../../../actions/room";
+import {fetchAllRoomsFromSelectedHotel, getCountOfRoomsAction} from "../../../actions/room";
 import {v4 as uuidv4} from 'uuid';
 
 
@@ -23,7 +23,9 @@ const Rooms = props => {
 
     const {hotels} = useSelector(state => state.hotel);
 
-    const {rooms} = useSelector(state => state.room);
+    const {count, rooms} = useSelector(state => state.room);
+
+    const {user} = useSelector(state => state.auth);
 
     useEffect(() => {
         // Get all hotels
@@ -37,9 +39,15 @@ const Rooms = props => {
     }, [hotels]);
 
     useEffect(() => {
-        if (hotelSelected !== null && hotelSelected !== 'undefined')
-            dispatch(fetchAllRoomsFromSelectedHotel(hotelSelected.value));
+        if (hotelSelected !== null && hotelSelected !== 'undefined' && user !== null)
+            dispatch(getCountOfRoomsAction(hotelSelected.value, user.id));
+            // dispatch(fetchAllRoomsFromSelectedHotel(hotelSelected.value));
     }, [hotelSelected]);
+
+    useEffect(() => {
+        if (hotelSelected !== null && hotelSelected !== 'undefined')
+            dispatch(fetchAllRoomsFromSelectedHotel(0, 10, 'id', hotelSelected.value));
+    }, [count])
 
 
     return (

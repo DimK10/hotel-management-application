@@ -113,15 +113,42 @@ public class RoomController {
         return new ResponseEntity<>(rooms, new HttpHeaders(), HttpStatus.OK);
     }
 
+    /***
+     * counts all the rooms in the database for a specific hotel id
+     * @return the number of rooms that exists in the database
+     */
+    @GetMapping("/api/rooms/quantity/{hotelId}/{userId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public int countRoomsOfHotel(@RequestHeader(name = "Authorization") String token,
+                                 @PathVariable Long hotelId,
+                                 @PathVariable Long userId
+    ) {
+
+        if (Objects.equals(userId, userService.getUserFromToken(token).getId())) {
+
+            return service.countRooms(hotelId, userId);
+        } else {
+
+            throw new RuntimeException("Unauthorized");
+        }
+    }
+
     /**
-     * Gets all rooms by hotel id
+     * Gets all rooms by hotel id with pagination
+     *
      * @param hotelId The hotel id we want to fetch all its rooms
      * @return List of Rooms in DTO format
      */
-    @GetMapping("/api/rooms/{hotelId}")
+    @GetMapping("/api/rooms/{hotelId}/{pageNo}/{pageSize}/{sortBy}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<List<RoomDTO>> findAllRoomsByHotelId(@PathVariable Long hotelId) {
-        List<RoomDTO> roomDTOS  = service.getRoomsByHotelId(hotelId);
+    public ResponseEntity<List<RoomDTO>> findAllRoomsByHotelId(
+            @PathVariable Long hotelId,
+            @PathVariable Integer pageNo,
+            @PathVariable Integer pageSize,
+            @PathVariable String sortBy) {
+
+
+        List<RoomDTO> roomDTOS = service.getRoomsByHotelId(pageNo, pageSize, sortBy, hotelId);
 
         return new ResponseEntity<>(roomDTOS, new HttpHeaders(), HttpStatus.OK);
     }
@@ -226,7 +253,7 @@ public class RoomController {
     @GetMapping("/api/room/amenities/{roomId}")
     public Set<RoomAmenity> findRoomAmenitiesByRoomId(@PathVariable Long roomId) throws ApiRequestException {
 
-            return service.getRoomAmenitiesByRoomId(roomId);
+        return service.getRoomAmenitiesByRoomId(roomId);
     }
 
     /***
@@ -235,7 +262,7 @@ public class RoomController {
      * @throws RuntimeException when not exist any hotel amenity
      */
     @GetMapping("/api/room/amenities")
-    public Set<RoomAmenity> findRoomAmenities()throws RuntimeException{
+    public Set<RoomAmenity> findRoomAmenities() throws RuntimeException {
 
         return service.getRoomAmenities();
 
@@ -250,7 +277,7 @@ public class RoomController {
      */
     @PutMapping("/api/room/saveRoomAmenity")
     @PreAuthorize("hasAuthority('SUPERUSER')")
-    public RoomAmenity saveRoomAmenity(@RequestHeader(name="Authorization")String token, @RequestBody RoomAmenity roomAmenity) throws ApiRequestException{
+    public RoomAmenity saveRoomAmenity(@RequestHeader(name = "Authorization") String token, @RequestBody RoomAmenity roomAmenity) throws ApiRequestException {
 
         if (Objects.equals(User.Role.SUPERUSER, userService.getUserFromToken(token).getRole())) {
 

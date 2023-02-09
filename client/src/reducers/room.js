@@ -5,6 +5,7 @@ const initialState = {
     loading: true,
     rooms: [],
     room: null,
+    count: 0,
     error: ''
 };
 
@@ -13,6 +14,11 @@ const roomSlice = createSlice({
     initialState,
     extraReducers: (builder) => builder.addCase(revertAll, () => initialState),
     reducers: {
+        getCountOfRooms: (state, action) => {
+            const { payload } = action;
+            state.count = payload;
+            state.error = '';
+        },
         getAllRoomsByHotel: (state, action) => {
             const { payload } = action;
             state.loading = false;
