@@ -175,7 +175,7 @@ export const finalizeOrder = (currentOrder) =>
             dispatch(resetOrderState());
 
         } catch (err) {
-            console.log(err)
+            console.error(err)
             const payload = {
                 msg: err.message,
                 status: err.response.status

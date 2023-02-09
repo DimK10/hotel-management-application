@@ -44,14 +44,14 @@ public class BootStrapData implements CommandLineRunner {
 
 		User client2 = new User(null, true, "dim_80", "dim", "Iwannou", "dimioannou@gmail.com", "soula_magapas",true ,Role.CLIENT, new HashSet<>(), new HashSet<>());
 		client2.setHashedPassword("1229758f94f95fe3593ffe549ab6c5dd797660bfc823ab8dc4fea9dd656c0609b196b0e77491ebf0");
-		userRepository.save(client2);
+		client2 = userRepository.save(client2);
 
 
 
 		User admin = new User(null, true, "geo_46", "thanos", "poul", "geopapadopoulos@gmail.com", "soula_sagapo",true, Role.ADMIN, new HashSet<>(), new HashSet<>());
 		admin.setHashedPassword("5c54105254c53d8e67ce12cddc0dc00a85ebd4156c68b2c8ee955d6d9066396ed4780bea29e02ef5");
 
-		userRepository.save(admin);
+		admin = userRepository.save(admin);
 
 		Room ena = new Room(null, "ena", 5, 54, false);
 		roomRepository.save(ena);
@@ -74,6 +74,29 @@ public class BootStrapData implements CommandLineRunner {
 		Hotel ksenia = new Hotel(null, "ksenia", 5, "athens", false);
 		Hotel ksenia2 = new Hotel(null, "ksenia2", 5, "athens", false);
 		Hotel ksenia3 = new Hotel(null, "ksenia3", 5, "athens", false);
+
+        // hotel with rooms for testing in front end
+        Hotel hotelWithRooms = new Hotel(null, "hotel_with_rooms", 4, "athens", false);
+        hotelWithRooms.setAddress("Athens");
+        hotelWithRooms.setAreaName("Patision 33");
+        hotelWithRooms.setDisabled(false);
+        hotelWithRooms.setOwner(admin);
+
+        hotelWithRooms = hotelRepository.save(hotelWithRooms);
+
+        for (int i = 0; i < 104; i++) {
+            Room room = new Room();
+
+            room.setHotel(hotelWithRooms);
+            room.setName("room_" + i);
+            room.setDisabled(false);
+            room.setLuxurity(i);
+            room.setPrice(i * 100);
+            room.setCapacity(i);
+
+            roomRepository.save(room);
+        }
+
 
 		hotelRepository.save(ksenia2);
 		hotelRepository.save(ksenia3);
