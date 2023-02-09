@@ -36,8 +36,7 @@ const RoomTable = ({rooms, onRoomSelect}) => {
                                 <td>
                                     {
                                         room.amenities.map(amenity => (
-                                            amenity.roomAmenities.charAt(0) + amenity.roomAmenities.slice(1).toLowerCase() + ' '
-                                        ))
+                                            amenity.rAmenity))
                                     }
                                 </td>
                                 <td>{room.price} €</td>

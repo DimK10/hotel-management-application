@@ -67,8 +67,6 @@ const PlaceNewOrder = () => {
         <Fragment>
             <NavBar/>
             {
-                hotel !== null
-                &&
                 <div key={uuidv4()} className="container mt-5">
                     <div className="card">
                         <div className="card-body">
@@ -102,9 +100,9 @@ const PlaceNewOrder = () => {
                                     <h6>Hotel Amenities</h6>
                                     {
                                         hotel.amenities.map(amenity => (
-                                            <div className="mb-3 row">
+                                            <div key={uuidv4()} className="mb-3 row">
                                                 <label htmlFor="staticText1"
-                                                       className="col-sm-2 col-form-label">{amenity.hotelAmenities.charAt(0) + amenity.hotelAmenities.slice(1).toLowerCase()}:</label>
+                                                       className="col-sm-2 col-form-label">{amenity.hAmenity}:</label>
                                                 <div className="col-sm-10">
                                                     <p id='staticText1' className="form-control-plaintext">price
                                                         included<small
