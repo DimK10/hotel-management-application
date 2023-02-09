@@ -1,6 +1,7 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sphy.hotelmanagementapplication.configuration.TestAppAdminConfiguration;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.domain.User;
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -39,6 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * created by dk
  */
 @ExtendWith(MockitoExtension.class)
+@Import(TestAppAdminConfiguration.class)
 class RoomControllerTest {
 
 	@Mock
@@ -368,15 +371,20 @@ class RoomControllerTest {
 		roomDTOS1.add(roomDTO);
 
 		// When
-		when(roomService.getRoomsByHotelId(1L)).thenReturn(roomDTOS1);
+		when(roomService.getRoomsByHotelId(0, 10, "id", 1L)).thenReturn(roomDTOS1);
 
 		// Return
-		mockMvc.perform(get("/api/rooms/1"))
+		mockMvc.perform(get("/api/rooms/1/0/10/id")
+				.header(HttpHeaders.AUTHORIZATION, "Bearer token"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$", Matchers.hasSize(1)))
 				.andExpect(jsonPath("$[0].name").value("roomName"));
 
-		verify(roomService, times(1)).getRoomsByHotelId(anyLong());
+		verify(roomService, times(1)).getRoomsByHotelId(anyInt(), anyInt(), anyString(), anyLong());
+    }
+
+    @Test
+    void countRoomsOfHotel() {
     }
 }
