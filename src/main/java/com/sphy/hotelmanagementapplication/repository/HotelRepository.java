@@ -54,4 +54,35 @@ public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long>{
 			"  where ha.enabled = true and i.hotel.id = :id order by i.hotel.id")
 	Set<HotelAmenity> findAmenityByHotelId(@Param("id") Long id);
 
+//	@Query(value = "select DISTINCT rk.hotel from (select r from rooms r " +
+//			"inner join Hotel h on r.hotel.id = h.id inner join " +
+//			"IntermediateHotelAmenity ih on h.id = ih.hotel.id " +
+//			"inner join HotelAmenity ha on ih.hotelAmenity.id = ha.id " +
+//			"inner join IntermediateRoomAmenity ir on r.id = ir.room.id " +
+//			"inner join RoomAmenity ra on ra.id = ir.roomAmenity.id inner join " +
+//			"orders o on o.room.id = r.id where h.disabled = false and " +
+//			"r.capacity = :adults and r.price > :priceFrom and r.price < :priceTo and h.stars = :stars and " +
+//			"(h.name like :NameOrLocation or h.areaName like :NameOrLocation) and (((:checkIn < o.checkInDate) and " +
+//			"(:checkOut < o.checkInDate)) or ((:checkIn > o.checkOutDate) and (:checkOut > o.checkOutDate))) " +
+//			" order by r.price) rk ")
+//	Set<Hotel> kjbasdkjbak();
+
+//	@Query(value = "select DISTINCT rk.hotel from (select r from rooms r " +
+//			"inner join com.sphy.hotelmanagementapplication.domain.Hotel h on rooms.hotel.id = Hotel.id " +
+//			"inner join com.sphy.hotelmanagementapplication.domain.IntermediateHotelAmenity ih on Hotel.id = IntermediateHotelAmenity.hotel.id " +
+//			"inner join com.sphy.hotelmanagementapplication.domain.HotelAmenity ha on IntermediateHotelAmenity.hotelAmenity.id = HotelAmenity.id " +
+//			"inner join com.sphy.hotelmanagementapplication.domain.IntermediateRoomAmenity ir on rooms.id = IntermediateRoomAmenity.room.id " +
+//			"inner join com.sphy.hotelmanagementapplication.domain.RoomAmenity ra on RoomAmenity.id = IntermediateRoomAmenity.roomAmenity.id " +
+//			"inner join com.sphy.hotelmanagementapplication.domain.Order o on orders.room.id = rooms.id " +
+//			"where Hotel.disabled = false " +
+//			"and rooms.capacity = :adults " +
+//			"and rooms.price > :priceFrom " +
+//			"and rooms.price < :priceTo " +
+//			"and Hotel.stars = :stars " +
+//			"and (Hotel.name like :NameOrLocation or Hotel.areaName like :NameOrLocation) " +
+//			"and (((:checkIn < orders.checkInDate) and (:checkOut < orders.checkInDate)) or ((:checkIn > orders.checkOutDate) " +
+//			"and (:checkOut > orders.checkOutDate)))  " +
+//			"order by r.price ) rk")
+//	Set<Hotel> kjbasdkjbak();
+
 }

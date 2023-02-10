@@ -91,12 +91,12 @@ public class HotelServiceIT {
 
         //when
 
-        Page<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, null, null, null, null, null, null, "athe",0,100, "name");
+        Page<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, null, null, null, null, null, null, "athe",0,1);
 
         System.out.println(hotelDTOS);
         //then
         assertEquals(21, hotelDTOS.get().count());
-        assertEquals(17, hotelDTOS.stream().findFirst().get().getId());
+        assertEquals(1, hotelDTOS.stream().findFirst().get().getId());
     }
 
     @Test
@@ -108,11 +108,11 @@ public class HotelServiceIT {
         List<RoomAmenity> roomAmenities = new ArrayList<>();
         //when
 
-        Page<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 4), LocalDate.of(2007, 12, 6), null, null, 2, null, null,0,100,"name");
+        Page<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 4), LocalDate.of(2007, 12, 6), null, null, 2, null, null,0,100);
 
         //then
         assertEquals(77, hotelDTOS.get().count());
-        assertEquals(59, hotelDTOS.stream().findFirst().get().getId());
+        assertEquals(21, hotelDTOS.stream().findFirst().get().getId());
 
     }
 
@@ -125,11 +125,11 @@ public class HotelServiceIT {
         List<RoomAmenity> roomAmenities = new ArrayList<>();
         //when
 
-        Page<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 2), LocalDate.of(2007, 12, 6), null, null, 2, null, null,0,100,"name");
+        Page<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 2), LocalDate.of(2007, 12, 6), null, null, 2, null, null,0,100);
 
         //then
         assertEquals(77, hotelDTOS.get().count());
-        assertEquals(79, hotelDTOS.stream().findFirst().get().getId());
+        assertEquals(21, hotelDTOS.stream().findFirst().get().getId());
 
     }
 
@@ -142,11 +142,11 @@ public class HotelServiceIT {
         List<RoomAmenity> roomAmenities = new ArrayList<>();
         //when
 
-        Page<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 4), LocalDate.of(2007, 12, 9), null, null, 2, null, null, 0 ,100, "name");
+        Page<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 4), LocalDate.of(2007, 12, 9), null, null, 2, null, null, 0 ,100);
 
         //then
         assertEquals(77, hotelDTOS.get().count());
-        assertEquals(64, hotelDTOS.stream().findFirst().get().getId());
+        assertEquals(21, hotelDTOS.stream().findFirst().get().getId());
 
     }
 
@@ -159,11 +159,11 @@ public class HotelServiceIT {
         List<RoomAmenity> roomAmenities = new ArrayList<>();
         //when
 
-        Page<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 3), LocalDate.of(2007, 12, 7), null, null, 2, null, null,0,100,"name");
+        Page<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 3), LocalDate.of(2007, 12, 7), null, null, 2, null, null,0,100);
 
         //then
         assertEquals(77, hotelDTOS.get().count());
-        assertEquals(34, hotelDTOS.stream().findFirst().get().getId());
+        assertEquals(21, hotelDTOS.stream().findFirst().get().getId());
 
     }
 
@@ -176,11 +176,11 @@ public class HotelServiceIT {
         List<RoomAmenity> roomAmenities = new ArrayList<>();
         //when
 
-        Page<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 2), LocalDate.of(2007, 12, 9), null, null, null, 1, null,0,100,"name");
+        Page<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, LocalDate.of(2007, 12, 2), LocalDate.of(2007, 12, 9), null, null, null, 1, null,0,100);
 
         //then
         assertEquals(39, hotelDTOS.get().count());
-        assertEquals(92, hotelDTOS.stream().findFirst().get().getId());
+        assertEquals(64, hotelDTOS.stream().findFirst().get().getId());
 
     }
 
@@ -193,11 +193,11 @@ public class HotelServiceIT {
         List<RoomAmenity> roomAmenities = new ArrayList<>();
         //when
 
-        Page<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities,null, null, null, null, 2, null, null, 0 ,100 ,"name");
+        Page<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities,null, null, null, null, 2, null, null, 0 ,100);
 
         //then
         assertEquals(97, hotelDTOS.get().count());
-        assertEquals(74, hotelDTOS.stream().findFirst().get().getId());
+        assertEquals(1, hotelDTOS.stream().findFirst().get().getId());
 
     }
 
@@ -210,11 +210,11 @@ public class HotelServiceIT {
         List<RoomAmenity> roomAmenities = new ArrayList<>();
         //when
 
-        Page<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, null, null, 0L, 11L, 2, null, null,0,100,"name");
+        Page<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, null, null, 0L, 11L, 2, null, null,0,100);
 
         //then
-        assertEquals(0, hotelDTOS.get().count());
-        assertEquals(0, hotelDTOS.stream().findFirst().get().getId());
+        assertEquals(39, hotelDTOS.get().count());
+        assertEquals(64, hotelDTOS.stream().findFirst().get().getId());
 
     }
 
@@ -225,17 +225,17 @@ public class HotelServiceIT {
 
         List<HotelAmenity> hotelAmenities = new ArrayList<>();
 
-        HotelAmenity hotelAmenity = new HotelAmenity("Airport Transport",true);
-        hotelAmenity.setId(9L);
-        hotelAmenities.add(hotelAmenity);
+        HotelAmenity hotelAmenity1 = new HotelAmenity("Parking", true);
+        hotelAmenity1.setId(1L);
+        hotelAmenities.add(hotelAmenity1);
         List<RoomAmenity> roomAmenities = new ArrayList<>();
         //when
 
-        Page<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, null, null, null, null, null, null, null, 0 ,100 ,"name");
+        Page<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, null, null, null, null, null, null, null, 0 ,100);
 
         //then
-        assertEquals(39, hotelDTOS.get().count());
-        assertEquals(84, hotelDTOS.stream().findFirst().get().getId());
+        assertEquals(59, hotelDTOS.get().count());
+        assertEquals(1, hotelDTOS.stream().findFirst().get().getId());
 
     }
 
@@ -246,19 +246,17 @@ public class HotelServiceIT {
 
         List<HotelAmenity> hotelAmenities = new ArrayList<>();
 
-        HotelAmenity hotelAmenity = new HotelAmenity("Airport Transport",true);
-
         List<RoomAmenity> roomAmenities = new ArrayList<>();
         RoomAmenity roomAmenity = new RoomAmenity("Free WiFi", true);
         roomAmenity.setId(1L);
         roomAmenities.add(roomAmenity);
         //when
 
-        Page<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, null, null, null, null, null, null, null, 0 ,100, "name");
+        Page<HotelDTO> hotelDTOS = hotelService.advanceSearchMethod(hotelAmenities, roomAmenities, null, null, null, null, null, null, null, 0 ,100);
 
         //then
         assertEquals(21, hotelDTOS.get().count());
-        assertEquals(18, hotelDTOS.stream().findFirst().get().getId());
+        assertEquals(1, hotelDTOS.stream().findFirst().get().getId());
 
     }
 

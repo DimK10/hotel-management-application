@@ -159,9 +159,9 @@ public class Hotel extends BaseEntity {
                 ", address='" + address + '\'' +
                 ", description='" + description + '\'' +
                 ", disabled=" + disabled +
-                ", owner=" + owner +
+//                ", owner=" + owner +
 //                ", rooms=" + rooms +
-                ", intermediateHotelAmenities=" + intermediateHotelAmenities +
+//                ", intermediateHotelAmenities=" + intermediateHotelAmenities +
                 '}';
     }
 }

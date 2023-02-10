@@ -75,8 +75,8 @@ public class SecurityConfig {
 				.antMatchers(HttpMethod.POST, "/api/hotel/basic/search").permitAll()
 				.antMatchers("**/h2-ui/**").permitAll()
 				.antMatchers("**/h2-ui/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/hotel/amenities").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/room/amenities").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/hotel/amenities").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/room/amenities").permitAll()
 
                 .anyRequest().authenticated()
 				.and()

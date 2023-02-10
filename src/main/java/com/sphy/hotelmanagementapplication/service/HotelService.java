@@ -409,9 +409,9 @@ public class HotelService {
 
 
     public Page<HotelDTO> advanceSearchMethod(List<HotelAmenity> hotelAmenities, List<RoomAmenity> roomAmenities, LocalDate checkInDate, LocalDate checkOutDate,
-                                             Long priceFrom, Long priceTo, Integer adultsRange, Integer stars, String nameOrLocation, Integer pageNo, Integer pageSize, String sortBy) {
+                                             Long priceFrom, Long priceTo, Integer adultsRange, Integer stars, String nameOrLocation, Integer pageNo, Integer pageSize) {
 
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.unsorted());
 
         Map<String, Object> parametrMap = new HashMap<>();
 
@@ -419,44 +419,47 @@ public class HotelService {
 //                "join rooms r on r.hotel.id = h.id inner join IntermediateRoomAmenity ir on r.id = ir.room.id inner join RoomAmenity ra on ra.id = ir.roomAmenity.id " +
 //                "inner join orders o on o.room.id = r.id where h.disabled = false ");
 
-        StringBuilder query = new StringBuilder("select DISTINCT r.hotel from Hotel h inner join IntermediateHotelAmenity ih on h.id = ih.hotel.id inner join HotelAmenity ha on ih.hotelAmenity.id = ha.id inner " +
-                "join rooms r on r.hotel.id = h.id inner join IntermediateRoomAmenity ir on r.id = ir.room.id inner join RoomAmenity ra on ra.id = ir.roomAmenity.id " +
+        StringBuilder query = new StringBuilder("select r.hotel from rooms r inner join Hotel h on r.hotel.id = h.id " +
+                "inner join IntermediateHotelAmenity ih on h.id = ih.hotel.id " +
+                "inner join HotelAmenity ha on ih.hotelAmenity.id = ha.id " +
+                "inner join IntermediateRoomAmenity ir on r.id = ir.room.id " +
+                "inner join RoomAmenity ra on ra.id = ir.roomAmenity.id " +
                 "inner join orders o on o.room.id = r.id where h.disabled = false ");
 
         if (adultsRange != null) {
 
-            query.append("and r.capacity = :adults");
+            query.append("and r.capacity = :adults ");
 
             parametrMap.put("adults", adultsRange);
         }
 
         if (priceFrom != null) {
 
-            query.append(" and r.price > :priceFrom");
+            query.append("and r.price >= :priceFrom ");
             parametrMap.put("priceFrom", priceFrom);
         }
 
         if (priceTo != null) {
 
-            query.append(" and r.price < :priceTo");
+            query.append("and r.price <= :priceTo ");
             parametrMap.put("priceTo", priceTo);
         }
 
         if (stars != null) {
 
-            query.append(" and h.stars = :stars");
+            query.append("and r.hotel.stars = :stars ");
             parametrMap.put("stars", stars);
         }
 
         if (nameOrLocation != null) {
 
-            query.append(" and (h.name like :NameOrLocation or h.areaName like :NameOrLocation)");
+            query.append("and (r.hotel.name like :NameOrLocation or r.hotel.areaName like :NameOrLocation) ");
             parametrMap.put("NameOrLocation", "%" + nameOrLocation.toLowerCase() + "%");
         }
 
         if (checkInDate != null && checkOutDate != null) {
 
-            query.append(" and (((:checkIn < o.checkInDate) and (:checkOut < o.checkInDate)) or ((:checkIn > o.checkOutDate) and (:checkOut > o.checkOutDate))) ");
+            query.append("and (((:checkIn < o.checkInDate) and (:checkOut < o.checkInDate)) or ((:checkIn > o.checkOutDate) and (:checkOut > o.checkOutDate))) ");
             parametrMap.put("checkOut", checkOutDate);
             parametrMap.put("checkIn", checkInDate);
         }
@@ -464,15 +467,17 @@ public class HotelService {
 
         for (int i = 0; i < hotelAmenities.size(); i++) {
 
-            query.append(" and ha.hAmenity = :hAmenity").append(i);
+            query.append("and ha.hAmenity = :hAmenity" + i + " " );
             parametrMap.put("hAmenity" + i, hotelAmenities.get(i).gethAmenity());
         }
 
         for (int i = 0; i < roomAmenities.size(); i++) {
 
-            query.append(" and ra.rAmenity = :rAmenity").append(i);
+            query.append("and ra.rAmenity = :rAmenity" + i + " " );
             parametrMap.put("rAmenity" + i, roomAmenities.get(i).getrAmenity());
         }
+
+        query.append(" order by r.price");
 
 
         Query queryFinal = entityManager.createQuery(String.valueOf(query), Hotel.class);
@@ -484,15 +489,15 @@ public class HotelService {
 
         List<Hotel> hotels = queryFinal.getResultList();
 
-        Set<HotelDTO> hotelDTOS = new HashSet<>();
+        Set<Hotel> hotels1 = new HashSet<>();
 
-        hotels.forEach(hotel -> hotelDTOS
-                .add(hotelToHotelDTO
-                        .converter(hotel)));
+        hotels.forEach(hotels1::add);
 
-        List<HotelDTO> hotelDTOSList = new ArrayList<>(hotelDTOS);
+        List<HotelDTO> hotelDTOSList = new ArrayList<>();
 
-        Page<HotelDTO> hotelDTOPage = new PageImpl<>(hotelDTOSList, paging, hotelDTOS.size());
+        hotels1.forEach(hotel -> hotelDTOSList.add(hotelToHotelDTO.converter(hotel)));
+
+        Page<HotelDTO> hotelDTOPage = new PageImpl<>(hotelDTOSList, paging, hotelDTOSList.size());
 
         return hotelDTOPage;
     }

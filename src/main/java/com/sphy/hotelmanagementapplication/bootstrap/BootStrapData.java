@@ -220,7 +220,7 @@ public class BootStrapData implements CommandLineRunner {
 
                 List<Room> rooms = new ArrayList<>();
 
-                Room room = new Room(null, String.valueOf(j), 3, 50 + i, false);
+                Room room = new Room(null, String.valueOf(j), 3, 50 + j, false);
 
                 room.setCapacity(j);
 
@@ -282,7 +282,7 @@ public class BootStrapData implements CommandLineRunner {
 
                 List<Room> rooms = new ArrayList<>();
 
-                Room room = new Room(null, String.valueOf(j), 5, 100 + i, false);
+                Room room = new Room(null, String.valueOf(j), 5, 100 + j, false);
 
                 room.setCapacity(j);
 
@@ -352,9 +352,9 @@ public class BootStrapData implements CommandLineRunner {
 
                 List<Room> rooms = new ArrayList<>();
 
-                Room room = new Room(null, String.valueOf(j), 1, 10 + i, false);
+                Room room = new Room(null, String.valueOf(j), 1, 10 + j, false);
 
-                room.setCapacity(j);
+                room.setCapacity(2);
 
                 roomRepository.save(room);
 
