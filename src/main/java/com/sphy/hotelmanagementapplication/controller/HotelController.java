@@ -96,6 +96,31 @@ public class HotelController {
         }
     }
 
+
+    /**
+     * Finds all hotels without pagination
+     *
+     * @param token The jwt token
+     * @return A List of hotels in DTo object
+     */
+    @GetMapping("/api/hotels")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Set<HotelDTO>> findAllHotels(@RequestHeader(name = "Authorization") String token) {
+
+        Long userId = userService.getUserFromToken(token).getId();
+
+        if (Objects.equals(userId, userService.getUserFromToken(token).getId())) {
+
+            Set<HotelDTO> hotelDTOS = service.getHotels(userId);
+
+            return new ResponseEntity<>(hotelDTOS, new HttpHeaders(), HttpStatus.OK);
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
+    }
+
+
+
     /***
      * Finds all hotels
      * @return all hotels for a specific user id

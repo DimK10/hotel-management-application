@@ -211,26 +211,26 @@ public class BootStrapData implements CommandLineRunner {
 
         roomRepository.save(dio);
 
-        // hotel with rooms for testing in front end
-//        Hotel hotelWithRooms = new Hotel(40L, "hotel_with_rooms", 40, "Larissa", "aaa", false);
-//        hotelWithRooms.setAddress("Larissa");
-//        hotelWithRooms.setAreaName("Patision 33");
-//        hotelWithRooms.setDisabled(false);
-//        hotelWithRooms.setOwner(admin);
-//
-//        hotelWithRooms = hotelRepository.save(hotelWithRooms);
-//
-//        for (int i = 0; i < 104; i++) {
-//            Room room = new Room();
-//
-//            room.setHotel(hotelWithRooms);
-//            room.setName("room_" + i);
-//            room.setDisabled(false);
-//            room.setLuxurity(i);
-//            room.setPrice(i * 1000);
-//            room.setCapacity(i * 100);
-//
-//            roomRepository.save(room);
-//        }
+        //  hotel with rooms for testing in front end
+        Hotel hotelWithRooms = new Hotel(40L, "hotel_with_rooms", 40, "Larissa", "aaa", false);
+        hotelWithRooms.setAddress("Larissa");
+        hotelWithRooms.setAreaName("Patision 33");
+        hotelWithRooms.setDisabled(false);
+        hotelWithRooms.setOwner(admin);
+
+        hotelWithRooms = hotelRepository.save(hotelWithRooms);
+
+        for (int i = 0; i < 104; i++) {
+            Room room = new Room();
+
+            room.setHotel(hotelWithRooms);
+            room.setName("room_" + i);
+            room.setDisabled(false);
+            room.setLuxurity(i);
+            room.setPrice(i * 1000);
+            room.setCapacity(i * 100);
+
+            roomRepository.save(room);
+        }
     }
 }
