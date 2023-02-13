@@ -25,6 +25,11 @@ const roomSlice = createSlice({
             state.rooms = payload;
             state.error = '';
         },
+        getRoomById: (state, action) => {
+            const { payload } = action;
+            state.loading = false;
+            state.room = payload;
+        },
         roomError: (state, action) => {
             const { payload } = action;
             state.error = payload;

@@ -74,7 +74,7 @@ const RoomTable = props => {
     }
 
     const onRowClick = (room) => {
-        navigate(`/room/${room.id}`);
+        navigate(`/rooms/${room.id}`);
     }
 
     return (
@@ -110,7 +110,7 @@ const RoomTable = props => {
                     <tbody>
                     {
                         rooms.map((room, index) => (
-                            <tr key={uuidv4()}>
+                            <tr key={uuidv4()} style={{ cursor: 'pointer' }} onClick={e => onRowClick(room)}>
                                 <th scope="row">{index + 1}</th>
                                 <td>{room.name}</td>
                                 <td>{room.luxurity}</td>
@@ -118,11 +118,11 @@ const RoomTable = props => {
                                 <td className="flex-row">
                                     <button type="button" className="btn btn-success"
                                             style={{color: '#fff', marginRight: '0.3rem'}}
-                                            data-coreui-toggle="tooltip" data-coreui-placement="top"
-                                            title="Edit this room"
-                                            onMouseOver={(e) => {
-                                                Tooltip.getOrCreateInstance(e.target).show()
-                                            }}
+                                            // data-coreui-toggle="tooltip" data-coreui-placement="top"
+                                            // title="Edit this room"
+                                            // onMouseOver={(e) => {
+                                            //     Tooltip.getOrCreateInstance(e.target).show()
+                                            // }}
                                     >
                                         <CIcon className="btn-icon" icon={cilPencil}/>
                                     </button>

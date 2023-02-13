@@ -8,6 +8,7 @@ import roomSlice from "../reducers/room";
 const {
     getAllRoomsByHotel,
     getCountOfRooms,
+    getRoomById,
     roomError,
 } = roomSlice.actions;
 
@@ -56,6 +57,23 @@ export const getAllRoomsByPage = (pageNo, pageSize, sortBy) => async dispatch =>
 
 
         dispatch(getAllRoomsByHotel(res.data))
+    } catch (err) {
+        dispatch(roomError(err.response.data.errorMessage));
+        dispatch(setAlertAction(ROOM_ERROR, ALERT_ERROR));
+    }
+
+}
+
+export const getRoomByIdAction = (roomId) => async  dispatch => {
+    if (localStorage.jwt) {
+        setAuthToken(localStorage.jwt);
+    }
+
+    try {
+
+        const res = await axios.get(`/api/roomId/${roomId}`);
+
+        dispatch(getRoomById(res.data));
     } catch (err) {
         dispatch(roomError(err.response.data.errorMessage));
         dispatch(setAlertAction(ROOM_ERROR, ALERT_ERROR));
