@@ -1,7 +1,6 @@
 package com.sphy.hotelmanagementapplication.converter;
 
 import com.sphy.hotelmanagementapplication.domain.Hotel;
-import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import org.springframework.stereotype.Component;
@@ -36,6 +35,7 @@ public class HotelToHotelDTO {
         hotelDTO.setAreaName(hotel.getAreaName());
         hotelDTO.setAddress(hotel.getAddress());
         hotelDTO.setStars(hotel.getStars());
+        hotelDTO.setDescription(hotelDTO.getDescription());
 
         if (hotel.getOwner() != null) {
             hotelDTO.setOwner(hotel.getOwner().getId());

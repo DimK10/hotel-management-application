@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,10 +24,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /***
  * created by gp
  */
-@Transactional
+
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles(value = "dev")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class RoomServiceIT {
 
     @Autowired
@@ -52,7 +54,7 @@ public class RoomServiceIT {
 
         Hotel hotel = new Hotel(10L);
         hotel.setOwner(admin);
-        hotelRepository.save(hotel);
+        hotel = hotelRepository.save(hotel);
 
 
         Room room1 = new Room(1L);
@@ -79,8 +81,8 @@ public class RoomServiceIT {
         roomRepository.save(room5);
         roomRepository.save(room6);
 
-        //when
-        List<RoomDTO> roomDTOS = roomService.getRooms(0, 10, "id", admin.getId());
+            //when
+            List<RoomDTO> roomDTOS = roomService.getRooms(0,5,"id", admin.getId());
 
         //then
         assertEquals(expected, roomDTOS.size());
@@ -99,9 +101,9 @@ public class RoomServiceIT {
         User admin = new User(1L);
         userRepository.save(admin);
 
-        Hotel hotel = new Hotel(10L);
+        Hotel hotel = new Hotel(200L);
         hotel.setOwner(admin);
-        hotelRepository.save(hotel);
+        hotel = hotelRepository.save(hotel);
 
 
         for (int i = 1; i < 12; i++) {
@@ -147,7 +149,7 @@ public class RoomServiceIT {
 
         Hotel hotel = new Hotel(10L);
         hotel.setOwner(admin);
-        hotelRepository.save(hotel);
+        hotel = hotelRepository.save(hotel);
 
 
         for (int i = 1; i < 12; i++) {

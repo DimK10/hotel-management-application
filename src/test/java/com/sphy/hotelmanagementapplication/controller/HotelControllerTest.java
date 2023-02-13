@@ -13,6 +13,7 @@ import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.UserService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -224,6 +225,7 @@ public class HotelControllerTest {
     }
 
     @Test
+    @Disabled("There is no longer a method to get all hotels without pagination")
     void findAllHotels() throws Exception {
         // Given
         User admin = new User(1L);
@@ -481,7 +483,7 @@ public class HotelControllerTest {
         //then
 
          mockMvc.perform(
-                        post("/api/hotel/basic/search")
+                        get("/api/hotel/basic/search")
                                 .content(asJsonString(basicSearchDTO1))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON))
