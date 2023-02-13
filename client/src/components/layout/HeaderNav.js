@@ -36,7 +36,6 @@ const HeaderNav = props => {
           <div className="header-divider"></div>
           <Breadcrumb/>
         </header>
-        <Alert />
         <div className={`${
           window.location.pathname !== '/calendar' ? 'container' : ''
         }`}>

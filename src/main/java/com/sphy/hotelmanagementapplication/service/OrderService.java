@@ -190,21 +190,24 @@ public class OrderService {
             throw new RuntimeException("The room can't be empty");
         }
 
-        conflict = orderRepository.OrderConflict(orderDTO.getCheckInDate(),
-                orderDTO.getCheckOutDate(), room.get());
+        synchronized (this) {
 
-        if (conflict == 0) {
-            orderOptional.get().setCheckOutDate(orderDTO.getCheckOutDate());
-            orderOptional.get().setCheckInDate(orderDTO.getCheckInDate());
-            orderOptional.get().setCanceled(orderDTO.isCanceled());
-            orderOptional.get().setPrice(orderDTO.getPrice());
-            orderOptional.get().setHotelName(orderDTO.getHotelName());
-            orderOptional.get().setRoomName(orderDTO.getRoomName());
-            orderOptional.get().getRoomAmenities().forEach(amenity -> orderDTO.getRoomAmenities().add(amenity));
-            orderOptional.get().getHotelAmenities().forEach(amenity -> orderDTO.getRoomAmenities().add(amenity));
+            conflict = orderRepository.OrderConflict(orderDTO.getCheckInDate(),
+                    orderDTO.getCheckOutDate(), room.get());
 
-        } else {
-            throw new ApiExceptionFront("The room isn't available on the desirable dates");
+            if (conflict == 0) {
+                orderOptional.get().setCheckOutDate(orderDTO.getCheckOutDate());
+                orderOptional.get().setCheckInDate(orderDTO.getCheckInDate());
+                orderOptional.get().setCanceled(orderDTO.isCanceled());
+                orderOptional.get().setPrice(orderDTO.getPrice());
+                orderOptional.get().setHotelName(orderDTO.getHotelName());
+                orderOptional.get().setRoomName(orderDTO.getRoomName());
+                orderOptional.get().getRoomAmenities().forEach(amenity -> orderDTO.getRoomAmenities().add(amenity));
+                orderOptional.get().getHotelAmenities().forEach(amenity -> orderDTO.getRoomAmenities().add(amenity));
+
+            } else {
+                throw new ApiExceptionFront("The room isn't available on the desirable dates");
+            }
         }
 
         return orderToOrderDTO.converter(orderRepository.save(orderOptional.get()));

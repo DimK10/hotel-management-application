@@ -35,15 +35,15 @@ function Sidebar(props) {
               Dashboard{/*<span className="badge badge-sm bg-info ms-auto">NEW</span>*/}
             </Link>
           </li>
-          <li className="nav-title">Calendar</li>
-          <li className="nav-item">
-            <Link className={`nav-link ${
-              window.location.pathname === '/calendar' ? 'active' : ''
-            }`} to='/calendar'>
-              <CIcon className='nav-icon' icon={cilCalendar}/>
-              calendar page
-            </Link>
-          </li>
+          {/*<li className="nav-title">Calendar</li>*/}
+          {/*<li className="nav-item">*/}
+          {/*  <Link className={`nav-link ${*/}
+          {/*    window.location.pathname === '/calendar' ? 'active' : ''*/}
+          {/*  }`} to='/calendar'>*/}
+          {/*    <CIcon className='nav-icon' icon={cilCalendar}/>*/}
+          {/*    calendar page*/}
+          {/*  </Link>*/}
+          {/*</li>*/}
           <li className="nav-title">Hotels</li>
           <li className="nav-item">
             <Link className={`nav-link ${

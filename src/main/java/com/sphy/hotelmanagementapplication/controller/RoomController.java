@@ -1,5 +1,6 @@
 package com.sphy.hotelmanagementapplication.controller;
 
+import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -109,6 +111,19 @@ public class RoomController {
         List<RoomDTO> rooms = service.getRooms(pageNo, pageSize, sortBy, userService.getUserFromToken(token).getId());
 
         return new ResponseEntity<>(rooms, new HttpHeaders(), HttpStatus.OK);
+    }
+
+    /**
+     * Gets all rooms by hotel id
+     * @param hotelId The hotel id we want to fetch all its rooms
+     * @return List of Rooms in DTO format
+     */
+    @GetMapping("/api/rooms/{hotelId}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<List<RoomDTO>> findAllRoomsByHotelId(@PathVariable Long hotelId) {
+        List<RoomDTO> roomDTOS  = service.getRoomsByHotelId(hotelId);
+
+        return new ResponseEntity<>(roomDTOS, new HttpHeaders(), HttpStatus.OK);
     }
 
     /***
