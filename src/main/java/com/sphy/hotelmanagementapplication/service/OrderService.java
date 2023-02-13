@@ -118,8 +118,11 @@ public class OrderService {
         Optional<Order> order = orderRepository.findById(id);
 
         if (order.isEmpty()) {
-            throw new ApiRequestException("There is now order with id: " + id);
-        } else {
+            throw new ApiRequestException("There is not order with id: " + id);
+
+        } else if(order.get().isCanceled()){
+            throw new ApiRequestException("The order with id: " + id + "is disabled");
+        }else {
             return orderToOrderDTO.converter(order.get());
         }
     }
