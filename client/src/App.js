@@ -34,6 +34,7 @@ import ClientOrders from "./components/client/order/ClientOrders";
 import SecuredRolePage from "./components/auth/SecuredRolePage";
 import ShowOrderInfo from './components/client/order/ShowOrderInfo';
 import ViewRoom from "./components/admin/room/ViewRoom";
+import EditRoom from "./components/admin/room/EditRoom";
 
 if (localStorage.token) {
     setAuthToken(localStorage.token);
@@ -164,6 +165,16 @@ const App = () => {
                                     <SecuredPage>
                                         <SecuredRolePage userRole={Role.ADMIN}>
                                             <CreateRoom/>
+                                        </SecuredRolePage>
+                                    </SecuredPage>
+                                }
+                            />
+                            <Route
+                                path='/rooms/update/:roomId'
+                                element={
+                                    <SecuredPage>
+                                        <SecuredRolePage userRole={Role.ADMIN}>
+                                            <EditRoom/>
                                         </SecuredRolePage>
                                     </SecuredPage>
                                 }

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {loadUser} from "../../../actions/auth";
@@ -10,6 +10,7 @@ import {cilPencil} from "@coreui/icons";
 import Loading from "../../layout/Loading";
 import NotFound from "../../error/NotFound";
 import {getRoomByIdAction} from "../../../actions/room";
+import {v4 as uuidv4} from "uuid";
 
 const ViewRoom = props => {
 
@@ -105,6 +106,26 @@ const ViewRoom = props => {
                                                                className="form-control-plaintext">{room.capacity}</p>
                                                         </div>
                                                     </div>
+                                                    {
+                                                        room.amenities.length > 0
+                                                        &&
+                                                        <Fragment>
+                                                            <label htmlFor="amenities"
+                                                                   className="col-form-label">Amenities:</label>
+                                                            <div className="mb-3">
+
+                                                                {
+                                                                    room.amenities.map((amenity) => (
+                                                                        <span key={uuidv4()}
+                                                                              id="amenities"
+                                                                              className="badge rounded-pill text-bg-primary"
+                                                                        >{amenity.label}</span>
+                                                                    ))
+                                                                }
+
+                                                            </div>
+                                                        </Fragment>
+                                                    }
                                                 </div>
 
                                             </div>

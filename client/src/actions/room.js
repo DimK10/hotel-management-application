@@ -1,7 +1,14 @@
 import setAuthToken from "../utils/setAuthToken";
 import axios from "axios";
 import {setAlertAction} from "./alert";
-import {ALERT_ERROR, HOTEL_ERROR, ROOM_ERROR} from "./types";
+import {
+    ALERT_ERROR,
+    ALERT_SUCCESS,
+    HOTEL_ERROR,
+    HOTEL_UPDATED_SUCCESS,
+    ROOM_ERROR,
+    ROOM_UPDATED_SUCCESS
+} from "./types";
 import roomSlice from "../reducers/room";
 
 
@@ -9,6 +16,7 @@ const {
     getAllRoomsByHotel,
     getCountOfRooms,
     getRoomById,
+    updateRoom,
     roomError,
 } = roomSlice.actions;
 
@@ -79,4 +87,21 @@ export const getRoomByIdAction = (roomId) => async  dispatch => {
         dispatch(setAlertAction(ROOM_ERROR, ALERT_ERROR));
     }
 
+}
+
+export const updateExistingRoomAction = (formData) => async dispatch => {
+    if (localStorage.jwt) {
+        setAuthToken(localStorage.jwt);
+    }
+
+    const config = {
+        headers: {
+            "Content-Type": "application/json",
+        },
+    };
+
+    const res = await axios.put("/api/room/update", formData, config);
+
+    dispatch(updateRoom(res.data));
+    dispatch(setAlertAction( ROOM_UPDATED_SUCCESS, ALERT_SUCCESS ));
 }
