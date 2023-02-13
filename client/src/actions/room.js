@@ -44,3 +44,21 @@ export const fetchAllRoomsFromSelectedHotel = (pageNo, pageSize, sortBy, hotelId
         dispatch(setAlertAction(ROOM_ERROR, ALERT_ERROR));
     }
 }
+
+export const getAllRoomsByPage = (pageNo, pageSize, sortBy) => async dispatch => {
+
+    if (localStorage.jwt) {
+        setAuthToken(localStorage.jwt);
+    }
+
+    try {
+        const res = await axios.get(`/api/rooms/${pageNo}/${pageSize}/${sortBy}`);
+
+
+        dispatch(getAllRoomsByHotel(res.data))
+    } catch (err) {
+        dispatch(roomError(err.response.data.errorMessage));
+        dispatch(setAlertAction(ROOM_ERROR, ALERT_ERROR));
+    }
+
+}

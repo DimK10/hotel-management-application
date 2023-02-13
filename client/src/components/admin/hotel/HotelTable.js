@@ -1,8 +1,6 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import CIcon from "@coreui/icons-react";
-import {cilPencil, cilTrash} from "@coreui/icons";
-import {Tooltip} from '@coreui/coreui/dist/js/coreui';
-import Pagination from "../../layout/Pagination";
+import {cilPencil} from "@coreui/icons";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllHotelsByPage} from "../../../actions/hotel";
 import {useNavigate} from "react-router-dom";
@@ -104,9 +102,9 @@ function HotelTable() {
           <label htmlFor="rows-select" style={{marginRight: ".5rem"}}>Number of
             records:</label>
           <select
-            className="custom-select" id="rows-select"
-            onChange={(e) => handleSelectChange(e)}>
-            <option value="10" defaultValue={true}>10</option>
+              className="custom-select" id="rows-select"
+              onChange={(e) => handleSelectChange(e)} value={pageSize}>
+            <option value="10">10</option>
             <option value="20">20</option>
             <option value="30">30</option>
           </select>
@@ -163,8 +161,7 @@ function HotelTable() {
           }
           </tbody>
         </table>
-        <Pagination pages={pages} changePage={changePage} moveToNextPage={moveToNextPage}
-                    moveToPreviousPage={moveToPreviousPage} currentPage={currentPage}/>
+
       </div>
     </Fragment>
   );
