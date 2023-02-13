@@ -20,11 +20,11 @@ import java.util.Set;
 public interface RoomRepository extends PagingAndSortingRepository<Room,Long> {
     Optional<Room> findByName(String name);
 
-    @Query("SELECT count(r) from rooms r where r.hotel.owner.id = :id")
+    @Query("SELECT count(r) from rooms r where r.hotel.owner.id = :id and r.disabled = false")
     int countAll(@Param("id") Long id);
 
-    @Query(value = "select r from rooms r where r.hotel.owner.id = :id",
-            countQuery = "select count (r) from  rooms r where r.hotel.owner.id = :id")
+    @Query(value = "select r from rooms r where r.hotel.owner.id = :id and r.disabled = false",
+            countQuery = "select count (r) from  rooms r where r.hotel.owner.id = :id and r.disabled = false")
     Page<Room> findAllRoomsByOwner(@Param("id") Long id, Pageable pageable);
 
 

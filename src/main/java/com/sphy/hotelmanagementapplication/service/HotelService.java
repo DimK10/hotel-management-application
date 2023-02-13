@@ -70,7 +70,13 @@ public class HotelService {
 
         if (hotel.isEmpty()) {
             throw new ApiRequestException("There is no hotel with id: " + id);
-        } else {
+
+        } else if (hotel.get().isDisabled()){
+
+            throw new ApiRequestException("The hotel with id: " + id + "is disabled");
+
+
+        }else {
             return hotelToHotelDTO.converter(hotel.get());
         }
 
@@ -89,7 +95,11 @@ public class HotelService {
 
         if (hotel.isEmpty()) {
             throw new ApiRequestException("There is no hotel with id: " + id);
-        } else {
+
+        } else if (hotel.get().isDisabled()){
+            throw new ApiRequestException("The hotel with id: " + id + "is disabled"); 
+
+        }else {
             return hotelToHotelDTO.converter(hotel.get());
         }
 
@@ -163,6 +173,11 @@ public class HotelService {
         Optional<Hotel> hotel = hotelRepository.findByName(name);
         if (hotel.isEmpty()) {
             throw new ApiRequestException("There is no hotel with name: " + name);
+
+        } else if(hotel.get().isDisabled()){
+            throw new ApiRequestException("The hotel with id: " + name + "is disabled"); 
+
+
         } else {
             return hotelToHotelDTO.converter(hotel.get());
 
@@ -361,7 +376,7 @@ public class HotelService {
 
             } else {
 
-                throw new ApiRequestException("The hotel has no Amenities whet");
+                throw new ApiRequestException("The hotel has no Amenities yet");
             }
         } else {
 
