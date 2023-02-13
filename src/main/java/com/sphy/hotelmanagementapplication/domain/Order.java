@@ -169,7 +169,7 @@ public class Order extends BaseEntity {
                 ", checkOutDate=" + checkOutDate +
                 ", canceled=" + canceled +
                 ", client=" + client +
-//                ", room=" + room +
+//              ", room=" + room +
                 ", price=" + price +
                 ", roomName='" + roomName + '\'' +
                 ", hotelName='" + hotelName + '\'' +

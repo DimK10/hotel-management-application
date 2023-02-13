@@ -13,6 +13,6 @@ import java.util.Set;
 
 public interface AmenityHotelRepository extends CrudRepository <HotelAmenity,Long> {
 
-    @Query(value = "select ha from HotelAmenity ha where ha.enabled = true ")
+    @Query(value = "select ha from HotelAmenity ha where ha.enabled = true order by ha.hAmenity desc ")
     Set<HotelAmenity> findAllEnabled();
 }

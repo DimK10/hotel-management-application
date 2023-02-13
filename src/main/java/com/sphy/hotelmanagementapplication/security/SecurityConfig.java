@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -73,7 +74,7 @@ public class SecurityConfig {
 				.antMatchers(HttpMethod.POST, "/api/signup").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/login").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/hotel/basic/search").permitAll()
-				.antMatchers("**/h2-ui/**").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/hotel/advanced/search").permitAll()
 				.antMatchers("**/h2-ui/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/hotel/amenities").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/room/amenities").permitAll()

@@ -16,6 +16,9 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.time.LocalDate;
 import java.util.*;
 
 /***
@@ -24,6 +27,7 @@ import java.util.*;
 @Service
 public class HotelService {
 
+    private final EntityManager entityManager;
 
     private final HotelRepository hotelRepository;
 
@@ -42,7 +46,8 @@ public class HotelService {
     private final AmenityHotelRepository amenityHotelRepository;
 
 
-    public HotelService(HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService, IntermediateHotelAmenityRepository intermediateHotelAmenityRepository, AmenityHotelRepository amenityHotelRepository) {
+    public HotelService(EntityManager entityManager, HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService, IntermediateHotelAmenityRepository intermediateHotelAmenityRepository, AmenityHotelRepository amenityHotelRepository) {
+        this.entityManager = entityManager;
         this.hotelRepository = hotelRepository;
         this.hotelDTOToHotel = hotelDTOToHotel;
         this.hotelToHotelDTO = hotelToHotelDTO;
@@ -119,7 +124,7 @@ public class HotelService {
     }
 
     /***
-     * get all hotels by page
+     * get all hotels
      * @return a list of all hotels
      * @throws ApiRequestException if There are no hotels
      */
@@ -231,6 +236,7 @@ public class HotelService {
                 existingHotel.setStars(hotelDTO.getStars());
                 existingHotel.setAreaName(hotelDTO.getAreaName());
                 existingHotel.setAddress(hotelDTO.getAddress());
+                existingHotel.setDescription(hotelDTO.getDescription());
                 Optional<User> admin = userRepository.findById(hotelDTO.getOwner());
                 admin.ifPresent(existingHotel::setOwner);
 
@@ -240,7 +246,6 @@ public class HotelService {
                                         .save(new IntermediateHotelAmenity(existingHotel, amenity))));
 
                 return hotelToHotelDTO.converter(hotelRepository.save(existingHotel));
-
             }
         }
     }
@@ -413,6 +418,7 @@ public class HotelService {
                     }
                 }
 
+
                 hotelDTOS.forEach(hotelDTO -> hotelDTO
                         .getRooms()
                         .forEach(roomDTO -> roomDTO.getAmenities()
@@ -467,4 +473,98 @@ public class HotelService {
         return amenityHotelRepository.save(hotelAmenity);
     }
 
+
+    public Page<HotelDTO> advanceSearchMethod(List<HotelAmenity> hotelAmenities, List<RoomAmenity> roomAmenities, LocalDate checkInDate, LocalDate checkOutDate,
+                                              Long priceFrom, Long priceTo, Integer adultsRange, Integer stars, String nameOrLocation, Integer pageNo, Integer pageSize) {
+
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.unsorted());
+
+        Map<String, Object> parametrMap = new HashMap<>();
+
+//        StringBuilder query = new StringBuilder("select DISTINCT h from Hotel h inner join IntermediateHotelAmenity ih on h.id = ih.hotel.id inner join HotelAmenity ha on ih.hotelAmenity.id = ha.id inner " +
+//                "join rooms r on r.hotel.id = h.id inner join IntermediateRoomAmenity ir on r.id = ir.room.id inner join RoomAmenity ra on ra.id = ir.roomAmenity.id " +
+//                "inner join orders o on o.room.id = r.id where h.disabled = false ");
+
+        StringBuilder query = new StringBuilder("select r.hotel from rooms r inner join Hotel h on r.hotel.id = h.id " +
+                "inner join IntermediateHotelAmenity ih on h.id = ih.hotel.id " +
+                "inner join HotelAmenity ha on ih.hotelAmenity.id = ha.id " +
+                "inner join IntermediateRoomAmenity ir on r.id = ir.room.id " +
+                "inner join RoomAmenity ra on ra.id = ir.roomAmenity.id " +
+                "inner join orders o on o.room.id = r.id where h.disabled = false ");
+
+        if (adultsRange != null) {
+
+            query.append("and r.capacity = :adults ");
+
+            parametrMap.put("adults", adultsRange);
+        }
+
+        if (priceFrom != null) {
+
+            query.append("and r.price >= :priceFrom ");
+            parametrMap.put("priceFrom", priceFrom);
+        }
+
+        if (priceTo != null) {
+
+            query.append("and r.price <= :priceTo ");
+            parametrMap.put("priceTo", priceTo);
+        }
+
+        if (stars != null) {
+
+            query.append("and r.hotel.stars = :stars ");
+            parametrMap.put("stars", stars);
+        }
+
+        if (nameOrLocation != null) {
+
+            query.append("and (r.hotel.name like :NameOrLocation or r.hotel.areaName like :NameOrLocation) ");
+            parametrMap.put("NameOrLocation", "%" + nameOrLocation.toLowerCase() + "%");
+        }
+
+        if (checkInDate != null && checkOutDate != null) {
+
+            query.append("and (((:checkIn < o.checkInDate) and (:checkOut < o.checkInDate)) or ((:checkIn > o.checkOutDate) and (:checkOut > o.checkOutDate))) ");
+            parametrMap.put("checkOut", checkOutDate);
+            parametrMap.put("checkIn", checkInDate);
+        }
+
+
+        for (int i = 0; i < hotelAmenities.size(); i++) {
+
+            query.append("and ha.hAmenity = :hAmenity" + i + " ");
+            parametrMap.put("hAmenity" + i, hotelAmenities.get(i).gethAmenity());
+        }
+
+        for (int i = 0; i < roomAmenities.size(); i++) {
+
+            query.append("and ra.rAmenity = :rAmenity" + i + " ");
+            parametrMap.put("rAmenity" + i, roomAmenities.get(i).getrAmenity());
+        }
+
+        query.append(" order by r.price");
+
+
+        Query queryFinal = entityManager.createQuery(String.valueOf(query), Hotel.class);
+
+        for (String key : parametrMap.keySet()) {
+
+            queryFinal.setParameter(key, parametrMap.get(key));
+        }
+
+        List<Hotel> hotels = queryFinal.getResultList();
+
+        Set<Hotel> hotels1 = new HashSet<>();
+
+        hotels.forEach(hotels1::add);
+
+        List<HotelDTO> hotelDTOSList = new ArrayList<>();
+
+        hotels1.forEach(hotel -> hotelDTOSList.add(hotelToHotelDTO.converter(hotel)));
+
+        Page<HotelDTO> hotelDTOPage = new PageImpl<>(hotelDTOSList, paging, hotelDTOSList.size());
+
+        return hotelDTOPage;
+    }
 }

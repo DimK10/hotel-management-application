@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /***
  * created by gp
  */
-@Transactional
+
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles(value = "dev")
@@ -79,8 +79,8 @@ public class RoomServiceIT {
         roomRepository.save(room5);
         roomRepository.save(room6);
 
-        //when
-        List<RoomDTO> roomDTOS = roomService.getRooms(0, 10, "id", admin.getId());
+            //when
+            List<RoomDTO> roomDTOS = roomService.getRooms(0,5,"id", admin.getId());
 
         //then
         assertEquals(expected, roomDTOS.size());
@@ -99,9 +99,9 @@ public class RoomServiceIT {
         User admin = new User(1L);
         userRepository.save(admin);
 
-        Hotel hotel = new Hotel(10L);
+        Hotel hotel = new Hotel(200L);
         hotel.setOwner(admin);
-        hotelRepository.save(hotel);
+        hotel = hotelRepository.save(hotel);
 
 
         Room room1 = new Room(1L);
