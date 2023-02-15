@@ -27,6 +27,10 @@ const EditRoom = props => {
 
     const [roomAmenitiesToSelect, setRoomAmenitiesToSelect] = useState([]);
 
+    const [roomAmenitiesSelected, setRoomAmenitiesSelected] = useState([...room.amenities.map(roomAmenity => {
+        return {label: roomAmenity.rAmenity, value: roomAmenity.id}
+    })]);
+
 
     const [formData, setFormData] = useState({
         id: room.id,
@@ -60,17 +64,17 @@ const EditRoom = props => {
 
     useEffect(() => {
 
-       let data = roomAmenities.map(roomAmenity => {
-           return { label: roomAmenity.rAmenity, value: roomAmenity.id }
-       })
+        let data = roomAmenities.map(roomAmenity => {
+            return {label: roomAmenity.rAmenity, value: roomAmenity.id}
+        })
 
         setRoomAmenitiesToSelect(data);
     }, [roomAmenities]);
 
     // test
     useEffect(() => {
-        console.log(amenities);
-    }, [amenities]);
+        setFormData({...formData, amenities: [...roomAmenitiesSelected.map(el => ({ id: el.value, rAmenity: el.label }))]})
+    }, [roomAmenitiesSelected]);
 
 
     const onChange = (e) =>
@@ -129,22 +133,23 @@ const EditRoom = props => {
                                     <input type="number" min="0" step=".01" className="form-control" id="price"
                                            aria-describedby="name" placeholder="Price" value={price} onChange={(e) => {
                                         onChange(e);
-                                    }} required="true"/>
+                                    }} required={true}/>
                                 </div>
 
                                 <div className="mb-3 w-25">
                                     <label htmlFor="capacity" className="form-label">Capacity:</label>
                                     <input type="number" min="0" className="form-control" id="capacity"
-                                           aria-describedby="name" placeholder="Capacity" value={capacity} onChange={(e) => {
-                                        onChange(e);
-                                    }} required="true"/>
+                                           aria-describedby="name" placeholder="Capacity" value={capacity}
+                                           onChange={(e) => {
+                                               onChange(e);
+                                           }} required={true}/>
                                 </div>
 
                                 <div className="mb-3">
                                     <MultiSelect
                                         options={roomAmenitiesToSelect}
-                                        value={amenities}
-                                        onChange={(value) => {setFormData({...formData, amenities: [...value]})}}
+                                        value={roomAmenitiesSelected}
+                                        onChange={setRoomAmenitiesSelected}
                                         labelledBy="Select"
                                     />
                                 </div>

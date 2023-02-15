@@ -4,7 +4,7 @@ import {revertAll} from "../actions/global";
 const initialState = {
     loading: true,
     rooms: [],
-    room: null,
+    room: {},
     count: 0,
     error: ''
 };

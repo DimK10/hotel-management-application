@@ -5,7 +5,7 @@ import Alert from "../../layout/Alert";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllHotelsAction} from "../../../actions/hotel";
 import Select from "react-select";
-import {fetchAllRoomsFromSelectedHotel, getCountOfRoomsAction} from "../../../actions/room";
+import {fetchAllRoomsFromSelectedHotel, getAllRoomsByPage, getCountOfRoomsAction} from "../../../actions/room";
 import RoomTable from "./RoomTable";
 
 
@@ -19,7 +19,7 @@ const Rooms = props => {
 
     const {hotels} = useSelector(state => state.hotel);
 
-    const {count, rooms} = useSelector(state => state.room);
+    const {count, rooms, loading} = useSelector(state => state.room);
 
     const {user} = useSelector(state => state.auth);
 
@@ -35,14 +35,14 @@ const Rooms = props => {
     }, [hotels]);
 
     useEffect(() => {
+        console.log(hotelSelected)
         if (hotelSelected !== null && hotelSelected !== 'undefined' && user !== null)
             dispatch(getCountOfRoomsAction(hotelSelected.value, user.id));
-            // dispatch(fetchAllRoomsFromSelectedHotel(hotelSelected.value));
     }, [hotelSelected]);
 
     useEffect(() => {
         if (hotelSelected !== null && hotelSelected !== 'undefined')
-            dispatch(fetchAllRoomsFromSelectedHotel(0, 10, 'id', hotelSelected.value));
+            dispatch(getAllRoomsByPage(0, 10, 'id', hotelSelected.value));
     }, [count])
 
 
@@ -65,7 +65,7 @@ const Rooms = props => {
                     rooms.length > 0
                         ?
                         (
-                            <RoomTable />
+                            <RoomTable hotelSelected={hotelSelected} />
                         )
                         :
                         (

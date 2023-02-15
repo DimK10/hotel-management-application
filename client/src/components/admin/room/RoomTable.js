@@ -7,8 +7,9 @@ import {cilPencil} from "@coreui/icons";
 import Pagination from "../../layout/Pagination";
 import {getAllRoomsByPage} from "../../../actions/room";
 import {Tooltip} from '@coreui/coreui/dist/js/coreui';
+import PropTypes from "prop-types";
 
-const RoomTable = props => {
+const RoomTable = ({ hotelSelected }) => {
 
     const dispatch = useDispatch();
 
@@ -29,7 +30,7 @@ const RoomTable = props => {
     }, [count]);
 
     useEffect(() => {
-        dispatch(getAllRoomsByPage(currentPage - 1, pageSize, 'id', user?.id));
+        dispatch(getAllRoomsByPage(currentPage - 1, pageSize, 'id', hotelSelected.value));
     }, [pages]);
 
 
@@ -140,7 +141,7 @@ const RoomTable = props => {
 };
 
 RoomTable.propTypes = {
-
+    hotelSelected: PropTypes.object.isRequired
 };
 
 export default RoomTable;
