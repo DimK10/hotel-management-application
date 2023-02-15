@@ -119,7 +119,7 @@ const ViewRoom = props => {
                                                                         <span key={uuidv4()}
                                                                               id="amenities"
                                                                               className="badge rounded-pill text-bg-primary"
-                                                                        >{amenity.label}</span>
+                                                                        >{amenity.rAmenity}</span>
                                                                     ))
                                                                 }
 
