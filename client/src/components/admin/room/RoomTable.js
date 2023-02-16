@@ -104,7 +104,8 @@ const RoomTable = ({ hotelSelected }) => {
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
                         <th scope="col">Luxurity</th>
-                        <th scope="col" className="d-none d-md-table-cell">Hotel</th>
+                        <th scope="col" className="d-none d-md-table-cell">Capacity</th>
+                        <th scope="col" className="d-none d-md-table-cell">Price</th>
                         <th scope="col">Edit</th>
                     </tr>
                     </thead>
@@ -115,7 +116,8 @@ const RoomTable = ({ hotelSelected }) => {
                                 <th scope="row">{index + 1}</th>
                                 <td>{room.name}</td>
                                 <td>{room.luxurity}</td>
-                                <td className="d-none d-md-table-cell">{room.hotel.name}</td>
+                                <td className="d-none d-md-table-cell">{room.capacity}</td>
+                                <td className="d-none d-md-table-cell">{room.price}</td>
                                 <td className="flex-row">
                                     <button type="button" className="btn btn-success"
                                             style={{color: '#fff', marginRight: '0.3rem'}}

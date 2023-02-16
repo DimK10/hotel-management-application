@@ -39,7 +39,8 @@ const EditRoom = props => {
         luxurity: room.luxurity,
         price: room.price,
         capacity: room.capacity,
-        amenities: room.amenities
+        amenities: room.amenities,
+        hotel: room.hotel
     });
 
 
@@ -49,7 +50,8 @@ const EditRoom = props => {
         luxurity,
         price,
         capacity,
-        amenities
+        amenities,
+        hotel
     } = formData;
 
     useEffect(() => {
@@ -78,7 +80,8 @@ const EditRoom = props => {
                 luxurity: room.luxurity,
                 price: room.price,
                 capacity: room.capacity,
-                amenities: room.amenities
+                amenities: room.amenities,
+                hotel: room.hotel
             })
         }
 
@@ -168,7 +171,8 @@ const EditRoom = props => {
                                             <div className="mb-3 w-25">
                                                 <label htmlFor="price" className="form-label">Price:</label>
                                                 <input type="number" min="0" step=".01" className="form-control" id="price"
-                                                       aria-describedby="name" placeholder="Price" value={price}
+                                                       name="price" aria-describedby="name" placeholder="Price"
+                                                       value={price}
                                                        onChange={(e) => {
                                                            onChange(e);
                                                        }} required={true}/>
@@ -177,7 +181,7 @@ const EditRoom = props => {
                                             <div className="mb-3 w-25">
                                                 <label htmlFor="capacity" className="form-label">Capacity:</label>
                                                 <input type="number" min="0" className="form-control" id="capacity"
-                                                       aria-describedby="name" placeholder="Capacity" value={capacity}
+                                                       name="capacity" aria-describedby="name" placeholder="Capacity" value={capacity}
                                                        onChange={(e) => {
                                                            onChange(e);
                                                        }} required={true}/>

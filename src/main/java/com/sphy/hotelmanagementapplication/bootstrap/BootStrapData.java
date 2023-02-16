@@ -227,8 +227,8 @@ public class BootStrapData implements CommandLineRunner {
             room.setName("room_" + i);
             room.setDisabled(false);
             room.setLuxurity(i);
-            room.setPrice(i * 1000);
-            room.setCapacity(i * 100);
+            room.setPrice(i);
+            room.setCapacity(i);
 
             roomRepository.save(room);
         }

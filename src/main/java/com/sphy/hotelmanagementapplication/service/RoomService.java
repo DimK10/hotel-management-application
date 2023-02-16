@@ -310,6 +310,7 @@ public class RoomService {
                 existingRoom.setPrice(roomDTO.getPrice());
                 hotel.ifPresent(existingRoom::setHotel);
                 existingRoom.setDisabled(roomDTO.isDisabled());
+                existingRoom.setCapacity(roomDTO.getCapacity());
 
                 roomDTO.getAmenities().forEach(roomAmenity ->
                         existingRoom.getIntermediateRoomAmenities()

@@ -62,10 +62,10 @@ const Rooms = props => {
                 />
                 {
 
-                    rooms.length > 0
+                    rooms.length > 0 && hotelSelected !== null && hotelSelected !== 'undefined'
                         ?
                         (
-                            <RoomTable hotelSelected={hotelSelected} />
+                            <RoomTable hotelSelected={hotelSelected}/>
                         )
                         :
                         (
