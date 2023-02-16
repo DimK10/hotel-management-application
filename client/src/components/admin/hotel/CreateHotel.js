@@ -87,9 +87,8 @@ function CreateHotel() {
 
     const onSubmit = async e => {
         e.preventDefault();
-        console.log(formData)
+
         setFormData({...formData, owner: user?.id});
-        console.log(formData)
 
         dispatch(createNewHotelAction(formData));
 
@@ -99,7 +98,6 @@ function CreateHotel() {
     };
 
     const onRoomSubmit = async (e, room) => {
-        console.log(room)
         e.preventDefault();
         // room.status = 'show';
 
@@ -128,7 +126,7 @@ function CreateHotel() {
         }
 
         fetchAllAmenities()
-            .catch(err => console.log(err));
+            .catch(err => console.error(err));
 
         // construct data for react-multi-select
         let data = [];
@@ -145,10 +143,6 @@ function CreateHotel() {
         setRoomAmenitiesToSelect([...data]);
     }, [roomAmenitiesLoading])
 
-    // test
-    useEffect(() => {
-        console.log(rooms);
-    }, [rooms])
 
     /* update formData when state for  roomsCreated changes*/
     useEffect(() => {

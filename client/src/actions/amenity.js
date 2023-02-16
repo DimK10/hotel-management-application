@@ -23,11 +23,11 @@ export const fetchAllHotelAmenitiesAction = () => async dispatch => {
 
     }catch (err) {
         const payload = {
-            msg: err,
+            msg: err.response.data.errorMessage,
             status: null,
         };
 
-        dispatch(amenityError(payload));
+        dispatch(amenityError(err.response.data.errorMessage));
     }
 }
 
@@ -45,10 +45,10 @@ export const fetchAllRoomAmenitiesAction = () => async dispatch => {
 
     }catch (err) {
         const payload = {
-            msg: err,
+            msg: err.response.data.errorMessage,
             status: null,
         };
 
-        dispatch(amenityError(payload));
+        dispatch(amenityError(err.response.data.errorMessage));
     }
 }

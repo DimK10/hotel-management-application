@@ -225,7 +225,6 @@ public class HotelControllerTest {
     }
 
     @Test
-    @Disabled("There is no longer a method to get all hotels without pagination")
     void findAllHotels() throws Exception {
         // Given
         User admin = new User(1L);

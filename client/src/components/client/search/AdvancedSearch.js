@@ -114,8 +114,8 @@ const AdvancedSearch = (props) => {
     };
 
     const handleEvent = (event, picker) => {
-        console.log(picker.startDate.toDate());
-        console.log(picker.endDate.toDate());
+        // console.log(picker.startDate.toDate());
+        // console.log(picker.endDate.toDate());
     }
 
     const checkUncheckAll = () => {

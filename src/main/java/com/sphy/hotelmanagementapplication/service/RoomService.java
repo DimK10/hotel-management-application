@@ -146,6 +146,15 @@ public class RoomService {
         return roomRepository.countAll(id);
     }
 
+    /***
+     * counts all the rooms in the database for a specific hotel id
+     * @return the number of rooms that exists in the database for a specific hotel id
+     */
+    public int countRooms(Long hotelId, Long userId) {
+
+        return roomRepository.countAllByHotelIdAndOwnerId(hotelId, userId);
+    }
+
 
     /***
      * get all rooms
@@ -301,6 +310,7 @@ public class RoomService {
                 existingRoom.setPrice(roomDTO.getPrice());
                 hotel.ifPresent(existingRoom::setHotel);
                 existingRoom.setDisabled(roomDTO.isDisabled());
+                existingRoom.setCapacity(roomDTO.getCapacity());
 
                 roomDTO.getAmenities().forEach(roomAmenity ->
                         existingRoom.getIntermediateRoomAmenities()
@@ -379,17 +389,21 @@ public class RoomService {
         }
     }
 
-    public List<RoomDTO> getRoomsByHotelId(Long hotelId) {
+    public List<RoomDTO> getRoomsByHotelId(Integer pageNo, Integer pageSize, String sortBy, Long hotelId) {
 
         List<RoomDTO> roomDTOS = new ArrayList<>();
 
         if (hotelId != null) {
-            roomRepository
-                    .findAllByHotelId(hotelId)
-                    .forEach(room ->
-                            roomDTOS.add(roomToRoomDTO.converter(room)
-                            )
-                    );
+
+            Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+
+            Page<Room> pageResult = roomRepository.findAllByHotelId(hotelId, paging);
+
+            if (pageResult != null && !pageResult.getContent().isEmpty())
+                pageResult
+                        .getContent()
+                        .forEach(room -> roomDTOS.add(roomToRoomDTO.converter(room)));
+
         }
         return roomDTOS;
     }
