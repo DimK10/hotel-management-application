@@ -11,17 +11,21 @@ import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.repository.OrderRepository;
 import com.sphy.hotelmanagementapplication.repository.RoomRepository;
 import com.sphy.hotelmanagementapplication.repository.UserRepository;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.time.LocalDate;
+import java.util.*;
 
 /***
  * created by gp on 08/11/22
  */
 @Service
 public class OrderService {
+
+    private final EntityManager entityManager;
 
     private final OrderRepository orderRepository;
 
@@ -33,7 +37,8 @@ public class OrderService {
 
     private final OrderToOrderDTO orderToOrderDTO;
 
-    public OrderService(OrderRepository orderRepository, RoomRepository roomRepository, UserRepository userRepository, OrderDTOToOrder orderDTOToOrder, OrderToOrderDTO orderToOrderDTO) {
+    public OrderService(EntityManager entityManager, OrderRepository orderRepository, RoomRepository roomRepository, UserRepository userRepository, OrderDTOToOrder orderDTOToOrder, OrderToOrderDTO orderToOrderDTO) {
+        this.entityManager = entityManager;
         this.orderRepository = orderRepository;
         this.roomRepository = roomRepository;
         this.userRepository = userRepository;
@@ -96,15 +101,46 @@ public class OrderService {
      * @return a list of all orders
      * @throws ApiRequestException if no orders are saved
      */
-    public List<OrderDTO> getOrdersAdmin(Long id) throws ApiRequestException {
+    public Page<OrderDTO> getOrdersAdmin(Long id, LocalDate from, LocalDate to, int pageNo, int pageSize) throws ApiRequestException {
 
-        List<Order> orders = new ArrayList<>(orderRepository.findAllAdmin(id));
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.unsorted());
+
+        Map<String, Object> parametrMap = new HashMap<>();
+
+        StringBuilder query = new StringBuilder("select o from orders o where o.room.hotel.owner.id = :id ");
+        parametrMap.put("id", id);
+
+        if (from != null){
+
+            query.append(" and (o.checkInDate > :from1 or o.checkOutDate > :from1) ");
+            parametrMap.put("from1", from);
+
+        }
+
+        if ( to != null){
+
+            query.append(" and (o.checkInDate < :to1 or o.checkOutDate < :to1) ");
+            parametrMap.put("to1", to);
+        }
+
+        Query queryFinal = entityManager.createQuery(String.valueOf(query), Order.class);
+
+        for (String key : parametrMap.keySet()) {
+
+            queryFinal.setParameter(key, parametrMap.get(key));
+        }
+
+        List<Order> orders = queryFinal.getResultList();
+
+
 
         List<OrderDTO> ordersDTO = new ArrayList<>();
 
         orders.forEach(order -> ordersDTO.add(orderToOrderDTO.converter(order)));
 
-        return ordersDTO;
+        Page<OrderDTO> orderDTOS1 = new PageImpl<>(ordersDTO, paging, ordersDTO.size());
+
+        return orderDTOS1;
 
     }
 

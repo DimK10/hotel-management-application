@@ -481,10 +481,6 @@ public class HotelService {
 
         Map<String, Object> parametrMap = new HashMap<>();
 
-//        StringBuilder query = new StringBuilder("select DISTINCT h from Hotel h inner join IntermediateHotelAmenity ih on h.id = ih.hotel.id inner join HotelAmenity ha on ih.hotelAmenity.id = ha.id inner " +
-//                "join rooms r on r.hotel.id = h.id inner join IntermediateRoomAmenity ir on r.id = ir.room.id inner join RoomAmenity ra on ra.id = ir.roomAmenity.id " +
-//                "inner join orders o on o.room.id = r.id where h.disabled = false ");
-
         StringBuilder query = new StringBuilder("select r.hotel from rooms r inner join Hotel h on r.hotel.id = h.id " +
                 "inner join IntermediateHotelAmenity ih on h.id = ih.hotel.id " +
                 "inner join HotelAmenity ha on ih.hotelAmenity.id = ha.id " +

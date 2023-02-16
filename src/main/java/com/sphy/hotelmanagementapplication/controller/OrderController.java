@@ -6,11 +6,14 @@ import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.OrderService;
 import com.sphy.hotelmanagementapplication.service.RoomService;
 import com.sphy.hotelmanagementapplication.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,6 +22,7 @@ import java.util.Objects;
  */
 @RestController
 public class OrderController {
+
 
     private final OrderService service;
 
@@ -68,11 +72,11 @@ public class OrderController {
      * @return all Admins orders
      * @throws ApiRequestException if no orders is saved
      */
-    @GetMapping("/api/orders/admin")
+    @GetMapping("/api/orders/admin/{from}/{to}/{pageNo}/{pageSize}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<OrderDTO> findAllOrdersAdmin(@RequestHeader(name = "Authorization") String token) throws ApiRequestException {
+    public Page<OrderDTO> findAllOrdersAdmin(@RequestHeader(name = "Authorization") String token, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate from, @PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate to, @PathVariable int pageNo, @PathVariable int pageSize) throws ApiRequestException {
 
-        return service.getOrdersAdmin(userService.getUserFromToken(token).getId());
+        return service.getOrdersAdmin(userService.getUserFromToken(token).getId(), from, to, pageNo,pageSize);
     }
 
     /***

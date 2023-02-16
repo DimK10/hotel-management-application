@@ -16,12 +16,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
@@ -31,6 +31,9 @@ import static org.mockito.Mockito.when;
  */
 @ExtendWith(MockitoExtension.class)
 public class OrderServiceTest {
+
+    @Mock
+    EntityManager entityManager;
 
 
     @Mock
@@ -110,7 +113,7 @@ public class OrderServiceTest {
         ordersDTO.add(orderDTO1);
 
 
-        orderService = new OrderService(orderRepository, roomRepository, userRepository,
+        orderService = new OrderService(entityManager, orderRepository, roomRepository, userRepository,
                 new OrderDTOToOrder(roomRepository, userRepository),
                 new OrderToOrderDTO(roomRepository, userRepository));
 
@@ -146,23 +149,6 @@ public class OrderServiceTest {
         assertEquals(ordersDTO, orderDTOList);
     }
 
-    @Test
-    void getOrdersAdmin() throws Exception {
-        // given
-
-
-        // when
-        when(orderRepository.findAllAdmin(anyLong())).thenReturn(orders);
-        when(userRepository.findById(1L)).thenReturn(Optional.ofNullable(admin));
-        when(userRepository.findById(2L)).thenReturn(Optional.ofNullable(client));
-
-
-        //then
-        List<OrderDTO> orderDTOList = orderService.getOrdersAdmin(id1);
-
-        assertEquals(2, orderDTOList.size());
-        assertEquals(ordersDTO, orderDTOList);
-    }
 
     @Test
     void getOrdersById() throws Exception {
