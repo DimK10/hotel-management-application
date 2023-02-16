@@ -13,6 +13,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchAllHotelAmenitiesAction, fetchAllRoomAmenitiesAction} from "../../../actions/amenity";
 import Loading from "../../layout/Loading";
 import Alert from "../../layout/Alert";
+import {useNavigate} from "react-router-dom";
 
 const AdvancedSearch = (props) => {
 
@@ -54,24 +55,19 @@ const AdvancedSearch = (props) => {
         const onChange = (e) =>
             setFormData({...formData, [e.target.name]: e.target.value});
 
-        const onCheckboxChange = (e) => {
-            let found = hotelAmenitiesToSelect.find(amenity => amenity.hAmenity === e.target.name);
+        const onCheckboxChange = (amenity, type) => {
 
-            if (found !== 'undefined' && found.checked === true) {
+            amenity.checked = !amenity.checked;
 
-                delete found.checked;
+            if (type === "hotelAmenity" && amenity.checked === true)
+                setFormData({...formData, hotelAmenities: [...formData.hotelAmenities, amenity]});
+            else if (type === "hotelAmenity" && amenity.checked === false)
+                setFormData({...formData, hotelAmenities: [...formData.hotelAmenities.filter(el => el.id !== amenity.id)]});
 
-                setFormData({...formData, hotelAmenities: [...hotelAmenities, found]});
-            }
-
-            found = roomAmenitiesToSelect.find(amenity => amenity.hAmenity === e.target.name);
-
-            if (found !== 'undefined' && found.checked === true) {
-
-                delete found.checked;
-
-                setFormData({...formData, roomAmenities: [...hotelAmenities, found]});
-            }
+            if (type === "roomAmenity" && amenity.checked === true)
+                setFormData({...formData, roomAmenities: [...formData.roomAmenities, amenity]});
+            else if (type === "roomAmenity" && amenity.checked === false)
+                setFormData({...formData, roomAmenities: [...formData.roomAmenities.filter(el => el.id !== amenity.id)]});
         }
 
 
@@ -87,6 +83,9 @@ const AdvancedSearch = (props) => {
         }
 
         const checkUncheckAll = () => {
+            hotelAmenitiesToSelect.map(amenity => onCheckboxChange(amenity, "hotelAmenity"))
+            roomAmenitiesToSelect.map(amenity => onCheckboxChange(amenity, "roomAmenity"))
+
             setHotelAmenitiesToSelect([...hotelAmenitiesToSelect.map(amenity => ({...amenity, checked: checkUncheck}))])
             setRoomAmenitiesToSelect([...roomAmenitiesToSelect.map(amenity => ({...amenity, checked: checkUncheck}))])
             setCheckUncheck(!checkUncheck);
@@ -100,8 +99,10 @@ const AdvancedSearch = (props) => {
 
         const dispatch = useDispatch();
 
+        const navigate = useNavigate();
 
         useEffect(() => {
+
             dispatch(fetchAllHotelAmenitiesAction());
             dispatch(fetchAllRoomAmenitiesAction());
         }, [])
@@ -115,11 +116,14 @@ const AdvancedSearch = (props) => {
 
         //test
         useEffect(() => {
-            console.log("hotelAmenities:")
-            console.log(hotelAmenities)
-            console.log("roomAmenities:")
-            console.log(roomAmenities)
-        }, [hotelAmenities, roomAmenities])
+            console.log("formData.hotelAmenities:")
+            console.log(formData.hotelAmenities)
+        }, [formData.hotelAmenities])
+
+        useEffect(() => {
+            console.log("formData.roomAmenities:")
+            console.log(formData.roomAmenities)
+        }, [formData.roomAmenities])
 
         return (
             loading === true
@@ -237,9 +241,10 @@ const AdvancedSearch = (props) => {
                                                                        id={amenity.hAmenity} name={amenity.hAmenity}
                                                                        checked={amenity.checked}
                                                                        onChange={(e) => {
-                                                                           onCheckboxChange(e);
+                                                                           onCheckboxChange(amenity, "hotelAmenity");
                                                                        }}/>
-                                                                <label className="form-check-label" htmlFor={amenity.hAmenity}>
+                                                                <label className="form-check-label"
+                                                                       htmlFor={amenity.hAmenity}>
                                                                     {amenity.hAmenity}
                                                                 </label>
                                                             </div>
@@ -256,9 +261,10 @@ const AdvancedSearch = (props) => {
                                                                        id={amenity.rAmenity} name={amenity.rAmenity}
                                                                        checked={amenity.checked}
                                                                        onChange={(e) => {
-                                                                           onCheckboxChange(e);
+                                                                           onCheckboxChange(amenity, "roomAmenity");
                                                                        }}/>
-                                                                <label className="form-check-label" htmlFor={amenity.rAmenity}>
+                                                                <label className="form-check-label"
+                                                                       htmlFor={amenity.rAmenity}>
                                                                     {amenity.rAmenity}
                                                                 </label>
                                                             </div>
