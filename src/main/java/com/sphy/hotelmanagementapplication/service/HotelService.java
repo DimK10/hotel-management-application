@@ -567,4 +567,15 @@ public class HotelService {
 
         return hotelDTOPage;
     }
+
+    public Map<String, Integer> getStatistics(Long id, LocalDate date) {
+
+        Map<String, Integer> statistic = new HashMap<>();
+
+        statistic.put("all", hotelRepository.countAllRooms(id));
+        statistic.put("vacant", hotelRepository.countAllRoomsVacant(id, date));
+
+        return statistic;
+
+    }
 }
