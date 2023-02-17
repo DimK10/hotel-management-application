@@ -50,6 +50,8 @@ const AdvancedSearch = (props) => {
             checkOutDate,
             adultsRange,
             stars,
+            priceFrom,
+            priceTo,
         } = formData;
 
         const onChange = (e) =>
@@ -231,6 +233,51 @@ const AdvancedSearch = (props) => {
                                                                 onChange(e);
                                                             }}
                                                         />
+                                                    </div>
+                                                    <div className='mb-3'>
+                                                        <label htmlFor='priceFrom' className='form-label'>
+                                                            Price From
+                                                        </label>
+                                                        <input
+                                                            type='number'
+                                                            min="1"
+                                                            step="1"
+                                                            className="form-control"
+                                                            id="price"
+                                                            aria-describedby="name"
+                                                            placeholder="Price From"
+                                                            name="price"
+                                                            onKeyPress={(e) => (e.charCode >= 48 && e.charCode <= 57)}
+                                                            onKeyDown={(e) => {
+                                                                if(e.key==='.')
+                                                                    e.preventDefault();
+                                                            }}  onInput={(e) => {e.target.value = e.target.value.replace(/[^0-9]*/g,'')}}
+                                                            onChange={(e) => {
+                                                                onChange(e);
+                                                            }} required={true}
+                                                        />
+                                                    </div>
+                                                    <div className='mb-3'>
+                                                        <label htmlFor='priceTo' className='form-label'>
+                                                            Price To
+                                                        </label>
+                                                        <input
+                                                            type='number'
+                                                            min="1"
+                                                            step="1"
+                                                            className="form-control"
+                                                            id="price"
+                                                            aria-describedby="name"
+                                                            placeholder="Price To"
+                                                            name="price"
+                                                            onKeyPress={(e) => (e.charCode >= 48 && e.charCode <= 57)}
+                                                            onKeyDown={(e) => {
+                                                                if(e.key==='.')
+                                                                    e.preventDefault();
+                                                            }}  onInput={(e) => {e.target.value = e.target.value.replace(/[^0-9]*/g,'')}}
+                                                            onChange={(e) => {
+                                                                onChange(e);
+                                                            }} required={true}/>
                                                     </div>
                                                     <hr/>
                                                     <h5>Hotel Amenities</h5>
