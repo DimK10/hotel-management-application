@@ -83,7 +83,7 @@ function CreateRoom(props) {
                                 <div className="mb-3 w-25">
                                     <label htmlFor="price" className="form-label">Price:</label>
                                     <input type="number" min="0" step=".01" className="form-control" id="price"
-                                           aria-describedby="name" placeholder="Price" onChange={(e) => {
+                                           aria-describedby="price" placeholder="Price" onChange={(e) => {
                                         onChange(e);
                                     }} required="true"/>
                                 </div>
