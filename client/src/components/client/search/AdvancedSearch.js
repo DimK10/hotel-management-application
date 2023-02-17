@@ -22,7 +22,7 @@ const AdvancedSearch = (props) => {
 
         const [hotelResults, setHotelResults] = useState([]);
 
-        const [checkUncheck, setCheckUncheck] = useState(true);
+        const [checkUncheck, setCheckUncheck] = useState(false);
 
         const [citiesArray, setCitiesArray] = useState(cities);
 
@@ -59,6 +59,12 @@ const AdvancedSearch = (props) => {
 
             amenity.checked = !amenity.checked;
 
+            console.log("type:");
+            console.log(type);
+
+            console.log("amenity:");
+            console.log(amenity);
+
             if (type === "hotelAmenity" && amenity.checked === true)
                 setFormData({...formData, hotelAmenities: [...formData.hotelAmenities, amenity]});
             else if (type === "hotelAmenity" && amenity.checked === false)
@@ -82,13 +88,16 @@ const AdvancedSearch = (props) => {
             // console.log(picker.endDate.toDate());
         }
 
-        const checkUncheckAll = () => {
-            hotelAmenitiesToSelect.map(amenity => onCheckboxChange(amenity, "hotelAmenity"))
-            roomAmenitiesToSelect.map(amenity => onCheckboxChange(amenity, "roomAmenity"))
+        const checkUncheckAll = async () => {
+            await setHotelAmenitiesToSelect([...hotelAmenitiesToSelect.map(amenity => ({...amenity, checked: !checkUncheck}))])
+            await setRoomAmenitiesToSelect([...roomAmenitiesToSelect.map(amenity => ({...amenity, checked: !checkUncheck}))])
+            await setCheckUncheck(!checkUncheck);
 
-            setHotelAmenitiesToSelect([...hotelAmenitiesToSelect.map(amenity => ({...amenity, checked: checkUncheck}))])
-            setRoomAmenitiesToSelect([...roomAmenitiesToSelect.map(amenity => ({...amenity, checked: checkUncheck}))])
-            setCheckUncheck(!checkUncheck);
+
+            if (!checkUncheck === true)
+                setFormData({...formData, hotelAmenities: [...hotelAmenitiesToSelect], roomAmenities: [...roomAmenitiesToSelect]})
+            else
+                setFormData({...formData, hotelAmenities: [], roomAmenities: []})
         }
 
         const {hotels, loading} = useSelector(state => state.search);
@@ -116,13 +125,13 @@ const AdvancedSearch = (props) => {
 
         //test
         useEffect(() => {
-            console.log("formData.hotelAmenities:")
-            console.log(formData.hotelAmenities)
+            console.log("formData hotel:")
+            console.log(formData)
         }, [formData.hotelAmenities])
 
         useEffect(() => {
-            console.log("formData.roomAmenities:")
-            console.log(formData.roomAmenities)
+            console.log("formData room:")
+            console.log(formData)
         }, [formData.roomAmenities])
 
         return (
