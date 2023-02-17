@@ -72,12 +72,6 @@ const AdvancedSearch = (props) => {
 
             amenity.checked = !amenity.checked;
 
-            console.log("type:");
-            console.log(type);
-
-            console.log("amenity:");
-            console.log(amenity);
-
             if (type === "hotelAmenity" && amenity.checked === true)
                 setFormData({...formData, hotelAmenities: [...formData.hotelAmenities, amenity]});
             else if (type === "hotelAmenity" && amenity.checked === false)
@@ -103,8 +97,6 @@ const AdvancedSearch = (props) => {
                 checkInDate: moment(picker.startDate.toDate(), 'DD/MM/YYYY').toDate(),
                 checkOutDate: moment(picker.endDate.toDate(), 'DD/MM/YYYY').toDate()
             })
-            // console.log(picker.startDate.toDate());
-            // console.log(picker.endDate.toDate());
         }
 
         const checkUncheckAll = async () => {
@@ -146,22 +138,6 @@ const AdvancedSearch = (props) => {
             setRoomAmenitiesToSelect([...roomAmenities.map(amenity => ({...amenity, checked: false}))])
         }, [hotelAmenities, roomAmenities])
 
-
-        //test
-        // useEffect(() => {
-        //     console.log("formData hotel:")
-        //     console.log(formData)
-        // }, [formData.hotelAmenities])
-        //
-        // useEffect(() => {
-        //     console.log("formData room:")
-        //     console.log(formData)
-        // }, [formData.roomAmenities])
-
-        useEffect(() => {
-            console.log("formData:")
-            console.log(formData)
-        }, [formData])
 
         return (
             loading === true
