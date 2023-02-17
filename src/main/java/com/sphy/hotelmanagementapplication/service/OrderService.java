@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import java.time.LocalDate;
 import java.util.*;
 
 /***
@@ -101,7 +100,7 @@ public class OrderService {
      * @return a list of all orders
      * @throws ApiRequestException if no orders are saved
      */
-    public Page<OrderDTO> getOrdersAdmin(Long id, LocalDate from, LocalDate to, int pageNo, int pageSize) throws ApiRequestException {
+    public Page<OrderDTO> getOrdersAdmin(Long id, String firstName, String lastName, Integer pageNo, Integer pageSize) throws ApiRequestException {
 
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.unsorted());
 
@@ -110,17 +109,17 @@ public class OrderService {
         StringBuilder query = new StringBuilder("select o from orders o where o.room.hotel.owner.id = :id ");
         parametrMap.put("id", id);
 
-        if (from != null){
+        if (firstName != null){
 
-            query.append(" and (o.checkInDate > :from1 or o.checkOutDate > :from1) ");
-            parametrMap.put("from1", from);
+            query.append(" and o.client.firstname like :firstName ");
+            parametrMap.put("firstName", "%" + firstName + "%" );
 
         }
 
-        if ( to != null){
+        if ( lastName != null){
 
-            query.append(" and (o.checkInDate < :to1 or o.checkOutDate < :to1) ");
-            parametrMap.put("to1", to);
+            query.append(" and o.client.lastname like :lastName ");
+            parametrMap.put("lastName", "%" + lastName + "%" );
         }
 
         Query queryFinal = entityManager.createQuery(String.valueOf(query), Order.class);
