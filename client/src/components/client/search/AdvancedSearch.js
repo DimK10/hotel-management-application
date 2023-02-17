@@ -14,11 +14,22 @@ import {fetchAllHotelAmenitiesAction, fetchAllRoomAmenitiesAction} from "../../.
 import Loading from "../../layout/Loading";
 import Alert from "../../layout/Alert";
 import {useNavigate} from "react-router-dom";
+import {updateExistingRoomAction} from "../../../actions/room";
+import {advancedSearchAction} from "../../../actions/search";
 
 const AdvancedSearch = (props) => {
 
         const {currentOrder} = useSelector(state => state.order);
 
+        const {hotels, loading} = useSelector(state => state.search);
+
+        const {hotelAmenities, hotelAmenitiesLoading} = useSelector(state => state.amenity);
+
+        const {roomAmenities, roomAmenitiesLoading} = useSelector(state => state.amenity);
+
+        const dispatch = useDispatch();
+
+        const navigate = useNavigate();
 
         const [hotelResults, setHotelResults] = useState([]);
 
@@ -33,11 +44,11 @@ const AdvancedSearch = (props) => {
         const [roomAmenitiesToSelect, setRoomAmenitiesToSelect] = useState([]);
 
         const [formData, setFormData] = useState({
-            location: '',
+            nameOrLocation: '',
             checkInDate: moment(currentOrder.checkInDate, 'DD/MM/YYYY').toDate(),
             checkOutDate: moment(currentOrder.checkOutDate, 'DD/MM/YYYY').toDate(),
-            priceFrom: 0,
-            priceTo: 0,
+            priceFrom: 1,
+            priceTo: 1,
             adultsRange: 1,
             stars: 1,
             hotelAmenities: [],
@@ -45,7 +56,7 @@ const AdvancedSearch = (props) => {
         });
 
         const {
-            location,
+            nameOrLocation,
             checkInDate,
             checkOutDate,
             adultsRange,
@@ -81,36 +92,48 @@ const AdvancedSearch = (props) => {
 
         const onLocationInputChange = (e) => {
             setCitiesSuggestions(
-                citiesArray.filter((city) => city.city.includes(e.target.value))
+                [...citiesArray.filter((city) => city.city.includes(e.target.value))]
             );
+            onChange(e);
         };
 
         const handleEvent = (event, picker) => {
+            setFormData({
+                ...formData,
+                checkInDate: moment(picker.startDate.toDate(), 'DD/MM/YYYY').toDate(),
+                checkOutDate: moment(picker.endDate.toDate(), 'DD/MM/YYYY').toDate()
+            })
             // console.log(picker.startDate.toDate());
             // console.log(picker.endDate.toDate());
         }
 
         const checkUncheckAll = async () => {
-            await setHotelAmenitiesToSelect([...hotelAmenitiesToSelect.map(amenity => ({...amenity, checked: !checkUncheck}))])
-            await setRoomAmenitiesToSelect([...roomAmenitiesToSelect.map(amenity => ({...amenity, checked: !checkUncheck}))])
+            await setHotelAmenitiesToSelect([...hotelAmenitiesToSelect.map(amenity => ({
+                ...amenity,
+                checked: !checkUncheck
+            }))])
+            await setRoomAmenitiesToSelect([...roomAmenitiesToSelect.map(amenity => ({
+                ...amenity,
+                checked: !checkUncheck
+            }))])
             await setCheckUncheck(!checkUncheck);
 
 
             if (!checkUncheck === true)
-                setFormData({...formData, hotelAmenities: [...hotelAmenitiesToSelect], roomAmenities: [...roomAmenitiesToSelect]})
+                setFormData({
+                    ...formData,
+                    hotelAmenities: [...hotelAmenitiesToSelect],
+                    roomAmenities: [...roomAmenitiesToSelect]
+                })
             else
                 setFormData({...formData, hotelAmenities: [], roomAmenities: []})
         }
 
-        const {hotels, loading} = useSelector(state => state.search);
+        const onSubmit = async e => {
+            e.preventDefault();
+            await dispatch(advancedSearchAction(formData, 0, 10));
+        };
 
-        const {hotelAmenities, hotelAmenitiesLoading} = useSelector(state => state.amenity);
-
-        const {roomAmenities, roomAmenitiesLoading} = useSelector(state => state.amenity);
-
-        const dispatch = useDispatch();
-
-        const navigate = useNavigate();
 
         useEffect(() => {
 
@@ -119,22 +142,26 @@ const AdvancedSearch = (props) => {
         }, [])
 
         useEffect(() => {
-                setHotelAmenitiesToSelect([...hotelAmenities.map(amenity => ({...amenity, checked: false}))]);
-                setRoomAmenitiesToSelect([...roomAmenities.map(amenity => ({...amenity, checked: false}))])
-            }, [hotelAmenities, roomAmenities]
-        )
+            setHotelAmenitiesToSelect([...hotelAmenities.map(amenity => ({...amenity, checked: false}))]);
+            setRoomAmenitiesToSelect([...roomAmenities.map(amenity => ({...amenity, checked: false}))])
+        }, [hotelAmenities, roomAmenities])
 
 
         //test
-        useEffect(() => {
-            console.log("formData hotel:")
-            console.log(formData)
-        }, [formData.hotelAmenities])
+        // useEffect(() => {
+        //     console.log("formData hotel:")
+        //     console.log(formData)
+        // }, [formData.hotelAmenities])
+        //
+        // useEffect(() => {
+        //     console.log("formData room:")
+        //     console.log(formData)
+        // }, [formData.roomAmenities])
 
         useEffect(() => {
-            console.log("formData room:")
+            console.log("formData:")
             console.log(formData)
-        }, [formData.roomAmenities])
+        }, [formData])
 
         return (
             loading === true
@@ -160,183 +187,191 @@ const AdvancedSearch = (props) => {
                                                 <div className='card-header'>
                                                     <h5 className='text-center'>Search Results</h5>
                                                 </div>
-                                                <div className='card-body'>
-                                                    <div className='mb-3'>
-                                                        <label htmlFor='locationInput' className='form-label'>
-                                                            Location
-                                                        </label>
-                                                        <input
-                                                            type='text'
-                                                            className='form-control'
-                                                            id='locationInput'
-                                                            placeholder='Location'
-                                                            name={location}
-                                                            onChange={(e) => onLocationInputChange(e)}
-                                                            onBlur={() => setCitiesSuggestions([])}
-                                                            list='citiesOptions'
-                                                        />
-                                                        <datalist id='citiesOptions'>
-                                                            {citiesSuggestions.length > 0 &&
-                                                                citiesSuggestions.map((city) => (
-                                                                    <option key={city.id} value={city.city}/>
-                                                                ))}
-                                                        </datalist>
-                                                    </div>
-                                                    <div className='mb-3'>
-                                                        <label htmlFor='customRange1' className='form-label'>
-                                                            Number of Adults: {adultsRange}
-                                                        </label>
-                                                        <input
-                                                            type='range'
-                                                            className='form-range'
-                                                            id='customRange1'
-                                                            min='1'
-                                                            max='10'
-                                                            value={adultsRange}
-                                                            name='adultsRange'
-                                                            onChange={(e) => {
-                                                                onChange(e);
+                                                <form onSubmit={e => onSubmit(e)}>
+                                                    <div className='card-body'>
+                                                        <div className='mb-3'>
+                                                            <label htmlFor='locationInput' className='form-label'>
+                                                                Location
+                                                            </label>
+                                                            <input
+                                                                type='text'
+                                                                className='form-control'
+                                                                id='locationInput'
+                                                                placeholder='Location'
+                                                                name="nameOrLocation"
+                                                                onChange={(e) => onLocationInputChange(e)}
+                                                                onBlur={() => setCitiesSuggestions([])}
+                                                                list='citiesOptions'
+                                                            />
+                                                            <datalist id='citiesOptions'>
+                                                                {citiesSuggestions.length > 0 &&
+                                                                    citiesSuggestions.map((city) => (
+                                                                        <option key={city.id} value={city.city}/>
+                                                                    ))}
+                                                            </datalist>
+                                                        </div>
+                                                        <div className='mb-3'>
+                                                            <label htmlFor='customRange1' className='form-label'>
+                                                                Number of Adults: {adultsRange}
+                                                            </label>
+                                                            <input
+                                                                type='range'
+                                                                className='form-range'
+                                                                id='customRange1'
+                                                                min='1'
+                                                                max='10'
+                                                                value={adultsRange}
+                                                                name='adultsRange'
+                                                                onChange={(e) => {
+                                                                    onChange(e);
+                                                                }}
+                                                            />
+                                                        </div>
+
+                                                        <div className='mb-3'>
+                                                            <label
+                                                                htmlFor='exampleFormControlInput1'
+                                                                className='form-label'
+                                                            >
+                                                                Check In - Check Out Date
+                                                            </label>
+                                                            <DateRangePicker
+                                                                initialSettings={{
+                                                                    startDate: checkInDate,
+                                                                    endDate: checkOutDate,
+                                                                }} onApply={handleEvent}
+                                                            >
+                                                                <input type='text' className='form-control'/>
+                                                            </DateRangePicker>
+
+                                                        </div>
+                                                        <div className='mb-3'>
+                                                            <label htmlFor='starsRange' className='form-label'>
+                                                                Stars: {stars}
+                                                            </label>
+                                                            <input
+                                                                type='range'
+                                                                className='form-range'
+                                                                id='starsRange'
+                                                                name='stars'
+                                                                min='1'
+                                                                max='5'
+                                                                value={stars}
+                                                                onChange={(e) => {
+                                                                    onChange(e);
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        <div className='mb-3'>
+                                                            <label htmlFor='priceFrom' className='form-label'>
+                                                                Price From
+                                                            </label>
+                                                            <input
+                                                                type='number'
+                                                                min="1"
+                                                                step="1"
+                                                                className="form-control"
+                                                                id="price"
+                                                                aria-describedby="name"
+                                                                placeholder="Price From"
+                                                                name="priceFrom"
+                                                                onKeyPress={(e) => (e.charCode >= 48 && e.charCode <= 57)}
+                                                                onKeyDown={(e) => {
+                                                                    if (e.key === '.')
+                                                                        e.preventDefault();
+                                                                }} onInput={(e) => {
+                                                                e.target.value = e.target.value.replace(/[^0-9]*/g, '')
                                                             }}
-                                                        />
-                                                    </div>
-
-                                                    <div className='mb-3'>
-                                                        <label
-                                                            htmlFor='exampleFormControlInput1'
-                                                            className='form-label'
-                                                        >
-                                                            Check In - Check Out Date
-                                                        </label>
-                                                        <DateRangePicker
-                                                            initialSettings={{
-                                                                startDate: checkInDate,
-                                                                endDate: checkOutDate,
-                                                            }} onApply={handleEvent}
-                                                        >
-                                                            <input type='text' className='form-control'/>
-                                                        </DateRangePicker>
-
-                                                    </div>
-                                                    <div className='mb-3'>
-                                                        <label htmlFor='starsRange' className='form-label'>
-                                                            Stars: {stars}
-                                                        </label>
-                                                        <input
-                                                            type='range'
-                                                            className='form-range'
-                                                            id='starsRange'
-                                                            name='stars'
-                                                            min='1'
-                                                            max='5'
-                                                            value={stars}
-                                                            onChange={(e) => {
-                                                                onChange(e);
+                                                                onChange={(e) => {
+                                                                    onChange(e);
+                                                                }} required={true}
+                                                            />
+                                                        </div>
+                                                        <div className='mb-3'>
+                                                            <label htmlFor='priceTo' className='form-label'>
+                                                                Price To
+                                                            </label>
+                                                            <input
+                                                                type='number'
+                                                                min="1"
+                                                                step="1"
+                                                                className="form-control"
+                                                                id="priceTo"
+                                                                aria-describedby="name"
+                                                                placeholder="Price To"
+                                                                name="priceTo"
+                                                                onKeyPress={(e) => (e.charCode >= 48 && e.charCode <= 57)}
+                                                                onKeyDown={(e) => {
+                                                                    if (e.key === '.')
+                                                                        e.preventDefault();
+                                                                }} onInput={(e) => {
+                                                                e.target.value = e.target.value.replace(/[^0-9]*/g, '')
                                                             }}
-                                                        />
-                                                    </div>
-                                                    <div className='mb-3'>
-                                                        <label htmlFor='priceFrom' className='form-label'>
-                                                            Price From
-                                                        </label>
-                                                        <input
-                                                            type='number'
-                                                            min="1"
-                                                            step="1"
-                                                            className="form-control"
-                                                            id="price"
-                                                            aria-describedby="name"
-                                                            placeholder="Price From"
-                                                            name="price"
-                                                            onKeyPress={(e) => (e.charCode >= 48 && e.charCode <= 57)}
-                                                            onKeyDown={(e) => {
-                                                                if(e.key==='.')
-                                                                    e.preventDefault();
-                                                            }}  onInput={(e) => {e.target.value = e.target.value.replace(/[^0-9]*/g,'')}}
-                                                            onChange={(e) => {
-                                                                onChange(e);
-                                                            }} required={true}
-                                                        />
-                                                    </div>
-                                                    <div className='mb-3'>
-                                                        <label htmlFor='priceTo' className='form-label'>
-                                                            Price To
-                                                        </label>
-                                                        <input
-                                                            type='number'
-                                                            min="1"
-                                                            step="1"
-                                                            className="form-control"
-                                                            id="price"
-                                                            aria-describedby="name"
-                                                            placeholder="Price To"
-                                                            name="price"
-                                                            onKeyPress={(e) => (e.charCode >= 48 && e.charCode <= 57)}
-                                                            onKeyDown={(e) => {
-                                                                if(e.key==='.')
-                                                                    e.preventDefault();
-                                                            }}  onInput={(e) => {e.target.value = e.target.value.replace(/[^0-9]*/g,'')}}
-                                                            onChange={(e) => {
-                                                                onChange(e);
-                                                            }} required={true}/>
-                                                    </div>
-                                                    <hr/>
-                                                    <h5>Hotel Amenities</h5>
-                                                    <div className="form-check form-check-inline">
-                                                        <input className="form-check-input" type="checkbox" value=""
-                                                               id="check-uncheck" onChange={() => checkUncheckAll()}/>
-                                                        <label className="form-check-label" htmlFor="check-uncheck">
-                                                            Check/UnCheck all
-                                                        </label>
-                                                    </div>
-                                                    {
-                                                        hotelAmenitiesToSelect.length > 0
-                                                        &&
-                                                        hotelAmenitiesToSelect.map(amenity => (
-                                                            <div className="form-check form-check-inline">
-                                                                <input className="form-check-input" type="checkbox" value=""
-                                                                       id={amenity.hAmenity} name={amenity.hAmenity}
-                                                                       checked={amenity.checked}
-                                                                       onChange={(e) => {
-                                                                           onCheckboxChange(amenity, "hotelAmenity");
-                                                                       }}/>
-                                                                <label className="form-check-label"
-                                                                       htmlFor={amenity.hAmenity}>
-                                                                    {amenity.hAmenity}
-                                                                </label>
+                                                                onChange={(e) => {
+                                                                    onChange(e);
+                                                                }} required={true}/>
+                                                        </div>
+                                                        <hr/>
+                                                        <h5>Hotel Amenities</h5>
+                                                        <div className="form-check form-check-inline">
+                                                            <input className="form-check-input" type="checkbox" value=""
+                                                                   id="check-uncheck" onChange={() => checkUncheckAll()}/>
+                                                            <label className="form-check-label" htmlFor="check-uncheck">
+                                                                Check/UnCheck all
+                                                            </label>
+                                                        </div>
+                                                        {
+                                                            hotelAmenitiesToSelect.length > 0
+                                                            &&
+                                                            hotelAmenitiesToSelect.map(amenity => (
+                                                                <div className="form-check form-check-inline">
+                                                                    <input className="form-check-input" type="checkbox"
+                                                                           value=""
+                                                                           id={amenity.hAmenity} name={amenity.hAmenity}
+                                                                           checked={amenity.checked}
+                                                                           onChange={(e) => {
+                                                                               onCheckboxChange(amenity, "hotelAmenity");
+                                                                           }}/>
+                                                                    <label className="form-check-label"
+                                                                           htmlFor={amenity.hAmenity}>
+                                                                        {amenity.hAmenity}
+                                                                    </label>
+                                                                </div>
+                                                            ))
+                                                        }
+
+                                                        <h5>Room Amenities</h5>
+                                                        {
+                                                            roomAmenitiesToSelect.length > 0
+                                                            &&
+                                                            roomAmenitiesToSelect.map(amenity => (
+                                                                <div className="form-check form-check-inline">
+                                                                    <input className="form-check-input" type="checkbox"
+                                                                           value=""
+                                                                           id={amenity.rAmenity} name={amenity.rAmenity}
+                                                                           checked={amenity.checked}
+                                                                           onChange={(e) => {
+                                                                               onCheckboxChange(amenity, "roomAmenity");
+                                                                           }}/>
+                                                                    <label className="form-check-label"
+                                                                           htmlFor={amenity.rAmenity}>
+                                                                        {amenity.rAmenity}
+                                                                    </label>
+                                                                </div>
+                                                            ))
+                                                        }
+
+
+                                                        <hr/>
+                                                        <div className='row'>
+                                                            <div className='col-6'>
+                                                                <button className='btn btn-primary px-4' type='submit'>
+                                                                    Search
+                                                                </button>
                                                             </div>
-                                                        ))
-                                                    }
-
-                                                    <h5>Room Amenities</h5>
-                                                    {
-                                                        roomAmenitiesToSelect.length > 0
-                                                        &&
-                                                        roomAmenitiesToSelect.map(amenity => (
-                                                            <div className="form-check form-check-inline">
-                                                                <input className="form-check-input" type="checkbox" value=""
-                                                                       id={amenity.rAmenity} name={amenity.rAmenity}
-                                                                       checked={amenity.checked}
-                                                                       onChange={(e) => {
-                                                                           onCheckboxChange(amenity, "roomAmenity");
-                                                                       }}/>
-                                                                <label className="form-check-label"
-                                                                       htmlFor={amenity.rAmenity}>
-                                                                    {amenity.rAmenity}
-                                                                </label>
-                                                            </div>
-                                                        ))
-                                                    }
-
-
-                                                    <hr/>
-                                                    <div className='row'>
-                                                        <div className='col-6'>
-                                                            <button className='btn btn-primary px-4' type='button'>
-                                                                Search
-                                                            </button>
                                                         </div>
                                                     </div>
-                                                </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>

@@ -474,8 +474,8 @@ public class HotelService {
     }
 
 
-    public Page<HotelDTO> advanceSearchMethod(List<HotelAmenity> hotelAmenities, List<RoomAmenity> roomAmenities, LocalDate checkInDate, LocalDate checkOutDate,
-                                              Long priceFrom, Long priceTo, Integer adultsRange, Integer stars, String nameOrLocation, Integer pageNo, Integer pageSize) {
+    public List<HotelDTO> advancedSearchMethod(List<HotelAmenity> hotelAmenities, List<RoomAmenity> roomAmenities, LocalDate checkInDate, LocalDate checkOutDate,
+                                               Long priceFrom, Long priceTo, Integer adultsRange, Integer stars, String nameOrLocation, Integer pageNo, Integer pageSize) {
 
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.unsorted());
 
@@ -565,6 +565,9 @@ public class HotelService {
 
         Page<HotelDTO> hotelDTOPage = new PageImpl<>(hotelDTOSList, paging, hotelDTOSList.size());
 
-        return hotelDTOPage;
+        if (hotelDTOPage.hasContent())
+            return hotelDTOPage.getContent();
+
+        return new ArrayList<>();
     }
 }
