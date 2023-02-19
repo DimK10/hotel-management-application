@@ -1,6 +1,6 @@
 import axios from 'axios';
 import jwt from 'jwt-decode'
-import {setAlertAction} from './alert';
+import alertSlice, {setAlertAction} from './alert';
 
 import setAuthToken from '../utils/setAuthToken';
 import authSlice from "../reducers/auth";
@@ -26,40 +26,55 @@ export const loadUser = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/auth');
 
-    dispatch(userLoaded(res.data));
+    await dispatch(userLoaded(res.data));
   } catch (err) {
-    dispatch(authError());
+    dispatch(authError(err.response.data.errorMessage));
   }
 };
 
 // Register user
 export const register =
-  ({name, email, password}) =>
-    async (dispatch) => {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      };
-
-      const body = JSON.stringify({name, email, password});
-
-      try {
-        const res = await axios.post('/api/users', body, config);
-
-        dispatch(registerSuccess(res.data));
-
-        dispatch(loadUser());
-      } catch (err) {
-        const errors = err.response.data.errors;
-
-        if (errors) {
-          errors.forEach((error) => dispatch(setAlertAction(error.msg, 'danger')));
-        }
-
-        dispatch(registerFail())
-      }
+  ({ emailVerify, username, firstname, lastname, email, password, role }) =>
+  async (dispatch) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
     };
+
+    const body = JSON.stringify({
+      emailVerify,
+      username,
+      firstname,
+      lastname,
+      email,
+      password,
+      role,
+    });
+
+    try {
+      const res = await axios.post('/api/signup', body, config);
+
+      await dispatch(registerSuccess(res.data));
+
+      const {
+        username,
+        password
+      } = res.data;
+
+      dispatch(loadUser());
+    } catch (err) {
+      const errors = err.response.data.errors;
+
+      if (errors) {
+        errors.forEach((error) =>
+          dispatch(setAlertAction(error.msg, 'danger'))
+        );
+      }
+
+      dispatch(registerFail());
+    }
+  };
 
 // Login user
 export const login = (username, password) => async (dispatch) => {
@@ -77,9 +92,9 @@ export const login = (username, password) => async (dispatch) => {
     const token = res.data.jwt;
     const username = jwt(token).sub;
 
-    dispatch(loginSuccess({jwt: token, user: username}));
+     await dispatch(loginSuccess({jwt: token, user: username}));
 
-    dispatch(loadUser());
+     await dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -92,6 +107,7 @@ export const login = (username, password) => async (dispatch) => {
 };
 
 // Logout / Clear Profile
-export const logout = () => (dispatch) => {
-  dispatch(cleaProfile());
+export const logoutAction = () => (dispatch) => {
+  dispatch(logOut());
+  dispatch(setAlertAction("You have been logged out successfully!", "success"));
 };

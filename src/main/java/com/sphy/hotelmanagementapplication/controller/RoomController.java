@@ -1,6 +1,7 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
+import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.service.HotelService;
@@ -212,5 +213,37 @@ public class RoomController {
 
             return service.getRoomAmenitiesByRoomId(roomId);
     }
+
+    /***
+     * returns all room amenities
+     * @return room amenities
+     * @throws RuntimeException when not exist any hotel amenity
+     */
+    @GetMapping("/api/room/amenities")
+    public Set<RoomAmenity> findRoomAmenities()throws RuntimeException{
+
+        return service.getRoomAmenities();
+
+    }
+
+    /***
+     * Created by BP
+     * Add Room Amenity
+     * @param roomAmenity new room Amenity parameters
+     * @return added the new Room Amenity
+     * @throws ApiRequestException if the user is not Authorised to add Room Amenity
+     */
+    @PutMapping("/api/room/saveRoomAmenity")
+    @PreAuthorize("hasAuthority('SUPERUSER')")
+    public RoomAmenity saveRoomAmenity(@RequestHeader(name="Authorization")String token, @RequestBody RoomAmenity roomAmenity) throws ApiRequestException{
+
+        if (Objects.equals(User.Role.SUPERUSER, userService.getUserFromToken(token).getRole())) {
+
+            return service.saveRoomAmenity(roomAmenity);
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
+    }
+
 
 }

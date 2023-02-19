@@ -17,6 +17,8 @@ public class HotelAmenity extends BaseEntity {
 
 	private String hAmenity;
 
+	private boolean enabled;
+
 	@OneToMany(mappedBy = "hotelAmenity", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
 	@JsonIgnore
 	private Set<IntermediateHotelAmenity> intermediateHotelAmenities = new HashSet<>();
@@ -25,9 +27,10 @@ public class HotelAmenity extends BaseEntity {
 		
 	}
 
-	public HotelAmenity(String hAmenity) {
+	public HotelAmenity(String hAmenity, boolean enabled) {
 
 		this.hAmenity = hAmenity;
+		this.enabled = enabled;
 	}
 
 	public String gethAmenity() {
@@ -36,6 +39,13 @@ public class HotelAmenity extends BaseEntity {
 
 	public void sethAmenity(String hAmenity) {
 		this.hAmenity = hAmenity;
+	}
+	
+	public boolean getEnabled() {
+		return enabled;
+	}
+	public void setEnabled(boolean enabled) {
+        this.enabled = enabled;   
 	}
 
 	public Set<IntermediateHotelAmenity> getIntermediateHotelAmenities() {
@@ -70,6 +80,7 @@ public class HotelAmenity extends BaseEntity {
 		return "HotelAmenity{" +
 				"id=" + super.getId() +
 				"hAmenity='" + hAmenity + '\'' +
+				"enabled='" + enabled + '\'' +
 				", intermediateHotelAmenities=" + intermediateHotelAmenities +
 				'}';
 	}

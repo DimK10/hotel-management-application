@@ -1,7 +1,5 @@
 package com.sphy.hotelmanagementapplication.domain;
 
-import org.springframework.data.annotation.Transient;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -28,11 +26,13 @@ public class User extends BaseEntity {
 
 	private String hashedPassword;
 
+	private boolean enabled;
+
 	@Transient
 	protected String password;
 
 	public enum Role {
-		CLIENT, ADMIN
+		CLIENT, ADMIN, SUPERUSER
 	}
 
 	@Enumerated(EnumType.STRING)
@@ -53,7 +53,7 @@ public class User extends BaseEntity {
 		super(id);
 	}
 
-	public User(Long id, boolean emailVerify, String username, String firstname, String lastname, String email, String password, Role role, Set<Hotel> hotels, Set<Order> orders) {
+	public User(Long id, boolean emailVerify, String username, String firstname, String lastname, String email, String password, boolean enabled, Role role, Set<Hotel> hotels, Set<Order> orders) {
 		super(id);
 		this.emailVerify = emailVerify;
 		this.username = username;
@@ -61,10 +61,13 @@ public class User extends BaseEntity {
 		this.lastname = lastname;
 		this.email = email;
 		this.password = password;
+		this.enabled = enabled;
 		this.role = role;
 		this.hotels = hotels;
 		this.orders = orders;
 	}
+
+	
 
 
 	public String getPassword() {
@@ -114,6 +117,12 @@ public class User extends BaseEntity {
 
 	public void setHashedPassword(String hashedPassword) {
 		this.hashedPassword = hashedPassword;
+	}
+	public boolean getEnabled() {
+		return enabled;
+	}
+	public void setEnabled(boolean enabled) {
+        this.enabled = enabled;   
 	}
 
 	public boolean isEmailVerify() {
@@ -171,12 +180,14 @@ public class User extends BaseEntity {
 	@Override
 	public String toString() {
 		return "User{" +
+				"id=" + super.getId() +
 				"emailVerify=" + emailVerify +
 				", username='" + username + '\'' +
 				", firstname='" + firstname + '\'' +
 				", lastname='" + lastname + '\'' +
 				", email='" + email + '\'' +
 				", hashedPassword='" + hashedPassword + '\'' +
+				", enabled='" + enabled + '\'' +
 				", password='" + password + '\'' +
 				", role=" + role +
 				", hotels=" + hotels +

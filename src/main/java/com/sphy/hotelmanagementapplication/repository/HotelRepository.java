@@ -51,6 +51,7 @@ public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long> 
 	, @Param("NameOrLocation") String NameOrLocation);
 
 	@Query(value = "select ha from HotelAmenity ha inner join IntermediateHotelAmenity i on i.hotelAmenity.id = ha.id" +
-			"  where i.hotel.id = :id order by i.hotel.id")
+			"  where ha.enabled = true and i.hotel.id = :id order by i.hotel.id")
 	Set<HotelAmenity> findAmenityByHotelId(@Param("id") Long id);
+
 }

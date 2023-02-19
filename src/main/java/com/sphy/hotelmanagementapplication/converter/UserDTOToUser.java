@@ -46,6 +46,8 @@ public class UserDTOToUser {
 
         user.setPassword(userDTO.getPassword());
 
+        user.setEnabled(userDTO.getEnabled());
+
 		if (user.getHotels() != null && !user.getHotels().isEmpty()) {
 			user.getHotels().forEach(hotel -> userDTO.getHotelDTOS().add(hotelToHotelDTO.converter(hotel)));
 		}
