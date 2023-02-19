@@ -4,14 +4,13 @@ import com.sphy.hotelmanagementapplication.domain.*;
 import com.sphy.hotelmanagementapplication.domain.User.Role;
 import com.sphy.hotelmanagementapplication.repository.*;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
-
+@Profile("dev")
 @Component
 public class BootStrapData implements CommandLineRunner {
     private final UserRepository userRepository;
