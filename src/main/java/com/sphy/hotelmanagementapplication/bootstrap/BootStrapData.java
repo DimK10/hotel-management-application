@@ -150,6 +150,193 @@ public class BootStrapData implements CommandLineRunner {
         roomRepository.save(dio);
 
 
+        for (int i = 0; i < 10; i++) {
+            Hotel hotel = new Hotel(null, ("ksenia" + i), 5, "athens", "description", false);
+            hotel.setOwner(admin);
+            admin.getHotels().add(hotel);
+            hotelRepository.save(hotel);
+
+            for (int j = 0; j < 4; j++) {
+
+                List<Room> rooms = new ArrayList<>();
+
+                Room room = new Room(null, String.valueOf(j), 3, 30 + i, false);
+
+                room.setCapacity(j);
+
+                roomRepository.save(room);
+
+                IntermediateRoomAmenity intermediateRoomAmenity1 = new IntermediateRoomAmenity(room, roomAmenity1);
+                intermediateRoomAmenityRepository.save(intermediateRoomAmenity1);
+                IntermediateRoomAmenity intermediateRoomAmenity2 = new IntermediateRoomAmenity(room, roomAmenity2);
+                intermediateRoomAmenityRepository.save(intermediateRoomAmenity2);
+
+                roomRepository.save(room);
+
+                hotel.getRooms().add(room);
+                hotelRepository.save(hotel);
+
+                room.setHotel(hotel);
+
+                roomRepository.save(room);
+                rooms.add(room);
+
+
+
+                    Order order = new Order(null, LocalDate.of(2022, 12, 30), LocalDate.of(2023, 1, 7), false, client, room, room.getName(), room.getHotel().getName(), room.getPrice());
+
+                    orderRepository.save(order);
+                    room.getOrders().add(order);
+                    roomRepository.save(room);
+
+                    client.getOrders().add(order);
+                    userRepository.save(client);
+
+
+            }
+            hotelRepository.save(hotel);
+
+            IntermediateHotelAmenity hamen1 = new IntermediateHotelAmenity(hotel, hotelAmenity1);
+            intermediateHotelAmenityRepository.save(hamen1);
+
+            IntermediateHotelAmenity hamen2 = new IntermediateHotelAmenity(hotel, hotelAmenity2);
+            intermediateHotelAmenityRepository.save(hamen2);
+
+            IntermediateHotelAmenity hamen3 = new IntermediateHotelAmenity(hotel, hotelAmenity3);
+            intermediateHotelAmenityRepository.save(hamen3);
+
+
+            userRepository.save(admin);
+
+        }
+
+        for (int i = 11; i < 20; i++) {
+            Hotel hotel = new Hotel(null, ("anna" + i), 4, "thesaloniki", "kati", false);
+            hotel.setOwner(admin);
+            admin.getHotels().add(hotel);
+            hotelRepository.save(hotel);
+
+            for (int j = 0; j < 4; j++) {
+
+                List<Room> rooms = new ArrayList<>();
+
+                Room room = new Room(null, String.valueOf(j), 3, 50 + j, false);
+
+                room.setCapacity(j);
+
+                roomRepository.save(room);
+
+                IntermediateRoomAmenity intermediateRoomAmenity1 = new IntermediateRoomAmenity(room, roomAmenity3);
+                intermediateRoomAmenityRepository.save(intermediateRoomAmenity1);
+                IntermediateRoomAmenity intermediateRoomAmenity2 = new IntermediateRoomAmenity(room, roomAmenity4);
+                intermediateRoomAmenityRepository.save(intermediateRoomAmenity2);
+                IntermediateRoomAmenity intermediateRoomAmenity3 = new IntermediateRoomAmenity(room, roomAmenity5);
+                intermediateRoomAmenityRepository.save(intermediateRoomAmenity3);
+
+                roomRepository.save(room);
+
+                hotel.getRooms().add(room);
+                hotelRepository.save(hotel);
+
+                room.setHotel(hotel);
+
+                roomRepository.save(room);
+                rooms.add(room);
+
+                    Order order = new Order(null, LocalDate.of(2022, 12, 10), LocalDate.of(2022, 12, 17), false, client, room, room.getName(), room.getHotel().getName(), room.getPrice());
+
+                    orderRepository.save(order);
+                    room.getOrders().add(order);
+                    roomRepository.save(room);
+
+                    client.getOrders().add(order);
+                    userRepository.save(client);
+
+            }
+            hotelRepository.save(hotel);
+
+            IntermediateHotelAmenity hamen1 = new IntermediateHotelAmenity(hotel, hotelAmenity1);
+            intermediateHotelAmenityRepository.save(hamen1);
+
+            IntermediateHotelAmenity hamen2 = new IntermediateHotelAmenity(hotel, hotelAmenity2);
+            intermediateHotelAmenityRepository.save(hamen2);
+
+            IntermediateHotelAmenity hamen3 = new IntermediateHotelAmenity(hotel, hotelAmenity3);
+            intermediateHotelAmenityRepository.save(hamen3);
+
+
+            userRepository.save(admin);
+
+        }
+
+        for (int i = 21; i < 30; i++) {
+            Hotel hotel = new Hotel(null, ("geo" + i), 3, "chios", "kati allo", false);
+            hotel.setOwner(admin);
+            admin.getHotels().add(hotel);
+            hotelRepository.save(hotel);
+
+            for (int j = 0; j < 2; j++) {
+
+                List<Room> rooms = new ArrayList<>();
+
+                Room room = new Room(null, String.valueOf(j), 5, 100 + j, false);
+
+                room.setCapacity(j);
+
+                roomRepository.save(room);
+
+                IntermediateRoomAmenity intermediateRoomAmenity1 = new IntermediateRoomAmenity(room, roomAmenity6);
+                intermediateRoomAmenityRepository.save(intermediateRoomAmenity1);
+                IntermediateRoomAmenity intermediateRoomAmenity2 = new IntermediateRoomAmenity(room, roomAmenity7);
+                intermediateRoomAmenityRepository.save(intermediateRoomAmenity2);
+                IntermediateRoomAmenity intermediateRoomAmenity3 = new IntermediateRoomAmenity(room, roomAmenity8);
+                intermediateRoomAmenityRepository.save(intermediateRoomAmenity3);
+                IntermediateRoomAmenity intermediateRoomAmenity4 = new IntermediateRoomAmenity(room, roomAmenity9);
+                intermediateRoomAmenityRepository.save(intermediateRoomAmenity4);
+
+                roomRepository.save(room);
+
+                hotel.getRooms().add(room);
+                hotelRepository.save(hotel);
+
+                room.setHotel(hotel);
+
+                roomRepository.save(room);
+                rooms.add(room);
+
+
+                    Order order = new Order(null, LocalDate.of(2022, 12, 3), LocalDate.of(2022, 12, 7), false, client, room, room.getName(), room.getHotel().getName(), room.getPrice());
+
+                    orderRepository.save(order);
+                    room.getOrders().add(order);
+                    roomRepository.save(room);
+
+                    client.getOrders().add(order);
+                    userRepository.save(client);
+
+            }
+            hotelRepository.save(hotel);
+
+            IntermediateHotelAmenity hamen1 = new IntermediateHotelAmenity(hotel, hotelAmenity1);
+            intermediateHotelAmenityRepository.save(hamen1);
+
+            IntermediateHotelAmenity hamen2 = new IntermediateHotelAmenity(hotel, hotelAmenity2);
+            intermediateHotelAmenityRepository.save(hamen2);
+
+            IntermediateHotelAmenity hamen3 = new IntermediateHotelAmenity(hotel, hotelAmenity3);
+            intermediateHotelAmenityRepository.save(hamen3);
+
+            IntermediateHotelAmenity hamen4 = new IntermediateHotelAmenity(hotel, hotelAmenity4);
+            intermediateHotelAmenityRepository.save(hamen4);
+
+            IntermediateHotelAmenity hamen5 = new IntermediateHotelAmenity(hotel, hotelAmenity5);
+            intermediateHotelAmenityRepository.save(hamen5);
+
+
+            userRepository.save(admin);
+
+        }
+
         Hotel ksenia = new Hotel(null, "ksenia", 5, "athens", "description", false);
         hotelRepository.save(ksenia);
         ksenia.setOwner(admin);

@@ -513,7 +513,7 @@ public class HotelService {
 
         if (stars != null) {
 
-            query.append("and r.hotel.stars = :stars ");
+            query.append("and r.hotel.stars >= :stars ");
             parametrMap.put("stars", stars);
         }
 
