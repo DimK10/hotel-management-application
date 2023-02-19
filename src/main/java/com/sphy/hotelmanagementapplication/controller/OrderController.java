@@ -1,16 +1,15 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
+import com.sphy.hotelmanagementapplication.dto.UserDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
-import com.sphy.hotelmanagementapplication.service.HotelService;
-import com.sphy.hotelmanagementapplication.service.OrderService;
-import com.sphy.hotelmanagementapplication.service.RoomService;
-import com.sphy.hotelmanagementapplication.service.UserService;
+import com.sphy.hotelmanagementapplication.service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -28,18 +27,22 @@ public class OrderController {
 
     private final HotelService hotelService;
 
+    private EmailService emailService;
 
-    public OrderController(OrderService service, UserService userService, RoomService roomService, HotelService hotelService) {
+
+    public OrderController(OrderService service, UserService userService, RoomService roomService, HotelService hotelService, EmailService emailService) {
         this.service = service;
 
         this.userService = userService;
         this.roomService = roomService;
 
         this.hotelService = hotelService;
+
+        this.emailService = emailService;
     }
 
     /***
-     * creates a new order
+     * creates a new order and sends an email confirmation to the user
      * @param orderDTO is the order to be saved
      * @return the saved order for confirmation
      * @throws ApiRequestException when there is no client or the client does not exist
@@ -47,7 +50,22 @@ public class OrderController {
     @PostMapping("/api/order/create")
     public OrderDTO addOrder(@RequestBody OrderDTO orderDTO) throws ApiRequestException {
 
-        return service.saveOrderDTO(orderDTO);
+        /* Created by Akd */
+
+        OrderDTO savedOrder = service.saveOrderDTO(orderDTO);
+
+        // Send confirmation email to user
+        String recipientEmail = userService.getUserById(savedOrder.getClient()).getEmail();
+        String hotelName = hotelService.getHotelById(roomService.getRoomById(savedOrder.getRoom()).getHotel()).getName();
+        LocalDate checkInDate = savedOrder.getCheckInDate();
+        LocalDate checkOutDate = savedOrder.getCheckOutDate();
+        Long price = savedOrder.getPrice();
+
+        emailService.sendEmail(recipientEmail, hotelName, checkInDate, checkOutDate, price);
+        return savedOrder;
+
+
+//        return service.saveOrderDTO(orderDTO);
     }
 
 
