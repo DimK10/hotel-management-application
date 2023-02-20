@@ -326,7 +326,7 @@ public class HotelController {
 
     }
 
-    @PostMapping("/api/hotel/statistics")
+    @GetMapping("/api/hotel/statistics")
     @PreAuthorize("hasAuthority('ADMIN')")
     public Map<String, Integer> findAllOrdersAdmin(@RequestHeader(name = "Authorization") String token, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) throws ApiRequestException {
 
