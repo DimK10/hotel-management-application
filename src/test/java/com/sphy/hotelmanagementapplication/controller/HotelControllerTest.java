@@ -482,7 +482,7 @@ public class HotelControllerTest {
         //then
 
          mockMvc.perform(
-                        get("/api/hotel/basic/search")
+                        post("/api/hotel/basic/search")
                                 .content(asJsonString(basicSearchDTO1))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON))

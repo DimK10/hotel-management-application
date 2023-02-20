@@ -17,7 +17,7 @@ const searchSlice = createSlice({
     initialState,
     extraReducers: (builder) => builder.addCase(revertAll, () => {return initialState}),
     reducers: {
-        basicSearch: (state, action) => {
+        search: (state, action) => {
             const { payload } = action;
 
             state.loading = false;

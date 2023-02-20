@@ -134,6 +134,10 @@ public class BootStrapData implements CommandLineRunner {
         client.setHashedPassword("avbasbvabcba");
         userRepository.save(client);
 
+        User client2 = new User(1L, true, "dim_80", "dim", "Iwannou", "dimioannou@gmail.com", "soula_magapas",true ,Role.CLIENT, new HashSet<>(), new HashSet<>());
+        client2.setHashedPassword("1229758f94f95fe3593ffe549ab6c5dd797660bfc823ab8dc4fea9dd656c0609b196b0e77491ebf0");
+        userRepository.save(client2);
+
 
         User admin = new User(2L, true, "geo_46", "thanos", "poul", "geopapadopoulos@gmail.com", "soula_sagapo", true, Role.ADMIN, new HashSet<>(), new HashSet<>());
         admin.setHashedPassword("5c54105254c53d8e67ce12cddc0dc00a85ebd4156c68b2c8ee955d6d9066396ed4780bea29e02ef5");
@@ -146,6 +150,7 @@ public class BootStrapData implements CommandLineRunner {
 
 
         Room dio = new Room(null, "dio", 4, 30, false);
+        dio.setCapacity(3);
         roomRepository.save(dio);
 
         Hotel ksenia = new Hotel(null, "ksenia", 5, "athens", "description", false);
