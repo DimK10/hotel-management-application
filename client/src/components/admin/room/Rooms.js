@@ -5,7 +5,7 @@ import Alert from "../../layout/Alert";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllHotelsAction} from "../../../actions/hotel";
 import Select from "react-select";
-import {fetchAllRoomsFromSelectedHotel, getAllRoomsByPage, getCountOfRoomsAction} from "../../../actions/room";
+import {getAllRoomsByPage, getCountOfRoomsAction} from "../../../actions/room";
 import RoomTable from "./RoomTable";
 
 

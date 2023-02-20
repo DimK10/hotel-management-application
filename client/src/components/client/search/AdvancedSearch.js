@@ -15,7 +15,7 @@ import Loading from "../../layout/Loading";
 import Alert from "../../layout/Alert";
 import {useNavigate} from "react-router-dom";
 import {updateExistingRoomAction} from "../../../actions/room";
-import {advancedSearchAction} from "../../../actions/search";
+import {advancedSearchAction} from "../../../actions/search"
 
 const AdvancedSearch = (props) => {
 

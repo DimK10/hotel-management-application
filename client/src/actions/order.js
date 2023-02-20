@@ -13,6 +13,8 @@ const {
     addHotelToOrderPreCheckout,
     addToOrder,
     addUserToOrder,
+    findOrdersByFistnameLastname,
+    startOrdersLoading,
     orderError,
     resetOrderState
 } = orderSlice.actions;
@@ -191,3 +193,39 @@ export const finalizeOrder = (currentOrder) =>
 export const resetOrderAction = () => dispatch => {
     dispatch(resetOrderState());
 };
+
+export const findOrdersByFirstnameLastNameAction = (formData, pageNo, pageSize) => async dispatch => {
+    dispatch(startOrdersLoading);
+    try {
+
+        const {
+            firstname,
+            lastname
+        } = formData;
+
+        let res;
+
+        if (firstname === 'undefined' & lastname !== 'undefined') {
+            res = await axios.get(`/api/orders/admin?${lastname}&${pageNo}&${pageSize}`)
+        }
+
+        if (firstname !== 'undefined' & lastname === 'undefined') {
+            res = await axios.get(`/api/orders/admin?${firstname}&${pageNo}&${pageSize}`)
+        }
+
+        if (firstname !== 'undefined' & lastname !== 'undefined') {
+            res = await axios.get(`/api/orders/admin?${firstname}&${lastname}&${pageNo}&${pageSize}`)
+        }
+
+
+
+        dispatch(findOrdersByFistnameLastname(res.data))
+    } catch (err) {
+
+        const payload = {
+            msg: err,
+            status: null
+        }
+        dispatch(orderError(payload))
+    }
+}

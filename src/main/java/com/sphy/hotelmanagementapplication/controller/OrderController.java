@@ -71,9 +71,20 @@ public class OrderController {
      */
     @GetMapping("/api/orders/admin")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<OrderDTO> findAllOrdersAdmin(@RequestHeader(name = "Authorization") String token, @RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName, @RequestParam(required = false) Integer pageNo, @RequestParam(required = false) Integer pageSize) throws ApiRequestException {
+    public List<OrderDTO> findAllOrdersAdmin(@RequestHeader(name = "Authorization") String token,
+                                             @RequestParam(required = false) String firstName,
+                                             @RequestParam(required = false) String lastName,
+                                             @RequestParam(required = false) Integer pageNo,
+                                             @RequestParam(required = false) Integer pageSize
+    ) throws ApiRequestException {
 
-        return service.getOrdersAdmin(userService.getUserFromToken(token).getId(), firstName, lastName, pageNo,pageSize);
+        return service.getOrdersAdmin(
+                userService.getUserFromToken(token).getId(),
+                firstName,
+                lastName,
+                pageNo,
+                pageSize
+        );
     }
 
     /***
@@ -88,12 +99,12 @@ public class OrderController {
         OrderDTO order = service.getOrderById(id);
 
         if (Objects.equals(userService.getUserById(order.getClient()), userService.getUserFromToken(token))
-        || Objects.equals(id, hotelService.getHotelById(roomService.getRoomById(order.getRoom()).getHotel()).getOwner())) {
+                || Objects.equals(id, hotelService.getHotelById(roomService.getRoomById(order.getRoom()).getHotel()).getOwner())) {
 
             return order;
-        }else {
+        } else {
 
-            throw  new RuntimeException("Unauthorized");
+            throw new RuntimeException("Unauthorized");
         }
     }
 

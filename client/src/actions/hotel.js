@@ -23,8 +23,7 @@ const {
     hotelError,
 } = hotelSlice.actions;
 
-export const getAllHotelsAction = () => async dispatch => {
-    if (localStorage.jwt) {
+export const getAllHotelsAction = () => async dispatch => {    if (localStorage.jwt) {
         setAuthToken(localStorage.jwt);
     }
 
