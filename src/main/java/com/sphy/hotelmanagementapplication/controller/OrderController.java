@@ -6,7 +6,6 @@ import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.OrderService;
 import com.sphy.hotelmanagementapplication.service.RoomService;
 import com.sphy.hotelmanagementapplication.service.UserService;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -72,7 +71,7 @@ public class OrderController {
      */
     @GetMapping("/api/orders/admin")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public Page<OrderDTO> findAllOrdersAdmin(@RequestHeader(name = "Authorization") String token, @RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName, @RequestParam(required = false) Integer pageNo, @RequestParam(required = false) Integer pageSize) throws ApiRequestException {
+    public List<OrderDTO> findAllOrdersAdmin(@RequestHeader(name = "Authorization") String token, @RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName, @RequestParam(required = false) Integer pageNo, @RequestParam(required = false) Integer pageSize) throws ApiRequestException {
 
         return service.getOrdersAdmin(userService.getUserFromToken(token).getId(), firstName, lastName, pageNo,pageSize);
     }

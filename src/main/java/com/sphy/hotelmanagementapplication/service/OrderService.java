@@ -100,7 +100,7 @@ public class OrderService {
      * @return a list of all orders
      * @throws ApiRequestException if no orders are saved
      */
-    public Page<OrderDTO> getOrdersAdmin(Long id, String firstName, String lastName, Integer pageNo, Integer pageSize) throws ApiRequestException {
+    public List<OrderDTO> getOrdersAdmin(Long id, String firstName, String lastName, Integer pageNo, Integer pageSize) throws ApiRequestException {
 
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.unsorted());
 
@@ -138,6 +138,14 @@ public class OrderService {
         orders.forEach(order -> ordersDTO.add(orderToOrderDTO.converter(order)));
 
         Page<OrderDTO> orderDTOS1 = new PageImpl<>(ordersDTO, paging, ordersDTO.size());
+
+        if (!orderDTOS1.isEmpty()) {
+            return orderDTOS1.getContent();
+
+        } else {
+            return new ArrayList<>() {
+            };
+        }
 
         return orderDTOS1;
 
