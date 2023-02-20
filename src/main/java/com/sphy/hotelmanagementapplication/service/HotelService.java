@@ -577,4 +577,52 @@ public class HotelService {
         return statistic;
 
     }
+
+    /**
+     * Created by AKd
+     * enables Hotel Amenity by id
+     * @param id of the hotel Amenity to be enabled
+     * @return a boolean if the action is done or not
+     * @throws ApiRequestException if the Hotel Amenity does not exist or is already enabled
+     */
+
+    public boolean enableHotelAmenity(Long id) throws ApiRequestException {
+
+        Optional<HotelAmenity> hotelAmenityOptional = amenityHotelRepository.findById(id);
+
+        if (hotelAmenityOptional.isEmpty()) {
+            throw new ApiRequestException("There is no Hotel Amenity with id: " + id);
+        } else if (hotelAmenityOptional.get().getEnabled()) {
+            throw new ApiRequestException("The hotel amenity with id: " + id + " is already enabled");
+        }else {
+            HotelAmenity hotelAmenity = hotelAmenityOptional.get();
+            hotelAmenity.setEnabled(true);
+            amenityHotelRepository.save(hotelAmenity);
+            return true;
+        }
+    }
+
+    /**
+    * Created by AKd
+    * disables Hotel Amenity by id
+    * @param id of the hotel Amenity to be disabled
+    * @return a boolean if the action is done or not
+    * @throws ApiRequestException if the Hotel Amenity does not exist or is already disabled
+    */
+    public boolean disableHotelAmenity(Long id) throws ApiRequestException{
+
+        Optional<HotelAmenity> hotelAmenityOptional = amenityHotelRepository.findById(id);
+
+        if(hotelAmenityOptional.isEmpty()){
+            throw new ApiRequestException("There is not an amenity hotel with the id: " + id);
+        }else if (!hotelAmenityOptional.get().getEnabled()){
+            throw new ApiRequestException("The hotel amenity with id: " + id + " is disabled");
+        }else{
+            HotelAmenity hotelAmenity = hotelAmenityOptional.get();
+            hotelAmenity.setEnabled(false);
+            amenityHotelRepository.save(hotelAmenity);
+            return true;
+        }
+
+    }
 }

@@ -332,5 +332,48 @@ public class HotelController {
 
         return service.getStatistics(userService.getUserFromToken(token).getId(), date);
     }
+    /**
+     * Created by AKd
+     * enables Hotel Amenity
+     * @param id of the hotel Amenity to be enabled by Superuser
+     * @return a message of confirmation of the action hotel amenity activated
+     * @throws ApiRequestException if the user is not authorized to activate the hotel Amenity
+     */
+     @PostMapping("/api/hotel/hotelAmenity/enable/{id}")
+     @PreAuthorize("hasAuthority('SUPERUSER')")
+     ResponseEntity<String> enableHotelAmenity(@RequestHeader(name = "Authorization") String token, @PathVariable Long id) throws ApiRequestException {
+
+         if (Objects.equals(User.Role.SUPERUSER, userService.getUserFromToken(token).getRole())) {
+
+             service.enableHotelAmenity(id);
+             return ResponseEntity.status(HttpStatus.OK)
+                     .body("Hotel Amenity with id: " + id + " was successfully activated");
+         } else {
+             throw new ApiRequestException("Unauthorized");
+         }
+     }
+
+    /**
+     * Created by AKd
+     * disables Hotel Amenity
+     * @param id of the hotel Amenity to be disabled by Superuser
+     * @return a message of confirmation of the action hotel amenity deactivated
+     * @throws ApiRequestException if the user is not authorized to deactivate the hotel Amenity
+     */
+
+    @PostMapping("/api/hotel/hotelAmenity/disable/{id}")
+    @PreAuthorize("hasAuthority('SUPERUSER')")
+    ResponseEntity<String> disableHotelAmenity(@RequestHeader(name = "Authorization") String token, @PathVariable Long id) throws ApiRequestException {
+
+        if (Objects.equals(User.Role.SUPERUSER, userService.getUserFromToken(token).getRole())) {
+
+            service.disableHotelAmenity(id);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body("Hotel Amenity with id: " + id + " was successfully deactivated");
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
+    }
+
 
 }

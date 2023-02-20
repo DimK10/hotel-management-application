@@ -174,13 +174,6 @@ public class BootStrapData implements CommandLineRunner {
 
         hotelRepository.save(ksenia);
 
-        IntermediateRoomAmenity roomAme1 = new IntermediateRoomAmenity(ena, roomAmenity1);
-        intermediateRoomAmenityRepository.save(roomAme1);
-
-        IntermediateRoomAmenity roomAme2 = new IntermediateRoomAmenity(ena, roomAmenity2);
-        intermediateRoomAmenityRepository.save(roomAme2);
-
-
         IntermediateHotelAmenity hamen1 = new IntermediateHotelAmenity(ksenia, hotelAmenity1);
         intermediateHotelAmenityRepository.save(hamen1);
 
@@ -203,6 +196,12 @@ public class BootStrapData implements CommandLineRunner {
 
         ena.getOrders().add(order);
 
+        IntermediateRoomAmenity roomAme1 = new IntermediateRoomAmenity(ena,roomAmenity1);
+        intermediateRoomAmenityRepository.save(roomAme1);
+
+        IntermediateRoomAmenity roomAme2 = new IntermediateRoomAmenity(ena, roomAmenity2);
+        intermediateRoomAmenityRepository.save(roomAme2);
+
         roomRepository.save(ena);
 
         ena.getIntermediateRoomAmenities().add(roomAme1);
@@ -212,6 +211,20 @@ public class BootStrapData implements CommandLineRunner {
         orderRepository.save(order1);
         dio.getOrders().add(order1);
 
+//        Set<RoomAmenity> amenityRset1 = new HashSet<>();
+//
+//        RoomAmenity amenityR4 = new RoomAmenity();
+//        amenityR4.setAmenitiesR(RoomAmenity.AmenitiesRoom.MINIBAR);
+//
+//        RoomAmenity amenityR5 = new RoomAmenity();
+//        amenityR5.setAmenitiesR(RoomAmenity.AmenitiesRoom.BABYHIGHCHAIR);
+//
+//
+//        amenityRset1.add(amenityR4);
+//        amenityRset1.add(amenityR5);
+//        amenityRoomRepository.saveAll(amenityRset1);
+//
+//        dio.getRoomAmenity().addAll(amenityRset1);
         roomRepository.save(dio);
 
         //  hotel with rooms for testing in front end

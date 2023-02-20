@@ -2,10 +2,7 @@ package com.sphy.hotelmanagementapplication.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sphy.hotelmanagementapplication.configuration.TestAppAdminConfiguration;
-import com.sphy.hotelmanagementapplication.domain.Hotel;
-import com.sphy.hotelmanagementapplication.domain.Order;
-import com.sphy.hotelmanagementapplication.domain.Room;
-import com.sphy.hotelmanagementapplication.domain.User;
+import com.sphy.hotelmanagementapplication.domain.*;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
@@ -492,7 +489,91 @@ public class HotelControllerTest {
 
     }
 
-	/**
+    /**
+     * Created by Akd
+     */
+
+    @Test
+    void saveHotelAmenity() throws Exception{
+
+        User superUser = new User(4L);
+        superUser.setRole(User.Role.SUPERUSER);
+
+        HotelAmenity hotelAmenity = new HotelAmenity();
+        hotelAmenity.setId(4L);
+        hotelAmenity.sethAmenity("POOL");
+        hotelAmenity.setEnabled(true);
+
+        // When
+        when(hotelService.saveHotelAmenity(any())).thenReturn(hotelAmenity);
+        when(userService.getUserFromToken(anyString())).thenReturn(superUser);
+
+        // Return
+        mockMvc.perform(
+                put("/api/hotel/addHotelAmenity")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer token")
+                        .content(asJsonString(hotelAmenity))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id")
+                        .value(4L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.hAmenity")
+                        .value("POOL"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.enabled")
+                        .value(true));
+
+        verify(hotelService, times(1)).saveHotelAmenity(any());
+    }
+
+    /**
+     * Created by Akd
+     */
+    @Test
+    void enableHotelAmenity() throws Exception{
+        User superUser = new User(4L);
+        superUser.setRole(User.Role.SUPERUSER);
+
+
+        when(userService.getUserFromToken(anyString())).thenReturn(superUser);
+        when(hotelService.enableHotelAmenity(anyLong())).thenReturn(true);
+
+        mockMvc.perform(
+                        post("/api/hotel/hotelAmenity/enable/{id}",4)
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer token")
+                )
+                .andExpect(status().isOk())
+
+        .andExpect(content().string("Hotel Amenity with id: 4 was successfully activated"));
+
+        verify(hotelService, times(1)).enableHotelAmenity(any());
+    }
+
+    /**
+     * Created by AKd
+     */
+
+    @Test
+    void disableHotelAmenity() throws Exception {
+
+        User superUser = new User(4L);
+        superUser.setRole(User.Role.SUPERUSER);
+
+        when(userService.getUserFromToken(anyString())).thenReturn(superUser);
+        when(hotelService.disableHotelAmenity(anyLong())).thenReturn(true);
+
+        mockMvc.perform(
+                post("/api/hotel/hotelAmenity/disable/{id}",4)
+                        .header(HttpHeaders.AUTHORIZATION,"Bearer token")
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().string("Hotel Amenity with id: 4 was successfully deactivated"));
+        verify(hotelService, times(1)).disableHotelAmenity(any());
+    }
+
+
+    /**
 	 * This method converts an object to a string representation in JSON format.
 	 * Basically, it serializes the object in json format.
 	 * @param obj The object to be serialized.

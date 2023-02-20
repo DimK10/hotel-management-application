@@ -287,5 +287,47 @@ public class RoomController {
         }
     }
 
+    /**
+     * Created by AKd
+     * enables Room Amenity
+     * @param id of the room Amenity to be enabled by Superuser
+     * @return a message of confirmation of the action room amenity activated
+     * @throws ApiRequestException if the user is not authorized to activate the room Amenity
+     */
+    @PostMapping("/api/room/roomAmenity/enable/{id}")
+    @PreAuthorize("hasAuthority('SUPERUSER')")
+    ResponseEntity<String> enableRoomAmenity(@RequestHeader(name = "Authorization") String token, @PathVariable Long id) throws ApiRequestException {
+
+        if (Objects.equals(User.Role.SUPERUSER, userService.getUserFromToken(token).getRole())) {
+
+            service.enableRoomAmenity(id);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body("Room Amenity with id: " + id + " was successfully activated");
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
+    }
+
+
+    /**
+     * Created by AKd
+     * disables Room Amenity
+     * @param id of the room Amenity to be disabled by Superuser
+     * @return a message of confirmation of the action room amenity deactivated
+     * @throws ApiRequestException if the user is not authorized to deactivate the room Amenity
+     */
+    @PostMapping("/api/room/roomAmenity/disable/{id}")
+    @PreAuthorize("hasAuthority('SUPERUSER')")
+    ResponseEntity<String> disableRoomAmenity(@RequestHeader(name = "Authorization") String token, @PathVariable Long id) throws ApiRequestException {
+
+        if (Objects.equals(User.Role.SUPERUSER, userService.getUserFromToken(token).getRole())) {
+
+            service.disableRoomAmenity(id);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body("Room Amenity with id: " + id + " was successfully deactivated");
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
+    }
 
 }

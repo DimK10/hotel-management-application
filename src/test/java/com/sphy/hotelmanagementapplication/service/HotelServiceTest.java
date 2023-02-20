@@ -60,7 +60,6 @@ public class HotelServiceTest {
     @Mock
     JwtUtil jwtUtil;
 
-
     HotelService hotelService;
 
     List<Hotel> hotels = new ArrayList<>();
@@ -425,5 +424,68 @@ public class HotelServiceTest {
 
         assertEquals(hotelService.getHotelBasicSearch(basicSearchDTO1), hotel1DTOS);
     }
+
+
+    /**
+     * Created by Akd
+     */
+    @Test
+    void saveHotelAmenity() {
+        // given
+        HotelAmenity hotelAmenity = new HotelAmenity();
+        hotelAmenity.setId(4L);
+        hotelAmenity.sethAmenity("POOL");
+        hotelAmenity.setEnabled(true);
+
+        // when
+        when(amenityHotelRepository.save(any())).thenReturn(hotelAmenity);
+
+        //then
+        assertEquals(hotelAmenity, hotelService.saveHotelAmenity(hotelAmenity));
+    }
+
+    /**
+     * Created by Akd
+     */
+    @Test
+    void enableHotelAmenity() {
+        // given
+        boolean expected = true;
+        HotelAmenity hotelAmenity = new HotelAmenity();
+        hotelAmenity.setId(4L);
+        hotelAmenity.sethAmenity("POOL");
+        hotelAmenity.setEnabled(false);
+
+        Optional<HotelAmenity> hotelAmenityOptional = Optional.of(hotelAmenity);
+
+        // when
+        when(amenityHotelRepository.findById(anyLong())).thenReturn(hotelAmenityOptional);
+
+        //then
+        boolean result = hotelService.enableHotelAmenity(anyLong());
+
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Created by Akd
+     */
+    @Test
+     void testDisableHotelAmenity(){
+        boolean expected = true;
+        HotelAmenity hotelAmenity = new HotelAmenity();
+        hotelAmenity.setId(4L);
+        hotelAmenity.sethAmenity("POOL");
+        hotelAmenity.setEnabled(true);
+
+        Optional<HotelAmenity> hotelAmenityOptional = Optional.of(hotelAmenity);
+
+        when(amenityHotelRepository.findById(anyLong())).thenReturn(hotelAmenityOptional);
+
+        boolean result = hotelService.disableHotelAmenity(anyLong());
+
+        assertEquals(expected,result);
+    }
+
 
 }
