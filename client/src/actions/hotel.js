@@ -9,7 +9,7 @@ import {
     ALERT_SUCCESS,
     HOTEL_CREATED_SUCCESS, HOTEL_ERROR,
     HOTEL_SUCCESS,
-    HOTEL_UPDATED_SUCCESS,
+    HOTEL_UPDATED_SUCCESS, ROOM_ERROR,
     SOMETHING_WRONG_HAPPENED
 } from "./types";
 
@@ -125,6 +125,7 @@ export const getHotelByIdAction = (hotelId) => async dispatch => {
         dispatch(getHotelById(res.data));
     } catch (err) {
         dispatch(hotelError(err.response.data.errorMessage));
+        dispatch(setAlertAction(HOTEL_ERROR, ALERT_ERROR));
     }
 
 }

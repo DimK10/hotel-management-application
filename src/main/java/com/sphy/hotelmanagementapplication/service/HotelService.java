@@ -489,16 +489,12 @@ public class HotelService {
     }
 
 
-    public Page<HotelDTO> advanceSearchMethod(List<HotelAmenity> hotelAmenities, List<RoomAmenity> roomAmenities, LocalDate checkInDate, LocalDate checkOutDate,
-                                              Long priceFrom, Long priceTo, Integer adultsRange, Integer stars, String nameOrLocation, Integer pageNo, Integer pageSize) {
+    public List<HotelDTO> advancedSearchMethod(List<HotelAmenity> hotelAmenities, List<RoomAmenity> roomAmenities, LocalDate checkInDate, LocalDate checkOutDate,
+                                               Long priceFrom, Long priceTo, Integer adultsRange, Integer stars, String nameOrLocation, Integer pageNo, Integer pageSize) {
 
         Pageable paging = PageRequest.of(pageNo, pageSize, Sort.unsorted());
 
         Map<String, Object> parametrMap = new HashMap<>();
-
-//        StringBuilder query = new StringBuilder("select DISTINCT h from Hotel h inner join IntermediateHotelAmenity ih on h.id = ih.hotel.id inner join HotelAmenity ha on ih.hotelAmenity.id = ha.id inner " +
-//                "join rooms r on r.hotel.id = h.id inner join IntermediateRoomAmenity ir on r.id = ir.room.id inner join RoomAmenity ra on ra.id = ir.roomAmenity.id " +
-//                "inner join orders o on o.room.id = r.id where h.disabled = false ");
 
         StringBuilder query = new StringBuilder("select r.hotel from rooms r inner join Hotel h on r.hotel.id = h.id " +
                 "inner join IntermediateHotelAmenity ih on h.id = ih.hotel.id " +
@@ -528,7 +524,7 @@ public class HotelService {
 
         if (stars != null) {
 
-            query.append("and r.hotel.stars = :stars ");
+            query.append("and r.hotel.stars >= :stars ");
             parametrMap.put("stars", stars);
         }
 
@@ -580,6 +576,20 @@ public class HotelService {
 
         Page<HotelDTO> hotelDTOPage = new PageImpl<>(hotelDTOSList, paging, hotelDTOSList.size());
 
-        return hotelDTOPage;
+        if (hotelDTOPage.hasContent())
+            return hotelDTOPage.getContent();
+
+        return new ArrayList<>();
+    }
+
+    public Map<String, Integer> getStatistics(Long id, LocalDate date) {
+
+        Map<String, Integer> statistic = new HashMap<>();
+
+        statistic.put("all", hotelRepository.countAllRooms(id));
+        statistic.put("vacant", hotelRepository.countAllRoomsVacant(id, date));
+
+        return statistic;
+
     }
 }

@@ -35,6 +35,7 @@ export const HOTEL_ERROR = 'There was an error fetching hotels. Please contact t
 
 
 // room
+export const ROOM_UPDATED_SUCCESS = 'Room updated successfully!';
 export const ROOM_ERROR = 'There was an error when fetching the rooms you requested. Please contact the app administrator.';
 
 export const LOGGED_OUT_LOG_IN_AGAIN =  'You have been logged out! Please log in again!';

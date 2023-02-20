@@ -23,12 +23,16 @@ public interface RoomRepository extends PagingAndSortingRepository<Room,Long> {
     @Query("SELECT count(r) from rooms r where r.hotel.owner.id = :id and r.disabled = false")
     int countAll(@Param("id") Long id);
 
-    @Query(value = "select r from rooms r where r.hotel.owner.id = :id and r.disabled = false",
+    @Query("SELECT count(r) from rooms r where r.hotel.id = :hotelId and r.hotel.owner.id = :userId and r.disabled = false")
+    int countAllByHotelIdAndOwnerId(@Param("hotelId") Long hotelId, @Param("userId") Long userId);
+
+    @Query(value = "select r from rooms r where r.hotel.owner.id = :id",
             countQuery = "select count (r) from  rooms r where r.hotel.owner.id = :id and r.disabled = false")
     Page<Room> findAllRoomsByOwner(@Param("id") Long id, Pageable pageable);
 
 
     @Query(value = "select ra from RoomAmenity ra inner join IntermediateRoomAmenity i on i.roomAmenity.id = ra.id where ra.enabled = true and i.room.id = :id")
     Set<RoomAmenity> findAmenitiesByRoomId(@Param("id") Long id);
-    List<Room> findAllByHotelId(Long hotelId);
+
+    Page<Room> findAllByHotelId(Long hotelId, Pageable pageable);
 }

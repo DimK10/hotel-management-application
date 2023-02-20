@@ -225,7 +225,6 @@ public class HotelControllerTest {
     }
 
     @Test
-    @Disabled("There is no longer a method to get all hotels without pagination")
     void findAllHotels() throws Exception {
         // Given
         User admin = new User(1L);
@@ -483,7 +482,7 @@ public class HotelControllerTest {
         //then
 
          mockMvc.perform(
-                        get("/api/hotel/basic/search")
+                        post("/api/hotel/basic/search")
                                 .content(asJsonString(basicSearchDTO1))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON))

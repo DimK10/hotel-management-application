@@ -10,6 +10,7 @@ import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.UserService;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -95,6 +98,31 @@ public class HotelController {
             throw new RuntimeException("Unauthorized");
         }
     }
+
+
+    /**
+     * Finds all hotels without pagination
+     *
+     * @param token The jwt token
+     * @return A List of hotels in DTo object
+     */
+    @GetMapping("/api/hotels")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Set<HotelDTO>> findAllHotels(@RequestHeader(name = "Authorization") String token) {
+
+        Long userId = userService.getUserFromToken(token).getId();
+
+        if (Objects.equals(userId, userService.getUserFromToken(token).getId())) {
+
+            Set<HotelDTO> hotelDTOS = service.getHotels(userId);
+
+            return new ResponseEntity<>(hotelDTOS, new HttpHeaders(), HttpStatus.OK);
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
+    }
+
+
 
     /***
      * Finds all hotels
@@ -263,7 +291,7 @@ public class HotelController {
      * @return the hotels than mach with the search
      * @throws RuntimeException if this that made the search is not a role client
      */
-    @GetMapping("/api/hotel/basic/search")
+    @PostMapping("/api/hotel/basic/search")
     public Set<HotelDTO> findHotelBasicSearch(@RequestBody BasicSearchDTO basicSearchDTO) throws RuntimeException {
 
         return service.getHotelBasicSearch(basicSearchDTO);
@@ -277,12 +305,12 @@ public class HotelController {
      * @throws RuntimeException if this that made the search is not a role client
      */
     @PostMapping("/api/hotel/advanced/search/{pageNo}/{pageSize}")
-    public Page<HotelDTO> advancedSearch(@RequestBody AdvancedSearch advancedSearch,
+    public List<HotelDTO> advancedSearch(@RequestBody AdvancedSearch advancedSearch,
                                          @PathVariable Integer pageNo,
                                          @PathVariable Integer pageSize
                                          ) throws RuntimeException {
 
-        return service.advanceSearchMethod(advancedSearch.getHotelAmenities(), advancedSearch.getRoomAmenities(), advancedSearch.getCheckInDate(), advancedSearch.getCheckOutDate(),
+        return service.advancedSearchMethod(advancedSearch.getHotelAmenities(), advancedSearch.getRoomAmenities(), advancedSearch.getCheckInDate(), advancedSearch.getCheckOutDate(),
                 advancedSearch.getPriceFrom(), advancedSearch.getPriceTo(), advancedSearch.getAdultsRange(), advancedSearch.getStars(), advancedSearch.getNameOrLocation(),pageNo, pageSize);
     }
 
@@ -296,6 +324,13 @@ public class HotelController {
 
         return service.getHotelAmenities();
 
+    }
+
+    @GetMapping("/api/hotel/statistics")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Map<String, Integer> findAllOrdersAdmin(@RequestHeader(name = "Authorization") String token, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) throws ApiRequestException {
+
+        return service.getStatistics(userService.getUserFromToken(token).getId(), date);
     }
 
 }

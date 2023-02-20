@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles(value = "dev")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class RoomServiceIT {
 
     @Autowired
@@ -52,7 +54,7 @@ public class RoomServiceIT {
 
         Hotel hotel = new Hotel(10L);
         hotel.setOwner(admin);
-        hotelRepository.save(hotel);
+        hotel = hotelRepository.save(hotel);
 
 
         Room room1 = new Room(1L);
@@ -92,7 +94,7 @@ public class RoomServiceIT {
     void getRoomsByHotelId() throws Exception {
 
         //given
-        int expectedSize = 5;
+        int expectedSize = 10;
 
         List<Room> rooms = new ArrayList<>();
 
@@ -104,35 +106,21 @@ public class RoomServiceIT {
         hotel = hotelRepository.save(hotel);
 
 
-        Room room1 = new Room(1L);
-        room1.setHotel(hotel);
-        rooms.add(room1);
+        for (int i = 1; i < 12; i++) {
+            Room room = new Room((long) i);
+            room.setHotel(hotel);
+            rooms.add(room);
+        }
 
-        Room room2 = new Room(2L);
-        room2.setHotel(hotel);
-        rooms.add(room2);
+        // test
+        List<Room> roomsInDb = new ArrayList<>();
 
-        Room room3 = new Room(3L);
-        room3.setHotel(hotel);
-        rooms.add(room3);
-
-        Room room4 = new Room(4L);
-        room4.setHotel(hotel);
-        rooms.add(room4);
-
-        Room room5 = new Room(5L);
-        room5.setHotel(hotel);
-        rooms.add(room5);
-
-        Room room6 = new Room(6L);
-
-        roomRepository.saveAll(rooms);
-        roomRepository.save(room6);
+        roomRepository.saveAll(rooms).spliterator().forEachRemaining(roomsInDb::add);
 
         List<RoomDTO> expectedList = new ArrayList<>();
         RoomDTO tmp = new RoomDTO();
 
-        for (int i = 1; i < 6; i++) {
+        for (int i = 1; i < 11; i++) {
             tmp = new RoomDTO();
             tmp.setId((long) i);
             tmp.setHotel(hotel.getId());
@@ -141,10 +129,45 @@ public class RoomServiceIT {
         }
 
         //when
-        List<RoomDTO> actualList = roomService.getRoomsByHotelId(hotel.getId());
+        List<RoomDTO> actualList = roomService.getRoomsByHotelId(0, 10, "id", hotel.getId());
 
         //then
         assertEquals(expectedSize, actualList.size());
         assertEquals(expectedList, actualList);
+    }
+
+
+    @Test
+    void countRooms() {
+        //given
+        int expectedCount = 11;
+
+        List<Room> rooms = new ArrayList<>();
+
+        User admin = new User(1L);
+        userRepository.save(admin);
+
+        Hotel hotel = new Hotel(10L);
+        hotel.setOwner(admin);
+        hotel = hotelRepository.save(hotel);
+
+
+        for (int i = 1; i < 12; i++) {
+            Room room = new Room((long) i);
+            room.setHotel(hotel);
+            rooms.add(room);
+        }
+
+        // test
+        List<Room> roomsInDb = new ArrayList<>();
+
+        roomRepository.saveAll(rooms).spliterator().forEachRemaining(roomsInDb::add);
+
+        // when
+        int actualCount = roomService.countRooms(hotel.getId(), admin.getId());
+
+        // then
+        assertEquals(expectedCount, actualCount);
+
     }
 }
