@@ -146,9 +146,6 @@ public class OrderService {
             return new ArrayList<>() {
             };
         }
-
-        return orderDTOS1;
-
     }
 
     /***
