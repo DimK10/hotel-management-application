@@ -27,18 +27,16 @@ public class OrderController {
 
     private final HotelService hotelService;
 
-    private EmailService emailService;
 
+    public OrderController(OrderService service, UserService userService, RoomService roomService, HotelService hotelService) {
 
-    public OrderController(OrderService service, UserService userService, RoomService roomService, HotelService hotelService, EmailService emailService) {
         this.service = service;
 
         this.userService = userService;
+
         this.roomService = roomService;
 
         this.hotelService = hotelService;
-
-        this.emailService = emailService;
     }
 
     /***
@@ -50,22 +48,7 @@ public class OrderController {
     @PostMapping("/api/order/create")
     public OrderDTO addOrder(@RequestBody OrderDTO orderDTO) throws ApiRequestException {
 
-        /* Created by Akd */
-
-        OrderDTO savedOrder = service.saveOrderDTO(orderDTO);
-
-        // Send confirmation email to user
-        String recipientEmail = userService.getUserById(savedOrder.getClient()).getEmail();
-        String hotelName = hotelService.getHotelById(roomService.getRoomById(savedOrder.getRoom()).getHotel()).getName();
-        LocalDate checkInDate = savedOrder.getCheckInDate();
-        LocalDate checkOutDate = savedOrder.getCheckOutDate();
-        Long price = savedOrder.getPrice();
-
-        emailService.sendEmail(recipientEmail, hotelName, checkInDate, checkOutDate, price);
-        return savedOrder;
-
-
-//        return service.saveOrderDTO(orderDTO);
+        return service.saveOrderDTO(orderDTO);
     }
 
 
