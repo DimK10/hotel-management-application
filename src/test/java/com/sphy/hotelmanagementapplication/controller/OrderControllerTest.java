@@ -75,6 +75,7 @@ public class OrderControllerTest {
 
         Room room = new Room(1L);
         client = new User(1L);
+        client.setEmail("asjgdfadgjkfa");
         order.setId(1L);
         order.setClient(client);
         order.setRoom(room);

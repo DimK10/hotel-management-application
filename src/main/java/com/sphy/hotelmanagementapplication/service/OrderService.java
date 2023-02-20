@@ -11,6 +11,8 @@ import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.repository.OrderRepository;
 import com.sphy.hotelmanagementapplication.repository.RoomRepository;
 import com.sphy.hotelmanagementapplication.repository.UserRepository;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
@@ -36,13 +38,16 @@ public class OrderService {
 
     private final OrderToOrderDTO orderToOrderDTO;
 
-    public OrderService(EntityManager entityManager, OrderRepository orderRepository, RoomRepository roomRepository, UserRepository userRepository, OrderDTOToOrder orderDTOToOrder, OrderToOrderDTO orderToOrderDTO) {
+    private final JavaMailSender emailSender;
+
+    public OrderService(EntityManager entityManager, OrderRepository orderRepository, RoomRepository roomRepository, UserRepository userRepository, OrderDTOToOrder orderDTOToOrder, OrderToOrderDTO orderToOrderDTO, JavaMailSender emailSender) {
         this.entityManager = entityManager;
         this.orderRepository = orderRepository;
         this.roomRepository = roomRepository;
         this.userRepository = userRepository;
         this.orderDTOToOrder = orderDTOToOrder;
         this.orderToOrderDTO = orderToOrderDTO;
+        this.emailSender = emailSender;
     }
 
     /***
@@ -71,11 +76,39 @@ public class OrderService {
             conflict = orderRepository.OrderConflict(order.getCheckInDate(), order.getCheckOutDate(), room.get());
 
             if (conflict == 0) {
-                return orderToOrderDTO.converter(orderRepository.save(order));
+
+                Order order1 = orderRepository.save(order);
+
+                // Created by Akd
+
+                if (order1 != null) {
+
+                    String subject = "Order Confirmation";
+                    String text = "Your order has been saved successfully.\n"
+                            + "Order details:\n"
+                            + "Hotel: " + order.getRoom().getHotel().getName() + "\n"
+                            + "Room: " + order.getRoom().getName() + "\n"
+                            + "Check-in date: " + order.getCheckInDate() + "\n"
+                            + "Check-out date: " + order.getCheckOutDate() + "\n"
+                            + "Total price is: " + order.getPrice() + "\n\n"
+                            + "Thank you for choosing our hotel!";
+
+                    SimpleMailMessage message = new SimpleMailMessage();
+                    message.setFrom("hotelmanagement140@gmail.com");
+                    message.setTo(client.get().getEmail());
+                    message.setSubject(subject);
+                    message.setText(text);
+
+                    emailSender.send(message);
+
+                }
+                return orderToOrderDTO.converter(order1);
+
             } else {
                 throw new ApiExceptionFront("The room isn't available on the desirable dates");
             }
         }
+
     }
 
     /***
@@ -226,7 +259,7 @@ public class OrderService {
 
         Optional<Room> room = roomRepository.findById(orderDTO.getRoom());
 
-        if (room.isEmpty()){
+        if (room.isEmpty()) {
             throw new RuntimeException("The room can't be empty");
         }
 
