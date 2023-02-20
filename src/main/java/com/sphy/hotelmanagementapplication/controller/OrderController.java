@@ -1,15 +1,16 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
-import com.sphy.hotelmanagementapplication.dto.UserDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
-import com.sphy.hotelmanagementapplication.service.*;
+import com.sphy.hotelmanagementapplication.service.HotelService;
+import com.sphy.hotelmanagementapplication.service.OrderService;
+import com.sphy.hotelmanagementapplication.service.RoomService;
+import com.sphy.hotelmanagementapplication.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -75,6 +76,18 @@ public class OrderController {
     public List<OrderDTO> findAllOrdersAdmin(@RequestHeader(name = "Authorization") String token, @RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName, @RequestParam(required = false) Integer pageNo, @RequestParam(required = false) Integer pageSize) throws ApiRequestException {
 
         return service.getOrdersAdmin(userService.getUserFromToken(token).getId(), firstName, lastName, pageNo,pageSize);
+    }
+
+    /***
+     * finds all Admins orders
+     * @return all Admins orders
+     * @throws ApiRequestException if no orders is saved
+     */
+    @GetMapping("/api/orders/admin/all")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<OrderDTO> findAllOrdersAdminAll(@RequestHeader(name = "Authorization") String token) throws ApiRequestException {
+
+        return service.getOrdersAdminAll(userService.getUserFromToken(token).getId());
     }
 
     /***

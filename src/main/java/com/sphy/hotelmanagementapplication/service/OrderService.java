@@ -286,5 +286,19 @@ public class OrderService {
         return orderToOrderDTO.converter(orderRepository.save(orderOptional.get()));
 
     }
+
+    /***
+     * get all orders
+     * @return a list of all orders
+     * @throws ApiRequestException if no orders are saved
+     */
+    public List<OrderDTO> getOrdersAdminAll(Long id) {
+
+        List<OrderDTO> orderDTOS = new ArrayList<>();
+
+        orderRepository.findAllAdmin(id).forEach(order -> orderDTOS.add(orderToOrderDTO.converter(order)));
+
+        return orderDTOS;
+    }
 }
 
