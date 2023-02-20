@@ -20,6 +20,7 @@ import java.util.Objects;
 @RestController
 public class OrderController {
 
+
     private final OrderService service;
 
     private final UserService userService;
@@ -70,9 +71,9 @@ public class OrderController {
      */
     @GetMapping("/api/orders/admin")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public List<OrderDTO> findAllOrdersAdmin(@RequestHeader(name = "Authorization") String token) throws ApiRequestException {
+    public List<OrderDTO> findAllOrdersAdmin(@RequestHeader(name = "Authorization") String token, @RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName, @RequestParam(required = false) Integer pageNo, @RequestParam(required = false) Integer pageSize) throws ApiRequestException {
 
-        return service.getOrdersAdmin(userService.getUserFromToken(token).getId());
+        return service.getOrdersAdmin(userService.getUserFromToken(token).getId(), firstName, lastName, pageNo,pageSize);
     }
 
     /***
