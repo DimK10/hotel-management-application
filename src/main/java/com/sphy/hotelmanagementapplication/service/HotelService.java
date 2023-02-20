@@ -513,7 +513,7 @@ public class HotelService {
 
         if (stars != null) {
 
-            query.append("and r.hotel.stars = :stars ");
+            query.append("and r.hotel.stars >= :stars ");
             parametrMap.put("stars", stars);
         }
 
@@ -569,5 +569,16 @@ public class HotelService {
             return hotelDTOPage.getContent();
 
         return new ArrayList<>();
+    }
+
+    public Map<String, Integer> getStatistics(Long id, LocalDate date) {
+
+        Map<String, Integer> statistic = new HashMap<>();
+
+        statistic.put("all", hotelRepository.countAllRooms(id));
+        statistic.put("vacant", hotelRepository.countAllRoomsVacant(id, date));
+
+        return statistic;
+
     }
 }

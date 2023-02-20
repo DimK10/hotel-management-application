@@ -57,6 +57,12 @@ public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long>{
 			"  where ha.enabled = true and i.hotel.id = :id order by i.hotel.id")
 	Set<HotelAmenity> findAmenityByHotelId(@Param("id") Long id);
 
+	@Query(value = "select count(r) from rooms r inner join Hotel h on h.id = r.hotel.id where r.hotel.owner.id = :id and h.disabled = false")
+    Integer countAllRooms(@Param("id") Long id);
+
+	@Query(value = "select count(r) from rooms r inner join Hotel h on r.hotel.id = h.id inner join orders o on o.room.id = r.id  where r.hotel.owner.id = :id and r.hotel.disabled = false and :date between o.checkInDate and o.checkOutDate")
+	Integer countAllRoomsVacant(@Param("id") Long id, @Param("date") LocalDate date);
+
 //	@Query(value = "select DISTINCT rk.hotel from (select r from rooms r " +
 //			"inner join Hotel h on r.hotel.id = h.id inner join " +
 //			"IntermediateHotelAmenity ih on h.id = ih.hotel.id " +

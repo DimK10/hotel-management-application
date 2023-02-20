@@ -10,6 +10,7 @@ import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.UserService;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -321,6 +324,13 @@ public class HotelController {
 
         return service.getHotelAmenities();
 
+    }
+
+    @GetMapping("/api/hotel/statistics")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Map<String, Integer> findAllOrdersAdmin(@RequestHeader(name = "Authorization") String token, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) throws ApiRequestException {
+
+        return service.getStatistics(userService.getUserFromToken(token).getId(), date);
     }
 
 }
