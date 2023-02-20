@@ -288,7 +288,7 @@ public class HotelController {
      * @return the hotels than mach with the search
      * @throws RuntimeException if this that made the search is not a role client
      */
-    @GetMapping("/api/hotel/basic/search")
+    @PostMapping("/api/hotel/basic/search")
     public Set<HotelDTO> findHotelBasicSearch(@RequestBody BasicSearchDTO basicSearchDTO) throws RuntimeException {
 
         return service.getHotelBasicSearch(basicSearchDTO);
@@ -302,12 +302,12 @@ public class HotelController {
      * @throws RuntimeException if this that made the search is not a role client
      */
     @PostMapping("/api/hotel/advanced/search/{pageNo}/{pageSize}")
-    public Page<HotelDTO> advancedSearch(@RequestBody AdvancedSearch advancedSearch,
+    public List<HotelDTO> advancedSearch(@RequestBody AdvancedSearch advancedSearch,
                                          @PathVariable Integer pageNo,
                                          @PathVariable Integer pageSize
                                          ) throws RuntimeException {
 
-        return service.advanceSearchMethod(advancedSearch.getHotelAmenities(), advancedSearch.getRoomAmenities(), advancedSearch.getCheckInDate(), advancedSearch.getCheckOutDate(),
+        return service.advancedSearchMethod(advancedSearch.getHotelAmenities(), advancedSearch.getRoomAmenities(), advancedSearch.getCheckInDate(), advancedSearch.getCheckOutDate(),
                 advancedSearch.getPriceFrom(), advancedSearch.getPriceTo(), advancedSearch.getAdultsRange(), advancedSearch.getStars(), advancedSearch.getNameOrLocation(),pageNo, pageSize);
     }
 
