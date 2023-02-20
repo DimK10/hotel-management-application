@@ -71,8 +71,7 @@ const ShowOrderInfo = props => {
                         htmlFor='staticText1'
                         className='col-sm-2 col-form-label'
                       >
-                        {amenity.hotelAmenities.charAt(0) +
-                          amenity.hotelAmenities.slice(1).toLowerCase()}
+                        {amenity.hAmenity}
                         :
                       </label>
                       <div className='col-sm-10'>

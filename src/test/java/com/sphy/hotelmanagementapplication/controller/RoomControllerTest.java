@@ -1,9 +1,11 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sphy.hotelmanagementapplication.configuration.TestAppAdminConfiguration;
 import com.sphy.hotelmanagementapplication.domain.Hotel;
 import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.domain.User;
+import com.sphy.hotelmanagementapplication.domain.*;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.service.HotelService;
@@ -16,6 +18,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -39,6 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * created by dk
  */
 @ExtendWith(MockitoExtension.class)
+@Import(TestAppAdminConfiguration.class)
 class RoomControllerTest {
 
 	@Mock
@@ -347,6 +351,93 @@ class RoomControllerTest {
 
 	}
 
+	/**
+	 * Created by AKd
+	 */
+
+	@Test
+	void saveRoomAmenity() throws Exception{
+
+		User superUser = new User(5L);
+		superUser.setRole(User.Role.SUPERUSER);
+
+		RoomAmenity roomAmenity = new RoomAmenity();
+		roomAmenity.setId(5L);
+		roomAmenity.setrAmenity("TOWELS");
+		roomAmenity.setEnabled(true);
+
+		// When
+		when(roomService.saveRoomAmenity(any())).thenReturn(roomAmenity);
+		when(userService.getUserFromToken(anyString())).thenReturn(superUser);
+
+		// Return
+		mockMvc.perform(
+						put("/api/room/saveRoomAmenity")
+								.header(HttpHeaders.AUTHORIZATION, "Bearer token")
+								.content(asJsonString(roomAmenity))
+								.contentType(MediaType.APPLICATION_JSON)
+								.accept(MediaType.APPLICATION_JSON)
+				)
+				.andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id")
+						.value(5L))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.rAmenity")
+						.value("TOWELS"))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.enabled")
+						.value(true));
+
+		verify(roomService, times(1)).saveRoomAmenity(any());
+	}
+
+	/**
+	* Created AKd
+	*/
+
+	@Test
+	void enableRoomAmenity() throws Exception {
+
+		User superUser = new User(4L);
+		superUser.setRole(User.Role.SUPERUSER);
+
+		when(roomService.enableRoomAmenity(anyLong())).thenReturn(true);
+		when(userService.getUserFromToken(anyString())).thenReturn(superUser);
+
+		mockMvc.perform(
+				post("/api/room/roomAmenity/enable/{id}",5)
+						.header(HttpHeaders.AUTHORIZATION,"Bearer token")
+		)
+				.andExpect(status().isOk())
+				.andExpect(content().string("Room Amenity with id: 5 was successfully activated"));
+
+		verify(roomService, times(1)).enableRoomAmenity(any());
+
+	}
+
+	/**
+	* Created by AKd
+	 */
+	@Test
+	void disableRoomAmenity() throws Exception {
+
+		User superUser = new User(4L);
+		superUser.setRole(User.Role.SUPERUSER);
+
+		when(roomService.disableRoomAmenity(anyLong())).thenReturn(true);
+		when(userService.getUserFromToken(anyString())).thenReturn(superUser);
+
+		mockMvc.perform(
+						post("/api/room/roomAmenity/disable/{id}",5)
+								.header(HttpHeaders.AUTHORIZATION,"Bearer token")
+				)
+				.andExpect(status().isOk())
+				.andExpect(content().string("Room Amenity with id: 5 was successfully deactivated"));
+
+		verify(roomService, times(1)).disableRoomAmenity(any());
+
+	}
+
+
+
 	public static String asJsonString(final Object obj) {
 		try {
 			return new ObjectMapper().writeValueAsString(obj);
@@ -354,4 +445,34 @@ class RoomControllerTest {
 			throw new RuntimeException(e);
 		}
 	}
+
+    @Test
+    void findAllRoomsByHotelId() throws Exception {
+
+		// Given
+		RoomDTO roomDTO = new RoomDTO();
+		HotelDTO hotelDTO1 = new HotelDTO(1L);
+		roomDTO.setId(1L);
+		roomDTO.setName("roomName");
+		roomDTO.setHotel(1L);
+		List<RoomDTO> roomDTOS1 = new ArrayList<>();
+		roomDTOS1.add(roomDTO);
+
+		// When
+		when(roomService.getRoomsByHotelId(0, 10, "id", 1L)).thenReturn(roomDTOS1);
+
+		// Return
+		mockMvc.perform(get("/api/rooms/1/0/10/id")
+				.header(HttpHeaders.AUTHORIZATION, "Bearer token"))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$", Matchers.hasSize(1)))
+				.andExpect(jsonPath("$[0].name").value("roomName"));
+
+		verify(roomService, times(1)).getRoomsByHotelId(anyInt(), anyInt(), anyString(), anyLong());
+    }
+
+    @Test
+    void countRoomsOfHotel() {
+    }
 }

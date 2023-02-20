@@ -1,6 +1,7 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 
+import com.sphy.hotelmanagementapplication.domain.AdvancedSearch;
 import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
@@ -8,6 +9,8 @@ import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +18,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -68,7 +73,7 @@ public class HotelController {
             }
         }
 
-        if (equal){
+        if (equal) {
 
             return service.saveHotels(hotelsDTO);
         } else {
@@ -93,6 +98,31 @@ public class HotelController {
             throw new RuntimeException("Unauthorized");
         }
     }
+
+
+    /**
+     * Finds all hotels without pagination
+     *
+     * @param token The jwt token
+     * @return A List of hotels in DTo object
+     */
+    @GetMapping("/api/hotels")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<Set<HotelDTO>> findAllHotels(@RequestHeader(name = "Authorization") String token) {
+
+        Long userId = userService.getUserFromToken(token).getId();
+
+        if (Objects.equals(userId, userService.getUserFromToken(token).getId())) {
+
+            Set<HotelDTO> hotelDTOS = service.getHotels(userId);
+
+            return new ResponseEntity<>(hotelDTOS, new HttpHeaders(), HttpStatus.OK);
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
+    }
+
+
 
     /***
      * Finds all hotels
@@ -176,7 +206,7 @@ public class HotelController {
      */
     @PutMapping("/api/hotel/addHotelAmenity")
     @PreAuthorize("hasAuthority('SUPERUSER')")
-    public HotelAmenity saveHotelAmenity(@RequestHeader(name="Authorization")String token, @RequestBody HotelAmenity hotelAmenity) throws ApiRequestException{
+    public HotelAmenity saveHotelAmenity(@RequestHeader(name = "Authorization") String token, @RequestBody HotelAmenity hotelAmenity) throws ApiRequestException {
 
         if (Objects.equals(User.Role.SUPERUSER, userService.getUserFromToken(token).getRole())) {
 
@@ -240,10 +270,18 @@ public class HotelController {
      */
 
     @GetMapping("/api/hotel/amenities/{hotelId}")
-    public Set<HotelAmenity> findHotelAmenitiesByHotelId(@PathVariable Long hotelId) throws ApiRequestException {
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Set<HotelAmenity> findHotelAmenitiesByHotelId(@RequestHeader(name = "Authorization") String token, @PathVariable Long hotelId) throws ApiRequestException {
+
+        HotelDTO hotelOptional = service.getHotelById(hotelId);
+
+        if (Objects.equals(hotelOptional.getOwner(), userService.getUserFromToken(token).getId())) {
 
             return service.getHotelAmenitiesByHotelId(hotelId);
 
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
     }
 
     /***
@@ -254,12 +292,27 @@ public class HotelController {
      * @throws RuntimeException if this that made the search is not a role client
      */
     @PostMapping("/api/hotel/basic/search")
-    public Set<HotelDTO> findHotelBasicSearch(@RequestBody BasicSearchDTO basicSearchDTO)throws RuntimeException{
+    public Set<HotelDTO> findHotelBasicSearch(@RequestBody BasicSearchDTO basicSearchDTO) throws RuntimeException {
 
-            return service.getHotelBasicSearch(basicSearchDTO);
-
+        return service.getHotelBasicSearch(basicSearchDTO);
     }
 
+
+    /***
+     * returns the hotels that are available in Advanced search specific fields
+     * @param advancedSearch Advanced search specific fields
+     * @return the hotels that mach with the search
+     * @throws RuntimeException if this that made the search is not a role client
+     */
+    @PostMapping("/api/hotel/advanced/search/{pageNo}/{pageSize}")
+    public List<HotelDTO> advancedSearch(@RequestBody AdvancedSearch advancedSearch,
+                                         @PathVariable Integer pageNo,
+                                         @PathVariable Integer pageSize
+                                         ) throws RuntimeException {
+
+        return service.advancedSearchMethod(advancedSearch.getHotelAmenities(), advancedSearch.getRoomAmenities(), advancedSearch.getCheckInDate(), advancedSearch.getCheckOutDate(),
+                advancedSearch.getPriceFrom(), advancedSearch.getPriceTo(), advancedSearch.getAdultsRange(), advancedSearch.getStars(), advancedSearch.getNameOrLocation(),pageNo, pageSize);
+    }
 
     /***
      * returns all hotel amenities
@@ -267,10 +320,59 @@ public class HotelController {
      * @throws RuntimeException when not exist any hotel amenity
      */
     @GetMapping("/api/hotel/amenities")
-    public Set<HotelAmenity> findHotelAmenities()throws RuntimeException{
+    public Set<HotelAmenity> findHotelAmenities() throws RuntimeException {
 
         return service.getHotelAmenities();
 
+    }
+
+    @GetMapping("/api/hotel/statistics")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public Map<String, Integer> findAllOrdersAdmin(@RequestHeader(name = "Authorization") String token, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) throws ApiRequestException {
+
+        return service.getStatistics(userService.getUserFromToken(token).getId(), date);
+    }
+    /**
+     * Created by AKd
+     * enables Hotel Amenity
+     * @param id of the hotel Amenity to be enabled by Superuser
+     * @return a message of confirmation of the action hotel amenity activated
+     * @throws ApiRequestException if the user is not authorized to activate the hotel Amenity
+     */
+     @PostMapping("/api/hotel/hotelAmenity/enable/{id}")
+     @PreAuthorize("hasAuthority('SUPERUSER')")
+     ResponseEntity<String> enableHotelAmenity(@RequestHeader(name = "Authorization") String token, @PathVariable Long id) throws ApiRequestException {
+
+         if (Objects.equals(User.Role.SUPERUSER, userService.getUserFromToken(token).getRole())) {
+
+             service.enableHotelAmenity(id);
+             return ResponseEntity.status(HttpStatus.OK)
+                     .body("Hotel Amenity with id: " + id + " was successfully activated");
+         } else {
+             throw new ApiRequestException("Unauthorized");
+         }
+     }
+
+    /**
+     * Created by AKd
+     * disables Hotel Amenity
+     * @param id of the hotel Amenity to be disabled by Superuser
+     * @return a message of confirmation of the action hotel amenity deactivated
+     * @throws ApiRequestException if the user is not authorized to deactivate the hotel Amenity
+     */
+
+    @PostMapping("/api/hotel/hotelAmenity/disable/{id}")
+    @PreAuthorize("hasAuthority('SUPERUSER')")
+    ResponseEntity<String> disableHotelAmenity(@RequestHeader(name = "Authorization") String token, @PathVariable Long id) throws ApiRequestException {
+
+        if (Objects.equals(User.Role.SUPERUSER, userService.getUserFromToken(token).getRole())) {
+
+            service.disableHotelAmenity(id);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body("Hotel Amenity with id: " + id + " was successfully deactivated");
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
     }
 
 

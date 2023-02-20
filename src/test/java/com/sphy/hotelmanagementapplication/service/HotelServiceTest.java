@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -54,8 +55,10 @@ public class HotelServiceTest {
     AmenityHotelRepository amenityHotelRepository;
 
     @Mock
-    JwtUtil jwtUtil;
+    EntityManager entityManager;
 
+    @Mock
+    JwtUtil jwtUtil;
 
     HotelService hotelService;
 
@@ -178,7 +181,7 @@ public class HotelServiceTest {
         hotelDTO.getRooms().add(roomDTO2);
 
         hotelService = new HotelService(
-                hotelRepository,
+                entityManager, hotelRepository,
                 new HotelDTOToHotel(new RoomDTOToRoom(hotelRepository,
                         new OrderDTOToOrder(roomRepository, userRepository)),
                         userRepository),
@@ -344,6 +347,7 @@ public class HotelServiceTest {
         //when
         when(hotelRepository.countAll(anyLong())).thenReturn(1);
 
+
         //then
         assertEquals(1, hotelService.countHotels(1L));
 
@@ -420,5 +424,68 @@ public class HotelServiceTest {
 
         assertEquals(hotelService.getHotelBasicSearch(basicSearchDTO1), hotel1DTOS);
     }
+
+
+    /**
+     * Created by Akd
+     */
+    @Test
+    void saveHotelAmenity() {
+        // given
+        HotelAmenity hotelAmenity = new HotelAmenity();
+        hotelAmenity.setId(4L);
+        hotelAmenity.sethAmenity("POOL");
+        hotelAmenity.setEnabled(true);
+
+        // when
+        when(amenityHotelRepository.save(any())).thenReturn(hotelAmenity);
+
+        //then
+        assertEquals(hotelAmenity, hotelService.saveHotelAmenity(hotelAmenity));
+    }
+
+    /**
+     * Created by Akd
+     */
+    @Test
+    void enableHotelAmenity() {
+        // given
+        boolean expected = true;
+        HotelAmenity hotelAmenity = new HotelAmenity();
+        hotelAmenity.setId(4L);
+        hotelAmenity.sethAmenity("POOL");
+        hotelAmenity.setEnabled(false);
+
+        Optional<HotelAmenity> hotelAmenityOptional = Optional.of(hotelAmenity);
+
+        // when
+        when(amenityHotelRepository.findById(anyLong())).thenReturn(hotelAmenityOptional);
+
+        //then
+        boolean result = hotelService.enableHotelAmenity(anyLong());
+
+        assertEquals(expected, result);
+    }
+
+    /**
+     * Created by Akd
+     */
+    @Test
+     void testDisableHotelAmenity(){
+        boolean expected = true;
+        HotelAmenity hotelAmenity = new HotelAmenity();
+        hotelAmenity.setId(4L);
+        hotelAmenity.sethAmenity("POOL");
+        hotelAmenity.setEnabled(true);
+
+        Optional<HotelAmenity> hotelAmenityOptional = Optional.of(hotelAmenity);
+
+        when(amenityHotelRepository.findById(anyLong())).thenReturn(hotelAmenityOptional);
+
+        boolean result = hotelService.disableHotelAmenity(anyLong());
+
+        assertEquals(expected,result);
+    }
+
 
 }

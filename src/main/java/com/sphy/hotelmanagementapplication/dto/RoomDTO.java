@@ -4,6 +4,7 @@ import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /***
@@ -33,6 +34,7 @@ public class RoomDTO implements Serializable {
 	}
 
     public RoomDTO(long l) {
+		Id = l;
     }
 
     public Long getId() {
@@ -120,5 +122,18 @@ public class RoomDTO implements Serializable {
 				", capacity=" + capacity +
 				", amenities=" + amenities +
 				'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		RoomDTO roomDTO = (RoomDTO) o;
+		return Objects.equals(Id, roomDTO.Id) && Objects.equals(hotel, roomDTO.hotel);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(Id, hotel);
 	}
 }

@@ -48,6 +48,7 @@ public class Room extends BaseEntity {
 	}
 
     public Room(Long id) {
+        super(id);
     }
 
 

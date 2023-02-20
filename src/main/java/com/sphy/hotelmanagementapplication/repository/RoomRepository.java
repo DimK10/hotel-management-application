@@ -9,6 +9,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -22,6 +23,9 @@ public interface RoomRepository extends PagingAndSortingRepository<Room,Long> {
     @Query("SELECT count(r) from rooms r where r.hotel.owner.id = :id")
     int countAll(@Param("id") Long id);
 
+    @Query("SELECT count(r) from rooms r where r.hotel.id = :hotelId and r.hotel.owner.id = :userId")
+    int countAllByHotelIdAndOwnerId(@Param("hotelId") Long hotelId, @Param("userId") Long userId);
+
     @Query(value = "select r from rooms r where r.hotel.owner.id = :id",
             countQuery = "select count (r) from  rooms r where r.hotel.owner.id = :id")
     Page<Room> findAllRoomsByOwner(@Param("id") Long id, Pageable pageable);
@@ -29,4 +33,6 @@ public interface RoomRepository extends PagingAndSortingRepository<Room,Long> {
 
     @Query(value = "select ra from RoomAmenity ra inner join IntermediateRoomAmenity i on i.roomAmenity.id = ra.id where ra.enabled = true and i.room.id = :id")
     Set<RoomAmenity> findAmenitiesByRoomId(@Param("id") Long id);
+
+    Page<Room> findAllByHotelId(Long hotelId, Pageable pageable);
 }

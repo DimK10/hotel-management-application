@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {loadUser} from "../../actions/auth";
 import {Navigate} from "react-router-dom";
 import {setAlertAction} from "../../actions/alert";
+import {ALERT_ERROR, LOGGED_OUT_LOG_IN_AGAIN} from "../../actions/types";
 
 const SecuredPage = ({ children }) => {
 
@@ -20,7 +21,7 @@ const SecuredPage = ({ children }) => {
   }
 
   if (auth.error === 'Token expired') {
-    dispatch(setAlertAction("You have been logged out! Please log in again!", 'danger'));
+    dispatch(setAlertAction(LOGGED_OUT_LOG_IN_AGAIN, ALERT_ERROR));
     return <Navigate to='/sign-in' />
   }
 

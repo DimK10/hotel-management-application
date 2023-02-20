@@ -35,6 +35,7 @@ public class RoomService {
     private final AmenityRoomRepository amenityRoomRepository;
 
 
+
     public RoomService(RoomRepository repository, HotelRepository hotelRepository, RoomDTOToRoom roomDTOToRoom, RoomToRoomDTO roomToRoomDTO, IntermediateRoomAmenityRepository intermediateRoomAmenityRepository, AmenityRoomRepository amenityRoomRepository) {
         this.roomRepository = repository;
         this.hotelRepository = hotelRepository;
@@ -143,6 +144,15 @@ public class RoomService {
     public int countRooms(Long id) {
 
         return roomRepository.countAll(id);
+    }
+
+    /***
+     * counts all the rooms in the database for a specific hotel id
+     * @return the number of rooms that exists in the database for a specific hotel id
+     */
+    public int countRooms(Long hotelId, Long userId) {
+
+        return roomRepository.countAllByHotelIdAndOwnerId(hotelId, userId);
     }
 
 
@@ -300,6 +310,7 @@ public class RoomService {
                 existingRoom.setPrice(roomDTO.getPrice());
                 hotel.ifPresent(existingRoom::setHotel);
                 existingRoom.setDisabled(roomDTO.isDisabled());
+                existingRoom.setCapacity(roomDTO.getCapacity());
 
                 roomDTO.getAmenities().forEach(roomAmenity ->
                         existingRoom.getIntermediateRoomAmenities()
@@ -337,6 +348,44 @@ public class RoomService {
         return amenitiesRoomDTO;
     }
 
+    /***
+     * returns all room amenities
+     * @return all room amenities
+     */
+    public Set<RoomAmenity> getRoomAmenities() throws ApiRequestException {
+
+        Set<RoomAmenity> amenities = new HashSet<>();
+
+        amenityRoomRepository.findAllEnabled().forEach(amenities::add);
+
+        if (amenities.isEmpty()) {
+
+            throw new ApiRequestException("There are no room amenities whet.");
+
+        } else {
+            return amenities;
+        }
+    }
+
+    public List<RoomDTO> getRoomsByHotelId(Integer pageNo, Integer pageSize, String sortBy, Long hotelId) {
+
+        List<RoomDTO> roomDTOS = new ArrayList<>();
+
+        if (hotelId != null) {
+
+            Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+
+            Page<Room> pageResult = roomRepository.findAllByHotelId(hotelId, paging);
+
+            if (pageResult != null && !pageResult.getContent().isEmpty())
+                pageResult
+                        .getContent()
+                        .forEach(room -> roomDTOS.add(roomToRoomDTO.converter(room)));
+
+        }
+        return roomDTOS;
+    }
+
      /**
      * Created by BP
      * saves a new Room Amenity
@@ -357,23 +406,55 @@ public class RoomService {
         return amenityRoomRepository.save(roomAmenity);
     }
 
-
-    /***
-     * returns all room amenities
-     * @return all room amenities
+    /**
+     * Created by AKd
+     * enables Room Amenity by id
+     * @param id of the Room Amenity to be enabled
+     * @return a boolean if the action is done or not
+     * @throws ApiRequestException if the Room Amenity does not exist or is already enabled
      */
-    public Set<RoomAmenity> getRoomAmenities() throws ApiRequestException{
 
-        Set<RoomAmenity> amenities = new HashSet<>();
+    public boolean enableRoomAmenity(Long id) throws ApiRequestException {
 
-        amenityRoomRepository.findAllEnabled().forEach(amenities::add);
+        Optional<RoomAmenity> roomAmenityOptional = amenityRoomRepository.findById(id);
 
-        if (amenities.isEmpty()){
-
-            throw new ApiRequestException("There are no room amenities whet.");
-
+        if (roomAmenityOptional.isEmpty()) {
+            throw new ApiRequestException("There is no Room Amenity with id: " + id);
+        } else if (roomAmenityOptional.get().getEnabled()) {
+            throw new ApiRequestException("The Room amenity with id: " + id + " is already enabled");
         }else {
-            return amenities;
+            RoomAmenity roomAmenity = roomAmenityOptional.get();
+            roomAmenity.setEnabled(true);
+            amenityRoomRepository.save(roomAmenity);
+            return true;
         }
     }
+
+
+    /**
+     * Created by AKd
+     * disables Room Amenity by id
+     * @param id of the Room Amenity to be disabled
+     * @return a boolean if the action is done or not
+     * @throws ApiRequestException if the Room Amenity does not exist or is already disabled
+     */
+
+    public boolean disableRoomAmenity(Long id) throws ApiRequestException {
+
+        Optional<RoomAmenity> roomAmenityOptional = amenityRoomRepository.findById(id);
+
+        if (roomAmenityOptional.isEmpty()) {
+            throw new ApiRequestException("There is no Room Amenity with id: " + id);
+        } else if (!roomAmenityOptional.get().getEnabled()) {
+            throw new ApiRequestException("The Room amenity with id: " + id + " is already disabled");
+        }else {
+            RoomAmenity roomAmenity = roomAmenityOptional.get();
+            roomAmenity.setEnabled(false);
+            amenityRoomRepository.save(roomAmenity);
+            return true;
+        }
+    }
+
+
+
 }

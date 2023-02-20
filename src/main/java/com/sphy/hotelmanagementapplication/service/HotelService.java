@@ -16,6 +16,9 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.time.LocalDate;
 import java.util.*;
 
 /***
@@ -24,6 +27,7 @@ import java.util.*;
 @Service
 public class HotelService {
 
+    private final EntityManager entityManager;
 
     private final HotelRepository hotelRepository;
 
@@ -42,7 +46,8 @@ public class HotelService {
     private final AmenityHotelRepository amenityHotelRepository;
 
 
-    public HotelService(HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService, IntermediateHotelAmenityRepository intermediateHotelAmenityRepository, AmenityHotelRepository amenityHotelRepository) {
+    public HotelService(EntityManager entityManager, HotelRepository hotelRepository, HotelDTOToHotel hotelDTOToHotel, HotelToHotelDTO hotelToHotelDTO, RoomService roomService, UserRepository userRepository, UserService userService, IntermediateHotelAmenityRepository intermediateHotelAmenityRepository, AmenityHotelRepository amenityHotelRepository) {
+        this.entityManager = entityManager;
         this.hotelRepository = hotelRepository;
         this.hotelDTOToHotel = hotelDTOToHotel;
         this.hotelToHotelDTO = hotelToHotelDTO;
@@ -99,6 +104,24 @@ public class HotelService {
         return hotelRepository.countAll(userId);
     }
 
+
+    /**
+     * Get all hotels by user id
+     *
+     * @param userId The use to get the hotels
+     * @return A Hashset of hotels in DTO object
+     */
+    public Set<HotelDTO> getHotels(Long userId) {
+
+
+        Set<Hotel> hotels = hotelRepository.findAllHotelsByOwner(userId);
+
+        Set<HotelDTO> hotelDTOS = new LinkedHashSet<>();
+
+        hotels.forEach(hotel -> hotelDTOS.add(hotelToHotelDTO.converter(hotel)));
+
+        return hotelDTOS;
+    }
 
     /***
      * get all hotels
@@ -212,6 +235,8 @@ public class HotelService {
                 existingHotel.setName(hotelDTO.getName());
                 existingHotel.setStars(hotelDTO.getStars());
                 existingHotel.setAreaName(hotelDTO.getAreaName());
+                existingHotel.setAddress(hotelDTO.getAddress());
+                existingHotel.setDescription(hotelDTO.getDescription());
                 Optional<User> admin = userRepository.findById(hotelDTO.getOwner());
                 admin.ifPresent(existingHotel::setOwner);
 
@@ -221,7 +246,6 @@ public class HotelService {
                                         .save(new IntermediateHotelAmenity(existingHotel, amenity))));
 
                 return hotelToHotelDTO.converter(hotelRepository.save(existingHotel));
-
             }
         }
     }
@@ -394,6 +418,7 @@ public class HotelService {
                     }
                 }
 
+
                 hotelDTOS.forEach(hotelDTO -> hotelDTO
                         .getRooms()
                         .forEach(roomDTO -> roomDTO.getAmenities()
@@ -412,17 +437,17 @@ public class HotelService {
      * returns all hotel amenities
      * @return all hotel amenities
      */
-    public Set<HotelAmenity> getHotelAmenities() throws ApiRequestException{
+    public Set<HotelAmenity> getHotelAmenities() throws ApiRequestException {
 
         Set<HotelAmenity> amenities = new HashSet<>();
 
         amenityHotelRepository.findAllEnabled().forEach(amenities::add);
 
-        if (amenities.isEmpty()){
+        if (amenities.isEmpty()) {
 
             throw new ApiRequestException("There are no hotel amenities whet.");
 
-        }else {
+        } else {
             return amenities;
         }
     }
@@ -430,21 +455,174 @@ public class HotelService {
     /**
      * Created by Akd
      * saves a new Hotel Amenity
-     * @param hotelAmenity  to be saved
+     *
+     * @param hotelAmenity to be saved
      * @return the saved hotel amenity for confirmation
      * @throws ApiRequestException if the hotel amenity is not created and does not be enabled
      */
-    public HotelAmenity saveHotelAmenity (HotelAmenity hotelAmenity) throws ApiRequestException{
+    public HotelAmenity saveHotelAmenity(HotelAmenity hotelAmenity) throws ApiRequestException {
 
-        if (hotelAmenity.gethAmenity().isEmpty()){
+        if (hotelAmenity.gethAmenity().isEmpty()) {
             throw new ApiRequestException("There is no Hotel Amenity");
         }
 
-        if(!hotelAmenity.getEnabled()){
+        if (!hotelAmenity.getEnabled()) {
             throw new ApiRequestException("There is no activated Hotel Amenity");
         }
 
         return amenityHotelRepository.save(hotelAmenity);
     }
 
+
+    public List<HotelDTO> advancedSearchMethod(List<HotelAmenity> hotelAmenities, List<RoomAmenity> roomAmenities, LocalDate checkInDate, LocalDate checkOutDate,
+                                               Long priceFrom, Long priceTo, Integer adultsRange, Integer stars, String nameOrLocation, Integer pageNo, Integer pageSize) {
+
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.unsorted());
+
+        Map<String, Object> parametrMap = new HashMap<>();
+
+        StringBuilder query = new StringBuilder("select r.hotel from rooms r inner join Hotel h on r.hotel.id = h.id " +
+                "inner join IntermediateHotelAmenity ih on h.id = ih.hotel.id " +
+                "inner join HotelAmenity ha on ih.hotelAmenity.id = ha.id " +
+                "inner join IntermediateRoomAmenity ir on r.id = ir.room.id " +
+                "inner join RoomAmenity ra on ra.id = ir.roomAmenity.id " +
+                "inner join orders o on o.room.id = r.id where h.disabled = false ");
+
+        if (adultsRange != null) {
+
+            query.append("and r.capacity = :adults ");
+
+            parametrMap.put("adults", adultsRange);
+        }
+
+        if (priceFrom != null) {
+
+            query.append("and r.price >= :priceFrom ");
+            parametrMap.put("priceFrom", priceFrom);
+        }
+
+        if (priceTo != null) {
+
+            query.append("and r.price <= :priceTo ");
+            parametrMap.put("priceTo", priceTo);
+        }
+
+        if (stars != null) {
+
+            query.append("and r.hotel.stars >= :stars ");
+            parametrMap.put("stars", stars);
+        }
+
+        if (nameOrLocation != null) {
+
+            query.append("and (r.hotel.name like :NameOrLocation or r.hotel.areaName like :NameOrLocation) ");
+            parametrMap.put("NameOrLocation", "%" + nameOrLocation.toLowerCase() + "%");
+        }
+
+        if (checkInDate != null && checkOutDate != null) {
+
+            query.append("and (((:checkIn < o.checkInDate) and (:checkOut < o.checkInDate)) or ((:checkIn > o.checkOutDate) and (:checkOut > o.checkOutDate))) ");
+            parametrMap.put("checkOut", checkOutDate);
+            parametrMap.put("checkIn", checkInDate);
+        }
+
+
+        for (int i = 0; i < hotelAmenities.size(); i++) {
+
+            query.append("and ha.hAmenity = :hAmenity" + i + " ");
+            parametrMap.put("hAmenity" + i, hotelAmenities.get(i).gethAmenity());
+        }
+
+        for (int i = 0; i < roomAmenities.size(); i++) {
+
+            query.append("and ra.rAmenity = :rAmenity" + i + " ");
+            parametrMap.put("rAmenity" + i, roomAmenities.get(i).getrAmenity());
+        }
+
+        query.append(" order by r.price");
+
+
+        Query queryFinal = entityManager.createQuery(String.valueOf(query), Hotel.class);
+
+        for (String key : parametrMap.keySet()) {
+
+            queryFinal.setParameter(key, parametrMap.get(key));
+        }
+
+        List<Hotel> hotels = queryFinal.getResultList();
+
+        Set<Hotel> hotels1 = new HashSet<>();
+
+        hotels.forEach(hotels1::add);
+
+        List<HotelDTO> hotelDTOSList = new ArrayList<>();
+
+        hotels1.forEach(hotel -> hotelDTOSList.add(hotelToHotelDTO.converter(hotel)));
+
+        Page<HotelDTO> hotelDTOPage = new PageImpl<>(hotelDTOSList, paging, hotelDTOSList.size());
+
+        if (hotelDTOPage.hasContent())
+            return hotelDTOPage.getContent();
+
+        return new ArrayList<>();
+    }
+
+    public Map<String, Integer> getStatistics(Long id, LocalDate date) {
+
+        Map<String, Integer> statistic = new HashMap<>();
+
+        statistic.put("all", hotelRepository.countAllRooms(id));
+        statistic.put("vacant", hotelRepository.countAllRoomsVacant(id, date));
+
+        return statistic;
+
+    }
+
+    /**
+     * Created by AKd
+     * enables Hotel Amenity by id
+     * @param id of the hotel Amenity to be enabled
+     * @return a boolean if the action is done or not
+     * @throws ApiRequestException if the Hotel Amenity does not exist or is already enabled
+     */
+
+    public boolean enableHotelAmenity(Long id) throws ApiRequestException {
+
+        Optional<HotelAmenity> hotelAmenityOptional = amenityHotelRepository.findById(id);
+
+        if (hotelAmenityOptional.isEmpty()) {
+            throw new ApiRequestException("There is no Hotel Amenity with id: " + id);
+        } else if (hotelAmenityOptional.get().getEnabled()) {
+            throw new ApiRequestException("The hotel amenity with id: " + id + " is already enabled");
+        }else {
+            HotelAmenity hotelAmenity = hotelAmenityOptional.get();
+            hotelAmenity.setEnabled(true);
+            amenityHotelRepository.save(hotelAmenity);
+            return true;
+        }
+    }
+
+    /**
+    * Created by AKd
+    * disables Hotel Amenity by id
+    * @param id of the hotel Amenity to be disabled
+    * @return a boolean if the action is done or not
+    * @throws ApiRequestException if the Hotel Amenity does not exist or is already disabled
+    */
+    public boolean disableHotelAmenity(Long id) throws ApiRequestException{
+
+        Optional<HotelAmenity> hotelAmenityOptional = amenityHotelRepository.findById(id);
+
+        if(hotelAmenityOptional.isEmpty()){
+            throw new ApiRequestException("There is not an amenity hotel with the id: " + id);
+        }else if (!hotelAmenityOptional.get().getEnabled()){
+            throw new ApiRequestException("The hotel amenity with id: " + id + " is disabled");
+        }else{
+            HotelAmenity hotelAmenity = hotelAmenityOptional.get();
+            hotelAmenity.setEnabled(false);
+            amenityHotelRepository.save(hotelAmenity);
+            return true;
+        }
+
+    }
 }

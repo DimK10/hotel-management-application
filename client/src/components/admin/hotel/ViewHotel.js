@@ -10,6 +10,7 @@ import {cilPencil} from "@coreui/icons";
 import {Tooltip} from '@coreui/coreui/dist/js/coreui';
 import {loadUser} from "../../../actions/auth";
 import Loading from "../../layout/Loading";
+import Alert from "../../layout/Alert";
 
 
 const ViewHotel = () => {
@@ -41,6 +42,7 @@ const ViewHotel = () => {
         <>
             <SidebarComp/>
             <HeaderNav>
+                <Alert />
                 {
                     hotelId !== null
                         ?

@@ -2,10 +2,7 @@ package com.sphy.hotelmanagementapplication.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sphy.hotelmanagementapplication.configuration.TestAppAdminConfiguration;
-import com.sphy.hotelmanagementapplication.domain.Hotel;
-import com.sphy.hotelmanagementapplication.domain.Order;
-import com.sphy.hotelmanagementapplication.domain.Room;
-import com.sphy.hotelmanagementapplication.domain.User;
+import com.sphy.hotelmanagementapplication.domain.*;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
@@ -13,6 +10,7 @@ import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.UserService;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,10 +26,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -94,7 +89,7 @@ public class HotelControllerTest {
 
         HotelDTO hotelDTO1 = new HotelDTO();
 
-        hotelDTO1.setId(1L);
+        hotelDTO1.setId(2L);
         hotelDTO1.setName("hotelDTO1");
         hotelDTO1.setStars(3);
         hotelDTO1.setOwner(1L);
@@ -226,6 +221,28 @@ public class HotelControllerTest {
         verify(hotelService, times(1)).saveHotels(any());
     }
 
+    @Test
+    void findAllHotels() throws Exception {
+        // Given
+        User admin = new User(1L);
+        admin.setRole(User.Role.ADMIN);
+        // Do we care about order?
+        Set<HotelDTO> hotelDTOsToTest = new LinkedHashSet<>(hotelDTOS1);
+
+        // When
+        when(hotelService.getHotels(1L)).thenReturn(hotelDTOsToTest);
+        when(userService.getUserFromToken(anyString())).thenReturn(admin);
+
+        // Return
+        mockMvc.perform(get("/api/hotels")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer token"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", Matchers.hasSize(2)))
+                .andExpect(jsonPath(
+                        "$[0].name",
+                        Matchers.equalTo("hotelDTO")
+                ));
+    }
     @Test
     void findAllHotelsByPage() throws Exception {
         // Given
@@ -472,7 +489,91 @@ public class HotelControllerTest {
 
     }
 
-	/**
+    /**
+     * Created by Akd
+     */
+
+    @Test
+    void saveHotelAmenity() throws Exception{
+
+        User superUser = new User(4L);
+        superUser.setRole(User.Role.SUPERUSER);
+
+        HotelAmenity hotelAmenity = new HotelAmenity();
+        hotelAmenity.setId(4L);
+        hotelAmenity.sethAmenity("POOL");
+        hotelAmenity.setEnabled(true);
+
+        // When
+        when(hotelService.saveHotelAmenity(any())).thenReturn(hotelAmenity);
+        when(userService.getUserFromToken(anyString())).thenReturn(superUser);
+
+        // Return
+        mockMvc.perform(
+                put("/api/hotel/addHotelAmenity")
+                        .header(HttpHeaders.AUTHORIZATION, "Bearer token")
+                        .content(asJsonString(hotelAmenity))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                )
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id")
+                        .value(4L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.hAmenity")
+                        .value("POOL"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.enabled")
+                        .value(true));
+
+        verify(hotelService, times(1)).saveHotelAmenity(any());
+    }
+
+    /**
+     * Created by Akd
+     */
+    @Test
+    void enableHotelAmenity() throws Exception{
+        User superUser = new User(4L);
+        superUser.setRole(User.Role.SUPERUSER);
+
+
+        when(userService.getUserFromToken(anyString())).thenReturn(superUser);
+        when(hotelService.enableHotelAmenity(anyLong())).thenReturn(true);
+
+        mockMvc.perform(
+                        post("/api/hotel/hotelAmenity/enable/{id}",4)
+                                .header(HttpHeaders.AUTHORIZATION, "Bearer token")
+                )
+                .andExpect(status().isOk())
+
+        .andExpect(content().string("Hotel Amenity with id: 4 was successfully activated"));
+
+        verify(hotelService, times(1)).enableHotelAmenity(any());
+    }
+
+    /**
+     * Created by AKd
+     */
+
+    @Test
+    void disableHotelAmenity() throws Exception {
+
+        User superUser = new User(4L);
+        superUser.setRole(User.Role.SUPERUSER);
+
+        when(userService.getUserFromToken(anyString())).thenReturn(superUser);
+        when(hotelService.disableHotelAmenity(anyLong())).thenReturn(true);
+
+        mockMvc.perform(
+                post("/api/hotel/hotelAmenity/disable/{id}",4)
+                        .header(HttpHeaders.AUTHORIZATION,"Bearer token")
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().string("Hotel Amenity with id: 4 was successfully deactivated"));
+        verify(hotelService, times(1)).disableHotelAmenity(any());
+    }
+
+
+    /**
 	 * This method converts an object to a string representation in JSON format.
 	 * Basically, it serializes the object in json format.
 	 * @param obj The object to be serialized.
@@ -485,5 +586,4 @@ public class HotelControllerTest {
             throw new RuntimeException(e);
         }
     }
-
 }
