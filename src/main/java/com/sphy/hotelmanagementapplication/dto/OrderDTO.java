@@ -20,6 +20,8 @@ public class OrderDTO implements Serializable {
 
     private Long client;
 
+    private String clientname;
+
     private Long room;
 
     private Long price;
@@ -43,6 +45,13 @@ public class OrderDTO implements Serializable {
         this.id = l;
     }
 
+    public String getClientname() {
+        return clientname;
+    }
+
+    public void setClientname(String clientname) {
+        this.clientname = clientname;
+    }
 
     public boolean isCanceled() {
         return canceled;
@@ -140,6 +149,7 @@ public class OrderDTO implements Serializable {
                 ", checkInDate=" + checkInDate +
                 ", checkOutDate=" + checkOutDate +
                 ", client=" + client +
+                ", clientname='" + clientname + '\'' +
                 ", room=" + room +
                 ", price=" + price +
                 ", roomName='" + roomName + '\'' +
