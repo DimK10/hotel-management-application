@@ -23,9 +23,9 @@ public interface OrderRepository extends CrudRepository<Order,Long> {
     int OrderConflict(@Param("checkIn") LocalDate checkIn, @Param("checkOut") LocalDate checkOut, @Param("id") Room room);
 
 
-    @Query(value = "select o from orders o where o.client.id = :id and o.canceled = false")
+    @Query(value = "select o from orders o where o.client.id = :id")
     List<Order> findAllClient(Long id);
 
-    @Query(value = "select o from orders o where o.room.hotel.owner.id = :id and o.canceled = false")
+    @Query(value = "select o from orders o where o.room.hotel.owner.id = :id")
     List<Order> findAllAdmin(Long id);
 }
