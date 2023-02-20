@@ -8,7 +8,7 @@ import {ALERT_ERROR, ALERT_SUCCESS, ORDER_ERROR, ORDER_SUCCESS} from "./types";
 
 const {
     newOrderPreCheckout,
-    getAllOrdersForClient,
+    getAllOrders,
     getOrderById,
     addHotelToOrderPreCheckout,
     addToOrder,
@@ -72,7 +72,7 @@ export const getAllOrdersForClientAction = () => async (dispatch) => {
 
         const res = await axios.get('/api/orders/client');
 
-        await dispatch(getAllOrdersForClient(res.data));
+        await dispatch(getAllOrders(res.data));
 
     } catch (err) {
 
@@ -84,6 +84,30 @@ export const getAllOrdersForClientAction = () => async (dispatch) => {
         dispatch(orderError(payload));
     }
 }
+
+export const getAllOrdersForAdminAction = (pageNo, pageSize) => async (dispatch) => {
+
+    if (localStorage.jwt) {
+        setAuthToken(localStorage.jwt);
+    }
+
+    try {
+
+        const res = await axios.get(`/api/orders/admin?${pageNo}&${pageSize}`);
+
+        await dispatch(getAllOrders(res.data));
+
+    } catch (err) {
+
+        const payload = {
+            msg: err,
+            status: null,
+        };
+
+        dispatch(orderError(payload));
+    }
+}
+
 
 // Create order pre checkout
 export const createNewOrderPreCheckout = (checkInDate, checkOutDate) => async (dispatch) => {

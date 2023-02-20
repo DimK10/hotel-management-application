@@ -41,7 +41,7 @@ const orderSlice = createSlice({
             state.orderToShow = payload;
             state.error = '';
         },
-        getAllOrdersForClient: (state, action) => {
+        getAllOrders: (state, action) => {
             const {payload} = action;
 
             state.orders = [...payload];
