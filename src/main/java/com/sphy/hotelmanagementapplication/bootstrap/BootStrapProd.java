@@ -157,13 +157,13 @@ public class BootStrapProd implements CommandLineRunner {
             admin.getHotels().add(hotel);
             hotelRepository.save(hotel);
 
-            for (int j = 0; j < 4; j++) {
+            for (int j = 0; j < 2; j++) {
 
                 List<Room> rooms = new ArrayList<>();
 
-                Room room = new Room(null, String.valueOf(j), 3, 30 + i, false);
+                Room room = new Room(null, String.valueOf(j), 3, 30, false);
 
-                room.setCapacity(j);
+                room.setCapacity(2);
 
                 roomRepository.save(room);
 
@@ -217,13 +217,13 @@ public class BootStrapProd implements CommandLineRunner {
             admin.getHotels().add(hotel);
             hotelRepository.save(hotel);
 
-            for (int j = 0; j < 4; j++) {
+            for (int j = 0; j < 2; j++) {
 
                 List<Room> rooms = new ArrayList<>();
 
-                Room room = new Room(null, String.valueOf(j), 3, 50 + j, false);
+                Room room = new Room(null, String.valueOf(j), 3, 50, false);
 
-                room.setCapacity(j);
+                room.setCapacity(3);
 
                 roomRepository.save(room);
 
@@ -280,9 +280,9 @@ public class BootStrapProd implements CommandLineRunner {
 
                 List<Room> rooms = new ArrayList<>();
 
-                Room room = new Room(null, String.valueOf(j), 5, 100 + j, false);
+                Room room = new Room(null, String.valueOf(j), 5, 100, false);
 
-                room.setCapacity(j);
+                room.setCapacity(4);
 
                 roomRepository.save(room);
 
