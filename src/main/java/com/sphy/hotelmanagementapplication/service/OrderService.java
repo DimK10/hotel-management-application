@@ -11,17 +11,20 @@ import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.repository.OrderRepository;
 import com.sphy.hotelmanagementapplication.repository.RoomRepository;
 import com.sphy.hotelmanagementapplication.repository.UserRepository;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.*;
 
 /***
  * created by gp on 08/11/22
  */
 @Service
 public class OrderService {
+
+    private final EntityManager entityManager;
 
     private final OrderRepository orderRepository;
 
@@ -33,7 +36,8 @@ public class OrderService {
 
     private final OrderToOrderDTO orderToOrderDTO;
 
-    public OrderService(OrderRepository orderRepository, RoomRepository roomRepository, UserRepository userRepository, OrderDTOToOrder orderDTOToOrder, OrderToOrderDTO orderToOrderDTO) {
+    public OrderService(EntityManager entityManager, OrderRepository orderRepository, RoomRepository roomRepository, UserRepository userRepository, OrderDTOToOrder orderDTOToOrder, OrderToOrderDTO orderToOrderDTO) {
+        this.entityManager = entityManager;
         this.orderRepository = orderRepository;
         this.roomRepository = roomRepository;
         this.userRepository = userRepository;
@@ -63,12 +67,14 @@ public class OrderService {
 
         int conflict;
 
-        conflict = orderRepository.OrderConflict(order.getCheckInDate(), order.getCheckOutDate(), room.get());
+        synchronized (this) {
+            conflict = orderRepository.OrderConflict(order.getCheckInDate(), order.getCheckOutDate(), room.get());
 
-        if (conflict == 0) {
-            return orderToOrderDTO.converter(orderRepository.save(order));
-        } else {
-            throw new ApiExceptionFront("The room isn't available on the desirable dates");
+            if (conflict == 0) {
+                return orderToOrderDTO.converter(orderRepository.save(order));
+            } else {
+                throw new ApiExceptionFront("The room isn't available on the desirable dates");
+            }
         }
     }
 
@@ -94,16 +100,52 @@ public class OrderService {
      * @return a list of all orders
      * @throws ApiRequestException if no orders are saved
      */
-    public List<OrderDTO> getOrdersAdmin(Long id) throws ApiRequestException {
+    public List<OrderDTO> getOrdersAdmin(Long id, String firstName, String lastName, Integer pageNo, Integer pageSize) throws ApiRequestException {
 
-        List<Order> orders = new ArrayList<>(orderRepository.findAllAdmin(id));
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.unsorted());
+
+        Map<String, Object> parametrMap = new HashMap<>();
+
+        StringBuilder query = new StringBuilder("select o from orders o where o.room.hotel.owner.id = :id ");
+        parametrMap.put("id", id);
+
+        if (firstName != null){
+
+            query.append(" and o.client.firstname like :firstName ");
+            parametrMap.put("firstName", "%" + firstName + "%" );
+
+        }
+
+        if ( lastName != null){
+
+            query.append(" and o.client.lastname like :lastName ");
+            parametrMap.put("lastName", "%" + lastName + "%" );
+        }
+
+        Query queryFinal = entityManager.createQuery(String.valueOf(query), Order.class);
+
+        for (String key : parametrMap.keySet()) {
+
+            queryFinal.setParameter(key, parametrMap.get(key));
+        }
+
+        List<Order> orders = queryFinal.getResultList();
+
+
 
         List<OrderDTO> ordersDTO = new ArrayList<>();
 
         orders.forEach(order -> ordersDTO.add(orderToOrderDTO.converter(order)));
 
-        return ordersDTO;
+        Page<OrderDTO> orderDTOS1 = new PageImpl<>(ordersDTO, paging, ordersDTO.size());
 
+        if (!orderDTOS1.isEmpty()) {
+            return orderDTOS1.getContent();
+
+        } else {
+            return new ArrayList<>() {
+            };
+        }
     }
 
     /***
@@ -188,21 +230,24 @@ public class OrderService {
             throw new RuntimeException("The room can't be empty");
         }
 
-        conflict = orderRepository.OrderConflict(orderDTO.getCheckInDate(),
-                orderDTO.getCheckOutDate(), room.get());
+        synchronized (this) {
 
-        if (conflict == 0) {
-            orderOptional.get().setCheckOutDate(orderDTO.getCheckOutDate());
-            orderOptional.get().setCheckInDate(orderDTO.getCheckInDate());
-            orderOptional.get().setCanceled(orderDTO.isCanceled());
-            orderOptional.get().setPrice(orderDTO.getPrice());
-            orderOptional.get().setHotelName(orderDTO.getHotelName());
-            orderOptional.get().setRoomName(orderDTO.getRoomName());
-            orderOptional.get().getRoomAmenities().forEach(amenity -> orderDTO.getRoomAmenities().add(amenity));
-            orderOptional.get().getHotelAmenities().forEach(amenity -> orderDTO.getRoomAmenities().add(amenity));
+            conflict = orderRepository.OrderConflict(orderDTO.getCheckInDate(),
+                    orderDTO.getCheckOutDate(), room.get());
 
-        } else {
-            throw new ApiExceptionFront("The room isn't available on the desirable dates");
+            if (conflict == 0) {
+                orderOptional.get().setCheckOutDate(orderDTO.getCheckOutDate());
+                orderOptional.get().setCheckInDate(orderDTO.getCheckInDate());
+                orderOptional.get().setCanceled(orderDTO.isCanceled());
+                orderOptional.get().setPrice(orderDTO.getPrice());
+                orderOptional.get().setHotelName(orderDTO.getHotelName());
+                orderOptional.get().setRoomName(orderDTO.getRoomName());
+                orderOptional.get().getRoomAmenities().forEach(amenity -> orderDTO.getRoomAmenities().add(amenity));
+                orderOptional.get().getHotelAmenities().forEach(amenity -> orderDTO.getRoomAmenities().add(amenity));
+
+            } else {
+                throw new ApiExceptionFront("The room isn't available on the desirable dates");
+            }
         }
 
         return orderToOrderDTO.converter(orderRepository.save(orderOptional.get()));

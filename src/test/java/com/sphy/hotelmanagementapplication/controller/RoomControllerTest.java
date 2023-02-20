@@ -1,6 +1,10 @@
 package com.sphy.hotelmanagementapplication.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sphy.hotelmanagementapplication.configuration.TestAppAdminConfiguration;
+import com.sphy.hotelmanagementapplication.domain.Hotel;
+import com.sphy.hotelmanagementapplication.domain.Room;
+import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.domain.*;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
@@ -14,6 +18,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -37,6 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * created by dk
  */
 @ExtendWith(MockitoExtension.class)
+@Import(TestAppAdminConfiguration.class)
 class RoomControllerTest {
 
 	@Mock
@@ -366,7 +372,7 @@ class RoomControllerTest {
 
 		// Return
 		mockMvc.perform(
-						post("/api/room/saveRoomAmenity")
+						put("/api/room/saveRoomAmenity")
 								.header(HttpHeaders.AUTHORIZATION, "Bearer token")
 								.content(asJsonString(roomAmenity))
 								.contentType(MediaType.APPLICATION_JSON)
@@ -439,4 +445,34 @@ class RoomControllerTest {
 			throw new RuntimeException(e);
 		}
 	}
+
+    @Test
+    void findAllRoomsByHotelId() throws Exception {
+
+		// Given
+		RoomDTO roomDTO = new RoomDTO();
+		HotelDTO hotelDTO1 = new HotelDTO(1L);
+		roomDTO.setId(1L);
+		roomDTO.setName("roomName");
+		roomDTO.setHotel(1L);
+		List<RoomDTO> roomDTOS1 = new ArrayList<>();
+		roomDTOS1.add(roomDTO);
+
+		// When
+		when(roomService.getRoomsByHotelId(0, 10, "id", 1L)).thenReturn(roomDTOS1);
+
+		// Return
+		mockMvc.perform(get("/api/rooms/1/0/10/id")
+				.header(HttpHeaders.AUTHORIZATION, "Bearer token"))
+				.andExpect(status().isOk())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON))
+				.andExpect(jsonPath("$", Matchers.hasSize(1)))
+				.andExpect(jsonPath("$[0].name").value("roomName"));
+
+		verify(roomService, times(1)).getRoomsByHotelId(anyInt(), anyInt(), anyString(), anyLong());
+    }
+
+    @Test
+    void countRoomsOfHotel() {
+    }
 }

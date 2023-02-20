@@ -87,7 +87,7 @@ class RoomServiceTest {
 
 
 		roomService = new RoomService(roomRepository, hotelRepository, new RoomDTOToRoom(hotelRepository,
-				new OrderDTOToOrder(roomRepository, userRepository)), new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository), intermediateRoomAmenityRepository,amenityRoomRepository);
+				new OrderDTOToOrder(roomRepository, userRepository)), new RoomToRoomDTO(new OrderToOrderDTO(roomRepository, userRepository), hotelRepository), intermediateRoomAmenityRepository, amenityRoomRepository);
 
 	}
 

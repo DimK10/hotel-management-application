@@ -1,14 +1,18 @@
 package com.sphy.hotelmanagementapplication.repository;
 
 import com.sphy.hotelmanagementapplication.domain.HotelAmenity;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+
+import java.util.Set;
 
 
 /***
  * created by AKd
  */
-@Repository
+
 public interface AmenityHotelRepository extends CrudRepository <HotelAmenity,Long> {
 
+    @Query(value = "select ha from HotelAmenity ha where ha.enabled = true order by ha.hAmenity desc ")
+    Set<HotelAmenity> findAllEnabled();
 }

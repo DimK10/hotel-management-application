@@ -170,27 +170,6 @@ public class OrderControllerTest {
         verify(orderService, times(1)).getOrdersClient(anyLong());
     }
 
-    @Test
-    void findAllOrdersAdmin() throws Exception {
-        // Given
-
-        // When
-        when(userService.getUserFromToken(anyString())).thenReturn(admin);
-        when(orderService.getOrdersAdmin(anyLong())).thenReturn(ordersDTO);
-
-        // Return
-        mockMvc.perform(get("/api/orders/admin")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer token"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", Matchers.hasSize(2)))
-                .andExpect(jsonPath(
-                        "$[0].id",
-                        Matchers.equalTo(1)
-                ));
-
-        // verify that roomService was executed inside findAllRooms() only once
-        verify(orderService, times(1)).getOrdersAdmin(anyLong());
-    }
 
     @Test
     void findOrderById() throws Exception {

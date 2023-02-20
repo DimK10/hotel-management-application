@@ -1,7 +1,5 @@
 package com.sphy.hotelmanagementapplication.domain;
 
-import org.springframework.data.annotation.Transient;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -192,8 +190,8 @@ public class User extends BaseEntity {
 				", enabled='" + enabled + '\'' +
 				", password='" + password + '\'' +
 				", role=" + role +
-				", hotels=" + hotels +
-				", orders=" + orders +
+//				", hotels=" + hotels +
+//				", orders=" + orders +
 				'}';
 	}
 }

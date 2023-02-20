@@ -1,7 +1,7 @@
 import React, {Fragment, useState} from 'react';
-import SidebarComp from "../layout/Sidebar";
-import HeaderNav from "../layout/HeaderNav";
-import cities from "../../json/cities.json";
+import SidebarComp from "../../layout/Sidebar";
+import HeaderNav from "../../layout/HeaderNav";
+import cities from "../../../json/cities.json";
 
 CreateRoom.propTypes = {};
 
@@ -82,8 +82,8 @@ function CreateRoom(props) {
 
                                 <div className="mb-3 w-25">
                                     <label htmlFor="price" className="form-label">Price:</label>
-                                    <input type="number" min="0" step=".01"className="form-control" id="price"
-                                           aria-describedby="name" placeholder="Price" onChange={(e) => {
+                                    <input type="number" min="0" step=".01" className="form-control" id="price"
+                                           aria-describedby="price" placeholder="Price" onChange={(e) => {
                                         onChange(e);
                                     }} required="true"/>
                                 </div>

@@ -4,12 +4,18 @@ import alertSlice from '../reducers/alert'
 
 const { setAlert, removeAlert } = alertSlice.actions;
 
-// This is the return from mapDispatchToProps in the documentation
 export const setAlertAction =
-  (msg, alertType, timeout = 5000) =>
+  (msg, alertType, timeout = 7000) =>
   (dispatch) => {
     const id = uuidv4();
-    dispatch(setAlert({ msg, alertType, id }));
+
+    const payload = {
+        msg,
+        alertType,
+        id
+    }
+
+    dispatch(setAlert(payload));
 
     setTimeout(() =>dispatch(removeAlert(id)), timeout);
   };

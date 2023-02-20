@@ -5,6 +5,7 @@ import com.sphy.hotelmanagementapplication.domain.*;
 import com.sphy.hotelmanagementapplication.domain.User.Role;
 import com.sphy.hotelmanagementapplication.dto.BasicSearchDTO;
 import com.sphy.hotelmanagementapplication.dto.HotelDTO;
+import com.sphy.hotelmanagementapplication.dto.OrderDTO;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
 import com.sphy.hotelmanagementapplication.repository.*;
 import com.sphy.hotelmanagementapplication.security.JwtUtil;
@@ -15,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -50,11 +52,13 @@ public class HotelServiceTest {
     IntermediateHotelAmenityRepository intermediateHotelAmenityRepository;
 
     @Mock
-    JwtUtil jwtUtil;
-
-    @Mock
     AmenityHotelRepository amenityHotelRepository;
 
+    @Mock
+    EntityManager entityManager;
+
+    @Mock
+    JwtUtil jwtUtil;
 
     HotelService hotelService;
 
@@ -177,7 +181,7 @@ public class HotelServiceTest {
         hotelDTO.getRooms().add(roomDTO2);
 
         hotelService = new HotelService(
-                hotelRepository,
+                entityManager, hotelRepository,
                 new HotelDTOToHotel(new RoomDTOToRoom(hotelRepository,
                         new OrderDTOToOrder(roomRepository, userRepository)),
                         userRepository),
@@ -343,6 +347,7 @@ public class HotelServiceTest {
         //when
         when(hotelRepository.countAll(anyLong())).thenReturn(1);
 
+
         //then
         assertEquals(1, hotelService.countHotels(1L));
 
@@ -369,11 +374,31 @@ public class HotelServiceTest {
 
         hotel.getRooms().add(room);
 
+        HotelAmenity hotelAmenity1 = new HotelAmenity("Parking",true);
+
+        Set<HotelAmenity> hotelAmenities = new HashSet<>();
+
+        hotelAmenities.add(hotelAmenity1);
+
+        IntermediateHotelAmenity hamen1 = new IntermediateHotelAmenity(hotel,hotelAmenity1);
+
+        hotel.getIntermediateHotelAmenities().add(hamen1);
+
         hotels1.add(hotel);
+
 
         Set<HotelDTO> hotel1DTOS = new HashSet<>();
 
-        hotels1.forEach(hotel1 -> hotel1DTOS.add(hotelToHotelDTO.converter(hotel1)));
+        HotelDTO hotelDTO = new HotelDTO(1L);
+
+        hotelDTO.setName("ksenia");
+        hotelDTO.setAreaName("athens");
+
+        hotel1DTOS.add(hotelDTO);
+
+        RoomDTO roomDTO = new RoomDTO(2L);
+
+        OrderDTO orderDTO = new OrderDTO(3L);
 
         BasicSearchDTO basicSearchDTO1 = new BasicSearchDTO();
 
@@ -391,6 +416,9 @@ public class HotelServiceTest {
 
         when(hotelRepository.findByBasicSearch(basicSearchDTO1.getCheckInDate(), basicSearchDTO1.getCheckOutDate(),
                 basicSearchDTO1.getNameOrLocation())).thenReturn(hotels1);
+        when(hotelToHotelDTO.converter(hotel)).thenReturn(hotelDTO);
+        when(hotelRepository.findById(anyLong())).thenReturn(Optional.of(hotel));
+        when(hotelRepository.findAmenityByHotelId(id)).thenReturn(hotelAmenities);
 
         //then
 
