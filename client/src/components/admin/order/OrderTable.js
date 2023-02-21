@@ -30,6 +30,7 @@ const OrderTable = ({ orders }) => {
                         <th scope="col">Check Out Date</th>
                         <th scope="col" className="d-none d-md-table-cell">Status</th>
                         <th scope="col" className="d-none d-md-table-cell">Room</th>
+                        <th scope="col" className="d-none d-md-table-cell">Hotel</th>
                         <th scope="col" className="d-none d-md-table-cell">Client</th>
                         <th scope="col">More</th>
                     </tr>
@@ -46,6 +47,7 @@ const OrderTable = ({ orders }) => {
                                     <td className="d-none d-md-table-cell">{order.canceled === true ? 'Canceled' : 'Active'}</td>
                                     <td className="d-none d-md-table-cell">{order.roomName}</td>
                                     <td className="d-none d-md-table-cell">{order.hotelName}</td>
+                                    <td className="d-none d-md-table-cell">{order.clientname}</td>
                                     <td className="flex-row">
                                         <button type="button" className="btn btn-warning"
                                                 style={{color: '#fff', marginRight: '0.3rem'}}
@@ -57,66 +59,6 @@ const OrderTable = ({ orders }) => {
                             </Fragment>
                         ))
                     }
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>{moment().format('DD/MM/YY')}</td>
-                        <td>{moment().format('DD/MM/YY')}</td>
-                        <td className="d-none d-md-table-cell">Active</td>
-                        <td className="d-none d-md-table-cell">Room#1</td>
-                        <td className="d-none d-md-table-cell">John Doe</td>
-                        <td className="flex-row">
-                            <button type="button" className="btn btn-warning"
-                                    style={{color: '#fff', marginRight: '0.3rem'}}
-                            >
-                                <CIcon className="btn-icon" icon={cilPlus}/>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>{moment().format('DD/MM/YY')}</td>
-                        <td>{moment().format('DD/MM/YY')}</td>
-                        <td className="d-none d-md-table-cell">Active</td>
-                        <td className="d-none d-md-table-cell">Room#1</td>
-                        <td className="d-none d-md-table-cell">John Doe</td>
-                        <td className="flex-row">
-                            <button type="button" className="btn btn-warning"
-                                    style={{color: '#fff', marginRight: '0.3rem'}}
-                            >
-                                <CIcon className="btn-icon" icon={cilPlus}/>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>{moment().format('DD/MM/YY')}</td>
-                        <td>{moment().format('DD/MM/YY')}</td>
-                        <td className="d-none d-md-table-cell">Active</td>
-                        <td className="d-none d-md-table-cell">Room#1</td>
-                        <td className="d-none d-md-table-cell">John Doe</td>
-                        <td className="flex-row">
-                            <button type="button" className="btn btn-warning"
-                                    style={{color: '#fff', marginRight: '0.3rem'}}
-                            >
-                                <CIcon className="btn-icon" icon={cilPlus}/>
-                            </button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>{moment().format('DD/MM/YY')}</td>
-                        <td>{moment().format('DD/MM/YY')}</td>
-                        <td className="d-none d-md-table-cell">Active</td>
-                        <td className="d-none d-md-table-cell">Room#1</td>
-                        <td className="d-none d-md-table-cell">John Doe</td>
-                        <td className="flex-row">
-                            <button type="button" className="btn btn-warning"
-                                    style={{color: '#fff', marginRight: '0.3rem'}}
-                            >
-                                <CIcon className="btn-icon" icon={cilPlus}/>
-                            </button>
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
                 {/*<nav aria-label="Page navigation example">*/}
