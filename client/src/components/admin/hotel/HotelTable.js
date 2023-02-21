@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getAllHotelsByPage} from "../../../actions/hotel";
 import {useNavigate} from "react-router-dom";
 import {v4 as uuidv4} from "uuid";
+import Pagination from "../../layout/Pagination";
 
 
 function HotelTable() {
@@ -161,7 +162,8 @@ function HotelTable() {
           }
           </tbody>
         </table>
-
+        <Pagination pages={pages} changePage={changePage} moveToNextPage={moveToNextPage}
+                    moveToPreviousPage={moveToPreviousPage} currentPage={currentPage}/>
       </div>
     </Fragment>
   );

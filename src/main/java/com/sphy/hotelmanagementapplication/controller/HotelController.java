@@ -330,7 +330,11 @@ public class HotelController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public Map<String, Integer> findAllOrdersAdmin(@RequestHeader(name = "Authorization") String token, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) throws ApiRequestException {
 
-        return service.getStatistics(userService.getUserFromToken(token).getId(), date);
+        if (Objects.equals(User.Role.ADMIN, userService.getUserFromToken(token).getRole())) {
+            return service.getStatistics(userService.getUserFromToken(token).getId(), date);
+        } else {
+            throw new ApiRequestException("Unauthorized");
+        }
     }
     /**
      * Created by AKd

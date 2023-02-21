@@ -4,6 +4,7 @@ import {revertAll} from "../actions/global";
 const initialState = {
   loading: true,
   count: 0,
+  statistics: {},
   hotels: [],
   hotel: {},
   error: ''
@@ -14,6 +15,15 @@ const hotelSlice = createSlice({
   initialState,
   extraReducers: (builder) => builder.addCase(revertAll, () => initialState),
   reducers: {
+    prepareLoading: (state) => {
+      state.loading = true;
+    },
+    getStatistics: (state, action) => {
+      const {payload} = action;
+      state.statistics = payload;
+      state.loading = false;
+      state.error = '';
+    },
     getAllHotels: (state, action) => {
       const { payload } = action;
       state.loading = false;

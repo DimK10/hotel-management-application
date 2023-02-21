@@ -12,9 +12,12 @@ import {
     HOTEL_UPDATED_SUCCESS, ROOM_ERROR,
     SOMETHING_WRONG_HAPPENED
 } from "./types";
+import moment from "moment/moment";
 
 
 const {
+    prepareLoading,
+    getStatistics,
     getAllHotels,
     getHotelById,
     getCountOfHotels,
@@ -23,7 +26,27 @@ const {
     hotelError,
 } = hotelSlice.actions;
 
-export const getAllHotelsAction = () => async dispatch => {    if (localStorage.jwt) {
+export const getStatisticsAction = () => async dispatch => {
+    if (localStorage.jwt) {
+        setAuthToken(localStorage.jwt);
+    }
+
+    try {
+
+        dispatch(prepareLoading())
+
+        const res = await axios.get(`/api/hotel/statistics?date=${moment(new Date()).format('YYYY-MM-DD')}`);
+
+
+        dispatch(getStatistics(res.data))
+    } catch (err) {
+        dispatch(hotelError(err.response.data.errorMessage));
+        dispatch(setAlertAction(HOTEL_ERROR, ALERT_ERROR));
+    }
+}
+
+export const getAllHotelsAction = () => async dispatch => {
+    if (localStorage.jwt) {
         setAuthToken(localStorage.jwt);
     }
 
