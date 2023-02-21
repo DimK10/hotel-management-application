@@ -62,6 +62,7 @@ const Orders = props => {
                                                         placeholder='Search by Firstname'
                                                         name='firstname'
                                                         value={firstname}
+                                                        onChange={(e) => onChange(e)}
                                                         aria-label='Search by Firstname'
                                                         aria-describedby='button-addon2'
                                                     />
@@ -72,6 +73,7 @@ const Orders = props => {
                                                         className='form-control'
                                                         name='lastname'
                                                         value={lastname}
+                                                        onChange={(e) => onChange(e)}
                                                         placeholder='Search by Lastname'
                                                         aria-label='Search by Lastname'
                                                         aria-describedby='button-addon2'

@@ -18,7 +18,7 @@ const initialOrder = {
 
 const initialState = {
     currentOrder: initialOrder,
-    orderToShow: null,
+    orderToShow: {},
     orders: [],
     error: {},
 };

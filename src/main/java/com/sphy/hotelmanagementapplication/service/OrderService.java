@@ -197,6 +197,22 @@ public class OrderService {
         }
     }
 
+    /***
+     * find an order by his id
+     * @param id of the order to be found
+     * @return the order with the current id
+     * @throws ApiRequestException if there is no order with the given id
+     */
+    public Order getOrderByIdAsOrderObj(Long id) throws ApiRequestException {
+        Optional<Order> order = orderRepository.findById(id);
+
+        if (order.isEmpty()) {
+            throw new ApiRequestException("There is now order with id: " + id);
+        } else {
+            return order.get();
+        }
+    }
+
 
     /***
      * enables an order

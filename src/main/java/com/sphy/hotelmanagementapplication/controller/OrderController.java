@@ -1,14 +1,18 @@
 package com.sphy.hotelmanagementapplication.controller;
 
+import com.sphy.hotelmanagementapplication.converter.OrderToOrderDTO;
+import com.sphy.hotelmanagementapplication.domain.Order;
 import com.sphy.hotelmanagementapplication.dto.OrderDTO;
 import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.OrderService;
 import com.sphy.hotelmanagementapplication.service.RoomService;
 import com.sphy.hotelmanagementapplication.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +32,9 @@ public class OrderController {
     private final RoomService roomService;
 
     private final HotelService hotelService;
+
+    @Autowired
+    private OrderToOrderDTO orderToOrderDTO;
 
 
     public OrderController(OrderService service, UserService userService, RoomService roomService, HotelService hotelService) {
@@ -108,14 +115,15 @@ public class OrderController {
      * @throws ApiRequestException if there is no order with the given id
      */
     @GetMapping("/api/orderId/{id}")
+    @Transactional
     public OrderDTO findOrderById(@RequestHeader(name = "Authorization") String token, @PathVariable Long id) throws ApiRequestException {
 
-        OrderDTO order = service.getOrderById(id);
+        Order order = service.getOrderByIdAsOrderObj(id);
 
-        if (Objects.equals(userService.getUserById(order.getClient()), userService.getUserFromToken(token))
-                || Objects.equals(id, hotelService.getHotelById(roomService.getRoomById(order.getRoom()).getHotel()).getOwner())) {
+        if (Objects.equals(userService.getUserById(order.getClient().getId()), userService.getUserFromToken(token))
+                || Objects.equals(userService.getUserFromToken(token).getId(), hotelService.getHotelById(roomService.getRoomById(order.getRoom().getId()).getHotel()).getOwner())) {
 
-            return order;
+            return orderToOrderDTO.converter(order);
         } else {
 
             throw new RuntimeException("Unauthorized");
