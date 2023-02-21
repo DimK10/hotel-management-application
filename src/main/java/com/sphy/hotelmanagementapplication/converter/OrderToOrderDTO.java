@@ -45,6 +45,7 @@ public class OrderToOrderDTO {
         orderDTO.setHotelName(order.getHotelName());
         orderDTO.setRoomName(order.getRoomName());
         orderDTO.setRoom(order.getRoom().getId());
+        orderDTO.setClientname(order.getClient().getLastname() + " " + order.getClient().getFirstname());
         orderDTO.getRoomAmenities().forEach(amenity -> order.getRoomAmenities().add(amenity));
         orderDTO.getHotelAmenities().forEach(amenity -> order.getRoomAmenities().add(amenity));
 

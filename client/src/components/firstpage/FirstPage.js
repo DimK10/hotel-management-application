@@ -62,6 +62,13 @@ const FirstPage = (props) => {
         navigate("/search");
     }
 
+    const onClickNameOrLocation = async (nameOrLocation) => {
+
+        await dispatch(createNewOrderPreCheckout(checkInDate, checkOutDate));
+        await dispatch(basicSearchAction({checkInDate, checkOutDate, nameOrLocation}));
+        navigate("/search");
+    }
+
     // scroll to top
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -133,9 +140,10 @@ const FirstPage = (props) => {
                                         Some quick example text to build on the card title and make
                                         up the bulk of the card's content.
                                     </p>
-                                    <a href='#' className='btn btn-primary'>
+                                    <button type='button' className='btn btn-primary' onClick={() => onClickNameOrLocation('athens')}>
                                         Go somewhere
-                                    </a>
+                                    </button>
+
                                 </div>
                             </div>
 
@@ -151,9 +159,10 @@ const FirstPage = (props) => {
                                         Some quick example text to build on the card title and make
                                         up the bulk of the card's content.
                                     </p>
-                                    <a href='#' className='btn btn-primary'>
+                                    <button type='button' className='btn btn-primary' onClick={() => onClickNameOrLocation('thessaloniki')}>
                                         Go somewhere
-                                    </a>
+                                    </button>
+
                                 </div>
                             </div>
                         </div>

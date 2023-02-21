@@ -45,6 +45,8 @@ const ViewRoom = props => {
                 <Alert/>
                 {
                     roomId !== null
+                    &&
+                    Object.keys(room).length > 0
                         ?
                         (
                             user !== null

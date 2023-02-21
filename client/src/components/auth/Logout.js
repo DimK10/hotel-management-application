@@ -4,6 +4,8 @@ import { resetOrderAction } from '../../actions/order'
 import {useDispatch} from "react-redux";
 import {Navigate} from "react-router-dom";
 import {revertAll} from "../../actions/global";
+import {setAlertAction} from "../../actions/alert";
+import {ALERT_SUCCESS, LOGGED_OUT_SUCCESS} from "../../actions/types";
 
 
 function Logout() {
@@ -14,6 +16,7 @@ function Logout() {
     // dispatch(logoutAction());
     // dispatch(resetOrderAction());
     dispatch(revertAll());
+    dispatch(setAlertAction(LOGGED_OUT_SUCCESS, 'success'))
   }, []);
 
   return (

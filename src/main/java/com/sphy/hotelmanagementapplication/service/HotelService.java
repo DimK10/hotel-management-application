@@ -382,6 +382,8 @@ public class HotelService {
         if (basicSearchDTO.getCheckInDate() != null && basicSearchDTO.getCheckOutDate() != null
                 && basicSearchDTO.getNameOrLocation() != null) {
 
+            basicSearchDTO.setNameOrLocation("%" + basicSearchDTO.getNameOrLocation() + "%");
+
             hotelRepository.findByBasicSearch(
                             basicSearchDTO.getCheckInDate(),
                             basicSearchDTO.getCheckOutDate(),

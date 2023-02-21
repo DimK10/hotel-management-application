@@ -18,7 +18,7 @@ const initialOrder = {
 
 const initialState = {
     currentOrder: initialOrder,
-    orderToShow: null,
+    orderToShow: {},
     orders: [],
     error: {},
 };
@@ -41,7 +41,7 @@ const orderSlice = createSlice({
             state.orderToShow = payload;
             state.error = '';
         },
-        getAllOrdersForClient: (state, action) => {
+        getAllOrders: (state, action) => {
             const {payload} = action;
 
             state.orders = [...payload];
@@ -66,6 +66,16 @@ const orderSlice = createSlice({
             state.currentOrder.user = payload;
             state.currentOrder.loading = false;
             state.error = '';
+        },
+        findOrdersByFistnameLastname: (state, action) => {
+            const {payload} =action;
+
+            state.orders = payload;
+            state.loading = false;
+            state.error = ''
+        },
+        startOrdersLoading: (state) => {
+            state.loading = true;
         },
         resetOrderState: (state) => initialState,
         orderError: (state, action) => {

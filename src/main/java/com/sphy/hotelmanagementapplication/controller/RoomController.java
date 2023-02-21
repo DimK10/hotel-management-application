@@ -1,6 +1,5 @@
 package com.sphy.hotelmanagementapplication.controller;
 
-import com.sphy.hotelmanagementapplication.domain.Room;
 import com.sphy.hotelmanagementapplication.domain.RoomAmenity;
 import com.sphy.hotelmanagementapplication.domain.User;
 import com.sphy.hotelmanagementapplication.dto.RoomDTO;
@@ -8,13 +7,14 @@ import com.sphy.hotelmanagementapplication.exception.ApiRequestException;
 import com.sphy.hotelmanagementapplication.service.HotelService;
 import com.sphy.hotelmanagementapplication.service.RoomService;
 import com.sphy.hotelmanagementapplication.service.UserService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -329,5 +329,23 @@ public class RoomController {
             throw new ApiRequestException("Unauthorized");
         }
     }
+
+    /***
+     * finds all rooms free
+     * @return all rooms
+     * @throws ApiRequestException if no room is saved
+     */
+    @GetMapping("/api/rooms/available")
+    public ResponseEntity<List<RoomDTO>> findAllRooms(
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate from,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate to,
+            @RequestParam Long hotelId)
+            throws ApiRequestException {
+
+        List<RoomDTO> rooms = service.getRoomsAvailable(from, to, hotelId);
+
+        return new ResponseEntity<>(rooms, new HttpHeaders(), HttpStatus.OK);
+    }
+
 
 }

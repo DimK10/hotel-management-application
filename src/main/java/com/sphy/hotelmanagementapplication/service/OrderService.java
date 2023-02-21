@@ -73,7 +73,7 @@ public class OrderService {
         int conflict;
 
         synchronized (this) {
-            conflict = orderRepository.OrderConflict(order.getCheckInDate(), order.getCheckOutDate(), room.get());
+            conflict = orderRepository.OrderConflict(order.getCheckInDate(), order.getCheckOutDate(), room.get().getId(), room.get().getHotel().getId());
 
             if (conflict == 0) {
 
@@ -197,6 +197,22 @@ public class OrderService {
         }
     }
 
+    /***
+     * find an order by his id
+     * @param id of the order to be found
+     * @return the order with the current id
+     * @throws ApiRequestException if there is no order with the given id
+     */
+    public Order getOrderByIdAsOrderObj(Long id) throws ApiRequestException {
+        Optional<Order> order = orderRepository.findById(id);
+
+        if (order.isEmpty()) {
+            throw new ApiRequestException("There is now order with id: " + id);
+        } else {
+            return order.get();
+        }
+    }
+
 
     /***
      * enables an order
@@ -266,7 +282,7 @@ public class OrderService {
         synchronized (this) {
 
             conflict = orderRepository.OrderConflict(orderDTO.getCheckInDate(),
-                    orderDTO.getCheckOutDate(), room.get());
+                    orderDTO.getCheckOutDate(), room.get().getId(), room.get().getHotel().getId());
 
             if (conflict == 0) {
                 orderOptional.get().setCheckOutDate(orderDTO.getCheckOutDate());
@@ -285,6 +301,20 @@ public class OrderService {
 
         return orderToOrderDTO.converter(orderRepository.save(orderOptional.get()));
 
+    }
+
+    /***
+     * get all orders
+     * @return a list of all orders
+     * @throws ApiRequestException if no orders are saved
+     */
+    public List<OrderDTO> getOrdersAdminAll(Long id) {
+
+        List<OrderDTO> orderDTOS = new ArrayList<>();
+
+        orderRepository.findAllAdmin(id).forEach(order -> orderDTOS.add(orderToOrderDTO.converter(order)));
+
+        return orderDTOS;
     }
 }
 

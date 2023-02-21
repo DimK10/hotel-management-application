@@ -14,8 +14,7 @@ import {fetchAllHotelAmenitiesAction, fetchAllRoomAmenitiesAction} from "../../.
 import Loading from "../../layout/Loading";
 import Alert from "../../layout/Alert";
 import {useNavigate} from "react-router-dom";
-import {updateExistingRoomAction} from "../../../actions/room";
-import {advancedSearchAction} from "../../../actions/search";
+import {advancedSearchAction} from "../../../actions/search"
 
 const AdvancedSearch = (props) => {
 
@@ -355,29 +354,26 @@ const AdvancedSearch = (props) => {
                                 </div>
 
                                 <div className="col-lg-9 col-md-12 col-sm-12">
-                                    <div className='input-group pb-3'>
-                                        <input
-                                            type='text'
-                                            className='form-control'
-                                            placeholder='Search for a hotel name'
-                                            aria-label='Search for a hotel name'
-                                            aria-describedby='button-addon2'
-                                        />
-                                        <button className='btn btn-primary px-4' type='button'>
-                                            Search
-                                        </button>
-                                    </div>
                                     {
-                                        hotels !== null
-                                        &&
-                                        hotels.length > 0
-                                        &&
                                         loading !== true
-                                        &&
-                                        hotels.map(hotel => (
-                                            <SearchItem key={uuidv4()} checkInDate={checkInDate} checkOutDate={checkOutDate}
-                                                        hotel={hotel}/>
-                                        ))
+                                            ?
+                                            hotels.length === 0
+                                            ?
+                                                (
+
+                                                <h5>No hotels found</h5>
+                                                )
+                                                :
+                                                (
+                                                    hotels.map(hotel => (
+                                                        <SearchItem key={uuidv4()} checkInDate={checkInDate}
+                                                                    checkOutDate={checkOutDate}
+                                                                    hotel={hotel}/>
+                                                )
+                                            ))
+                                            :
+
+                                            <Loading/>
                                     }
 
                                 </div>

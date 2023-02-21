@@ -8,11 +8,13 @@ import {ALERT_ERROR, ALERT_SUCCESS, ORDER_ERROR, ORDER_SUCCESS} from "./types";
 
 const {
     newOrderPreCheckout,
-    getAllOrdersForClient,
+    getAllOrders,
     getOrderById,
     addHotelToOrderPreCheckout,
     addToOrder,
     addUserToOrder,
+    findOrdersByFistnameLastname,
+    startOrdersLoading,
     orderError,
     resetOrderState
 } = orderSlice.actions;
@@ -53,10 +55,10 @@ export const getOrderByIdAction = (orderId) => async (dispatch) => {
 
         dispatch(orderError(payload));
 
-        setAlertAction(
+        dispatch(setAlertAction(
             ORDER_ERROR,
             ALERT_ERROR
-        )
+        ))
     }
 }
 
@@ -70,7 +72,7 @@ export const getAllOrdersForClientAction = () => async (dispatch) => {
 
         const res = await axios.get('/api/orders/client');
 
-        await dispatch(getAllOrdersForClient(res.data));
+        await dispatch(getAllOrders(res.data));
 
     } catch (err) {
 
@@ -82,6 +84,30 @@ export const getAllOrdersForClientAction = () => async (dispatch) => {
         dispatch(orderError(payload));
     }
 }
+
+export const getAllOrdersForAdminAction = (pageNo, pageSize) => async (dispatch) => {
+
+    if (localStorage.jwt) {
+        setAuthToken(localStorage.jwt);
+    }
+
+    try {
+
+        const res = await axios.get(`/api/orders/admin?pageNo=${pageNo}&pageSize=${pageSize}`);
+
+        await dispatch(getAllOrders(res.data));
+
+    } catch (err) {
+
+        const payload = {
+            msg: err,
+            status: null,
+        };
+
+        dispatch(orderError(payload));
+    }
+}
+
 
 // Create order pre checkout
 export const createNewOrderPreCheckout = (checkInDate, checkOutDate) => async (dispatch) => {
@@ -167,10 +193,10 @@ export const finalizeOrder = (currentOrder) =>
 
             // do nothing - the order object is not needed
 
-            setAlertAction(
+            dispatch(setAlertAction(
                 ORDER_SUCCESS,
                 ALERT_SUCCESS
-            )
+            ))
 
             dispatch(resetOrderState());
 
@@ -191,3 +217,39 @@ export const finalizeOrder = (currentOrder) =>
 export const resetOrderAction = () => dispatch => {
     dispatch(resetOrderState());
 };
+
+export const findOrdersByFirstnameLastNameAction = (formData, pageNo, pageSize) => async dispatch => {
+    dispatch(startOrdersLoading);
+    try {
+
+        const {
+            firstname,
+            lastname
+        } = formData;
+
+        let res;
+
+        if (firstname === 'undefined' & lastname !== 'undefined') {
+            res = await axios.get(`/api/orders/admin?lastName=${lastname}&pageNo=${pageNo}&pageSize=${pageSize}`)
+        }
+
+        if (firstname !== 'undefined' & lastname === 'undefined') {
+            res = await axios.get(`/api/orders/admin?firstname=${firstname}&pageNo=${pageNo}&pageSize=${pageSize}`)
+        }
+
+        if (firstname !== 'undefined' & lastname !== 'undefined') {
+            res = await axios.get(`/api/orders/admin?firstname=${firstname}&lastname=${lastname}&pageNo=${pageNo}&pageSize=${pageSize}`)
+        }
+
+
+
+        dispatch(findOrdersByFistnameLastname(res.data))
+    } catch (err) {
+
+        const payload = {
+            msg: err,
+            status: null
+        }
+        dispatch(orderError(payload))
+    }
+}
