@@ -3,6 +3,7 @@ import setAuthToken from "../utils/setAuthToken";
 import searchSlice from "../reducers/search";
 
 const {
+    prepareLoading,
     search,
     searchError
 } = searchSlice.actions;
@@ -43,6 +44,8 @@ export const advancedSearchAction = (formData, pageNo, pageSize) => async (dispa
     }
 
     try {
+
+        dispatch(prepareLoading);
 
         const config = {
             headers: {
