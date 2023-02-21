@@ -73,7 +73,7 @@ public class OrderService {
         int conflict;
 
         synchronized (this) {
-            conflict = orderRepository.OrderConflict(order.getCheckInDate(), order.getCheckOutDate(), room.get());
+            conflict = orderRepository.OrderConflict(order.getCheckInDate(), order.getCheckOutDate(), room.get().getId(), room.get().getHotel().getId());
 
             if (conflict == 0) {
 
@@ -266,7 +266,7 @@ public class OrderService {
         synchronized (this) {
 
             conflict = orderRepository.OrderConflict(orderDTO.getCheckInDate(),
-                    orderDTO.getCheckOutDate(), room.get());
+                    orderDTO.getCheckOutDate(), room.get().getId(), room.get().getHotel().getId());
 
             if (conflict == 0) {
                 orderOptional.get().setCheckOutDate(orderDTO.getCheckOutDate());
