@@ -31,16 +31,18 @@ public class OrderController {
 
 
     public OrderController(OrderService service, UserService userService, RoomService roomService, HotelService hotelService) {
+
         this.service = service;
 
         this.userService = userService;
+
         this.roomService = roomService;
 
         this.hotelService = hotelService;
     }
 
     /***
-     * creates a new order
+     * creates a new order and sends an email confirmation to the user
      * @param orderDTO is the order to be saved
      * @return the saved order for confirmation
      * @throws ApiRequestException when there is no client or the client does not exist
@@ -85,6 +87,18 @@ public class OrderController {
                 pageNo,
                 pageSize
         );
+    }
+
+    /***
+     * finds all Admins orders
+     * @return all Admins orders
+     * @throws ApiRequestException if no orders is saved
+     */
+    @GetMapping("/api/orders/admin/all")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public List<OrderDTO> findAllOrdersAdminAll(@RequestHeader(name = "Authorization") String token) throws ApiRequestException {
+
+        return service.getOrdersAdminAll(userService.getUserFromToken(token).getId());
     }
 
     /***

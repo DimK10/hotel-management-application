@@ -415,7 +415,7 @@ public class HotelServiceTest {
         //when
 
         when(hotelRepository.findByBasicSearch(basicSearchDTO1.getCheckInDate(), basicSearchDTO1.getCheckOutDate(),
-                basicSearchDTO1.getNameOrLocation())).thenReturn(hotels1);
+               "%" + basicSearchDTO1.getNameOrLocation() + "%")).thenReturn(hotels1);
         when(hotelToHotelDTO.converter(hotel)).thenReturn(hotelDTO);
         when(hotelRepository.findById(anyLong())).thenReturn(Optional.of(hotel));
         when(hotelRepository.findAmenityByHotelId(id)).thenReturn(hotelAmenities);

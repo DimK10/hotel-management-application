@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.mail.javamail.JavaMailSender;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -44,6 +45,9 @@ public class OrderServiceTest {
 
     @Mock
 	UserRepository userRepository;
+
+    @Mock
+    JavaMailSender emailSender;
 
     OrderService orderService;
 
@@ -115,7 +119,7 @@ public class OrderServiceTest {
 
         orderService = new OrderService(entityManager, orderRepository, roomRepository, userRepository,
                 new OrderDTOToOrder(roomRepository, userRepository),
-                new OrderToOrderDTO(roomRepository, userRepository));
+                new OrderToOrderDTO(roomRepository, userRepository), emailSender);
 
     }
 

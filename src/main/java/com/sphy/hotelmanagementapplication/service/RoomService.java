@@ -13,6 +13,7 @@ import com.sphy.hotelmanagementapplication.repository.RoomRepository;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.*;
 
 /***
@@ -456,5 +457,16 @@ public class RoomService {
     }
 
 
+    public List<RoomDTO> getRoomsAvailable(LocalDate from, LocalDate to, Long hotelId) {
 
+
+        List<Room> rooms = roomRepository.findAllRoomsAvalable(from, to, hotelId);
+
+        List<RoomDTO> roomDTOS = new ArrayList<>();
+
+        rooms.forEach(room -> roomDTOS.add(roomToRoomDTO.converter(room)));
+
+        return roomDTOS;
+
+    }
 }
