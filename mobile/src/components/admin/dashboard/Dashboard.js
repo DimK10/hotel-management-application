@@ -23,14 +23,13 @@ const Dashboard = props => {
 
             <SidebarComp/>
             <HeaderNav>
-                <Alert />
                 {
                     !loading
                     &&
                     user != null
                     &&
                     <>
-
+                        <Alert />
                         <div className="jumbotron">
                             <h1 className="display-4">Welcome back {user.firstname} {user.lastname} !</h1>
                             <hr className="my-4"/>

@@ -1,0 +1,16 @@
+.wrapper {
+    width: 100%;
+    will-change: auto;
+    transition: padding 0.15s;
+}
+html:not([dir=rtl]) .wrapper {
+    padding-left: var(--cui-sidebar-occupy-start, 0);
+}
+*[dir=rtl] .wrapper {
+    padding-right: var(--cui-sidebar-occupy-start, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+    .wrapper {
+        transition: none;
+    }
+}

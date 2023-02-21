@@ -93,7 +93,7 @@ export const getAllOrdersForAdminAction = (pageNo, pageSize) => async (dispatch)
 
     try {
 
-        const res = await axios.get(`/api/orders/admin?pageNo=${pageNo}&pageSize=${pageSize}`);
+        const res = await axios.get(`/api/orders/admin?${pageNo}&${pageSize}`);
 
         await dispatch(getAllOrders(res.data));
 
@@ -230,15 +230,15 @@ export const findOrdersByFirstnameLastNameAction = (formData, pageNo, pageSize) 
         let res;
 
         if (firstname === 'undefined' & lastname !== 'undefined') {
-            res = await axios.get(`/api/orders/admin?lastName=${lastname}&pageNo=${pageNo}&pageSize=${pageSize}`)
+            res = await axios.get(`/api/orders/admin?${lastname}&${pageNo}&${pageSize}`)
         }
 
         if (firstname !== 'undefined' & lastname === 'undefined') {
-            res = await axios.get(`/api/orders/admin?firstname=${firstname}&pageNo=${pageNo}&pageSize=${pageSize}`)
+            res = await axios.get(`/api/orders/admin?${firstname}&${pageNo}&${pageSize}`)
         }
 
         if (firstname !== 'undefined' & lastname !== 'undefined') {
-            res = await axios.get(`/api/orders/admin?firstname=${firstname}&lastname=${lastname}&pageNo=${pageNo}&pageSize=${pageSize}`)
+            res = await axios.get(`/api/orders/admin?${firstname}&${lastname}&${pageNo}&${pageSize}`)
         }
 
 
