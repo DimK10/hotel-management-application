@@ -227,18 +227,20 @@ export const findOrdersByFirstnameLastNameAction = (formData, pageNo, pageSize) 
             lastname
         } = formData;
 
+        console.log(formData)
+
         let res;
 
-        if (firstname === 'undefined' & lastname !== 'undefined') {
+        if (firstname === '' & lastname !== '') {
             res = await axios.get(`/api/orders/admin?lastName=${lastname}&pageNo=${pageNo}&pageSize=${pageSize}`)
         }
 
-        if (firstname !== 'undefined' & lastname === 'undefined') {
-            res = await axios.get(`/api/orders/admin?firstname=${firstname}&pageNo=${pageNo}&pageSize=${pageSize}`)
+        if (firstname !== '' & lastname === '') {
+            res = await axios.get(`/api/orders/admin?firstName=${firstname}&pageNo=${pageNo}&pageSize=${pageSize}`)
         }
 
-        if (firstname !== 'undefined' & lastname !== 'undefined') {
-            res = await axios.get(`/api/orders/admin?firstname=${firstname}&lastname=${lastname}&pageNo=${pageNo}&pageSize=${pageSize}`)
+        if (firstname !== '' & lastname !== '') {
+            res = await axios.get(`/api/orders/admin?firstName=${firstname}&lastName=${lastname}&pageNo=${pageNo}&pageSize=${pageSize}`)
         }
 
 

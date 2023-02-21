@@ -27,7 +27,10 @@ const Orders = props => {
     const onChange = (e) =>
         setFormData({...formData, [e.target.name]: e.target.value});
 
-    const onSubmit = (e) => dispatch(findOrdersByFirstnameLastNameAction(formData, 0, 999));
+    const onSubmit = (e) => {
+        e.preventDefault();
+        dispatch(findOrdersByFirstnameLastNameAction(formData, 0, 999))
+    };
 
     useEffect(() => {
         dispatch(getAllOrdersForAdminAction(0, 999))
@@ -82,7 +85,7 @@ const Orders = props => {
                                                 </div>
                                                 <div className="col-sm-4 col-md-4 col-lg-2">
                                                     <button className='btn btn-primary px-4' style={{float: 'right'}}
-                                                            type='button'>
+                                                            type='submit'>
                                                         Search
                                                     </button>
                                                 </div>
