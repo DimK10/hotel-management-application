@@ -34,7 +34,6 @@ const ViewOrder = props => {
     } = orderToShow;
 
     useEffect(() => {
-        console.log("got orderId")
         if (user === null) {
             dispatch(loadUser);
         }
