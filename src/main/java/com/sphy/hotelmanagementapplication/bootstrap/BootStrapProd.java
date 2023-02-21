@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 
 @Component
-@Profile("prod")
+@Profile({"dev","prod"})
 public class BootStrapProd implements CommandLineRunner {
 
     private final UserRepository userRepository;

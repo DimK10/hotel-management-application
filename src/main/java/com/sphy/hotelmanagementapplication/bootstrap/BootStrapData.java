@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.HashSet;
 
-@Profile("dev")
-@Component
+//@Profile("dev")
+//@Component
 public class BootStrapData implements CommandLineRunner {
     private final UserRepository userRepository;
     private final HotelRepository hotelRepository;
