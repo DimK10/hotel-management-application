@@ -9,6 +9,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -35,4 +36,8 @@ public interface RoomRepository extends PagingAndSortingRepository<Room,Long> {
     Set<RoomAmenity> findAmenitiesByRoomId(@Param("id") Long id);
 
     Page<Room> findAllByHotelId(Long hotelId, Pageable pageable);
+
+    @Query(value = "select r from rooms r inner join orders o on r.id = o.room.id where r.hotel.id = :id and " +
+            " (((:from < o.checkInDate) and (:to < o.checkInDate)) or ((:from > o.checkOutDate) and (:to > o.checkOutDate))) ")
+    List<Room> findAllRoomsAvalable(@Param("from") LocalDate from,@Param("to") LocalDate to,@Param("id") Long hotelId);
 }
