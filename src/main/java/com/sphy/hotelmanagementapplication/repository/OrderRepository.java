@@ -15,7 +15,7 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends CrudRepository<Order,Long> {
 
-    @Query("SELECT count(o) from orders o where o.room=:id and o.room.hotel.id = :hid " +
+    @Query("SELECT count(o) from orders o where o.room.id=:id and o.room.hotel.id = :hid " +
             "and (o.checkInDate>:checkIn and o.checkOutDate>:checkOut and o.checkInDate<:checkOut) or " +
             "(o.checkInDate<:checkIn and o.checkOutDate<:checkOut and o.checkOutDate>:checkIn) or" +
             "(o.checkInDate<=:checkIn and o.checkOutDate>=:checkOut)")

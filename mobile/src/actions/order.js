@@ -55,10 +55,10 @@ export const getOrderByIdAction = (orderId) => async (dispatch) => {
 
         dispatch(orderError(payload));
 
-        setAlertAction(
+        dispatch(setAlertAction(
             ORDER_ERROR,
             ALERT_ERROR
-        )
+        ))
     }
 }
 
@@ -193,10 +193,10 @@ export const finalizeOrder = (currentOrder) =>
 
             // do nothing - the order object is not needed
 
-            setAlertAction(
+            dispatch(setAlertAction(
                 ORDER_SUCCESS,
                 ALERT_SUCCESS
-            )
+            ));
 
             dispatch(resetOrderState());
 
@@ -207,10 +207,10 @@ export const finalizeOrder = (currentOrder) =>
                 status: err.response.status
             }
             dispatch(orderError(payload));
-            setAlertAction(
+            dispatch(setAlertAction(
                 ORDER_ERROR,
                 ALERT_ERROR
-            )
+            ))
         }
     }
 
