@@ -202,6 +202,11 @@ public class RoomService {
 
             throw new ApiRequestException("There is now room with id: " + id);
 
+        }else if (room.get().isDisabled()){
+
+            throw new ApiRequestException("The room with id: " + id + "is disabled");
+
+
         } else {
 
             return roomToRoomDTO.converter(room.get());
@@ -223,6 +228,10 @@ public class RoomService {
 
             throw new ApiRequestException("There is now room with name: " + name);
 
+        } else if (room.get().isDisabled()){
+
+            throw new ApiRequestException("The room with name: " + name + "is disabled");
+ 
         } else {
 
             return roomToRoomDTO.converter(room.get());

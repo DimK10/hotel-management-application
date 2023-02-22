@@ -34,14 +34,14 @@ public interface HotelRepository extends PagingAndSortingRepository<Hotel,Long>{
 	boolean existsByName(String name);
 
 
-	@Query("SELECT count(h) from Hotel h where h.owner.id = :id")
+	@Query("SELECT count(h) from Hotel h where h.owner.id = :id and h.disabled = false ")
 	int countAll(@Param("id") Long id);
 
-	@Query(value = "select h from Hotel h where h.owner.id = :id")
+	@Query(value = "select h from Hotel h where h.owner.id = :id and h.disabled = false ")
 	Set<Hotel> findAllHotelsByOwner(@Param("id") Long id);
 
-	@Query(value = "select h from Hotel h where h.owner.id = :id",
-	countQuery = "select count (h) from  Hotel h where h.owner.id = :id")
+	@Query(value = "select h from Hotel h where h.owner.id = :id and h.disabled = false ",
+	countQuery = "select count (h) from  Hotel h where h.owner.id = :id and h.disabled = false ")
 	Page<Hotel> findAllHotelsByOwner(@Param("id") Long id, Pageable pageable);
 
 
