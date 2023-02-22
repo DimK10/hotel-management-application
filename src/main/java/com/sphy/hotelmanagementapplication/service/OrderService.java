@@ -20,6 +20,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.*;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 /***
  * created by gp on 08/11/22
  */
@@ -90,7 +92,8 @@ public class OrderService {
                             + "Room: " + order.getRoom().getName() + "\n"
                             + "Check-in date: " + order.getCheckInDate() + "\n"
                             + "Check-out date: " + order.getCheckOutDate() + "\n"
-                            + "Total price is: " + order.getPrice() + "\n\n"
+                            + "The price per day is: " + order.getPrice() + "\n"
+//                            + "Total price is: " + order.getPrice() * DAYS.between(order.getCheckOutDate(), order.getCheckInDate()) + "\n\n"
                             + "Thank you for choosing our hotel!";
 
                     SimpleMailMessage message = new SimpleMailMessage();
